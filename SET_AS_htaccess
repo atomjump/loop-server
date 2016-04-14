@@ -1,0 +1,31 @@
+RewriteEngine On
+RewriteBase /
+
+
+RewriteRule ^search-chat - [L,PT]
+#Get out of here early - we know we don't need further processing
+RewriteRule copy-image - [L,PT]
+#Get out of here early - we know we don't need further processing
+
+
+RewriteRule ^download$ download.php [L,PT]
+
+RewriteCond %{HTTP_HOST} seetalent.com$
+RewriteRule (.*) https://atomjump.com/seetalent/%{QUERY_STRING} [L]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !atomjump.com$
+RewriteCond %{HTTP_HOST} !ajmp.co$     
+RewriteRule (.*) https://atomjump.com/%{QUERY_STRING}
+
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !www.atomjump.com$
+RewriteRule http://www.atomjump.com https://atomjump.com/%{QUERY_STRING}
+
+
+
+RewriteCond %{HTTPS} on
+RewriteRule https://www.atomjump.com https://atomjump.com/%{QUERY_STRING}
+
+

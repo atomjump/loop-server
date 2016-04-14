@@ -1,0 +1,19 @@
+RewriteEngine On
+RewriteBase /
+
+
+RewriteRule ^search-chat - [L,PT]
+#Get out of here early - we know we don't need further processing
+
+
+
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://staging.atomjump.com/%{QUERY_STRING}
+RewriteRule http://staging.atomjump.com https://atomjump.com
+
+RewriteCond %{HTTPS} on
+RewriteRule https://staging.atomjump.com https://staging.atomjump.com/%{QUERY_STRING}
+
+RewriteRule ^download download.php [NC,L]
+
