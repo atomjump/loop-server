@@ -7,6 +7,13 @@
         bower install atomjump
     */
 
+    //Configurable Params
+    $server = "https://atomjump.com/atomjump-loop-server-0.02/";
+    //$host = "http://127.0.0.1/";
+    $host = "https://atomjump.com";
+
+
+
 	//Ensure no caching
 	header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
 	header("Cache-Control: post-check=0, pre-check=0", false);
@@ -77,7 +84,7 @@
 																			6. Copy the myMachineUser into here.
 					
 													*/
-				"server":  "https://atomjump.com"
+			"server":  "<?php echo $server ?>"
 		}
 	</script>
 	<script type="text/javascript" src="bower_components/atomjump/js/chat.js"></script>
@@ -154,7 +161,7 @@
 
         var oReq = new XMLHttpRequest();
         oReq.onload = reqListener;
-        oReq.open("get", "/data/words.json", true);
+        oReq.open("get", "<?php echo $host ?>/data/words.json", true);
         oReq.send();
 
         function reqListener(e) {
@@ -184,7 +191,7 @@
                 }
                 return col;
               },
-              rotateRatio: 0.2,
+              rotateRatio: 0,
               backgroundColor: '#5ca7d2',
               classes: 'comment-open',
               click: function(index, size) {
