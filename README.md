@@ -53,7 +53,7 @@ when possible.
 
 
 
-**Smart Feedback Client**
+# Smart Feedback Client
 
 This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is ideal for feedback, but can also be used as a live discussion tool, or a CRM.  We actually run our entire operation off one page with several of these popups on it.
 
