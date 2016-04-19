@@ -53,11 +53,11 @@ when possible.
 
 
 
-**Smart Feedback**
+**Smart Feedback Client**
 
 This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is ideal for feedback, but can also be used as a live discussion tool, or a CRM.  We actually run our entire operation off one page with several of these popups on it.
 
-The client software is entirely Javascript and CSS, but it refers to an AtomJump server to store messages.  Supported platforms: IE8 upwards, Chrome, Firefox, Safari, Android Native, Android Chrome, Android Firefox, iPad, iPhone, Opera. There may be other supported platforms we haven't tested on.
+The client software is entirely Javascript and CSS, but it refers to an AtomJump Loop server to store messages.  Supported client platforms: IE8 upwards, Chrome, Firefox, Safari, Android Native, Android Chrome, Android Firefox, iPad, iPhone, Opera. There may be other supported platforms we haven't tested on.
 
 See the demo at <a href="https://atomjump.com">AtomJump</a>
 
@@ -66,7 +66,7 @@ You are most welcome to adjust the styling by making changes to the CSS file for
 
 
 
-# Installation Instructions
+# Client Installation Instructions
 
 With [bower](http://bower.io) from within the root of your project path:
 
@@ -79,7 +79,7 @@ Run atomjump/index.html in your browser.  You should see a 'Click me for comment
 
 
 
-# Setup Instructions
+# Client Setup Instructions
 
 Look carefully at the index.html example.
 
@@ -141,10 +141,25 @@ Open the feedback forum in your browser.
 e.g. "123.456.123.32:1200:sms,123.456.123.32:1201:sms"
 
 
+# To change the theme
+
+Add 
+
+"cssBootstrap":"relative/url"
+
+and
+
+"cssFeedback":"relative/url/to/your/css"
+
+to the ajFeedback object.
+
+Note: your css file must be on an https server, if your server is using https.
+
+
 # To download a forum's messages programmatically
 
 **Endpoint**
-https://atomjump.com/download.php
+http://yourserver.com/download.php
 
 **Parameters**
 
@@ -153,7 +168,7 @@ https://atomjump.com/download.php
 2. **pass**  
    Your AtomJump Loop password
 3. **uniqueFeedbackId**  
-   The particular forum to view. Note: include 'ajps_' at the start of this string for x.atomjump.com forums.
+   The particular forum to view.
 4. **from_id**  
    There is a limit of 2000 records per request. To download more, include the 'id' of the last record, from the previous download request, in this field.
 
