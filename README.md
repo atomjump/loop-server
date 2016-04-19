@@ -1,8 +1,4 @@
-# loop
-
-
-
-**Smart Feedback Server**
+# Smart Feedback Server
 
 This acts as a server to the AtomJump Loop open source
 interface at http://github.com/atomjump/loop
