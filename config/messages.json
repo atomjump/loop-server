@@ -53,7 +53,7 @@
                 "timestamp": "timestamp",
                 "private": "private",
                 "sentiment": "sentiment"            
-            }
+            },
             "isPrivate": "private",
             "isPublic": "public",
             "passwordNotReset": "Sorry, that link has not reset your password. Please try again, and ensure you use the same device and browser.",
@@ -103,7 +103,7 @@
             "privateOwnersEnter": "Enter your users string",
             "saveSettingsButton": "Save Settings",
             "tip": "Tip: Click a person's name to talk privately to them.",
-            "getYourOwn": "Get your own <a target=\"_blank\" href="http:\/\/atomjump.com\">AtomJump Loop</a> widget.",
+            "getYourOwn": "Get your own <a target=\"_blank\" href=\"http:\/\/atomjump.com\">AtomJump Loop</a> widget.",
             "uploadTitle" : "Upload",
             "selectImage" : "Select Image",
             "selectImagePrompt": "Select your image file",
