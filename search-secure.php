@@ -108,9 +108,9 @@ if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 		 <!--<meta name="viewport" content="width=device-width, user-scalable=no">-->
 		 <title>AtomJump Loop - a feedback form for your site</title>
 		 
-		 <meta name="description" content="Offer your customers a clean feedback form, with live chat, public & private posts across any mobile or desktop device.">
+		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
 		 
-		 <meta name="keywords" content="Feedback Form, Live Chat, Customer Chat">
+		 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
 		 
 			  <!-- Bootstrap core CSS -->
 			<link rel="StyleSheet" href="<?php echo $cssBootstrap ?>" rel="stylesheet">
@@ -173,7 +173,7 @@ if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 			?>
 			<div id="video-chat-container" style="position: relative; width: <?php echo $width ?>px; margin-left: auto; margin-right: auto; display: none; margin-bottom: 10px; display: none; background-color: #444;">
 				<div id="video-chat-iframe-container" style="width:<?php echo $width; ?>px; height: <?php echo $maxheight ?>px;"><iframe id="video-chat" style="z-index: 1000;" width="100%" height="100%" frameborder="0"></iframe></div>
-				<div style="position: relative; float: right; padding: 5px;  z-index: 5000;"><a href="javascript:" title="Go Fullscreen" onclick="toggleVideoFullScreen(); return false;"><img src="images/largerscreen.svg"></a></div>
+				<div style="position: relative; float: right; padding: 5px;  z-index: 5000;"><a href="javascript:" title="<?php echo $msg['msgs'][$lang]['goFullscreen'] ?>" onclick="toggleVideoFullScreen(); return false;"><img src="images/largerscreen.svg"></a></div>
 				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: <?php echo $_REQUEST['clientremoteurl'] ?></div> 
 				<div style="clear: both; height: 2px;"></div>
 			</div>
@@ -342,12 +342,12 @@ if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 							<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 							  <div class="">
-								<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="Enter your comment" autocomplete="off"> 
+								<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
 							  </div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
-								<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;">Send Privately</button>
-								<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;">Send Publicly</button>
+								<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
+								<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
 								<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 							</div>
 					</form>
@@ -356,83 +356,83 @@ if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 			</div>
 		</div>
 		<div id="comment-options" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
-				<h4>Comment Settings</h4>
+				<h4><?php echo $msg['msgs'][$lang]['commentSettings'] ?></h4>
 				
 				<div style="float: right;" id="comment-logout" <?php if($_SESSION['logged-user']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>>
 				
 					
-					<a id="comment-logout-text" href="javascript:" onclick="$.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>>Logout</a>
+					<a id="comment-logout-text" href="javascript:" onclick="$.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>><?php echo $msg['msgs'][$lang]['logoutLink'] ?></a>
 					
-					<span id="comment-not-signed-in" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>>Not Signed In</span>
+					<span id="comment-not-signed-in" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>><?php echo $msg['msgs'][$lang]['notSignedIn'] ?></span>
 				</div>
 					
 				 <form id="options-frm" class="form" role="form" action="" onsubmit="return set_options_cookie();"  method="POST">
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 				 				 <div class="form-group">
-				 						<div>Your name</div>
+				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
 							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="Enter your name" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
-		 									<div>Your email <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="We only use this to forward private messages from this forum.">optional</a> <span id="email-explain" style="display: none;  color: #f88374;">We only use this to forward private messages from this forum.</span></div>
-						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="Enter your e-mail" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
+		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
+						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterEmail'] ?>" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
 								</div>
-								<div><a id="comment-show-password" href="javascript:">More</a></div>
+								<div><a id="comment-show-password" href="javascript:"><?php echo $msg['msgs'][$lang]['more'] ?></a></div>
 								<div id="comment-password-vis" style="display: none;">
 									<div  class="form-group">
-										<div>Your password <a href="javascript:" onclick="$('#password-explain').slideToggle();" title="We use this to provide security if you require private messages. Enter this, and click save to login.">optional</a>, <a id='clear-password' href="javascript:" onclick="return clearPass();">reset</a> <span id="password-explain" style="display: none; color: #f88374;">We use this to provide security if you require private messages. Enter this, and click save to login. </span></div>
-						  				<input  id="password-opt" name="pd" type="password" class="form-control" placeholder="Enter your password" value="">
+										<div><?php echo $msg['msgs'][$lang]['yourPassword'] ?> <a href="javascript:" onclick="$('#password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourPasswordReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>, <a id='clear-password' href="javascript:" onclick="return clearPass();"><?php echo $msg['msgs'][$lang]['resetPasswordLink'] ?></a> <span id="password-explain" style="display: none; color: #f88374;"><?php echo $msg['msgs'][$lang]['yourPasswordReason'] ?> </span></div>
+						  				<input  id="password-opt" name="pd" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
 									</div>
 									<div  class="form-group">
-										<div>Your full mobile <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="We use this to text you if you receive messages on this feedback forum. Note the cost is 16c per message.  We bill on a monthly basis.  Please include your full country code eg. 4412345678">optional, 16c/text</a>  <span id="mobile-explain" style="display: none;  color: #f88374;">We use this to text you if you receive messages on this feedback forum. Note the cost is 16c per message.  We bill on a monthly basis.  Please include your full country code eg. 4412345678</span></div>
-										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="Enter your mobile (ignore +)" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
+										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
+										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 									</div>
 									<div style="float: right;">
-						  					<a id="comment-user-code" href="javascript:">Advanced</a>
+						  					<a id="comment-user-code" href="javascript:"><?php echo $msg['msgs'][$lang]['advancedLink'] ?></a>
 						  			</div>
 						  			<div id="group-users-form" class="form-group" style="display:none;">
-										<div>This forum's private owners <a href="javascript:" onclick="$('#users-explain').slideToggle();" title="A list of the users who see the private messages, separated by commas.">optional</a>  <span id="users-explain" style="display: none;  color: #f88374;">A list of the users who see the private messages, separated by commas, with an optional sms message sent to each user E.g. 92.27.10.17:62,92.27.10.17:7:sms</span></div>
-										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="Enter your users string" value="">
+										<div><?php echo $msg['msgs'][$lang]['privateOwners'] ?> <a href="javascript:" onclick="$('#users-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['privateOwnersReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="users-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['privateOwnersReasonExtended'] ?></span></div>
+										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 									</div>
 									
 						  			</div>
 								<div  class="form-group">
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
 								</div>
-							 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;">Save Settings</button>
+							 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?></button>
 							<br/>
 							<br/>
-							 <div>Tip: Click a person's name to talk privately to them.</div>
+							 <div><?php echo $msg['msgs'][$lang]['tip'] ?></div>
 							 <br/>
-							 <div>Get your own <a target="_blank" href="http://atomjump.com">AtomJump Loop</a> widget.</div>
+							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
 				 </form>
 		</div>
 		<div id="comment-upload" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
-				<h4>Upload</h4>
+				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				
 				
 					
 				 <form id="upload-frm" class="form" role="form" action="" onsubmit="return upload();"  method="POST">
 				 				 <div class="form-group">
-				 						<div>Select Image</div>
-							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="Select your image file" >
+				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
+							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" >
 								</div>
-								<div id="uploading-wait" style="display: none; margin-bottom: 10px;">Uploading, please wait... <img src="images/ajax-loader.gif"></div>
+								<div id="uploading-wait" style="display: none; margin-bottom: 10px;"><?php echo $msg['msgs'][$lang]['uploadingWait'] ?> <img src="images/ajax-loader.gif"></div>
 								<div id="uploading-msg" style="display: none; color: #900; margin-bottom: 10px;"></div>
 								
-											 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;" name="submit">Upload</button>
+											 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
 						  	<br/>
 							 <br/>
-							 <div>Max size 10MB. Only .jpgs are accepted.</div>
+							 <div><?php echo $msg['msgs'][$lang]['uploadLimits'] ?></div>
 							 <br/>
 								 
-								 	<h4>Download</h4>
-								  <div>Download messages spreadsheet <small>(must log in)</small>. 	</div>
+								 	<h4><?php echo $msg['msgs'][$lang]['downloadTitle'] ?></h4>
+								  <div><?php echo $msg['msgs'][$lang]['downloadDescription'] ?> 	</div>
 								  <br/>
-						    <div><a href="download.php?format=excel&uniqueFeedbackId=<?php echo $_REQUEST['uniqueFeedbackId'] ?>" class="btn btn-primary" role="button">Download</a></div>
+						    <div><a href="download.php?format=excel&uniqueFeedbackId=<?php echo $_REQUEST['uniqueFeedbackId'] ?>" class="btn btn-primary" role="button"><?php echo $msg['msgs'][$lang]['downloadButton'] ?></a></div>
 							 	 <br/>
 							 <br/>
 					
-							 <div>Get your own <a target="_blank" href="http://atomjump.com">AtomJump Loop</a> widget.</div>
+							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
 				 </form>
 		</div>
 		
@@ -473,7 +473,7 @@ if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 				function vidDeactivate()
 				{
 					$('#video-button').attr("src", "<?php echo $root_server_url ?>/images/no-video.svg");
-					$('#video-button').attr("title","Supported platforms: Recent Android, iPhone, iPad, Chrome, Firefox, Opera");
+					$('#video-button').attr("title","<?php echo $msg['msgs'][$lang]['videoSupportedPlatforms'] ?>");
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				

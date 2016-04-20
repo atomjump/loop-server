@@ -173,14 +173,14 @@ class cls_layer
 
 	
 	
-  // Turn on SSL certificate verfication
-  curl_setopt($curl, CURLOPT_CAPATH, "/etc/apache2/ssl/ca.pem");
-  curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
-  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
+      // Turn on SSL certificate verfication
+      curl_setopt($curl, CURLOPT_CAPATH, "/etc/apache2/ssl/ca.pem");
+      curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
 
-	 $result = curl_exec($ch);
-		curl_close($ch);
-		return $result;
+	  $result = curl_exec($ch);
+	  curl_close($ch);
+	  return $result;
 	
 	
 	}
@@ -260,13 +260,13 @@ class cls_layer
 		if($row = mysql_fetch_array($result))
 		{
 			$url = cur_page_url();
-			$email_body = $message . "\n\nSee <a href=\"$url\">$url</a>\nPopup: " . $this->layer_name;
+			$email_body = $message . "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
 			if($is_admin_user == true) {
 				$url = $root_server_url . "/de.php?mid=" . $message_id;
-				$email_body .= "\n\nTo remove this comment click here: <a href=\"$url\">$url</a>";
+				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		
-			cc_mail($row['var_email'], "New forum message from " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
+			cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
 		
 		
 		}
@@ -706,10 +706,10 @@ class cls_login
 			$user_id = $row['int_user_id'];
 			$sql = "UPDATE tbl_user SET enm_confirmed = 'confirmed', date_updated = NOW() WHERE int_user_id = " . $user_id;
 			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			return "Thank you for confirming your AtomJump Feedback email address.";
+			return $msg['msgs'][$lang]['thanksConfirmEmail'];
  
 		} else {
-			return "Sorry that is not a valid code.";
+			return $msg['msgs'][$lang]['invalidEmailCode'];
 		
 		}
 	
