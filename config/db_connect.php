@@ -236,7 +236,7 @@
     	return;
     }
 
-	function cc_mail($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="")
+	function cc_mail($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 		global $root_server_url;
 		global $local_server_path;
@@ -244,7 +244,7 @@
 		global $staging;
 		
 		if($notify == true) {
-			$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging;	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
+			$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . $bcc_email;	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
 		
 			$output = shell_exec($cmd);
 		}
@@ -257,46 +257,34 @@
 	
 	
 	
-	function send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="")
+	function send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 	
 	 global $cnf;
  
 		$config = array();
 	 
-		$config['api_key'] = $cnf['mailgun']['key'];
-	 
+		$config['api_key'] = $cnf['mailgun']['key']; 
 		$config['api_url'] = $cnf['mailgun']['url'];
 	 
 		$message = array();
 	 
-		$message['from'] = $sender_email;
-	 
-		$message['to'] = $to_email;
-	 
-	 
-		$message['subject'] = $subject;
-	 
+		$message['from'] = $sender_email; 
+		$message['to'] = $to_email;	
+		$message['bcc'] = $bcc_email;
+		$message['subject'] = $subject;	 
 		$message['html'] = nl2br($body_text); 
 	
 		$ch = curl_init();
 	 
-		curl_setopt($ch, CURLOPT_URL, $config['api_url']);
-	 
+		curl_setopt($ch, CURLOPT_URL, $config['api_url']); 
 		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-	 
 		curl_setopt($ch, CURLOPT_USERPWD, "api:{$config['api_key']}");
-	 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	 
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-	 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-	 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-	 
 		curl_setopt($ch, CURLOPT_POST, true); 
-	 
 		curl_setopt($ch, CURLOPT_POSTFIELDS,$message);
 	 
 		$result = curl_exec($ch);
@@ -308,9 +296,9 @@
 	}
 	
 
-	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="")
+	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
-		return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name);
+		return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
 		
 	}
 	

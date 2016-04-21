@@ -350,7 +350,7 @@ class cls_ssshout
 				//This is to someone who has been mentioned in the body of the message
 				$checksum = 233242 + $user_id * 19;
 				 
-    		$components = parse_url(cur_page_url());
+    		    $components = parse_url(cur_page_url());
 				$params = parse_str($components['query']);
 				$params['t'] = $user_id;
 				$params['f'] = $from_user_id;
