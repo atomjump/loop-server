@@ -23,7 +23,7 @@ SSL server
 
 1. /server directory. Replace atomjump with your own domain.
 
-2. /config/config.json. Replace the options with your own accounts and paths.
+2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths.
 
 3. Create a temporary image upload directory at
 /images/im
