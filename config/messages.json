@@ -1,5 +1,6 @@
 {
     "defaultLanguage" : "en",
+    "note": "Also see the top of /js/chat-inner-1.x.js for further language configuration.",
     "msgs": {
         "en":{
             "fullnameEnglish": "English",

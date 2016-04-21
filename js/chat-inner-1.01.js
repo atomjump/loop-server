@@ -1,3 +1,25 @@
+//Language & messages configuration
+var lsmsg = {
+    "defaultLanguage" : "en",
+    "msgs": {
+        "en":{
+              defaultYourName: 'Your Name',
+              defaultYourEmail: 'Your Email',
+              loggedIn: 'Logged in. Please wait..',
+              passwordWrong: 'Sorry, your password is not correct.',
+              passwordStored: 'Thanks, your password is now set.',
+              registration: 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.',
+              badResponse: 'Sorry, response is: ',
+              more: 'More'
+        }
+    }
+}
+var lang = lsmsg.defaultLanguage;       
+
+
+
+
+
 function myTrim(x)
 {
 	return x.replace(/^\s+|\s+$/gm,'');
@@ -544,7 +566,7 @@ function set_options_cookie() {
    
     if(yourName == "") {
     	
-    	yourName = 'Your Name';
+    	yourName = lsmsg.msgs[lang].defaultYourName;
     	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
     	
     } else {
@@ -557,7 +579,7 @@ function set_options_cookie() {
     
     if(email == "") {
     	
-    	email = 'Your Email';
+    	email = lsmsg.msgs[lang].defaultYourEmail;
     	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
     	
     } else {
@@ -598,7 +620,7 @@ function set_options_cookie() {
 			{
 				case "LOGGED_IN":
 					
-					msg = 'Logged in. Please wait..';
+					msg = lsmsg.msgs[lang].loggedIn;
 					toggle = true;
 					$('#comment-logout-text').show();	//show the correct text 
 					$('#comment-not-signed-in').hide();
@@ -607,24 +629,24 @@ function set_options_cookie() {
 				break;
 				
 				case 'INCORRECT_PASS':		
-					msg = 'Sorry, your password is not correct.';
+					msg = lsmsg.msgs[lang].passwordWrong;
 					toggle = false;
 				break;
 				
 				case 'STORED_PASS':
-					msg = 'Thanks, your password is now set.';	
+					msg = lsmsg.msgs[lang].passwordStored;	
 					toggle = true;	
 				break;
 				
 				case 'NEW_USER':
-					msg = 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.';
+					msg = lsmsg.msgs[lang].registration;
 					toggle = true;
 					$('#comment-logout-text').show();	//show the correct text 
 					$('#comment-not-signed-in').hide();		
 				break;
 				
 				default:
-					msg = 'Sorry, response is: ' + response;
+					msg = lsmsg.msgs[lang].badResponse + response;
 					toggle = false;
 				break;
 			}
@@ -874,7 +896,7 @@ function refreshResults(results)
 				}
 				
 				if((results.res.length >= showMore)&&(records <= showMore)) {		//we need to show more if there are more	
-					var line = '<tr><td style=\"word-wrap: break-word;\" width="65%">&nbsp;</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;"><a href="javascript:" onclick=\"records=500;\">More</a></div></td></tr>';
+					var line = '<tr><td style=\"word-wrap: break-word;\" width="65%">&nbsp;</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;"><a href="javascript:" onclick=\"records=500;\">' +lsmsg.msgs[lang].more + '</a></div></td></tr>';
 			 		newLine = newLine + line;
 			 	}
 			
