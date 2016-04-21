@@ -8,14 +8,14 @@ interface at http://github.com/atomjump/loop
 
 # Requirements
 
-PHP 5, fully tested on PHP 5.3
-MySQL 5+ 
-Apache2
+PHP 5, fully tested on PHP 5.3,
+MySQL 5+, 
+Apache2,
 Linux server (though a Windows server may be partially functional)
 
 # Optional
-Amazon MySQL RDS (any number of db servers)
-Load balancers haproxy
+Amazon MySQL RDS (any number of db servers),
+Load balancers haproxy,
 SSL server
 
 
