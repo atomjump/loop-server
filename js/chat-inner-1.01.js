@@ -1,4 +1,5 @@
 //Language & messages configuration
+//Note: also see /config/messages.json for further messages configuration
 var lsmsg = {
     "defaultLanguage" : "en",
     "msgs": {
@@ -11,7 +12,9 @@ var lsmsg = {
               registration: 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.',
               badResponse: 'Sorry, response is: ',
               more: 'More'
-        }
+        },
+        "de":{
+        }       
     }
 }
 var lang = lsmsg.defaultLanguage;       
