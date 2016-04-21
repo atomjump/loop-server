@@ -1,3 +1,5 @@
+<img src="https://atomjump.com/images/logo80.png">
+
 # Smart Feedback Server
 
 This acts as a server to the AtomJump Loop open source
