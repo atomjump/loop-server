@@ -260,7 +260,7 @@ For a sample plugin called 'help_is_coming':
 
 /plugins/help_is_coming/index.php
 
-<?php
+```<?php
     include_once("classes/cls.pluginapi.php");
     
     class plugin_help_is_coming
@@ -279,7 +279,7 @@ For a sample plugin called 'help_is_coming':
             
         }
     }
-?>
+?>```
 
 # Reading functions
 
