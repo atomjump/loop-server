@@ -474,6 +474,23 @@ class cls_ssshout
 		}
 		return false;
 	}
+	
+	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone) {
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
+	        $plugin_name = $cnf['plugins'][$cnt];
+	        require_once("plugins/" . $plugin_name . "/index.php");
+	        $class_name = "class_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        if(isset($pg->on_message)) {
+	            //OK call the on_message function of the plugin
+	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
+	        
+	        }
+	    }
+	    return true;
+	}
 
 	
 	
@@ -624,6 +641,8 @@ class cls_ssshout
 					//Update an existing shout at the end of typing, after push commit
 					if($typing == false) {
 					   $status = "final";
+					   
+					   
 					} else {
 					   $status = "typing";
 					}
@@ -648,6 +667,9 @@ class cls_ssshout
 						//Prep a message to users
 						$message_id = $ssshout_id;
 						$ssshout_id = "";		//this is the return value of null beacuse want a new message
+						
+						//Hook into plugins here
+						$this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
 					} else {
 						//A continuation request
 						$message_id = "";
@@ -719,6 +741,11 @@ class cls_ssshout
 												var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "'
 												WHERE int_ssshout_id = " . $ssshout_id;
 						}
+						
+						if($typing == false) {
+					        //Hook into plugins here
+					        $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
+					    }
 						
 						
 				}

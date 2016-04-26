@@ -58,7 +58,11 @@
          },
          "facebook": {
          }
-      }
+      },
+      "plugins": [
+         "help_is_coming",
+         "and_more"
+      ]
    }, 
    "production": {      
       "db": {
@@ -120,6 +124,10 @@
          },
          "facebook": {
          }
-      }
+      },
+      "plugins": [
+         "help_is_coming",
+         "and_more"
+      ]
   }
 }
