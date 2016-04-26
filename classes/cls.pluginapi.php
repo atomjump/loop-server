@@ -175,8 +175,28 @@ class cls_plugin_api {
 	                        $date_override);
 	 
 	 }	
-		 
+	 
+	 
+	 /*
 
+	    Hide a message, and optionally warn an admin user.
+	 */	
+	 
+	 public function hide_message($message_id, $warn_admin = false)
+	 {
+	    
+	     $ly = new cls_layer();
+	     $sh = new cls_ssshout();
+	     
+	     if($warn_admin = true) {
+	        $just_typing = false;
+	     } else {
+	        $just_typing = true;
+	     }	        
+	     
+	     return $sh->deactivate_shout($message_id, $just_typing)
+		 
+     }
    
 
 }

@@ -479,7 +479,7 @@ class cls_ssshout
 	    //Loop through each class and call each plugin_* -> on_message() function
 	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
 	        $plugin_name = $cnf['plugins'][$cnt];
-	        require_once("plugins/" . $plugin_name . "/index.php");
+	        include_once("plugins/" . $plugin_name . "/index.php");
 	        $class_name = "class_" . $plugin_name;
 	        
 	        $pg = new $class_name();
