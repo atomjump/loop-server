@@ -279,7 +279,8 @@ For a sample plugin called 'help_is_coming':
             
         }
     }
-?>```
+?>
+```
 
 # Reading functions
 
