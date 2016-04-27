@@ -476,17 +476,24 @@ class cls_ssshout
 	}
 	
 	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone) {
+	    global $cnf;
+	    
 	    //Loop through each class and call each plugin_* -> on_message() function
 	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
 	        $plugin_name = $cnf['plugins'][$cnt];
+	        
+	       
 	        include_once("plugins/" . $plugin_name . "/index.php");
-	        $class_name = "class_" . $plugin_name;
+	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
-	        if(isset($pg->on_message)) {
+	        
+	        if(method_exists($pg,"on_message") == true) {
 	            //OK call the on_message function of the plugin
 	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
 	        
+	        } else {
+	            error_log("Plugin $plugin_name, class $class_name  on_message() not found.");
 	        }
 	    }
 	    return true;

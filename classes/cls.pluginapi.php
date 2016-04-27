@@ -3,10 +3,10 @@
 //This API class should be included by any Loop-server plugins 
 //  The plugin is located in the /plugins/pluginname directory
  
-require_once("../../classes/cls.basic_geosearch.php");
+/*require_once("../../classes/cls.basic_geosearch.php");
 require_once("../../classes/cls.layer.php");
 require_once("../../classes/cls.ssshout.php"); 
-
+*/
 
 
 
@@ -114,7 +114,7 @@ class cls_plugin_api {
 	    $returns = $ly->get_layer_id($message_forum_name, null);
 	    
 	    if($returns != false) {
-	        $output = new array();
+	        $output = array();
 	        $output['forum_id'] = $returns['int_layer_id'];
 	        $output['access_type'] = $returns['myaccess'];
 	        $output['forum_owner_user_id'] = $returns['layer-group-user'];
@@ -194,7 +194,7 @@ class cls_plugin_api {
 	        $just_typing = true;
 	     }	        
 	     
-	     return $sh->deactivate_shout($message_id, $just_typing)
+	     return $sh->deactivate_shout($message_id, $just_typing);
 		 
      }
    

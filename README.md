@@ -266,11 +266,11 @@ For a sample plugin called 'help_is_coming':
     
     class plugin_help_is_coming
     {
-        function on_message($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
+        public function on_message($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
         {
             //Do your thing in here. Here is a sample.
-            $api = new cls_api();
-            
+            $api = new cls_plugin_api();
+          
             //e.g. hide the message we have just posted if it includes the string 'aargh' in it.
             if(strpos($message, 'aargh') !== false) {
                 $api->hide_message($message_id);
