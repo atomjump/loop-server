@@ -42,9 +42,9 @@ class cls_plugin_api {
     */
 	
 	
-	public function db_insert($table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+	public function db_insert(  $table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
 	                            $insert_field_names_str,    //Insert string e.g. "(var_layers, var_title, var_body, date_when_received, var_whisper)"
-	                            $insert_field_data_str)     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . mysql_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') "
+	                            $insert_field_data_str)     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . mysql_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
 	{
 	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
 	    
@@ -54,6 +54,20 @@ class cls_plugin_api {
 	    return;
 	}
 	
+	/*
+	   A manual database update for plugins 
+    */
+	
+	public function db_update($table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+	                            $update_set)    //Update set e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields	                          
+	{
+	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
+	    
+	    //TODO: ensure this uses a more modern type of mysql insertion.
+	    $sql = "UPDATE " . $table . " SET " . $update_set;  
+	    mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+	    return;
+	}
 	
 	
 	/*
@@ -138,16 +152,7 @@ class cls_plugin_api {
 	                            $sender_email,                              //Sender's email address e.g. "fred@company.com"
 	                            $sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
 	                            $message_forum_name,                        //Forum name e.g. 'aj_interesting'
-	                            $sender_still_typing = false,               //Set to true if this is a partially completed message
-	                            $known_message_id = null,                   //If received an id from this function in the past
-	                            $sender_phone = null,                       //Include the phone number for configuration purposes
-	                            $javascript_client_msg_id = null,           //Browser id for this message. Important for 
-	                            $forum_owner_id = null,                     //User id of forum owner
-	                            $social_post_short_code = null,             //eg 'twt' for twitter, 'fcb' for facebook
-	                            $social_recipient_handle_str = null,        //eg. 'atomjump' for '@atomjump' on Twitter
-	                            $date_override = null,                      //optional string for a custom date (as opposed to now) 
-	                            $latitude = 0.0,                            //for potential future location expansion
-	                            $longitude = 0.0                            //for potential future location expansion
+	                            $options = null
 	                            )
 	 {
 	     //Returns the message id if successful, or false if not successful.
@@ -155,6 +160,30 @@ class cls_plugin_api {
 	     $bg = new clsBasicGeosearch();
 	     $ly = new cls_layer();
 	     $sh = new cls_ssshout();
+	 
+        $sender_still_typing = false;               //Set to true if this is a partially completed message
+        $known_message_id = null;                   //If received an id from this function in the past
+        $sender_phone = null;                       //Include the phone number for configuration purposes
+        $javascript_client_msg_id = null;           //Browser id for this message. Important for 
+        $forum_owner_id = null;                     //User id of forum owner
+        $social_post_short_code = null;             //eg 'twt' for twitter, 'fcb' for facebook
+        $social_recipient_handle_str = null;        //eg. 'atomjump' for '@atomjump' on Twitter
+        $date_override = null;                      //optional string for a custom date (as opposed to now) 
+        $latitude = 0.0;                            //for potential future location expansion
+        $longitude = 0.0;                            //for potential future location expansion
+	 
+	    if(isset($options)) {
+	     if(isset($options['sender_still_typing'])) $sender_still_typing = $options['sender_still_typing'];
+	     if(isset($options['known_message_id']))  $known_message_id = $options['known_message_id'];
+	     if(isset($options['sender_phone']))  $known_message_id = $options['sender_phone'];
+	     if(isset($options['javascript_client_msg_id']))  $javascript_client_msg_id = $options['javascript_client_msg_id'];
+	     if(isset($options['forum_owner_id']))  $forum_owner_id = $options['forum_owner_id'];
+	     if(isset($options['social_post_short_code']))  $social_post_short_code = $options['social_post_short_code'];
+	     if(isset($options['social_recipient_handle_str']))  $social_recipient_handle_str = $options['social_recipient_handle_str'];
+	     if(isset($options['date_override']))  $date_override = $options['date_override'];
+	     if(isset($options['latitude'])) $latitude = $options['latitude'];
+	     if(isset($options['longitude']))  $longitude = $options['longitude'];
+	    }
 	 
 	     return $sh->insert_shout($latitude,
 	                        $longitude,

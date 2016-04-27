@@ -297,6 +297,11 @@ Parameters
 Parameters
 ($sql)
 
+**db_update()**
+
+Parameters
+($table, $update_set)
+
 **get_forum_id**
 
 Parameters
@@ -317,9 +322,9 @@ Output parameters
 **new_message**
 
 Required Parameters
-($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name)
+($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)
 
-Optional Parameters
+Optional Parameters in an $options object:
 ($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)
 
 
