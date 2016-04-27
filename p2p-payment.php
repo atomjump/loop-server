@@ -88,7 +88,7 @@
 				
 				header("Location: " . $redirecturl);
 			} else {
-				echo "Sorry, this user did not log in when posting the link, therefore we cannot verify them and allow you to make a payment.";
+				echo echo $msg['msgs'][$lang]['cannotVerifyForPayment'];
 			
 			}
 		}

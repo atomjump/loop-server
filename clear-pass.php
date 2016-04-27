@@ -19,11 +19,11 @@
           //Password cleared
           
        } else {
-       		echo "Sorry, that link has not reset your password. Please try again, and ensure you use the same device and browser.";
+       		echo $msg['msgs'][$lang]['passwordNotReset'];
        
        }
     } else {
-    	  echo "Sorry, that link has not reset your password. Please try again, and ensure you use the same device and browser.";
+    	  echo $msg['msgs'][$lang]['passwordNotReset'];
     
     }
  
@@ -40,7 +40,7 @@
 			      //There is an email like this on the system   
 			   		 
 			   } else {
-			   		echo "Sorry, that email does not exist.";
+			   		echo $msg['msgs'][$lang]['emailNotExist'];
 			   		exit(0);
 			   
 			   }
@@ -52,10 +52,10 @@
 	     //Send an email to the logged email
 	     $_SESSION['temp-email'] = $email;
 	     $link =$root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . 'sckskfjfnsll24hdb'); //todo improve this algo
-	     cc_mail($email, "AtomJump Loop password reset", "Please click the following link to clear your password:\n\n<a href=\"$link\">$link</a>", "webmaster@atomjump.com");
-	     echo "Check your email and click the link provided there.";
+	     cc_mail($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
+	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
-	  	 echo "Please enter your email above. Then click here.";
+	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
 	  
 	  
 	  }

@@ -101,6 +101,8 @@ class cls_ssshout
 	{
 		global $root_server_url;
 		global $cnf;
+		global $msg;
+		global $lang;
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
@@ -185,11 +187,11 @@ class cls_ssshout
 			
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
-						cc_mail($email, "AtomJump Feedback Welcome", "Hello,\n\nWelcome to AtomJump Feedback. To confirm your email address is valid, please click the following link:\n\n" . $root_server_url . "/link.php?d=" . $confirm_code . "\n\nYou will have 1 day in which to confirm this.\n\nTo set up alerts to your phone, which are priced at \$" . CUSTOMER_PRICE_PER_SMS_US_DOLLARS . ", when there is a new message, enter your mobile number on the settings.\n\nIf you have any questions or suggestions, you're welcome to get in touch via our feedback button at " . $root_server_url . ".\n\nBest regards,\nAtomJump Team", $cnf['webmasterEmail']);
+						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['webmasterEmail']);
 					}
 					
 					//Let me know there is a new user
-					cc_mail($cnf['adminEmail'], "New Feedback user!", clean_data($email), $cnf['webmasterEmail']);
+					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
 		
 					return mysql_insert_id();
 			
@@ -247,9 +249,9 @@ class cls_ssshout
 									   
 									
 												if($staging == true) {
-															$message = "@TESTONLY see a reply at $replaced from " . $sender_title;
+															$message = "@TESTONLY " . $msg['msgs'][$lang]['tweetSeeReply'] . " " . $replaced . " " . $msg['msgs'][$lang]['tweetFrom'] . " " . $sender_title;
 												} else {
-															$message = "@$public_to see a reply at $replaced from " . $sender_title;
+															$message = "@$public_to " . $msg['msgs'][$lang]['tweetSeeReply'] . " " . $replaced . " " . $msg['msgs'][$lang]['tweetFrom'] . " " . $sender_title;
 												}
 												
 												require_once(dirname(__FILE__) . '/twitter/TwitterAPIExchange.php');
@@ -274,7 +276,7 @@ class cls_ssshout
 		 	  case "twt":
 		 	  			//In twitters case, they will be directed back to our page, and there must be a clear indication
 		 	  			//of which message was sent to them
-		 	  			$outgoing = $message . " (Also sent to @" . $public_to . " on Twitter)";
+		 	  			$outgoing = $message . str_replace("PUBLIC_TO", $public_to, $msg['msgs'][$lang]['tweetAlsoSentTo']);
 		 	  break;
 		 
 		 	  default:
@@ -295,6 +297,8 @@ class cls_ssshout
 		global $notify;
 		global $cnf;
 		global $staging;
+		global $msg;
+		global $lang;
 	
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
@@ -335,13 +339,13 @@ class cls_ssshout
 				
 				if($access == 'public') {
 					$url = cur_page_url();
-					$email_body .= "\n\nSee <a href=\"$url\">$url</a>\nPopup: " . $this->layer_name;
+					$email_body .= "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
 				
 					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$email_body .= "\n\nTo remove this comment click here: <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
+					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . " <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
 				} else {
 					//Sent from a private email forum - append our logo
-					$email_body .= "\n------\nSent from AtomJump Shortmail";
+					$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				}
 		
@@ -361,17 +365,17 @@ class cls_ssshout
 				
 				if($access == 'public') { 
 					if($from_different == false) {
-						$email_body .= "\n\nTo reply see: <a href=\"$replaced\">$replaced</a>";
+						$email_body .= "\n\n" . $msg['msgs'][$lang]['toReplySee'] . " <a href=\"$replaced\">$replaced</a>";
 					} else {
-						$email_body .= "\n\nReply to this email, or chat live with this person: <a href=\"$replaced\">$replaced</a>";
+						$email_body .= "\n\n" . $msg['msgs'][$lang]['replyOrChat'] . " <a href=\"$replaced\">$replaced</a>";
 				
 					}
 					 
 					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$email_body .= "\n\nTo remove this comment click here: <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
+					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
-				$email_body .= "\n------\nSent from AtomJump Shortmail";
+				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 			
@@ -409,13 +413,15 @@ class cls_ssshout
 	public function deactivate_shout($ssshout_id, $just_typing = false)
 	{
 		global $cnf;
+		global $msg;
+		global $lang;
 		
 		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
 		
 		if($just_typing == false) {
 			//Warn overall admin - TODO: just layer admin?
-			cc_mail($cnf['adminEmail'], "AtomJump Message was deactivated. ID: " . $ssshout_id, "If this looks unlikely, you might want to log into the AtomJump Loop db to check it.", $cnf['webmasterEmail']);
+			cc_mail($cnf['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['webmasterEmail']);
 			echo "Deactivated message.";		//TODO more descriptive comment here.	
 		}
 	
@@ -479,6 +485,8 @@ class cls_ssshout
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null)
 	{
+	    global $msg;
+	    global $lang;
 		$email_in_msg = false;
 	
 		//Insert shouted text into database at this time
@@ -488,7 +496,7 @@ class cls_ssshout
 		$peano2iv = $bg->generate_peano_iv($peano2);
 		
 		if($typing == true) {
-			$shouted = "<i>Typing...</i>";
+			$shouted = $msg['msgs'][$lang]['typing'];
 		}
 		
 		if(($your_name != "")&&
@@ -785,8 +793,8 @@ class cls_ssshout
 	   //Checks whether this is a social network
 	   // post. Direct message replies get sent publicly
 	   
-	   $networks = array(array( "Via Twitter:", "twt"),
-	                     array( "Via Facebook:", "fbk" ));
+	   $networks = array(array( $msg['msgs'][$lang]['social']['viaTwitter'], "twt"),
+	                     array( $msg['msgs'][$lang]['social']['viaFacebook'], "fbk" ));
 	     
 	   $outgoing = "";                  
 	   foreach($networks as $network) {
@@ -838,7 +846,7 @@ class cls_ssshout
 
 
 		//Turn long links into smaller 'More Info' text only (except where an image)
-		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">Expand$2", $my_line);
+		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
 		
 
 		//TODO: turn smileys
@@ -846,14 +854,14 @@ class cls_ssshout
 		//Turn names into an ip address private whisper link
 		if($ip != "") {
 		
-		 $privately = "privately";
+		 $privately = $msg['msgs'][$lang]['social']['privately'];
 		 $private = "true";  //true
 		 $shortcode = $this->is_social($my_line);
 		 if($shortcode != "") {
 		    $private = "false";  //false
-		    $privately = "publicly via social network";
+		    $privately = $msg['msgs'][$lang]['social']['publiclyViaSocial'];
 		 } 
-			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='Send comment to $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		//old /(.*?):\s/i
+			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		//old /(.*?):\s/i
 		}
 		
 		if(preg_match('/pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar)/i', $my_line, $pay)) {
@@ -912,16 +920,24 @@ class cls_search {
 
 		public function ago($time)
 		{
-		
+		   global $msg; 
+		   global $lang;
 		   //Doesn't seem to be needed: global $db_timezone;
-		   $periods = array("sec", "min", "hour", "day", "week", "month", "year", "decade");
+		   $periods = array($msg['msgs'][$lang]['time']['second'],
+		                    $msg['msgs'][$lang]['time']['minute'],
+		                    $msg['msgs'][$lang]['time']['hour'],
+		                    $msg['msgs'][$lang]['time']['day'],
+		                    $msg['msgs'][$lang]['time']['week'],
+		                    $msg['msgs'][$lang]['time']['month'],
+		                    $msg['msgs'][$lang]['time']['year'],
+		                    $msg['msgs'][$lang]['time']['decade']);
 		   $lengths = array("60","60","24","7","4.35","12","10");
 	
 		   date_default_timezone_set($db_timezone); //e.g. "Europe/Berlin"	
 		   $now = time();
 
 		   $difference     = $now - $time;
-		   $tense         = "ago";
+		   $tense         = $msg['msgs'][$lang]['time']['ago'];
 
 		   for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
 			   $difference /= $lengths[$j];
@@ -929,11 +945,14 @@ class cls_search {
 
 		   $difference = round($difference);
 
-		   if($difference != 1) {
-			   $periods[$j].= "s";
+           if($lang == "en") {
+		       //If language is English, pluralise if not 1
+		       if($difference != 1) {
+			       $periods[$j].= "s";
+		       }
 		   }
 
-		   return "$difference $periods[$j] ago";
+		   return "$difference $periods[$j] " . $tense;
 		}
 
   // Original PHP code by Chirp Internet: www.chirp.com.au
@@ -972,7 +991,12 @@ class cls_search {
       $output = fopen('php://output', 'w');
 
       // output the column headings
-      fputcsv($output, array('id', 'text', 'timestamp','private', 'sentiment'));
+      fputcsv($output, array($msg['msgs'][$lang]['fields']['id'],
+                            $msg['msgs'][$lang]['fields']['text'],
+                            $msg['msgs'][$lang]['fields']['timestamp'],
+                            $msg['msgs'][$lang]['fields']['private'],
+                            $msg['msgs'][$lang]['fields']['sentiment']
+                             ));
 								 
       // loop over the rows, outputting them
       foreach($res as $row){
@@ -991,6 +1015,8 @@ class cls_search {
   
    /** Include PHPExcel */
    	require_once('classes/PHPExcel.php');
+   	global $msg;
+   	global $lang;
 
 
 	  // Create new PHPExcel object
@@ -1007,11 +1033,11 @@ class cls_search {
 
 
 	  $i = 1;
-   	$objPHPExcel->getActiveSheet()->setCellValue('A' . $i, 'id')
-	                              ->setCellValue('B' . $i, 'text')
-	                              ->setCellValue('C' . $i, 'timestamp')
-	                              ->setCellValue('D' . $i, 'private')
-	                              ->setCellValue('E' . $i, 'sentiment');
+   	$objPHPExcel->getActiveSheet()->setCellValue('A' . $i, $msg['msgs'][$lang]['fields']['id'])
+	                              ->setCellValue('B' . $i, $msg['msgs'][$lang]['fields']['text'])
+	                              ->setCellValue('C' . $i, $msg['msgs'][$lang]['fields']['timestamp'])
+	                              ->setCellValue('D' . $i, $msg['msgs'][$lang]['fields']['private'])
+	                              ->setCellValue('E' . $i, $msg['msgs'][$lang]['fields']['sentiment']);
 
 
   	$i = 2;
@@ -1020,7 +1046,7 @@ class cls_search {
 	  	$objPHPExcel->getActiveSheet()->setCellValue('A' . $i,$row['id'])
 	                              ->setCellValue('B' . $i, $row['text'])
 	                              ->setCellValue('C' . $i, $row['timestamp'])
-	                              ->setCellValue('D' . $i, ($row['private'] == true) ? 'private' : 'public')
+	                              ->setCellValue('D' . $i, ($row['private'] == true) ? $msg['msgs'][$lang]['isPrivate'] : $msg['msgs'][$lang]['isPublic'])
 	                              ->setCellValue('E' . $i, $row['sentiment']);
 	   	$i++;
 	  }
@@ -1056,7 +1082,9 @@ class cls_search {
 
 public function process($shout_id = null, $msg_id = null, $records = null, $download = false, $last_id = 0, $db_timezone= null, $format = "json", $avg_over_secs = 900)  //900 = 15 mins
 {
-   global $cnf;
+           global $cnf;
+           global $msg;
+           global $lang;
 
 			$ly = new cls_layer();
 			$bg = new clsBasicGeosearch();

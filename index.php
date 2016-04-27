@@ -211,7 +211,7 @@
 					$start_lon = 0;
 
 					if($user_name == "") {
-						$user_name = "Anon " . substr($ip, -2) ;
+						$user_name = $msg['msgs'][$lang]['anon'] . " " . substr($ip, -2) ;
 						$_SESSION['temp-user-name'] = $user_name;
 					}
 				} else {
@@ -228,7 +228,7 @@
 							if($resp->country_code != "") {
 								$user_name = $resp->country_code . ' ' . substr($ip, -1);
 							} else {
-								$user_name = "Anon " . substr($ip, -2);
+								$user_name = $msg['msgs'][$lang]['anon'] . " " . substr($ip, -2);
 							}
 					}
 
@@ -249,7 +249,7 @@
 						if($resp->country_code != "") {
 							$user_name = $resp->country_code . ' ' . substr($ip, -1);
 						} else {
-							$user_name = "Anon " . substr($ip, -2);
+							$user_name = $msg['msgs'][$lang]['anon'] . " " . substr($ip, -2);
 						}
 				}
 
@@ -396,10 +396,10 @@
 				//Special case exception - no tweets on this subdomain
 				if($subdomain != 'medimage') {
 				   $cmd = 'nohup nice -n 10 /usr/bin/php  ' . getcwd() . $req;
-		    if(bot_detected() == FALSE) {
-		        $response = shell_exec($cmd);
-		    }
-		  }
+		            if(bot_detected() == FALSE) {
+		                $response = shell_exec($cmd);
+		            }
+		        }
 			} else {
 				//On someone's website - don't get social, stuff. And also not after having clicking on
 				//a twitter link in to here (request 'm')
@@ -408,7 +408,7 @@
 								$req = "/social-cron.php 1 test_feedback test staging";			//Use for testing tweets etc.
 
      				$cmd = 'nohup nice -n 10 /usr/bin/php  ' . getcwd() . $req;
-		       $response = shell_exec($cmd);
+		            $response = shell_exec($cmd);
 				}
 			}
 
@@ -580,9 +580,9 @@
 		 <meta name="viewport" content="width=device-width, user-scalable=no">
 		 <?php if($subdomain == false) { ?><title>AtomJump Loop - smart feedback for your site</title><?php } else { ?><title><?php echo ucwords($subdomain); ?> smart feedback - provided by AtomJump Loop</title><?php } ?>
 
-		 <meta name="description" content="Offer your customers a smart feedback form, with live chat, public & private posts across any mobile or desktop device.">
+		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
 
-		 <meta name="keywords" content="Feedback Form, Live Chat, Customer Chat">
+		 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
 
 			  <!-- Bootstrap core CSS -->
 			<link rel="StyleSheet" href="css/bootstrap.min.css" rel="stylesheet">
@@ -1069,7 +1069,7 @@
 			<?php if(isset($_REQUEST['show'])) { ?>
 				<?php if(!isset($_REQUEST['kiosk'])) { ?>
 					<div id="dialog-confirm" title="Full-screen">
-						<p>The SeeTalent streaming page is about to go full-screen.  Please confirm.</p>
+						<p><?php echo $msg['msgs'][$lang]['goingFullscreen'] ?></p>
 					</div>
 				<?php } ?>
 			<?php } ?>
@@ -1278,7 +1278,7 @@
 									height:240,
 									modal: true,
 									buttons: {
-										"Go Full-screen": function() {
+										"<?php echo $msg['msgs'][$lang]['goFullscreen'] ?>": function() {
 
 												$( this ).dialog( "close" );
 												toggleScreenSaver();
@@ -1402,7 +1402,7 @@
 					<form name="frmMainSearch" action="index.php" onsubmit="return newDomain('srch');" method="POST" style="position: relative; z-index: 1000;" >
 					<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					  <div class="" >
-						<input id="srch" name="orig_query" type="text" class="form-control" maxlength="30" placeholder="Feedback On.." autocomplete="off" style="background-color:#f8ebec; color: #701375; border: 1px solid #8473d9;">
+						<input id="srch" name="orig_query" type="text" class="form-control" maxlength="30" placeholder="<?php echo $msg['msgs'][$lang]['feedbackOn'] ?>" autocomplete="off" style="background-color:#f8ebec; color: #701375; border: 1px solid #8473d9;">
 					  </div>
 					</div>
 
@@ -1481,7 +1481,7 @@
 			 			default:
 			 				echo 'medimage.php';
 			 			break;
-			 	} ?>" title="Download Software"><img  border="0" src="images/loopdownload.svg" width="80" height="80"><?php if($platform == 'windows') { ?><img id="download-tip" border="0" src="images/download-tip.png" width="261" height="150" style="position: relative; top: -70px"><?php } ?></a>
+			 	} ?>" title="<?php echo $msg['msgs'][$lang]['downloadTitle'] ?>"><img  border="0" src="images/loopdownload.svg" width="80" height="80"><?php if($platform == 'windows') { ?><img id="download-tip" border="0" src="images/download-tip.png" width="261" height="150" style="position: relative; top: -70px"><?php } ?></a>
 			</div>
 		<?php } ?>
 
@@ -1500,7 +1500,7 @@
 					<form name="frmNewDomain" action="index.php" onsubmit="return newDomain('doma');" method="POST">
 						<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 						  <div class="">
-							<input id="doma" name="orig_query" type="text" class="form-control" maxlength="30" placeholder="Enter a place or brand" autocomplete="off">
+							<input id="doma" name="orig_query" type="text" class="form-control" maxlength="30" placeholder="<?php echo $msg['msgs'][$lang]['enterPlaceBrand'] ?>" autocomplete="off">
 						  </div>
 						</div>
 						<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
@@ -1827,17 +1827,17 @@
 		<?php if($subdomain == false) { ?>
 			<div class="cpy">
 				<p align="right"><a href="<?php if($subdomain == 'medimage') { echo 'medimage.php'; } else { echo 'howto.php'; } ?>">Learn More</a></p>
-				<p align="right"><a class="comment-open" data-uniquefeedbackid="aj_other_products" data-mymachineuser="<?php global $cnf; echo $cnf['adminMachineUser']; ?>" href="javascript:">Other Products</a></p>
-				<p align="right"><small>&copy; <?php echo date('Y'); ?> AtomJump.com</small></p>
+				<p align="right"><a class="comment-open" data-uniquefeedbackid="aj_other_products" data-mymachineuser="<?php global $cnf; echo $cnf['adminMachineUser']; ?>" href="javascript:"><?php echo $msg['msgs'][$lang]['otherProducts'] ?></a></p>
+				<p align="right"><small>&copy; <?php echo date('Y'); ?> <?php echo $msg['msgs'][$lang]['copyright'] ?></small></p>
 			</div>
 		<?php } else { ?>
 			<div class="cpy saver-hideable">
 
 
-				<p align="right"><a href="<?php if($subdomain == 'medimage') { echo 'medimage.php'; } else { echo 'howto.php'; } ?>">Learn More</a></p>
+				<p align="right"><a href="<?php if($subdomain == 'medimage') { echo 'medimage.php'; } else { echo 'howto.php'; } ?>"><?php echo $msg['msgs'][$lang]['learnMore'] ?></a></p>
 				<p align="right"><a class="comment-open" data-uniquefeedbackid="ajp_credits" data-mymachineuser="<?php global $cnf; echo $cnf['adminMachineUser']; ?>" href="javascript:">Credits</a></p>
 
-				<p align="right"><small>&copy; <?php echo date('Y'); ?> AtomJump.com</small></p>
+				<p align="right"><small>&copy; <?php echo date('Y'); ?> <?php echo $msg['msgs'][$lang]['copyright'] ?></small></p>
 			</div>
 
     	<?php } ?>

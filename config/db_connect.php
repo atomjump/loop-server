@@ -3,7 +3,7 @@
 
   if(!isset($config)) {
      //Get global config - but only once
-		   $data = file_get_contents (dirname(__FILE__) . "/config.json");
+     $data = file_get_contents (dirname(__FILE__) . "/config.json");
      if($data) {
         $config = json_decode($data, true);
         if(!isset($config)) {
@@ -15,11 +15,33 @@
        echo "Error: Missing config/config.json.";
        exit(0);
      
-     }
-  
-  
+     } 
   }
 	
+
+  if(!isset($msg)) {
+     //Get global language file - but only once
+     $data = file_get_contents (dirname(__FILE__) . "/messages.json");
+     if($data) {
+        $msg = json_decode($data, true);
+        if(!isset($msg)) {
+          echo "Error: config/messages.json is not valid JSON.";
+          exit(0);
+        }
+        
+       
+        
+     
+     } else {
+       echo "Error: Missing messages/messages.json.";
+       exit(0);
+     
+     } 
+  }
+  
+  //Set default language, unless otherwise set
+  $lang = $msg['defaultLanguage'];
+    
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
@@ -35,13 +57,13 @@
 
 			
 			
-			$db_username = $config['production']['db']['user']; //Edit this e.g. "peter"
-			$db_password = $config['production']['db']['pass']; //Edit this e.g. "secretpassword"
-			$db_host =  $config['production']['db']['hosts'][0]; 
-			$db_name = $config['production']['db']['name'];
-			
-			$server_timezone = $config['production']['timezone'];
-			$db_timezone = $server_timezone;
+	$db_username = $config['production']['db']['user']; //Edit this e.g. "peter"
+	$db_password = $config['production']['db']['pass']; //Edit this e.g. "secretpassword"
+	$db_host =  $config['production']['db']['hosts'][0]; 
+	$db_name = $config['production']['db']['name'];
+	
+	$server_timezone = $config['production']['timezone'];
+	$db_timezone = $server_timezone;
 			
   
 	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)) {
@@ -364,7 +386,7 @@
 			foreach($servers as $server)
 			{
 	
-     		 		//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
+     		 	//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
 		        $handle = fopen($filename, "r");
 		        $data = fread($handle, filesize($filename));
 		        $POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
@@ -378,7 +400,6 @@
 		        $response = curl_exec($curl);
 		        curl_close ($curl);
 
-	       
 		        
 		     }
 		
