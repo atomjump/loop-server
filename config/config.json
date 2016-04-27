@@ -3,29 +3,27 @@
       "db": {
          "name": "ssshout",
          "hosts": [
-            "localhost"
+            "127.0.0.1"
          ],
-         "user": "yourdbuser",
-         "pass": "yourdbpass",
+         "user": "root",
+         "pass": "December18",
          "port": "3306",
          "timezone": "EDT"
       },
-      "webRoot": "https://staging.yoursite.com",
-      "webDomain": "staging.yoursite.com",
-      "fileRoot": "/var/www/html/yoursite_staging/",
+      "webRoot": "http://127.0.0.1/loop-server",
+      "webDomain": "127.0.0.1",
+      "fileRoot": "/home/peter/projects/rose/loop-server",
       "serverTimezone": "America/Los_Angeles",
       "ips": [
-          "123.123.234.123"
+          "127.0.0.1"
       ],
       "loadbalancer": {
           "ips": [
-              "123.235.54.86",
-              "54.79.234.71"
           ]
       },    
-      "adminEmail": "youremail@yoursite.com",
-      "webmasterEmail": "webmaster@yoursite.com",
-      "noReplyEmail": "noreply@yoursite.com",
+      "adminEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "webmasterEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "noReplyEmail": "peter.abrahamson@2degreesenterprise.co.nz",
       "adminMachineUser" : "92.27.10.17:1",
       "mailgun": {
          "key":"key-7f6f12be7e62360853e0eff491f89b9d",
@@ -61,33 +59,30 @@
       }
    }, 
    "production": {      
-      "db": {
+     "db": {
          "name": "ssshout",
          "hosts": [
-            "yourrds0.cy8djoxkjh6u.us-west-2.rds.amazonaws.com",
-            "yourrds1.cy8djoxkjh6u.us-west-2.rds.amazonaws.com"
+            "127.0.0.1"
          ],
-         "user": "yourdbuser",
-         "pass": "yourdbpass",
+         "user": "root",
+         "pass": "December18",
          "port": "3306",
-         "timezone": "UTC"
+         "timezone": "EDT"
       },
-      "webRoot": "https://yoursite.com",
-      "webDomain": "yoursite.com",
-      "fileRoot": "/var/www/html/feedback/",
+      "webRoot": "http://127.0.0.1",
+      "webDomain": "127.0.0.1",
+      "fileRoot": "/home/peter/projects/rose/loop-server",
       "serverTimezone": "America/Los_Angeles",
       "ips": [
-          "175.31.5.142"
+          "127.0.0.1"
       ],
       "loadbalancer": {
           "ips": [
-              "175.62.57.86",
-              "103.170.234.71"           
           ]
-      },           
-      "adminEmail": "peter@yoursite.com",
-      "webmasterEmail": "webmaster@yoursite.com",
-      "noReplyEmail": "noreply@yoursite.com",
+      },    
+      "adminEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "webmasterEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "noReplyEmail": "peter.abrahamson@2degreesenterprise.co.nz",
       "adminMachineUser" : "92.27.10.17:1",
       "mailgun": {
          "key":"key-7f6f12be7e62360853e0eff491f89b9d",

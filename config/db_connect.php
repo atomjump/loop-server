@@ -21,7 +21,7 @@
 
   if(!isset($msg)) {
      //Get global language file - but only once
-     $data = file_get_contents (dirname(__FILE__) . "/config.json");
+     $data = file_get_contents (dirname(__FILE__) . "/messages.json");
      if($data) {
         $msg = json_decode($data, true);
         if(!isset($msg)) {
@@ -29,18 +29,19 @@
           exit(0);
         }
         
-        //Set default language, unless otherwise set
-        $lang = $msg['defaultLanguage'];
+       
         
      
      } else {
-       echo "Error: Missing config/config.json.";
+       echo "Error: Missing messages/messages.json.";
        exit(0);
      
      } 
   }
-
-
+  
+  //Set default language, unless otherwise set
+  $lang = $msg['defaultLanguage'];
+    
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	

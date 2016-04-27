@@ -14,7 +14,7 @@
                 "title": "AtomJump Feedback Welcome",
                 "pleaseClick": "Hello,\n\nWelcome to AtomJump Feedback. To confirm your email address is valid, please click the following link:\n\n",
                 "confirm": "\n\nYou will have 1 day in which to confirm this.",
-                "setupSMS": "\n\nTo set up alerts to your phone, which are priced at \$CUSTOMER_PRICE_PER_SMS_US_DOLLARS, when there is a new message, enter your mobile number on the settings.",
+                "setupSMS": "\n\nTo set up alerts to your phone, which are priced at $CUSTOMER_PRICE_PER_SMS_US_DOLLARS, when there is a new message, enter your mobile number on the settings.",
                 "questions": "\n\nIf you have any questions or suggestions, you're welcome to get in touch via our feedback button at ROOT_SERVER_URL",
                 "regards": "\n\nBest regards,\nAtomJump Team",
                 "warnAdminNewUser": "New Feedback user!"

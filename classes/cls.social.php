@@ -5,9 +5,16 @@
  
 class cls_social {
 
-        public $networks = array(array( $msg['msgs'][$lang]['social']['viaTwitter'], "twt"),
-	                           array( $msg['msgs'][$lang]['social']['viaFacebook'], "fbk" ));
+        public $networks = array(array("Via Twitter:", "twt"),
+	                           array("Via Facebook:", "fbk" ));
 	  
+
+         function __construct() {
+            
+             $networks[$msg['msgs'][$lang]['social']['viaTwitter']] = "twt";
+             $networks[$msg['msgs'][$lang]['social']['viaFacebook']] = "fbk";
+         
+         }
 
 		 
 		 public function twitter_query($url, $requestMethod, $postfields)

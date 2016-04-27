@@ -1,6 +1,8 @@
 <?php 
 
 global $cfg;
+global $msg;
+global $lang;
 define("CUSTOMER_PRICE_PER_SMS_US_DOLLARS", $cnf['USDollarsPerSMS']);  //$0.16 or 10p. When we are charged 5p per message.
 
 class cls_layer
@@ -253,6 +255,8 @@ class cls_layer
 	{
 		global $root_server_url;
 		global $cnf;
+		global $msg;
+		global $lang;
 	
 		//Send a whisper to a recipient
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
@@ -278,6 +282,8 @@ class cls_layer
 	public function sms($phone_to, $message, $user_from_id)
 	{
 	  global $cnf;
+	  global $msg;
+	  global $lang;
 	  
 		//Wrapper
 		$phone_to = "+" . $phone_to;

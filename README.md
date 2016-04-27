@@ -39,6 +39,8 @@ chmod 777 /images/im
 7. In a MySQL prompt, run 'create database ssshout'. Then from the command line:
     mysql -u youruser -p ssshout < db/atomjump-loop-shell.sql
 
+
+
 #Known project issues
 Currently using an old style mysql php connection. We will try to update this
 when possible.

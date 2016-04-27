@@ -5,7 +5,11 @@
 $db_read_only = true;				//Ensure we can palm this off to RDS replicas - we are only reading here, never writing
 									//except where we write because of the sessions vars.  Have added a test to reconnect with the
 									//master in that case.
+
+
 require('config/db_connect.php');
+
+
 
 require("classes/cls.basic_geosearch.php");
 require("classes/cls.layer.php");

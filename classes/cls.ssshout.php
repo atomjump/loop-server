@@ -101,6 +101,8 @@ class cls_ssshout
 	{
 		global $root_server_url;
 		global $cnf;
+		global $msg;
+		global $lang;
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
@@ -295,6 +297,8 @@ class cls_ssshout
 		global $notify;
 		global $cnf;
 		global $staging;
+		global $msg;
+		global $lang;
 	
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
@@ -338,7 +342,7 @@ class cls_ssshout
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
 				
 					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$email_body .= "\n\n" $msg['msgs'][$lang]['removeComment'] . " <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
+					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . " <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
 				} else {
 					//Sent from a private email forum - append our logo
 					$email_body .= $msg['msgs'][$lang]['fromShortMail'];
@@ -409,6 +413,8 @@ class cls_ssshout
 	public function deactivate_shout($ssshout_id, $just_typing = false)
 	{
 		global $cnf;
+		global $msg;
+		global $lang;
 		
 		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
@@ -479,6 +485,8 @@ class cls_ssshout
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null)
 	{
+	    global $msg;
+	    global $lang;
 		$email_in_msg = false;
 	
 		//Insert shouted text into database at this time
@@ -912,7 +920,8 @@ class cls_search {
 
 		public function ago($time)
 		{
-		
+		   global $msg; 
+		   global $lang;
 		   //Doesn't seem to be needed: global $db_timezone;
 		   $periods = array($msg['msgs'][$lang]['time']['second'],
 		                    $msg['msgs'][$lang]['time']['minute'],
@@ -936,7 +945,7 @@ class cls_search {
 
 		   $difference = round($difference);
 
-           if($lang == "en") }
+           if($lang == "en") {
 		       //If language is English, pluralise if not 1
 		       if($difference != 1) {
 			       $periods[$j].= "s";
@@ -1006,6 +1015,8 @@ class cls_search {
   
    /** Include PHPExcel */
    	require_once('classes/PHPExcel.php');
+   	global $msg;
+   	global $lang;
 
 
 	  // Create new PHPExcel object
@@ -1071,7 +1082,9 @@ class cls_search {
 
 public function process($shout_id = null, $msg_id = null, $records = null, $download = false, $last_id = 0, $db_timezone= null, $format = "json", $avg_over_secs = 900)  //900 = 15 mins
 {
-   global $cnf;
+           global $cnf;
+           global $msg;
+           global $lang;
 
 			$ly = new cls_layer();
 			$bg = new clsBasicGeosearch();
