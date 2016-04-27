@@ -304,7 +304,7 @@ Parameters
 Parameters
 ($table, $update_set)
 
-**get_forum_id**
+**get_forum_id()**
 
 Parameters
 ($message_forum_name)
@@ -313,7 +313,7 @@ Parameters
 
 # Hooks
 
-**on_message**
+**on_message()**
 
 Output parameters
 ($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
@@ -321,7 +321,7 @@ Output parameters
 
 # Writing functions
 
-**new_message**
+**new_message()**
 
 Required Parameters
 ($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)
@@ -330,7 +330,7 @@ Optional Parameters in an $options object:
 ($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)
 
 
-**hide_message**
+**hide_message()**
 
 Required Parameters
 ($message_id)

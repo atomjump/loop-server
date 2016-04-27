@@ -58,8 +58,6 @@
          }
       },
       "plugins": [
-         "help_is_coming",
-         "and_more"
       ]
    }, 
    "production": {      
@@ -121,8 +119,6 @@
          }
       },
       "plugins": [
-         "help_is_coming",
-         "and_more"
       ]
   }
 }
