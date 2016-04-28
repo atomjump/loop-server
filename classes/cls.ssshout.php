@@ -348,8 +348,10 @@ class cls_ssshout
 					$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				}
+				
 		
-				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email);  //"Private message on " . cur_page_url()
+				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+				
 			} else {
 				//This is to someone who has been mentioned in the body of the message
 				$checksum = 233242 + $user_id * 19;
@@ -377,7 +379,8 @@ class cls_ssshout
 				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
-				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+				
+				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 			
 			}
 		
