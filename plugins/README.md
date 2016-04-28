@@ -33,6 +33,9 @@ For a sample plugin called 'help_is_coming':
 ?>
 ```
 
+Add the entry "help_is_coming" to the "plugins" array in config/config.json to activate the plugin.
+
+
 # Reading functions
 
 
