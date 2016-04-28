@@ -2,11 +2,13 @@
 
 //This API class should be included by any Loop-server plugins 
 //  The plugin is located in the /plugins/pluginname directory
- 
-/*require_once("../../classes/cls.basic_geosearch.php");
-require_once("../../classes/cls.layer.php");
-require_once("../../classes/cls.ssshout.php"); 
-*/
+
+if(isset($define_classes_path)) {
+    //Optionally set $define_classes_path with the root of the loop-server
+    require_once($define_classes_path . "classes/cls.basic_geosearch.php");
+    require_once($define_classes_path . "classes/cls.layer.php");
+    require_once($define_classes_path . "classes/cls.ssshout.php"); 
+}
 
 
 
