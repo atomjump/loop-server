@@ -847,7 +847,9 @@ class cls_ssshout
 	public function process_chars($my_line, $ip, $user_id, $id = null)
 	{
 		$include_payment = false;
-    $orig_line = $my_line;
+        $orig_line = $my_line;
+        global $msg;
+        global $lang;
 		
 		
 		//Turn xxx@ into clickable atomjump links
