@@ -141,7 +141,27 @@ class cls_plugin_api {
     	    return false;
         }
 	}
-	
+
+	/*
+	    Get the current user's ip address
+	*/		
+		
+	public function get_current_user_ip()
+    {	
+	    $ly = new cls_layer();
+	    return $ly->getRealIpAddr();
+	}	
+
+
+	/*
+	    Get the current user's user id
+	*/		
+		
+	public function get_current_user_id()
+    {	
+	    
+	    return $_SESSION['logged-user'];
+	}
 		
 	
 	/*

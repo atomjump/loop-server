@@ -312,6 +312,15 @@ Parameters
 ($message_forum_name)
 
 
+**get_current_user_ip()**
+
+No parameters
+
+
+**get_current_user_id()**
+
+No parameters
+
 
 # Hooks
 
@@ -319,6 +328,12 @@ Parameters
 
 Output parameters
 ($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
+
+
+**before_message()**
+
+Output parameters
+($message)
 
 
 # Writing functions

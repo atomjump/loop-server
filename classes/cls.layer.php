@@ -93,15 +93,15 @@ class cls_layer
 		
 		//Put all our proxy and servers in here
 		//so that we don't ever return our own ip
-	 $proxy_whitelisted = array();
-	 
-	 for($cnt = 0; $cnt< count($cnf['ips']); $cnt ++) {
-	   $proxy_whitelisted[] = $cnf['ips'][$cnt];
-	 }
-	 
-	 for($cnt = 0; $cnt< count($cnf['loadbalancer']['ips']); $cnt ++) {
-	   $proxy_whitelisted[] = $cnf['loadbalancer']['ips'][$cnt];
-	 }
+	     $proxy_whitelisted = array();
+	     
+	     for($cnt = 0; $cnt< count($cnf['ips']); $cnt ++) {
+	       $proxy_whitelisted[] = $cnf['ips'][$cnt];
+	     }
+	     
+	     for($cnt = 0; $cnt< count($cnf['loadbalancer']['ips']); $cnt ++) {
+	       $proxy_whitelisted[] = $cnf['loadbalancer']['ips'][$cnt];
+	     }
 	 
 	 
 		//Check if ip from session - early out

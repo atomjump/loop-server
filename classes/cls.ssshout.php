@@ -502,11 +502,37 @@ class cls_ssshout
 	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
 	        
 	        } else {
-	            error_log("Plugin $plugin_name, class $class_name  on_message() not found.");
+	            //error_log("Plugin $plugin_name, class $class_name  on_message() not found.");
 	        }
 	    }
 	    return true;
 	}
+	
+	
+	public function call_plugins_before_msg($message) {
+	    global $cnf;
+	    
+	    //Loop through each class and call each plugin_* -> before_message() function
+	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
+	        $plugin_name = $cnf['plugins'][$cnt];
+	        
+	       
+	        include_once("plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"before_message") == true) {
+	            //OK call the on_message function of the plugin
+	            $message = $pg->before_message($message);
+	        
+	        } else {
+	            //error_log("Plugin $plugin_name, class $class_name  before_message() not found.");
+	        }
+	    }
+	    return $message;
+	}
+	
 
 	
 	
@@ -852,6 +878,10 @@ class cls_ssshout
         global $lang;
 		
 		
+		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
+        $my_line = $this->call_plugins_before_msg($my_line);
+		
+		
 		//Turn xxx@ into clickable atomjump links
 		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
 				
@@ -888,7 +918,7 @@ class cls_ssshout
 		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
 		
 
-		//TODO: turn smileys
+		
 
 		//Turn names into an ip address private whisper link
 		if($ip != "") {
@@ -938,6 +968,8 @@ class cls_ssshout
 			$include_payment = true;  //switch on flag	
 			
 		}
+		
+		
 		
 
 		return array($my_line, $include_payment);
@@ -1345,18 +1377,18 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 							  
 		
 							  $dt = new DateTime($result['date_when_shouted'], $src_tz);
-       $dt->setTimeZone($dest_tz);
+                              $dt->setTimeZone($dest_tz);
 
 							
-		      $json['res'][] = array(
-		       'id' => $result['int_ssshout_id'],
-		       'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
+		                      $json['res'][] = array(
+		                       'id' => $result['int_ssshout_id'],
+		                       'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'timestamp' => $dt->format('Y-m-d\TH:i:s\Z'),
 											'private' => $whisper,
 											'sentiment' => round($result['flt_sentiment'],1)
 										 );  
 		    
-		    } else {
+		                    } else {
 							
 							  $json['res'][] = array('text' => $result['var_shouted_processed'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'lat' => $result['latitude'],
@@ -1390,7 +1422,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 			//Echo the jsonp
 			if($download == true){
-      	 $json['more'] = $more;     //relevant to download
+      	       $json['more'] = $more;     //relevant to download
 			   switch($format) {
 			     case 'csv':
 			  
