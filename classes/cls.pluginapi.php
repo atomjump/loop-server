@@ -162,6 +162,32 @@ class cls_plugin_api {
 	    
 	    return $_SESSION['logged-user'];
 	}
+	
+	
+	
+	/*
+	    Run a parallel system process on the server machine
+	*/		
+		
+	public function parallel_system_call($command, $platform = "linux", $logfile = "")
+    {	
+        switch($platform) {
+            case "linux":
+                if($logfile != "") {
+                    $logfile = ">" . $logfile;
+                }
+            
+	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
+		        $output = shell_exec($cmd);
+		    break;
+		    
+		    case "windows":
+		        //Not yet supported
+		    break;
+		}
+	    return;
+	}
+	
 		
 	
 	/*

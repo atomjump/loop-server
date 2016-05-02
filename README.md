@@ -326,13 +326,15 @@ No parameters
 Server: >= 0.5.0
 
 
+
+
 # Hooks
 
 **on_message()**
 
 Output parameters
-($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)  
-Server: >= 0.5.0
+($message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)  
+Server: >= 0.5.1
 
 
 **before_message()**
@@ -352,6 +354,9 @@ Server: >= 0.5.0
 Optional Parameters in an $options object:
 ($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)  
 Server: >= 0.5.0
+
+Output parameters
+($message_id)
 
 
 **hide_message()**

@@ -75,6 +75,10 @@ No parameters
 Server: >= 0.5.0
 
 
+
+
+
+
 # Hooks
 
 **on_message()**
@@ -101,6 +105,9 @@ Server: >= 0.5.0
 Optional Parameters in an $options object:
 ($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)  
 Server: >= 0.5.0
+
+Output parameters
+($message_id)
 
 
 **hide_message()**
