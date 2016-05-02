@@ -299,30 +299,30 @@ Server: >= 0.5.0
 **db_select()**
 
 Parameters
-($sql)
+($sql)  
 Server: >= 0.5.0
 
 **db_update()**
 
 Parameters
-($table, $update_set)
+($table, $update_set)  
 Server: >= 0.5.0
 
 **get_forum_id()**
 
 Parameters
-($message_forum_name)
+($message_forum_name)  
 Server: >= 0.5.0
 
 **get_current_user_ip()**
 
-No parameters
+No parameters  
 Server: > 0.5.0
 
 
 **get_current_user_id()**
 
-No parameters
+No parameters  
 Server: >= 0.5.0
 
 
@@ -331,14 +331,14 @@ Server: >= 0.5.0
 **on_message()**
 
 Output parameters
-($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
+($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)  
 Server: >= 0.5.0
 
 
 **before_message()**
 
 Output parameters
-($message)
+($message)  
 Server: >= 0.5.0
 
 # Writing functions
@@ -346,21 +346,21 @@ Server: >= 0.5.0
 **new_message()**
 
 Required Parameters
-($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)
+($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)  
 Server: >= 0.5.0
 
 Optional Parameters in an $options object:
-($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)
+($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)  
 Server: >= 0.5.0
 
 
 **hide_message()**
 
 Required Parameters
-($message_id)
+($message_id)  
 Server: >= 0.5.0
 
 Optional Parameters
-($warn_admin)
+($warn_admin)  
 Server: >= 0.5.0
 
