@@ -43,35 +43,36 @@ Add the entry "help_is_coming" to the "plugins" array in config/config.json to a
 
 Parameters
 ($table, $insert_field_names_str, $insert_field_data_str)  
-
+Server: >= 0.5.0
 
 **db_select()**
 
 Parameters
 ($sql)
-
+Server: >= 0.5.0
 
 **db_update()**
 
 Parameters
 ($table, $update_set)
-
+Server: >= 0.5.0
 
 **get_forum_id()**
 
 Parameters
 ($message_forum_name)
-
+Server: >= 0.5.0
 
 **get_current_user_ip()**
 
 No parameters
+Server: >= 0.5.0
 
 
 **get_current_user_id()**
 
 No parameters
-
+Server: >= 0.5.0
 
 
 # Hooks
@@ -80,18 +81,14 @@ No parameters
 
 Output parameters
 ($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
-
-Return: true for success, false for not success 
+Server: >= 0.5.0
 
 
 **before_message()**
 
 Output parameters
 ($message)
-
-Return: altered message 
-
-
+Server: >= 0.5.0
 
 # Writing functions
 
@@ -99,16 +96,20 @@ Return: altered message
 
 Required Parameters
 ($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)
+Server: >= 0.5.0
 
 Optional Parameters in an $options object:
 ($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)
+Server: >= 0.5.0
 
 
 **hide_message()**
 
 Required Parameters
 ($message_id)
+Server: >= 0.5.0
 
 Optional Parameters
 ($warn_admin)
+Server: >= 0.5.0
 
