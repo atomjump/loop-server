@@ -492,7 +492,7 @@ class cls_ssshout
 	        $plugin_name = $cnf['plugins'][$cnt];
 	        
 	       
-	        include_once("plugins/" . $plugin_name . "/index.php");
+	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
@@ -512,12 +512,13 @@ class cls_ssshout
 	public function call_plugins_before_msg($message) {
 	    global $cnf;
 	    
+	    
 	    //Loop through each class and call each plugin_* -> before_message() function
 	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
 	        $plugin_name = $cnf['plugins'][$cnt];
 	        
 	       
-	        include_once("plugins/" . $plugin_name . "/index.php");
+	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
