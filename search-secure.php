@@ -69,7 +69,7 @@
 	
 	if((isset($_REQUEST['cssBootstrap']))&&($_REQUEST['cssBootstrap'] != '')) {
 	    
-	    if(substr($_REQUEST['cssBootstrap'], 4) == "http") {
+	    if(substr($_REQUEST['cssBootstrap'], 0, 4) == "http") {
 	        //An absolute url
 	        $cssBootstrap = $_REQUEST['cssBootstrap'];
 	    } else {
@@ -82,7 +82,7 @@
 	}
 			
     if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
-	    if(substr($_REQUEST['cssFeedback'], 4) == "http") {
+	    if(substr($_REQUEST['cssFeedback'], 0, 4) == "http") {
 	         //An absolute url
 	        $cssFeedback = $_REQUEST['cssFeedback'];
 	    } else {
