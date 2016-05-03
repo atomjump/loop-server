@@ -39,9 +39,21 @@
      } 
   }
   
+   
+  
   //Set default language, unless otherwise set
   $lang = $msg['defaultLanguage'];
     
+
+    function trim_trailing_slash($str) {
+        return rtrim($str, "/");
+    }
+    
+    function add_trailing_slash($str) {
+        //Remove and then add
+        return rtrim($str, "/") . '/';
+    }
+
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
@@ -79,8 +91,8 @@
 		$db_name = $cnf['db']['name'];
 	
 	
-		$root_server_url = $cnf['webRoot'];
-		$local_server_path = $cnf['fileRoot'];
+		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		$db_inc = false;
 		$staging = true;
 		$db_timezone = $cnf['db']['timezone'];
@@ -88,8 +100,8 @@
 	} else {
   
   $cnf = $config['production']; 
-		$root_server_url = $cnf['webRoot'];
-		$local_server_path = $cnf['fileRoot'];
+		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
 		//Live is now on amazon
 		$db_total = count($cnf['db']['hosts']);			//Total number of databases

@@ -69,6 +69,7 @@
 	
 	if((isset($_REQUEST['cssBootstrap']))&&($_REQUEST['cssBootstrap'] != '')) {
 	    $cssBootstrap = urldir($_REQUEST['cssBootstrap'], $clientremoteurl);
+	    //TODO: Possible improvement here - check for https/http of server = https/http of css files
 	} else {
 	    $cssBootstrap = "https://atomjump.com/css/bootstrap.min.css";
 	}
@@ -136,7 +137,7 @@
 				var ajFeedback = {
 					"uniqueFeedbackId" : "<?php echo $_REQUEST['uniqueFeedbackId'] ?>",
 					"myMachineUser" : "<?php echo $_REQUEST['myMachineUser'] ?>",
-					"server" : "<?php echo $_REQUEST['server'] ?>"
+					"server" : "<?php echo trim_trailing_slash($_REQUEST['server']) ?>"
 				}
 				
 				<?php if(($_SESSION['logged-user'])||($staging == true)) { 
