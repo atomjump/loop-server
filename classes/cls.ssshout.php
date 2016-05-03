@@ -536,7 +536,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = false)
 	{
 	    global $msg;
 	    global $lang;
@@ -569,7 +569,7 @@ class cls_ssshout
 			
 		
    	//If we are a user get our id
-		$user_id = $this->new_user($email, $ip, $phone);
+		$user_id = $this->new_user($email, $ip, $phone, $loginas);
 				
 
 		

@@ -352,8 +352,10 @@ Required Parameters
 Server: >= 0.5.0
 
 Optional Parameters in an $options object:
-($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude)  
+($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude, $login_as)  
 Server: >= 0.5.0
+
+Additions: ($login_as), server >= 0.5.1
 
 Output parameters
 ($message_id)

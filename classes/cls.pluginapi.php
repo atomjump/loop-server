@@ -178,6 +178,7 @@ class cls_plugin_api {
                 }
             
 	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
+		        
 		        $output = shell_exec($cmd);
 		    break;
 		    
@@ -219,6 +220,7 @@ class cls_plugin_api {
         $date_override = null;                      //optional string for a custom date (as opposed to now) 
         $latitude = 0.0;                            //for potential future location expansion
         $longitude = 0.0;                            //for potential future location expansion
+	    $login_as = false;
 	 
 	    if(isset($options)) {
 	     if(isset($options['sender_still_typing'])) $sender_still_typing = $options['sender_still_typing'];
@@ -231,6 +233,7 @@ class cls_plugin_api {
 	     if(isset($options['date_override']))  $date_override = $options['date_override'];
 	     if(isset($options['latitude'])) $latitude = $options['latitude'];
 	     if(isset($options['longitude']))  $longitude = $options['longitude'];
+	     if(isset($options['login_as']))  $longitude = $options['login_as'];
 	    }
 	 
 	     return $sh->insert_shout($latitude,
@@ -249,7 +252,8 @@ class cls_plugin_api {
 	                        $forum_owner_id,
 	                        $social_post_short_code,
 	                        $social_recipient_handle_str,
-	                        $date_override);
+	                        $date_override,
+	                        $login_as);
 	 
 	 }	
 	 
