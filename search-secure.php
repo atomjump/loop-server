@@ -68,14 +68,29 @@
 	
 	
 	if((isset($_REQUEST['cssBootstrap']))&&($_REQUEST['cssBootstrap'] != '')) {
-	    $cssBootstrap = urldir($_REQUEST['cssBootstrap'], $clientremoteurl);
+	    
+	    if(substr($_REQUEST['cssBootstrap'], 4) == "http") {
+	        //An absolute url
+	        $cssBootstrap = $_REQUEST['cssBootstrap'];
+	    } else {
+	        //A relative one
+	        $cssBootstrap = urldir($_REQUEST['cssBootstrap'], $clientremoteurl);
+	    }
 	    //TODO: Possible improvement here - check for https/http of server = https/http of css files
 	} else {
 	    $cssBootstrap = "https://atomjump.com/css/bootstrap.min.css";
 	}
 			
     if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
-	    $cssFeedback = urldir($_REQUEST['cssFeedback'], $clientremoteurl);
+	    if(substr($_REQUEST['cssFeedback'], 4) == "http") {
+	         //An absolute url
+	        $cssFeedback = $_REQUEST['cssFeedback'];
+	    } else {
+	        //A relative one
+	        $cssFeedback = urldir($_REQUEST['cssFeedback'], $clientremoteurl);
+	    }    
+	        
+	        
 	} else {
 	    $cssFeedback = "https://atomjump.com/css/comments-0.1.css";
 	}
