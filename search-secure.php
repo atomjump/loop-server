@@ -70,13 +70,13 @@
 	if((isset($_REQUEST['cssBootstrap']))&&($_REQUEST['cssBootstrap'] != '')) {
 	    $cssBootstrap = urldir($_REQUEST['cssBootstrap'], $clientremoteurl);
 	} else {
-	    $cssBootstrap = "css/bootstrap.min.css";
+	    $cssBootstrap = "https://atomjump.com/css/bootstrap.min.css";
 	}
 			
-if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
+    if((isset($_REQUEST['cssFeedback']))&&($_REQUEST['cssFeedback'] != '')) {
 	    $cssFeedback = urldir($_REQUEST['cssFeedback'], $clientremoteurl);
 	} else {
-	    $cssFeedback = "css/comments-0.1.css";
+	    $cssFeedback = "https://atomjump.com/css/comments-0.1.css";
 	}
 	
 	
