@@ -66,6 +66,16 @@ function hideKeyboard(element) {
     }, 100);
 }
 
+function assignPortToURL(url, portNum) {
+    if((portNum)&&(portNum != "")) {
+        url = url.replace("/\/\/(.*?)\//", "//$1:" + portNum + "/");
+    } else {
+        //Do nothing if no port number 
+           
+    }
+    return url;
+}
+
 var commentLayer="comments";
 var ssshoutFreq = 5000;
 var ssshoutHasFocus = true;
@@ -937,7 +947,9 @@ function doSearch()
 		portReset = true;	
 	}
 	
-	 $.getJSON(ssshoutServer + port + "/search-chat.php?callback=?", {
+	var serv = assignPortToURL(ssshoutServer, port);
+	
+	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),
 					lon: $('#lon').val(),
 					passcode: commentLayer,
