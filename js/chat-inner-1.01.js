@@ -73,7 +73,7 @@ var myLoopTimeout;
 var whisperOften = "1.1.1.1:2"; //defaults to admin user's ip and id
 var whisperSite = "1.1.1.1:2"; //defaults to admin user's ip and id
 var cs = 2438974;
-var ssshoutServer = "https://atomjump.com";  //https://atomjump.com  normally
+var ssshoutServer = "https://atomjump.com/api";  //https://atomjump.com/api  normally
 var typingTimer = 0;
 var startShoutId = 0;		//start of a typing session
 
