@@ -178,10 +178,10 @@ class cls_plugin_api {
                 }
             
 	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
-		        session_write_close();          //This allows for session data to be stored, and accessed again before a long
+		        //Seems to help: session_write_close();          //This allows for session data to be stored, and accessed again before a long
 		                                        //running process finishes
 		        $output = shell_exec($cmd);
-		        session_start();
+		        
 		    break;
 		    
 		    case "windows":
