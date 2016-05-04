@@ -103,6 +103,7 @@ class cls_ssshout
 		global $cnf;
 		global $msg;
 		global $lang;
+		
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
@@ -487,6 +488,7 @@ class cls_ssshout
 	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone) {
 	    global $cnf;
 	    
+	    	    
 	    //Loop through each class and call each plugin_* -> on_message() function
 	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
 	        $plugin_name = $cnf['plugins'][$cnt];

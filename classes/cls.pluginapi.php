@@ -178,8 +178,10 @@ class cls_plugin_api {
                 }
             
 	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
-		        
+		        session_write_close();          //This allows for session data to be stored, and accessed again before a long
+		                                        //running process finishes
 		        $output = shell_exec($cmd);
+		        session_start();
 		    break;
 		    
 		    case "windows":
@@ -233,8 +235,10 @@ class cls_plugin_api {
 	     if(isset($options['date_override']))  $date_override = $options['date_override'];
 	     if(isset($options['latitude'])) $latitude = $options['latitude'];
 	     if(isset($options['longitude']))  $longitude = $options['longitude'];
-	     if(isset($options['login_as']))  $longitude = $options['login_as'];
+	     if(isset($options['login_as']))  $login_as = $options['login_as'];
 	    }
+	 
+	    
 	 
 	     return $sh->insert_shout($latitude,
 	                        $longitude,

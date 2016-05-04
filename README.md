@@ -348,7 +348,7 @@ Server: >= 0.5.0
 **new_message()**
 
 Required Parameters
-($sender_name_str, $message, $recipient_id, $sender_email, $sender_ip, $message_forum_name, $options)  
+($sender_name_str, $message, $recipient_ip_colon_id, $sender_email, $sender_ip, $message_forum_name, $options)  
 Server: >= 0.5.0
 
 Optional Parameters in an $options object:
