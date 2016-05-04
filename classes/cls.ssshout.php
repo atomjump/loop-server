@@ -485,13 +485,20 @@ class cls_ssshout
 		return false;
 	}
 	
-	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone) {
+	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins) {
 	    global $cnf;
 	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
 	    	    
 	    //Loop through each class and call each plugin_* -> on_message() function
-	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
-	        $plugin_name = $cnf['plugins'][$cnt];
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
 	        
 	       
 	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
@@ -511,13 +518,20 @@ class cls_ssshout
 	}
 	
 	
-	public function call_plugins_before_msg($message) {
+	public function call_plugins_before_msg($message, $allowed_plugins = null) {
 	    global $cnf;
 	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
 	    
 	    //Loop through each class and call each plugin_* -> before_message() function
-	    for($cnt=0; $cnt < count($cnf['plugins']); $cnt++) {
-	        $plugin_name = $cnf['plugins'][$cnt];
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
 	        
 	       
 	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
@@ -539,7 +553,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = false)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = false, $allow_plugins = true, $allowed_plugins = null)
 	{
 	    global $msg;
 	    global $lang;
@@ -694,7 +708,7 @@ class cls_ssshout
 					   $status = "typing";
 					}
 					
-					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id);
+					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id, $allow_plugins, $allowed_plugins);
 					
 					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . $date_shouted . ",
 												var_shouted = '" . clean_data($message) . "',
@@ -716,7 +730,9 @@ class cls_ssshout
 						$ssshout_id = "";		//this is the return value of null beacuse want a new message
 						
 						//Hook into plugins here
-						$this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
+						if($allow_plugins == true) {
+						    $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
+						}
 					} else {
 						//A continuation request
 						$message_id = "";
@@ -725,7 +741,7 @@ class cls_ssshout
 				} else {
 				
 					//Process the chars
-					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id);
+					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, null, $allow_plugins, $allowed_plugins);
 				
 					if($typing == false) {
 					   $status = "final";
@@ -783,7 +799,7 @@ class cls_ssshout
 						
 						if($include_payment == true) {
 							//Includes payment need to process again with the message id
-							list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id,$message_id);
+							list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id,$message_id, $allow_plugins, $allowed_plugins);
 							$sql = "UPDATE tbl_ssshout SET 
 												var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "'
 												WHERE int_ssshout_id = " . $ssshout_id;
@@ -791,7 +807,9 @@ class cls_ssshout
 						
 						if($typing == false) {
 					        //Hook into plugins here
-					        $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
+					        if($allow_plugins == true) {
+					            $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
+					        }
 					    }
 						
 						
@@ -873,7 +891,7 @@ class cls_ssshout
 	
 	}
 	
-	public function process_chars($my_line, $ip, $user_id, $id = null)
+	public function process_chars($my_line, $ip, $user_id, $id = null, $allow_plugins = true, $allowed_plugins = null)
 	{
 		$include_payment = false;
         $orig_line = $my_line;
@@ -882,7 +900,9 @@ class cls_ssshout
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
-        $my_line = $this->call_plugins_before_msg($my_line);
+        if($allow_plugins == true) {
+            $my_line = $this->call_plugins_before_msg($my_line, $allowed_plugins);
+        }
 		
 		
 		//Turn xxx@ into clickable atomjump links

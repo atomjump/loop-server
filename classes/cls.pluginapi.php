@@ -178,8 +178,9 @@ class cls_plugin_api {
                 }
             
 	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
-		        //Seems to help: session_write_close();          //This allows for session data to be stored, and accessed again before a long
+		        //Seems to help:           //This allows for session data to be stored, and accessed again before a long
 		                                        //running process finishes
+		        session_write_close();
 		        shell_exec($cmd);
 		        
 		    break;
@@ -222,7 +223,11 @@ class cls_plugin_api {
         $date_override = null;                      //optional string for a custom date (as opposed to now) 
         $latitude = 0.0;                            //for potential future location expansion
         $longitude = 0.0;                            //for potential future location expansion
-	    $login_as = false;
+	    $login_as = false;                          //Also login as this user
+	    $allow_plugins = false;                     //To prevent infinite message sending loops, we don't refer to any other plugins
+	                                                //after a message send
+	    $allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
+	                                                //developer. However, plugins that work with before_msg will continue to work 
 	 
 	    if(isset($options)) {
 	     if(isset($options['sender_still_typing'])) $sender_still_typing = $options['sender_still_typing'];
@@ -236,6 +241,8 @@ class cls_plugin_api {
 	     if(isset($options['latitude'])) $latitude = $options['latitude'];
 	     if(isset($options['longitude']))  $longitude = $options['longitude'];
 	     if(isset($options['login_as']))  $login_as = $options['login_as'];
+	     if(isset($options['allow_plugins']))  $allow_plugins = $options['allow_plugins'];
+	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	    }
 	 
 	    
@@ -257,7 +264,9 @@ class cls_plugin_api {
 	                        $social_post_short_code,
 	                        $social_recipient_handle_str,
 	                        $date_override,
-	                        $login_as);
+	                        $login_as,
+	                        $allow_plugins,
+	                        $allowed_plugins);
 	 
 	 }	
 	 
