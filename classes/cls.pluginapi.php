@@ -167,21 +167,62 @@ class cls_plugin_api {
 	
 	/*
 	    Run a parallel system process on the server machine
-	*/		
+	*/	
+	
+	
+    #
+    # control.php
+    #
+    public function JobStartAsync($server, $url, $port=80,$conn_timeout=30, $rw_timeout=86400)
+    {
+	    $errno = '';
+	    $errstr = '';
+	
+	    set_time_limit(0);
+	
+	    $fp = fsockopen($server, $port, $errno, $errstr, $conn_timeout);
+	    if (!$fp) {
+	       echo "$errstr ($errno)<br />\n";
+	       return false;
+	    }
+	    $out = "GET $url HTTP/1.1\r\n";
+	    $out .= "Host: $server\r\n";
+	    $out .= "Connection: Close\r\n\r\n";
+	
+	    stream_set_blocking($fp, false);
+	    stream_set_timeout($fp, $rw_timeout);
+	    fwrite($fp, $out);
+	
+	    return $fp;
+    }
+
+    // returns false if HTTP disconnect (EOF), or a string (could be empty string) if still connected
+    public function JobPollAsync(&$fp) 
+    {
+	    if ($fp === false) return false;
+	
+	    if (feof($fp)) {
+		    fclose($fp);
+		    $fp = false;
+		    return false;
+	    }
+	
+	    return fread($fp, 10000);
+    }	
 		
-	public function parallel_system_call($command, $platform = "linux", $logfile = "")
+		
+	public function parallel_system_call($server, $command, $platform = "linux", $logfile = "")
     {	
         switch($platform) {
             case "linux":
                 if($logfile != "") {
                     $logfile = ">" . $logfile;
                 }
-            
-	            $cmd = "nohup nice -n 10 " . $command . " " . $logfile . " 2>&1 &";
-		        //Seems to help:           //This allows for session data to be stored, and accessed again before a long
-		                                        //running process finishes
-		        session_write_close();
-		        shell_exec($cmd);
+	        
+		        $fp1 = $this->JobStartAsync($server,$command);
+	            
+	            global $process_parallel;
+	            $process_parallel = true;	        
 		        
 		    break;
 		    

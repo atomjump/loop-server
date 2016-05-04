@@ -7,7 +7,7 @@ class cls_ssshout
  public $layer_name;
  
 
-	public function trim_long_conversations($peano1, $layer_id)
+	/* old: public function trim_long_conversations($peano1, $layer_id)
 	{
 
 		//When a long conversation takes place from one person, or one person makes lots of ssshouts 
@@ -79,7 +79,7 @@ class cls_ssshout
 	
 		return;
 
-	}
+	}*/
 	
 	public function get_user_ip($user_id)
 	{
@@ -420,6 +420,8 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		
+
+		
 		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
 		
@@ -669,14 +671,14 @@ class cls_ssshout
 					$whisper_to_group = explode(",",$whisper_to);
 					
 					$whisper_to_divided = explode(":",$whisper_to_group[0]);
-					if(($whisper_to_divided[1] == '')||($whisper_to_divided[1] == 0)) {
+					if(($whisper_to_divided[1] == '')||($whisper_to_divided[1] == 0)||($whisper_to_divided[1] == 'undefined')) {
 				
 						$whisper_to_id = "NULL";
 					} else {
 						$whisper_to_id = $whisper_to_divided[1];
 					}
 					
-					if((isset($_SESSION['layer-group-user']))&&($_SESSION['layer-group-user'] != '')) {
+					if((isset($_SESSION['layer-group-user']))&&($_SESSION['layer-group-user'] != '')&&($_SESSION['layer-group-user'] != 'undefined')) {
 						if($whisper_to == $whisper_site) {
 							//Check to make sure we are whispering to the owner - in that case modify the target to be the special
 							//group user
@@ -730,9 +732,9 @@ class cls_ssshout
 						$ssshout_id = "";		//this is the return value of null beacuse want a new message
 						
 						//Hook into plugins here
-						if($allow_plugins == true) {
+						/*if($allow_plugins == true) {
 						    $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
-						}
+						}*/
 					} else {
 						//A continuation request
 						$message_id = "";
@@ -805,12 +807,7 @@ class cls_ssshout
 												WHERE int_ssshout_id = " . $ssshout_id;
 						}
 						
-						if($typing == false) {
-					        //Hook into plugins here
-					        if($allow_plugins == true) {
-					            $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
-					        }
-					    }
+						
 						
 						
 				}
@@ -830,7 +827,7 @@ class cls_ssshout
 					
 					if($email_in_msg == true) {
 						//We are sending off a whisper to an email address
-						$result = $this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id);	//true is because we are introducing
+						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id);	//true is because we are introducing
 					} else {
 				
 				
@@ -849,7 +846,7 @@ class cls_ssshout
 							} else {
 						
 								//Just one recipient - only let them know
-								$result = $this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
+								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
 							
 							}
 		
@@ -863,8 +860,16 @@ class cls_ssshout
 						}
 					}
 				}
+				
+				if(($typing == false)&&($message_id != "")) {
+			        //Hook into plugins here
+			        if($allow_plugins == true) {
+			            $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
+			        }
+			    }
+				
 
-				return $ssshout_id;
+ 				return $ssshout_id;
 			}
 		}
 		

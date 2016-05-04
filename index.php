@@ -309,6 +309,27 @@
 
 			$se->process($shout_id, $msg_id, 25);		//25 messages
 		}
+		
+		//Handle any post processing
+		global $process_parallel;
+		if($process_parallel == true) {
+		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
+            $pg = new cls_plugin_api();
+
+            while (true) {
+	            sleep(5);
+	            
+	            error_log("polling");
+	            $r1 = $pg->JobPollAsync($fp1);
+	            error_log("returned $r1");
+	
+	            if ($r1 === false) break;
+	
+	            echo "<b>r1 = </b>$r1<br>";
+	            flush(); @ob_flush();
+            }
+		
+		}
 
 		exit(0);		//We don't want to do anything else after a shout, now that it is ajax
 

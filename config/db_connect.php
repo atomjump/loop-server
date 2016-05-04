@@ -124,7 +124,9 @@
 		$staging = false;
 	}	
 	
-	
+	//General globals:
+	$process_parallel = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
+	                                        //if this is to be run.
 	
 
 	//Leave the code below - this connects to the database
