@@ -181,7 +181,7 @@ class cls_plugin_api {
 		        session_write_close();          //This allows for session data to be stored, and accessed again before a long
 		                                        //running process finishes
 		        $output = shell_exec($cmd);
-		        //TEST OUTsession_start();
+		        session_start();
 		    break;
 		    
 		    case "windows":
