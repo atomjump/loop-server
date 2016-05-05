@@ -513,7 +513,8 @@ class cls_ssshout
 	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
 	        
 	        } else {
-	            //error_log("Plugin $plugin_name, class $class_name  on_message() not found.");
+	            //No on_message() in plugin - do nothing
+
 	        }
 	    }
 	    return true;
@@ -546,7 +547,7 @@ class cls_ssshout
 	            $message = $pg->before_message($message);
 	        
 	        } else {
-	            //error_log("Plugin $plugin_name, class $class_name  before_message() not found.");
+	            //No before_message() in plugin - do nothing
 	        }
 	    }
 	    return $message;

@@ -371,3 +371,15 @@ Optional Parameters
 ($warn_admin)  
 Server: >= 0.5.0
 
+
+# Misc
+
+**parallel_system_call()**
+
+Required Parameters
+($command)  
+Server: >= 0.5.3
+
+Optional Parameters
+($platform:'linux'/'windows', $logfile)
+
