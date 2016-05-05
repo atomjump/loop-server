@@ -312,24 +312,38 @@
 		
 		//Handle any post processing
 		global $process_parallel;
-		if((isset($process_parallel))&&($process_parallel != null)) {
+		global $process_parallel_url;
+		if((isset($process_parallel_url))&&($process_parallel_url != null)) {
 		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
-            
 
             while (true) {
 	            sleep(5);
 	            
-	            error_log("polling");
+	            //error_log("polling");
 	            $r1 = $process_parallel->JobPollAsync($process_parallel->job);  
-	            error_log("returned $r1");
+	            //error_log("returned $r1");
 	
 	            if ($r1 === false) break;
 	
-	            echo "<b>r1 = </b>$r1<br>";
+	            //echo "<b>r1 = </b>$r1<br>";
 	            flush(); @ob_flush();
             }
 		
 		}
+		
+		if(count($process_parallel) > 0) {
+		    //We have an array of shell commands to run
+		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
+		    flush(); @ob_flush();
+		    
+		    for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
+		    
+		        shell_exec($process_parallel[$cnt]);
+		    
+		    }
+		
+		}
+		
 
 		exit(0);		//We don't want to do anything else after a shout, now that it is ajax
 

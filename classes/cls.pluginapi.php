@@ -213,7 +213,7 @@ class cls_plugin_api {
     }	
 		
 		
-	public function parallel_system_call($server, $command, $platform = "linux", $logfile = "")
+	public function parallel_system_call($command, $platform = "linux", $logfile = "", $server = "")
     {	
         switch($platform) {
             case "linux":
@@ -223,10 +223,23 @@ class cls_plugin_api {
 	        
 		        
 	            
+	            global $process_parallel_url;
 	            global $process_parallel;
-	            $process_parallel = $this;
 	            
-	            $this->job = $this->JobStartAsync($server,$command);	        
+	            if($server != "") {
+	                //This is a URL based request (currently only works against an http server, not https)
+	                $process_parallel_url = $this;
+	                $this->job = $this->JobStartAsync($server,$command);
+	            } else {
+	                //This is an ordinary system process
+	                if($logfile != "") {
+	                    $logfile = " >" . $logfile;
+	                
+	                }
+	                
+	                $cmd = "nohup nice -10 " . $command . " " . $logfile . " 2>&1 &";
+	                array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
+	            }	        
 		        
 		    break;
 		    

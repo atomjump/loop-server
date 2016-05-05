@@ -125,8 +125,11 @@
 	}	
 	
 	//General globals:
-	$process_parallel = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
-	                                        //if this is to be run.
+	$process_parallel = array();                //An array of system commands to run after an insert message request. These
+	                                            //are set by any of the plugins, and are run right at the end of the script.
+	
+	$process_parallel_url = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
+	                                            //if this is to be run (currently only works for http servers, not https)
 	
 
 	//Leave the code below - this connects to the database
