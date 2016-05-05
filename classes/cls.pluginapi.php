@@ -36,6 +36,8 @@ class cls_plugin_api {
     */
 
     
+    
+    public $job;
 
 
 	  
@@ -222,7 +224,9 @@ class cls_plugin_api {
 		        
 	            
 	            global $process_parallel;
-	            $process_parallel = $this->JobStartAsync($server,$command);;	        
+	            $process_parallel = $this;
+	            
+	            $this->job = $this->JobStartAsync($server,$command);	        
 		        
 		    break;
 		    
