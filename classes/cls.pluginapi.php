@@ -219,10 +219,10 @@ class cls_plugin_api {
                     $logfile = ">" . $logfile;
                 }
 	        
-		        $fp1 = $this->JobStartAsync($server,$command);
+		        
 	            
 	            global $process_parallel;
-	            $process_parallel = true;	        
+	            $process_parallel = $this->JobStartAsync($server,$command);;	        
 		        
 		    break;
 		    

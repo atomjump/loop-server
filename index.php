@@ -312,7 +312,7 @@
 		
 		//Handle any post processing
 		global $process_parallel;
-		if($process_parallel == true) {
+		if((isset($process_parallel))&&($process_parallel != false)) {
 		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
             $pg = new cls_plugin_api();
 
@@ -320,7 +320,7 @@
 	            sleep(5);
 	            
 	            error_log("polling");
-	            $r1 = $pg->JobPollAsync($fp1);
+	            $r1 = $pg->JobPollAsync($process_parallel);
 	            error_log("returned $r1");
 	
 	            if ($r1 === false) break;
