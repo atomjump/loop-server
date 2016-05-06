@@ -19,8 +19,8 @@ if((process.argv[2]) && (process.argv[2] == '-production')){
 crontab -e 
 
 */
-//  */1 * * * * /usr/bin/nodejs /var/www/html/atomjump_staging/node/sentiment.js
-//  */1 * * * * /usr/bin/nodejs /var/www/html/feedback/node/sentiment.js -production
+//  */1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js
+//  */1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production
 
 
 var connection = mysql.createConnection({
