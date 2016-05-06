@@ -281,7 +281,7 @@ class cls_ssshout
 		 	  case "twt":
 		 	  			//In twitters case, they will be directed back to our page, and there must be a clear indication
 		 	  			//of which message was sent to them
-		 	  			$outgoing = $message . str_replace("PUBLIC_TO", $public_to, $msg['msgs'][$lang]['tweetAlsoSentTo']);
+		 	  			$outgoing = $message . " " . str_replace("PUBLIC_TO", $public_to, $msg['msgs'][$lang]['tweetAlsoSentTo']);
 		 	  break;
 		 
 		 	  default:
