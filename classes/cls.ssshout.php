@@ -225,6 +225,8 @@ class cls_ssshout
 	public function social_post($public_to, $short_code, $user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $sender_title = null)
  	{
  	    global $staging;
+            global $msg;
+            global $lang;
  	    
   	
 	  //Get the URL of where it was from  		
@@ -269,6 +271,8 @@ class cls_ssshout
 	
 	public function social_outing($message, $public_to, $short_code)
 	{
+                 global $msg;
+                 global $lang;
 		 $outgoing = "";
 	
 		 switch($short_code)
