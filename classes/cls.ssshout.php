@@ -560,7 +560,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = false, $allow_plugins = true, $allowed_plugins = null)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null)
 	{
 	    global $msg;
 	    global $lang;
