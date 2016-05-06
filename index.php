@@ -400,35 +400,9 @@
 		$query = $subdomain;
 	}
 
-	//Latest social network requests
-	global $root_server_url;
-	global $staging;
-
-	if(($subdomain != false)&&(!isset($_REQUEST['m']))) {
+	
 
 
-		$req = "/social-cron.php 1 ajps_" . $subdomain . " " . urlencode($query);
-
-		if($staging == true) {
-	        $req .= " staging";			//Use for testing tweets etc.
-	    }
-
-	    $cmd = 'nohup nice -n 10 /usr/bin/php  ' . getcwd() . $req;     //TODO: php path
-        if(bot_detected() == FALSE) {
-            shell_exec($cmd);
-        }
-        
-	} else {
-		//On someone's website - don't get social, stuff. And also not after having clicking on
-		//a twitter link in to here (request 'm')
-		if($staging == true) {
-			  //Test tweets being added here
-						$req = "/social-cron.php 1 test_feedback test staging";			//Use for testing tweets etc.
-
-			$cmd = 'nohup nice -n 10 /usr/bin/php  ' . getcwd() . $req;
-            shell_exec($cmd);
-		}
-	}
 
 
 
