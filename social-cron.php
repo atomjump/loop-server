@@ -1,7 +1,10 @@
 <?php
 	//Cron job to add new social posts every 2 minutes.
 	//To install put the following line in after typing 
-    ///usr/bin/php /var/www/html/feedback/social-cron.php 5 layername Search+Terms
+	//  /usr/bin/php /your-loop-server-path/social-cron.php 5 forumname
+    //
+    //It is run from a index.php as
+    //  /usr/bin/php /your-loop-server-path/social-cron.php 5 forumname Search+Terms
 
 	//Based on mail-cron.php
 	//In our case: mail_id refers to the overall chat layer
@@ -53,18 +56,24 @@
 	$agent = "AJ feed bot - https://atomjump.com";
 	ini_set("user_agent",$agent);
 	$_SERVER['HTTP_USER_AGENT'] = $agent;
-	$start_path = "/var/www/html/feedback/";
+	//$start_path = "/var/www/html/feedback/";
 	
 	//When testing on staging
-	if( (isset($_REQUEST['staging'])) || ((isset($argv[4]))&&($argv[4] == 'staging')) ) {
+	/*if( (isset($_REQUEST['staging'])) || ((isset($argv[4]))&&($argv[4] == 'staging')) ) {
 	   $start_path = "/var/www/html/atomjump_staging/";
 	   $_SERVER["SERVER_NAME"] = "staging.atomjump.com";
 	   $staging = true;	
+	}*/
+	if((isset($argv[4]))&&($argv[4] == 'staging')) {
+	    $staging = true;	
 	}
-	
 	
 	$notify = false;
 	include_once('config/db_connect.php');	
+	
+	
+	
+	$start_path = $local_server_path;
 	
 	
 	require($start_path . "classes/cls.basic_geosearch.php");
@@ -100,8 +109,8 @@
 	     //since_id
 	     $resp = $soc->search_twitter($search, $last_id);
 	
-				 //print_r($resp);
-					return $resp;
+				 
+		return $resp;
 	
 	
 	}
@@ -130,7 +139,7 @@
 			$newfeeds = array();
 			
 			
-			$layer_info = $ly->get_layer_id($layer); //, $reading)
+			$layer_info = $ly->get_layer_id($layer);
 			
 			if($layer_info) {
 					//yep alreay exists
@@ -146,7 +155,7 @@
 					$lg = new cls_login();
 					$lg->update_subscriptions($cnf['adminMachineUser'], $layer_id);		
 					
-				}
+			}
 			
 			
 			$sql = "SELECT * from tbl_subdomain WHERE var_subdomain = '" . $subdomain . "'";
@@ -187,15 +196,15 @@
 			$feeds[] = $feed;	//$newfeeds;
 		 }
 	
-			//Get the last date from which we should be searching
-			$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND enm_active = 'true' ORDER BY int_ssshout_id DESC LIMIT 1";
+		 //Get the last date from which we should be searching
+		 $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND enm_active = 'true' ORDER BY int_ssshout_id DESC LIMIT 1";
 		 $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row = mysql_fetch_array($result))
-			{
-			   $last_date = $row['date_when_shouted'];
-			} else {
-						$last_date = null;
-			}
+		 if($row = mysql_fetch_array($result))
+		 {
+		    $last_date = $row['date_when_shouted'];
+		 } else {
+			$last_date = null;
+		 }
 	}
 	
 	
@@ -235,15 +244,15 @@
 			$search_terms = explode(",",$feed['var_search_words']);
 			
 			$results = array();
-		 foreach($search_terms as $search) {
-		   if($silent == false) {
-		 			  echo "<br>Searching for $search  ";
-		   }
-		 	   //Search twitter
-		 	   $res = read_tweets($soc, $search, $last_msg_id);
-		 		  $results = $res;
+		    foreach($search_terms as $search) {
+		       if($silent == false) {
+		     			  echo "<br>Searching for $search  ";
+		       }
+		     	   //Search twitter
+		     	   $res = read_tweets($soc, $search, $last_msg_id);
+		     		  $results = $res;
 
-		 }
+		    }
 			
 			
 
@@ -261,7 +270,7 @@
 			  	$pubDate = (string) $message->created_at;			//Note: this is GMT
 				 
 				  
-			  if($guid != "") {
+			    if($guid != "") {
 		
 				  //Check if this item has already been processed for this mailbox
 				  $sql = "SELECT * FROM tbl_feed WHERE int_uid_id = '" . trim($guid) . "' AND int_social_id = " . $social_id;
@@ -318,7 +327,7 @@
 								$shouted = summary($utf8_text, 300) . " " . $link;		//guid may not be url for some feeds, may need to have link
 								$your_name = $username;
 								$whisper_to = $feed['var_whisper_to'];
-							 $email ="";
+							    $email ="";
 		
 								$ip = "92.27.10.17"; //must be something anything
 								
