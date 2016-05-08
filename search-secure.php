@@ -146,7 +146,7 @@
 			
 			
 			<script>
-				var initPort = ":1444";
+				var initPort = "<?php echo $cnf['logoutPort'] ?>";
 				var portReset = true;
 			
 				var ajFeedback = {
@@ -377,7 +377,8 @@
 				<div style="float: right;" id="comment-logout" <?php if($_SESSION['logged-user']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>>
 				
 					
-					<a id="comment-logout-text" href="javascript:" onclick="$.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>><?php echo $msg['msgs'][$lang]['logoutLink'] ?></a>
+					<a id="comment-logout-text" href="javascript:" onclick="beforeLogout(function() {
+					             $.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );  });" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>><?php echo $msg['msgs'][$lang]['logoutLink'] ?></a>
 					
 					<span id="comment-not-signed-in" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>><?php echo $msg['msgs'][$lang]['notSignedIn'] ?></span>
 				</div>

@@ -34,10 +34,14 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 } else {
 		
 	//First request from new user, make sure we get the ip address   WAS OR NOT AND BELOW
-	if(($_SERVER['SERVER_PORT'] == 1444)||   // this case is after a logout
+	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
 	  ($_SESSION['view-count'] == 0)||
 	  (!isset($_SESSION['view-count']))) {
-  //error_log("first request new user:" . $_SESSION['view-count']);
+        error_log("first request new user:" . $_SESSION['view-count']);
+
+        if(!isset($_SESSION['view-count'])) {
+            $_SESSION['view-count'] = 0;    //initialise
+        }
 
 		$ly = new cls_layer();
 		

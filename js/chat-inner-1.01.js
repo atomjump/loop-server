@@ -204,7 +204,7 @@ var msg = function() {
 		this.localMsg[this.localMsgId].shouted = $('#shouted').val();
 		this.localMsg[this.localMsgId].shortCode = shortCode;
 		this.localMsg[this.localMsgId].shortCode = publicTo;
-	 this.processEachMsg();
+	    this.processEachMsg();
 
 		records = showMore;	//If we had clicked more before, we want to reduce again
 
@@ -228,8 +228,8 @@ var msg = function() {
 		this.localMsg[this.localMsgId].shouted = $('#shouted').val();		//Save whatever was entered when pushing enter or clicking send
 		this.localMsg[this.localMsgId].typing = "off";
 		this.localMsg[this.localMsgId].status = "committed";
-  	this.localMsg[this.localMsgId].shortCode = shortCode;
- 	 this.localMsg[this.localMsgId].publicTo = publicTo;
+  	    this.localMsg[this.localMsgId].shortCode = shortCode;
+ 	    this.localMsg[this.localMsgId].publicTo = publicTo;
 
 		//Clear the shout input box
 		$('#shouted').val('');
@@ -279,7 +279,9 @@ var msg = function() {
 		//Remove message from server side
 		if(msgId == this.localMsgId) {	//only if the current message
 			this.localMsg[msgId].status = "deactivate";
+			
 			this.processEachMsg();
+			
 		}
 	}
 
@@ -322,7 +324,7 @@ var msg = function() {
 	}
 	this.deactivateAll = deactivateAll;
 
-	function processEachMsg()
+	function processEachMsg(cb)
 	{
 		//Loop through each message in the array
 		var mythis = this;
@@ -340,6 +342,10 @@ var msg = function() {
 					}, function(response){ 
 						var results = response;
 						refreshResults(results);
+						
+						if(cb) {
+						    cb();
+						}
 					});
 				}
 			} else {
@@ -417,7 +423,7 @@ function registerNewKeypress()
 	var myMsgId = mg.localMsgId;
 	typingTimer = setTimeout(function() { 
   		//Delete the typing message (or rather deactivate it)
-			mg.deactivateMsg(myMsgId);
+		mg.deactivateMsg(myMsgId);
 
 	}, 10000);	//30000);
 
@@ -478,7 +484,7 @@ $(document).ready(function() {
 				});
 				
 				$('#shouted').bind('paste',function() {
-				 	//Entered		a paste operation. Note this wouldn't be detected by a js keypress ordinarily but it does pretty much what the keypress does		
+				 	//Entered a paste operation. Note this wouldn't be detected by a js keypress ordinarily but it does pretty much what the keypress does		
 				 	
 				 	// Short pause to wait for paste to complete
 					setTimeout( function() {
@@ -492,7 +498,7 @@ $(document).ready(function() {
 						
 						} else {
 					
-					    mg.reactivateMsg(mg.localMsgId); //if it was deactivated
+					        mg.reactivateMsg(mg.localMsgId); //if it was deactivated
 							registerNewKeypress();
 					
 						}
@@ -507,10 +513,10 @@ $(document).ready(function() {
  					var keyCode = evt.keyCode;
 
 					
-     			if((keyCode === 13)||(keyCode === 10)) {
-						//If a return, rely on the submit not the key. On iphone return is 10
-						return false;
-   				}
+         			if((keyCode === 13)||(keyCode === 10)) {
+						    //If a return, rely on the submit not the key. On iphone return is 10
+						    return false;
+       				}
 					
 					
 					//Register that we have started typing
@@ -541,27 +547,27 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 {
    if(typeof(priv) != "undefined") {
       
-   			if((priv === false)||(priv == 0)) {
+   		if((priv === false)||(priv == 0)) {
 		      //Via a social network - still public. TODO change colour of button?
-		 	     whisperOften = whisper_to;		//set global
-			     $('#private-button').html("Public to " + targetName);
+		 	  whisperOften = whisper_to;		//set global
+			  $('#private-button').html("Public to " + targetName);
 		 
 		      sendPublic = true;
 		      shortCode = socialNetwork;
 		      publicTo = targetName;
-		   } else {
-		      whisperOften = whisper_to;		//set global
-	       $('#private-button').html("Send to " + targetName);
-        sendPublic = false;
-        shortCode = "";
-        publicTo = "";
+		} else {
+		    whisperOften = whisper_to;		//set global
+	        $('#private-button').html("Send to " + targetName);
+            sendPublic = false;
+            shortCode = "";
+            publicTo = "";
 		   
-		   }
+		}
      
    } else {
    
       whisperOften = whisper_to;		//set global
-	     $('#private-button').html("Send to " + targetName);
+	  $('#private-button').html("Send to " + targetName);
       sendPublic = false;
       shortCode = "";
       publicTo = "";
@@ -716,7 +722,7 @@ function prepareUpload(event)
 
 function upload() {
 
- 	//TODO: show uploading
+ 	//TODO: show uploading progress
     
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
@@ -924,9 +930,9 @@ function refreshResults(results)
 		//Session results
 		$('#ses').val(results.ses);
   	
-  	//Set the cookie also so that when we come back we will have same user
-  	var ses = results.ses;
-  	document.cookie = 'ses=' + ses + '; path=/; expires=' + cookieOffset() + ';'; //Thu,31-Dec-2020 00:00:00 GMT
+      	//Set the cookie also so that when we come back we will have same user
+      	var ses = results.ses;
+      	document.cookie = 'ses=' + ses + '; path=/; expires=' + cookieOffset() + ';'; //Thu,31-Dec-2020 00:00:00 GMT
   
 	}
 	
@@ -1022,19 +1028,43 @@ function family(string)
 
 cs += 9484320;
 
-function logout() {
-	
-	$('#comment-logout-text').hide();	//show the correct text 
-	$('#comment-not-signed-in').show();
-	$('#ses').val('');  //also sign out the current sess
- 
+
+function beforeLogout(cb) {
+    //This is called before logout.php is called
+    
     //Reset the email/pass
     $('#email-opt').val('');
     $('#your-name-opt').val('');
     $('#password-opt').val('');
+    $('#phone-opt').val('');
+    
+    //Clear out the local cookies
+    document.cookie = "your_name=; path=/; expires=" + cookieOffset() + ";";
+    document.cookie = "email=; path=/; expires=" + cookieOffset() + ";";
+    document.cookie = "phone=; path=/; expires=" + cookieOffset() + ";";
+    document.cookie = "your_password=; path=/; expires=" + cookieOffset() + ";";
+
+    
+    cb();
+
+}
+
+function logout() {
+	//This is called after the call to logout.php is complete
+	$('#comment-logout-text').hide();	//show the correct text 
+	$('#comment-not-signed-in').show();
+	$('#ses').val('');  //also sign out the current sess
+ 
+
+    
+ 
+    
 
 	portReset = false; 
 	port=initPort;
+	
+	//And run a search
+	doSearch();
 	return;
 }
 

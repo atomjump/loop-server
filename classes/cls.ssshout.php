@@ -117,13 +117,13 @@ class cls_ssshout
 		}
 		
 		if((is_null($email))||($email == '')) {
-			//This is likely a first request for a session - just check for users with no email
-		 error_log("logged user:" . $_SESSION['logged-user']);
-		 
-		 if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
-					 return $_SESSION['logged-user'];
-				} else {
-			  //no existing row with this ip
+			 //This is likely a first request for a session - just check for users with no email
+	         error_log("logged user:" . $_SESSION['logged-user']);
+	         
+	         if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
+				         return $_SESSION['logged-user'];
+             } else {
+			        //no existing row with this ip
 			 		//Create a new 'temporary' user
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
 					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());

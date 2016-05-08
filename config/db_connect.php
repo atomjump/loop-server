@@ -99,7 +99,7 @@
 		
 	} else {
   
-  $cnf = $config['production']; 
+        $cnf = $config['production']; 
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
@@ -123,6 +123,11 @@
 		
 		$staging = false;
 	}	
+	
+	//Make sure we have a default logoutPort
+	if(!isset($cnf['logoutPort'])) {
+	    $cnf['logoutPort'] = 1444;
+	}
 	
 	//General globals:
 	$process_parallel = array();                //An array of system commands to run after an insert message request. These
