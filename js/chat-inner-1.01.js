@@ -579,7 +579,7 @@ function set_options_cookie() {
    
     if(yourName == "") {
     	
-    	yourName = lsmsg.msgs[lang].defaultYourName;
+    	yourName = ""; //Testing Try a blank? lsmsg.msgs[lang].defaultYourName;
     	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
     	
     } else {
@@ -592,7 +592,7 @@ function set_options_cookie() {
     
     if(email == "") {
     	
-    	email = lsmsg.msgs[lang].defaultYourEmail;
+    	email = ""; //Testing out lsmsg.msgs[lang].defaultYourEmail;
     	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
     	
     } else {
@@ -627,6 +627,7 @@ function set_options_cookie() {
 		}).done(function(response) {
 			var msg = "";
 			var toggle = true;
+			var timeMult= 1;
 			
 		
 			switch(response)
@@ -656,6 +657,7 @@ function set_options_cookie() {
 					toggle = true;
 					$('#comment-logout-text').show();	//show the correct text 
 					$('#comment-not-signed-in').hide();		
+					timeMult = 6;
 				break;
 				
 				default:
@@ -680,7 +682,7 @@ function set_options_cookie() {
 							$("#comment-messages").hide();
 							$("#comment-popup-content").toggle(); 
 							$("#comment-options").toggle();
-						}, 500);
+						}, (500*timeMult));
 				
 				}
 			} else {
