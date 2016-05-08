@@ -589,7 +589,7 @@ class cls_login
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
 		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		if(($row = mysql_fetch_array($result))&&($email != ""))
 		{
 			//Email exists
 			

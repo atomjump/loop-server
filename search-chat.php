@@ -44,7 +44,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 		$ip = $ly->getRealIpAddr();
 		
 		make_writable_db();
-		$user_id = $sh->new_user('', $ip);		//Was NULL
+		$user_id = $sh->new_user('', $ip, null, true);		//Was NULL
 		
 		$_SESSION['logged-user'] = $user_id;		//This will be a 'temporary user id' - for their ip address only
 		$_SESSION['user-ip'] = $ip;					//Save their ip in this session
