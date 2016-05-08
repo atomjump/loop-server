@@ -36,10 +36,10 @@
 
  
      // Remove any cookies
-     setcookie("your_name", "", time() - 3600);
-     setcookie("email", "", time() - 3600);
-     setcookie("phone", "", time() - 3600);
-     setcookie("your_password", "", time() - 3600);
+     setcookie("your_name", "deleted", time() - 3600);
+     setcookie("email", "deleted", time() - 3600);
+     setcookie("phone", "deleted", time() - 3600);
+     setcookie("your_password", "deleted", time() - 3600);
  
 
     //Note: we should keep this session open

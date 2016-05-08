@@ -582,6 +582,7 @@ function set_options_cookie() {
     var yourName = $('#your-name-opt').val();
     var email = $('#email-opt').val();
     var phone = $('#phone-opt').val();
+    var sendNewUserMsg = true;
    
     if(yourName == "") {
     	
@@ -598,6 +599,7 @@ function set_options_cookie() {
     
     if(email == "") {
     	
+    	sendNewUserMsg = false;
     	email = ""; //Testing out lsmsg.msgs[lang].defaultYourEmail;
     	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
     	
@@ -640,6 +642,7 @@ function set_options_cookie() {
 			{
 				case "LOGGED_IN":
 					
+					
 					msg = lsmsg.msgs[lang].loggedIn;
 					toggle = true;
 					$('#comment-logout-text').show();	//show the correct text 
@@ -659,11 +662,18 @@ function set_options_cookie() {
 				break;
 				
 				case 'NEW_USER':
-					msg = lsmsg.msgs[lang].registration;
-					toggle = true;
-					$('#comment-logout-text').show();	//show the correct text 
-					$('#comment-not-signed-in').hide();		
-					timeMult = 6;
+				
+				    if(sendNewUserMsg == true) {
+					    msg = lsmsg.msgs[lang].registration;
+					    toggle = true;
+					    $('#comment-logout-text').show();	//show the correct text 
+					    $('#comment-not-signed-in').hide();		
+					    timeMult = 6;
+					} else {
+					    toggle = true;
+					    $('#comment-logout-text').show();	//show the correct text 
+					    $('#comment-not-signed-in').hide();	
+					}
 				break;
 				
 				default:
@@ -1037,12 +1047,13 @@ function beforeLogout(cb) {
     $('#your-name-opt').val('');
     $('#password-opt').val('');
     $('#phone-opt').val('');
+    $('#name-pass').val('');
     
     //Clear out the local cookies
-    document.cookie = "your_name=; path=/; expires=" + cookieOffset() + ";";
-    document.cookie = "email=; path=/; expires=" + cookieOffset() + ";";
-    document.cookie = "phone=; path=/; expires=" + cookieOffset() + ";";
-    document.cookie = "your_password=; path=/; expires=" + cookieOffset() + ";";
+    document.cookie = "your_name=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    document.cookie = "email=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    document.cookie = "phone=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+    document.cookie = "your_password=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 
     
     cb();
