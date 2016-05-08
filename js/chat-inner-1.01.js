@@ -1026,6 +1026,10 @@ function logout() {
 	$('#comment-not-signed-in').show();
 	$('#ses').val('');  //also sign out the current sess
  
+    //Reset the email/pass
+    $('#email-opt').val('');
+    $('#your-name-opt').val('');
+    $('#password-opt').val('');
 
 	portReset = false; 
 	port=initPort;
