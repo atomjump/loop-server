@@ -225,6 +225,8 @@ class cls_ssshout
 	public function social_post($public_to, $short_code, $user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $sender_title = null)
  	{
  	    global $staging;
+            global $msg;
+            global $lang;
  	    
   	
 	  //Get the URL of where it was from  		
@@ -269,6 +271,8 @@ class cls_ssshout
 	
 	public function social_outing($message, $public_to, $short_code)
 	{
+                 global $msg;
+                 global $lang;
 		 $outgoing = "";
 	
 		 switch($short_code)
@@ -277,7 +281,7 @@ class cls_ssshout
 		 	  case "twt":
 		 	  			//In twitters case, they will be directed back to our page, and there must be a clear indication
 		 	  			//of which message was sent to them
-		 	  			$outgoing = $message . str_replace("PUBLIC_TO", $public_to, $msg['msgs'][$lang]['tweetAlsoSentTo']);
+		 	  			$outgoing = $message . " " . str_replace("PUBLIC_TO", $public_to, $msg['msgs'][$lang]['tweetAlsoSentTo']);
 		 	  break;
 		 
 		 	  default:
@@ -556,7 +560,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = false, $allow_plugins = true, $allowed_plugins = null)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null)
 	{
 	    global $msg;
 	    global $lang;
