@@ -235,7 +235,7 @@ class cls_layer
 						if($notify == true) {
 						
 						 //note: from user id is actually the recipient, it is their account we are reducing
-							$cmd = "nohup nice -n 10 /usr/bin/php  " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $row['int_user_id'] . " staging=" . $staging;	// . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
+							$cmd = "nohup nice -n 10 /usr/bin/php  " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $row['int_user_id'] . " staging=" . $staging . " > /dev/null 2>&1 &";	// . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
 		
 		
 							$output = shell_exec($cmd);
