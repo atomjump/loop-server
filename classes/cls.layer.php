@@ -270,8 +270,9 @@ class cls_layer
 				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		
-			cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
-		
+		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
+			    cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
+		    }
 		
 		}
 	
