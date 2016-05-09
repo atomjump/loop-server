@@ -292,7 +292,7 @@
 			} else {
 				$msg_id = NULL;
 			}
-
+			
 			$se->process($shout_id, $msg_id, 25);		//25 messages
 		}
 		
@@ -306,7 +306,7 @@
 	            sleep(5);
 	            
 	            //error_log("polling");
-	            $r1 = $process_parallel->JobPollAsync($process_parallel->job);  
+	            $r1 = $process_parallel_url->JobPollAsync($process_parallel_url->job);  
 	            //error_log("returned $r1");
 	
 	            if ($r1 === false) break;
@@ -324,7 +324,7 @@
 		    
 		    for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
 		    
-		        shell_exec($process_parallel[$cnt]);
+		        $ret = shell_exec($process_parallel[$cnt]);
 		    
 		    }
 		

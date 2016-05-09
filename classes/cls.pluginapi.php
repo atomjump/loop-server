@@ -237,7 +237,7 @@ class cls_plugin_api {
 	                
 	                }
 	                
-	                $cmd = "nohup nice -10 " . $command . " " . $logfile . " 2>&1 &";
+	                $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
 	                array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 	            }	        
 		        
@@ -258,7 +258,7 @@ class cls_plugin_api {
 	
 	public function new_message($sender_name_str,                           //e.g. 'Fred'
 	                            $message,                                   //Message being sent e.g "Hello world!"
-	                            $recipient_id,                              //User id of recipient e.g. 436 
+	                            $recipient_id,                              //User id of recipient e.g. "123.123.123.123:436" 
 	                            $sender_email,                              //Sender's email address e.g. "fred@company.com"
 	                            $sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
 	                            $message_forum_name,                        //Forum name e.g. 'aj_interesting'
@@ -303,7 +303,7 @@ class cls_plugin_api {
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	    }
 	 
-	    
+	    error_log("Allowed plugins:" . $allowed_plugins);
 	 
 	     return $sh->insert_shout($latitude,
 	                        $longitude,

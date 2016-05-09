@@ -867,7 +867,7 @@ class cls_ssshout
 					}
 				}
 				
-				if(($typing == false)&&($message_id != "")) {
+				if(($typing == false)&&($message_id != "")) {      
 			        //Hook into plugins here
 			        if($allow_plugins == true) {
 			            $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);

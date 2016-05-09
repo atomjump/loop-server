@@ -324,7 +324,7 @@ var msg = function() {
 	}
 	this.deactivateAll = deactivateAll;
 
-	function processEachMsg(cb)
+	function processEachMsg()
 	{
 		//Loop through each message in the array
 		var mythis = this;
@@ -342,10 +342,6 @@ var msg = function() {
 					}, function(response){ 
 						var results = response;
 						refreshResults(results);
-						
-						if(cb) {
-						    cb();
-						}
 					});
 				}
 			} else {
@@ -861,7 +857,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 			if(mycommit == true) {
 				//If we clicked a commit button
-					
+				
 				mg.updateMsg(myMsgId, myShoutId, "complete");
 				
 				var results = response;
