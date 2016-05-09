@@ -387,21 +387,21 @@
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
-							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="Enter your name" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
+							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="Enter your name" autocomplete="off" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
 		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
-						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterEmail'] ?>" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
+						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterEmail'] ?>" autocomplete="off" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
 								</div>
 								<div><a id="comment-show-password" href="javascript:"><?php echo $msg['msgs'][$lang]['more'] ?></a></div>
 								<div id="comment-password-vis" style="display: none;">
 									<div  class="form-group">
 										<div><?php echo $msg['msgs'][$lang]['yourPassword'] ?> <a href="javascript:" onclick="$('#password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourPasswordReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>, <a id='clear-password' href="javascript:" onclick="return clearPass();"><?php echo $msg['msgs'][$lang]['resetPasswordLink'] ?></a> <span id="password-explain" style="display: none; color: #f88374;"><?php echo $msg['msgs'][$lang]['yourPasswordReason'] ?> </span></div>
-						  				<input  id="password-opt" name="pd" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
+						  				<input  id="password-opt" name="pd" type="password" class="form-control" autocomplete="off" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
 									</div>
 									<div  class="form-group">
 										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
-										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
+										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="off" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 									</div>
 									<div style="float: right;">
 						  					<a id="comment-user-code" href="javascript:"><?php echo $msg['msgs'][$lang]['advancedLink'] ?></a>
