@@ -229,6 +229,10 @@ To test the web domain, use the following small PHP script:
 
 **loadbalancer**: Required for a production setup - any number of machines. Can be blank in a staging setup.
 
+**phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
+
+**logoutPort**: Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5
+
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
 Advanced settings, and write this into the config. This is the default location for private messages if there is no other
 owner of a group.
@@ -248,6 +252,8 @@ account for fluctuations in price.
 
 **twitter**: optional. Retrieves tweets from twitter related to this subdomain, and allows for replying to the tweets (posts a 
 message via twitter).
+
+
 
 
 ## Plugins
