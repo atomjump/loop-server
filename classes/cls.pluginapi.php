@@ -303,7 +303,6 @@ class cls_plugin_api {
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	    }
 	 
-	    error_log("Allowed plugins:" . $allowed_plugins);
 	 
 	     return $sh->insert_shout($latitude,
 	                        $longitude,
