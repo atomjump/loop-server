@@ -358,7 +358,7 @@
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 							<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 							  <div class="">
-								<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="false"> 
+								<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
 							  </div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
