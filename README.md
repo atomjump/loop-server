@@ -28,19 +28,23 @@ SSL server
 3. Create a temporary image upload directory at
 /images/im
 
+```
 chmod 777 /images/im
-
+```
 
 4. Copy SET_AS_htaccess to .htaccess and replace atomjump.com with your domain
 
 5. Customer defined themes must be on a secure server if the server is on ssl.
 
 6. To the ajFeedback object in your index.html, add a parameter
-    "server": "http://yourserver.com"
+```   
+ "server": "http://yourserver.com"
+```
 
 7. In a MySQL prompt, run 'create database ssshout'. Then from the command line:
-    mysql -u youruser -p ssshout < db/atomjump-loop-shell.sql
-
+```   
+ mysql -u youruser -p ssshout < db/atomjump-loop-shell.sql
+```
 
 
 # Known project issues
