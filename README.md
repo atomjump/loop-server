@@ -293,7 +293,7 @@ For a sample plugin called 'help_is_coming':
 
 Add the entry "help_is_coming" to the "plugins" array in config/config.json to activate the plugin.
 
-# Reading functions
+## Reading functions
 
 
 **db_insert()**
@@ -334,7 +334,7 @@ Server: >= 0.5.0
 
 
 
-# Hooks
+## Hooks
 
 **on_message()**
 
@@ -349,7 +349,7 @@ Output parameters
 ($message)  
 Server: >= 0.5.0
 
-# Writing functions
+## Writing functions
 
 **new_message()**
 
@@ -380,7 +380,7 @@ Optional Parameters
 Server: >= 0.5.0
 
 
-# Misc
+## Misc
 
 **parallel_system_call()**
 
@@ -390,4 +390,14 @@ Server: >= 0.5.5
 
 Optional Parameters
 ($platform:'linux'/'windows' default:'linux')
+
+
+# Contributing
+
+Contributions are welcome, and they can take the shape of:
+
+1. Core: Submit github pull requests. We will need to consider whether the feature should be in core, or externally as a plugin.  It is generally a good idea to get in touch with us via our homepage at https://atomjump.com to ensure we are not already working on a similar feature.
+2. Plugins: Develop to the API above, and then publish on the https://atomjump.com/smart.php 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
+
+
 
