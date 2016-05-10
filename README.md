@@ -14,8 +14,8 @@ Apache2,
 Linux server (though a Windows server may be partially functional)  
 
 # Optional
-Amazon MySQL RDS (any number of db servers),
-Load balancers haproxy,
+Amazon MySQL RDS (any number of db servers),  
+Load balancers haproxy,  
 SSL server
 
 
