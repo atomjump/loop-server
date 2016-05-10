@@ -332,7 +332,7 @@
 	
 	
 			<div id="comment-chat-form" class="container" >
-				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(true);"  method="GET">
+				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(true);"  autocomplete="off" method="GET">
 							<input type="hidden" name="action" value="ssshout">
 							<input type="hidden" id="lat" name="lat" value="">
 							<input type="hidden" id="lon" name="lon" value="">
