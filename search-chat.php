@@ -37,8 +37,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
 	  ($_SESSION['view-count'] == 0)||
 	  (!isset($_SESSION['view-count']))) {
-        error_log("first request new user:" . $_SESSION['view-count']);
-
+        
         if(!isset($_SESSION['view-count'])) {
             $_SESSION['view-count'] = 0;    //initialise
         }
