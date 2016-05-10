@@ -21,7 +21,7 @@ SSL server
 
 # Server Setup
 
-1. /server directory. Replace atomjump with your own domain.
+1. /server directory. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
 
 2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths.
 
