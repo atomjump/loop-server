@@ -50,15 +50,16 @@ when possible.
 
 # Optional Setup
 
-Add two cron tasks to your server  
-1. A typing cleanup task. On rare instances, a 'typing...' message is left (if the machine cut out etc.). This cleans up any of these old messages periodically (every 5 minutes).  
+Add two cron tasks to your server:
+
+* A typing cleanup task. On rare instances, a 'typing...' message is left (if the machine cut out etc.). This cleans up any of these old messages periodically (every 5 minutes).  
 
 ```
 sudo crontab -e  
 */5 * * * *	/usr/bin/php /yourserverpath/typing-cron.php  
 ```
 
-2. A sentiment analysis task. This sentiment is reflected when you download a spreadsheet of the messages. It requires nodejs to be installed and available to be run by a cron job.  
+* A sentiment analysis task. This sentiment is reflected when you download a spreadsheet of the messages. It requires nodejs to be installed and available to be run by a cron job.  
 
 On your internet server, first install NodeJS and npm. See Ubuntu install notes at https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-an-ubuntu-14-04-server, but there are several ways to do this depending on your platform e.g. MacOSX may vary slightly.  
 
