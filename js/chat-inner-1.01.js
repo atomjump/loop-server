@@ -581,42 +581,29 @@ function set_options_cookie() {
     var sendNewUserMsg = true;
    
     if(yourName == "") {
-    	
-    	yourName = ""; //Testing Try a blank? lsmsg.msgs[lang].defaultYourName;
+    	yourName = ""; 
     	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
-    	
     } else {
-    	
     	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
-    	
     }
     $('#name-pass').val(yourName);	//Set the form
    
     
     if(email == "") {
-    	
     	sendNewUserMsg = false;
-    	email = ""; //Testing out lsmsg.msgs[lang].defaultYourEmail;
+    	email = "";
     	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
-    	
     } else {
-    	
     	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
-    	
     }
     $("#email").val(email);		//Set the form
     
     
     if(phone == "") {
-    	
     	phone = '';
     	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + ';';
-    	
     } else {
-    	
-    	
     	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + ';';
-    	
     }
     $("#phone").val(phone);		//Set the form
     
@@ -670,6 +657,10 @@ function set_options_cookie() {
 					    $('#comment-logout-text').show();	//show the correct text 
 					    $('#comment-not-signed-in').hide();	
 					}
+				break;
+				
+				case 'RELOAD':
+				    location.reload();
 				break;
 				
 				default:

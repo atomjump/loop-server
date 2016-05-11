@@ -584,8 +584,56 @@ class cls_login
 	}
 
 
-	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false)
+    public function save_plugin_settings($user_id, $full_request, $type = "SAVE", $allowed_plugins = null)
+    {
+        //$type = SAVE or NEW
+        global $cnf;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    
+	    $reload = false;
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_save_settings") == true) {
+	            //OK call the on_settings function of the plugin
+	            $returns = $pg->on_save_settings($user_id, $full_request, $type);
+	        
+	            if($returns == "RELOAD") {
+	                $reload = true;
+	            }
+	        } else {
+	            //No on_save_settings() in plugin - do nothing
+
+	        }
+	    }
+	    if($reload == true) {
+	        return "RELOAD";        //This option reloads the entire frame e.g. for a language change
+	    } else {
+	        return true;
+        }
+    
+    }
+
+
+	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
+	
+	    
 	
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
@@ -616,6 +664,14 @@ class cls_login
 				
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
+				
+				
+				//Handle any plugin generated settings
+	            $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+                if($returns == "RELOAD") {
+                    return "RELOAD";
+                }
+				
 				return "STORED_PASS";
 				
 			} else {
@@ -662,7 +718,11 @@ class cls_login
 					}
 					
 					
-					
+					//Handle any plugin generated settings
+	                $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+	                if($returns == "RELOAD") {
+	                    return "RELOAD";
+	                }
 				
 					return "LOGGED_IN";  
 					
@@ -695,6 +755,13 @@ class cls_login
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
 			}
+			
+			//Handle any plugin generated settings
+			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
+            if($returns == "RELOAD") {
+                return "RELOAD";
+            }
+			
 			
 			return "NEW_USER";
 		}

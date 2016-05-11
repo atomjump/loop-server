@@ -387,7 +387,7 @@
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
-							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="Enter your name" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
+							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
 		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
@@ -403,6 +403,7 @@
 										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
 										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 									</div>
+									<?php $sh->call_plugins_settings(null); //User added plugins here ?>									
 									<div style="float: right;">
 						  					<a id="comment-user-code" href="javascript:"><?php echo $msg['msgs'][$lang]['advancedLink'] ?></a>
 						  			</div>
@@ -421,6 +422,7 @@
 							 <div><?php echo $msg['msgs'][$lang]['tip'] ?></div>
 							 <br/>
 							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
+							 
 				 </form>
 		</div>
 		<div id="comment-upload" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -450,6 +452,7 @@
 							 <br/>
 					
 							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
+							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
 		</div>
 		

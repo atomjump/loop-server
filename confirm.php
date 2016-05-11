@@ -14,12 +14,12 @@ $lg = new cls_login();
 
 if($_REQUEST['usercode']) {
 
-		//Read
-		$json = $lg->get_usercode();
+	//Read
+	$json = $lg->get_usercode();
 	
 } else {
 	//Confirm email/password
-	$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode']);
+	$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);
 }
 
 echo $_GET['callback'] . "(" . json_encode($json) . ")";

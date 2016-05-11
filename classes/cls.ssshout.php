@@ -558,6 +558,75 @@ class cls_ssshout
 	    return $message;
 	}
 	
+	
+	
+    public function call_plugins_settings($allowed_plugins) {
+	    global $cnf;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_more_settings") == true) {
+	            //OK call the on_settings function of the plugin
+	            $pg->on_more_settings();
+	        
+	        } else {
+	            //No on_message() in plugin - do nothing
+
+	        }
+	    }
+	    return true;
+	}
+	
+
+    public function call_plugins_upload($allowed_plugins) {
+	    global $cnf;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_upload_screen") == true) {
+	            //OK call the on_settings function of the plugin
+	            $pg->on_upload_screen();
+	        
+	        } else {
+	            //No on_message() in plugin - do nothing
+
+	        }
+	    }
+	    return true;
+	}
+	
 
 	
 	

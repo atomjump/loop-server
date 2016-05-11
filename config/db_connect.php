@@ -17,15 +17,47 @@
      
      } 
   }
+  
+  function file_get_contents_utf8($fn) {
+     $content = file_get_contents($fn);
+      return mb_convert_encoding($content, 'UTF-8',
+          mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+  }
 	
 
   if(!isset($msg)) {
      //Get global language file - but only once
-     $data = file_get_contents (dirname(__FILE__) . "/messages.json");
+     $data = file_get_contents_utf8(dirname(__FILE__) . "/messages.json");
      if($data) {
         $msg = json_decode($data, true);
         if(!isset($msg)) {
-          echo "Error: config/messages.json is not valid JSON.";
+          echo "Error: config/messages.json is not valid JSON ";
+          
+          switch(json_last_error()) {
+          
+                case JSON_ERROR_NONE:
+                    echo ' - No errors';
+                break;
+                case JSON_ERROR_DEPTH:
+                    echo ' - Maximum stack depth exceeded';
+                break;
+                case JSON_ERROR_STATE_MISMATCH:
+                    echo ' - Underflow or the modes mismatch';
+                break;
+                case JSON_ERROR_CTRL_CHAR:
+                    echo ' - Unexpected control character found';
+                break;
+                case JSON_ERROR_SYNTAX:
+                    echo ' - Syntax error, malformed JSON';
+                break;
+                case JSON_ERROR_UTF8:
+                    echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+                break;
+                default:
+                    echo ' - Unknown error';
+                break;
+          
+          }
           exit(0);
         }
         
@@ -43,6 +75,9 @@
   
   //Set default language, unless otherwise set
   $lang = $msg['defaultLanguage'];
+  if(isset($_COOKIE['lang'])) {
+     $lang = $_COOKIE['lang'];
+  }
     
 
     function trim_trailing_slash($str) {
