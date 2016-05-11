@@ -79,22 +79,52 @@ Server: >= 0.5.0
 
 
 
-# Hooks
+## Hooks
 
 **on_message()**
 
 Output parameters
-($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)  
-Server: >= 0.5.0
+($message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)  
+Plugin function returns  
+(true)  
+Server: >= 0.5.1
 
 
 **before_message()**
 
 Output parameters
 ($message)  
+Plugin function returns  
+($message)  
 Server: >= 0.5.0
 
-# Writing functions
+
+**on_more_settings()**
+
+Output parameters
+($message)  
+Plugin function writes HTML inside ordinary PHP tags e.g. ?>Your settings HTML<?php  
+Server: >= 0.5.9  
+
+
+**on_save_settings()**
+
+Output parameters
+($user_id, $full_request: array of options, $type: NEW or SAVE)
+Plugin function returns  
+(true/false)  
+
+
+**on_upload_screen()**
+
+Output parameters
+($message)  
+Plugin function writes HTML inside ordinary PHP tags e.g. ?>Your settings HTML<?php  
+Server: >= 0.5.9  
+
+
+
+## Writing functions
 
 **new_message()**
 
@@ -112,7 +142,6 @@ Additions:
 
 Output parameters
 ($message_id)
-
 
 
 **hide_message()**
