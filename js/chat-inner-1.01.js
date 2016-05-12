@@ -683,6 +683,8 @@ function set_options_cookie() {
 			
 			//show the messages again
 			if(toggle == true) {
+			    
+			    var reloadOpt = false;
 			    if(mytype[1]) {
 				    if(mytype[1] === "RELOAD") {
 				        reloadOpt = true;
@@ -701,7 +703,7 @@ function set_options_cookie() {
 				} else {
 					$("#comment-messages").html(msg);
 					$("#comment-messages").show();
-					var reloadOpt = false;
+					
 					
 					
 					
