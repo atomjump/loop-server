@@ -597,7 +597,7 @@ class cls_login
 	        $plugins = $cnf['plugins'];
 	    }
 	    
-	    $reload = false;
+	    $reloadScreen = false;
 	    	    
 	    //Loop through each class and call each plugin_* -> on_message() function
 	    for($cnt=0; $cnt < count($plugins); $cnt++) {
@@ -613,15 +613,16 @@ class cls_login
 	            //OK call the on_settings function of the plugin
 	            $returns = $pg->on_save_settings($user_id, $full_request, $type);
 	        
-	            if($returns == "RELOAD") {
-	                $reload = true;
+	            
+	            if(strcmp($returns, "RELOAD") == 0) {
+	                $reloadScreen = true;
 	            }
 	        } else {
 	            //No on_save_settings() in plugin - do nothing
 
 	        }
 	    }
-	    if($reload == true) {
+	    if($reloadScreen === true) {
 	        return "RELOAD";        //This option reloads the entire frame e.g. for a language change
 	    } else {
 	        return true;
@@ -668,11 +669,11 @@ class cls_login
 				
 				//Handle any plugin generated settings
 	            $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                if($returns == "RELOAD") {
-                    return "RELOAD";
+                if(strcmp($returns, "RELOAD") == 0) {
+                    $reload = ",RELOAD";
                 }
 				
-				return "STORED_PASS";
+				return "STORED_PASS" . $reload;
 				
 			} else {
 				//A password already - compare with existing password
@@ -720,11 +721,12 @@ class cls_login
 					
 					//Handle any plugin generated settings
 	                $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-	                if($returns == "RELOAD") {
-	                    return "RELOAD";
+	                if(strcmp($returns, "RELOAD") == 0) {
+	                    $reload = ",RELOAD";
+	                   
 	                }
 				
-					return "LOGGED_IN";  
+					return "LOGGED_IN" . $reload;  
 					
 				
 				} else {
@@ -758,12 +760,12 @@ class cls_login
 			
 			//Handle any plugin generated settings
 			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
-            if($returns == "RELOAD") {
-                return "RELOAD";
+            if(strcmp($returns, "RELOAD") == 0) {
+                $reload = ",RELOAD";
             }
 			
 			
-			return "NEW_USER";
+			return "NEW_USER" . $reload;
 		}
 	}
 	

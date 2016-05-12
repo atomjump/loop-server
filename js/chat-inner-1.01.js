@@ -633,8 +633,9 @@ function set_options_cookie() {
 			var reload = false;
 			var timeMult= 1;
 			
+			var type = response.split(','); 
 		
-			switch(response)
+			switch(type[0])
 			{
 				case "LOGGED_IN":
 					
@@ -672,17 +673,12 @@ function set_options_cookie() {
 					}
 				break;
 				
-				case 'RELOAD':
-				    toggle = true;
-				    reload = true;
-				    
-				break;
-				
 				default:
 					msg = lsmsg.msgs[lang].badResponse + response;
 					toggle = false;
 				break;
 			}
+			
 			
 			
 			//show the messages again
@@ -700,6 +696,14 @@ function set_options_cookie() {
 							$("#comment-messages").hide();
 							$("#comment-popup-content").toggle(); 
 							$("#comment-options").toggle();
+							
+							if(type[1]) {
+			                    //carry out a reload of the page too
+			                    if(type[1] == "RELOAD") {
+			                        location.reload();
+			                    }
+			                }
+							
 						}, (500*timeMult));
 				
 				}
@@ -708,11 +712,16 @@ function set_options_cookie() {
 				$("#comment-messages").html(msg);
 				$("#comment-messages").show();
 	
+	            if(type[1]) {
+			        //carry out a reload of the page too
+			        if(type[1] == "RELOAD") {
+			            location.reload();
+			        }
+			    }
+	
 			}
 			
-			if(reload == true) {
-			    location.reload();
-			}
+			
 				
 		});
     

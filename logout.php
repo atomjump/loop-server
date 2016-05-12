@@ -22,7 +22,6 @@
 	$_SESSION['view-count'] = 0; //testing this
     
 
-    //$_SESSION = array();
 
 	$ip = $ly->getRealIpAddr();
     $user_id = $sh->new_user('', '', '', true);
@@ -31,7 +30,6 @@
 	$_SESSION['user-ip'] = $ip;					//Save their ip in this session
 
     
-    error_log("Logging out");
     session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
 
  
