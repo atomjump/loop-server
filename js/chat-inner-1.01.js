@@ -630,6 +630,7 @@ function set_options_cookie() {
 		}).done(function(response) {
 			var msg = "";
 			var toggle = true;
+			var reload = false;
 			var timeMult= 1;
 			
 		
@@ -672,7 +673,9 @@ function set_options_cookie() {
 				break;
 				
 				case 'RELOAD':
-				    location.reload();
+				    toggle = true;
+				    reload = true;
+				    
 				break;
 				
 				default:
@@ -705,6 +708,10 @@ function set_options_cookie() {
 				$("#comment-messages").html(msg);
 				$("#comment-messages").show();
 	
+			}
+			
+			if(reload == true) {
+			    location.reload();
 			}
 				
 		});
