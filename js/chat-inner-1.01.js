@@ -691,17 +691,22 @@ function set_options_cookie() {
 				} else {
 					$("#comment-messages").html(msg);
 					$("#comment-messages").show();
+					var reloadOpt = false;
+					if(type[1]) {
+					    if(type[1] == "RELOAD") {
+					        reloadOpt = true;
+					    }
+					} 
+					
 					//Pause in here for 3 seconds before switching back to message view
 					setTimeout(function(){
+							
 							$("#comment-messages").hide();
 							$("#comment-popup-content").toggle(); 
 							$("#comment-options").toggle();
 							
-							if(type[1]) {
-			                    //carry out a reload of the page too
-			                    if(type[1] == "RELOAD") {
-			                        location.reload();
-			                    }
+							if(reloadOpt == true) {
+			                   location.reload();
 			                }
 							
 						}, (500*timeMult));
