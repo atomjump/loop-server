@@ -633,9 +633,9 @@ function set_options_cookie() {
 			var reload = false;
 			var timeMult= 1;
 			
-			var type = response.split(','); 
+			var mytype = response.split(','); 
 		
-			switch(type[0])
+			switch(mytype[0])
 			{
 				case "LOGGED_IN":
 					
@@ -683,20 +683,27 @@ function set_options_cookie() {
 			
 			//show the messages again
 			if(toggle == true) {
+			    if(mytype[1]) {
+				    if(mytype[1] === "RELOAD") {
+				        reloadOpt = true;
+				    }
+			    } 
+			
 				//Do toggle, but pause if there is a message
 				if(msg == '') {
 					//Switch back immediately
 					$("#comment-popup-content").toggle(); 
 					$("#comment-options").toggle();
+					if(reloadOpt == true) {
+			            location.reload();
+			        }
+					
 				} else {
 					$("#comment-messages").html(msg);
 					$("#comment-messages").show();
 					var reloadOpt = false;
-					if(type[1]) {
-					    if(type[1] == "RELOAD") {
-					        reloadOpt = true;
-					    }
-					} 
+					
+					
 					
 					//Pause in here for 3 seconds before switching back to message view
 					setTimeout(function(){
@@ -717,9 +724,9 @@ function set_options_cookie() {
 				$("#comment-messages").html(msg);
 				$("#comment-messages").show();
 	
-	            if(type[1]) {
+	            if(mytype[1]) {
 			        //carry out a reload of the page too
-			        if(type[1] == "RELOAD") {
+			        if(mytype[1] === "RELOAD") {
 			            location.reload();
 			        }
 			    }
