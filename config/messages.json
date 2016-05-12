@@ -44,7 +44,16 @@
                 "month": "month",
                 "year": "year",
                 "decade": "decade",
-                "ago": "ago"            
+                "seconds" : "secs",
+                "minutes": "mins",
+                "hours": "hours",
+                "days": "days",
+                "weeks": "weeks",
+                "months": "months",
+                "years": "years",
+                "decades": "decades",
+                "ago": "ago"
+                      
             },
             "fields": {
                 "id": "id",
@@ -159,6 +168,14 @@
 				"month": "mes",
 				"year": "año",
 				"decade": "década",
+				"seconds" : "secs",
+                "minutes": "min",
+                "hours": "horas",
+                "days": "días",
+                "weeks": "semanas",
+                "months": "meses",
+                "years": "años",
+                "decades": "décadas",
 				"ago": "hace"
 			},
 			"fields": {

@@ -1105,6 +1105,14 @@ class cls_search {
 		                    $msg['msgs'][$lang]['time']['month'],
 		                    $msg['msgs'][$lang]['time']['year'],
 		                    $msg['msgs'][$lang]['time']['decade']);
+		   $periods_plural = array($msg['msgs'][$lang]['time']['seconds'],
+		                    $msg['msgs'][$lang]['time']['minutes'],
+		                    $msg['msgs'][$lang]['time']['hours'],
+		                    $msg['msgs'][$lang]['time']['days'],
+		                    $msg['msgs'][$lang]['time']['weeks'],
+		                    $msg['msgs'][$lang]['time']['months'],
+		                    $msg['msgs'][$lang]['time']['years'],
+		                    $msg['msgs'][$lang]['time']['decades']);
 		   $lengths = array("60","60","24","7","4.35","12","10");
 	
 		   date_default_timezone_set($db_timezone); //e.g. "Europe/Berlin"	
@@ -1118,15 +1126,12 @@ class cls_search {
 		   }
 
 		   $difference = round($difference);
-
-           if($lang == "en") {
-		       //If language is English, pluralise if not 1
-		       if($difference != 1) {
-			       $periods[$j].= "s";
-		       }
+		   
+		   if($difference != 1) {
+		        return "$difference $periods_plural[$j] " . $tense;
+		   } else {
+		        return "$difference $periods[$j] " . $tense;
 		   }
-
-		   return "$difference $periods[$j] " . $tense;
 		}
 
   // Original PHP code by Chirp Internet: www.chirp.com.au
