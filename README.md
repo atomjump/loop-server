@@ -291,7 +291,7 @@ See https://atomjump.com/smart.php for a list of plugins available.
 
 ## Plugin API
 
-For a sample plugin called 'help_is_coming':
+For a sample plugin called 'hide_aargh':
 
 /plugins/hide_aargh/index.php
 

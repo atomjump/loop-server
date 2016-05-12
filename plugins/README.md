@@ -6,15 +6,15 @@ See https://atomjump.com/smart.php for a list of plugins available.
 
 ## Plugin API
 
-For a sample plugin called 'help_is_coming':
+For a sample plugin called 'hide_aargh':
 
-/plugins/help_is_coming/index.php
+/plugins/hide_aargh/index.php
 
 ```
 <?php
     include_once("classes/cls.pluginapi.php");
     
-    class plugin_help_is_coming
+    class plugin_hide_aargh
     {
         public function on_message($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
         {
@@ -33,10 +33,9 @@ For a sample plugin called 'help_is_coming':
 ?>
 ```
 
-Add the entry "help_is_coming" to the "plugins" array in config/config.json to activate the plugin.
+Add the entry "hide_aargh" to the "plugins" array in config/config.json to activate the plugin.
 
-
-# Reading functions
+## Reading functions
 
 
 **db_insert()**
@@ -73,8 +72,6 @@ Server: > 0.5.0
 
 No parameters  
 Server: >= 0.5.0
-
-
 
 
 
@@ -155,7 +152,7 @@ Optional Parameters
 Server: >= 0.5.0
 
 
-# Misc
+## Misc
 
 **parallel_system_call()**
 
