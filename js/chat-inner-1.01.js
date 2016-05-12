@@ -13,7 +13,15 @@ var lsmsg = {
               badResponse: 'Sorry, response is: ',
               more: 'More'
         },
-        "de":{
+        "es":{
+              defaultYourName: 'Tu Nombre',
+              defaultYourEmail: 'Su e-mail',
+              loggedIn: 'Conectado Por favor, espere..',
+              passwordWrong: 'Lo siento, la contraseña no es correcta.',
+              passwordStored: 'Gracias, su contraseña se establece ahora.',
+              registration: 'Gracias por registrarse. Para confirmar su dirección de correo electrónico que\'ve enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.',
+              badResponse: 'Lo siento, la respuesta es: ',
+              more: 'Mas'
         }       
     }
 }
@@ -433,6 +441,10 @@ $(document).ready(function() {
 			var email = getCookie("email");
 			var yourName = getCookie("your_name");
 			var password = getCookie("your_password");
+			var setLang = getCookie("lang");
+			if(setLang) {
+			    lang = setLang;			
+			}
 			var screenWidth = $(window).width();
 			var screenHeight = $(window).height();
 			
