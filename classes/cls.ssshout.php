@@ -7,79 +7,7 @@ class cls_ssshout
  public $layer_name;
  
 
-	/* old: public function trim_long_conversations($peano1, $layer_id)
-	{
 
-		//When a long conversation takes place from one person, or one person makes lots of ssshouts 
-		//it eventually breaks the 200 limit within a given peano code.  Index is peano -> message id
-		//What we are trying to do here is limit the number of ssshouts searchable at any one time from
-		//any one peano.  We make them nonactive to the search once we are past 40 shouts from one peano,
-		//or past x hours (depending on the rate within that peano).
-	
-	
-		
-		
-
-
-		//Now find a max of 40 shouts from the one peano
-		
-		//Find the first shout less than x minutes ago within peano.
-		$sql = "SELECT int_ssshout_id FROM tbl_ssshout where enm_active = 'true' AND int_peano1 = " . $peano1 . " AND int_layer_id = " . $layer_id . " AND date_when_shouted < (NOW() - INTERVAL 30 MINUTE) ORDER BY int_ssshout_id DESC"; //30 MINUTE) ";
-		if($_REQUEST['dbg'] == 'true') {
-			echo $sql . "<br>";
-		}
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
-		{
-			$my_cutoff_id = $row['int_ssshout_id'];
-		
-		
-		
-			//Find number of shouts within peano prior to this cutoff point
-			$sql = "SELECT COUNT(*) AS remove FROM tbl_ssshout  WHERE enm_active = 'true' AND int_peano1 = " . $peano1 . " AND int_layer_id = " . $layer_id . " AND int_ssshout_id < " . $my_cutoff_id . " ORDER BY int_ssshout_id DESC";
-			if($_REQUEST['dbg'] == 'true') {
-				echo $sql . "<br>";
-			}
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row_b = mysql_fetch_array($result))
-			{
-				$remove_total = $row_b['remove'];
-		
-				$perc_remove = 0.95;
-				$remove_from = (int)floor($remove_total * $perc_remove);
-				$remove_num = (int)floor($remove_total * (1.0 - $perc_remove));
-				
-				//Now deactivate (for the search) these old shouts
-				$sql = "SELECT int_ssshout_id AS from_here FROM tbl_ssshout WHERE enm_active = 'true' AND int_peano1 = " . $peano1 . " AND int_layer_id = " . $layer_id . " AND int_ssshout_id < " . $my_cutoff_id . " ORDER BY int_ssshout_id DESC LIMIT  $remove_from, 1";
-				if($_REQUEST['dbg'] == 'true') {
-					echo $sql . "<br>";
-				}
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-				if($row_c = mysql_fetch_array($result))
-				{
-					$sql = "SELECT int_ssshout_id AS to_here FROM tbl_ssshout WHERE enm_active = 'true' AND int_peano1 = " . $peano1 . " AND int_layer_id = " . $layer_id . " AND int_ssshout_id < " . $my_cutoff_id . " ORDER BY int_ssshout_id DESC LIMIT  " . ($remove_from + $remove_num) . " ,1";
-					if($_REQUEST['dbg'] == 'true') {
-						echo $sql . "<br>";
-					}
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					if($row_d = mysql_fetch_array($result))
-					{
-				
-				
-						$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE enm_active = 'true' AND int_peano1 = " . $peano1 . " AND int_layer_id = " . $layer_id . " AND int_ssshout_id < " . $row_c['from_here'] . " AND int_ssshout_id >= " . $row_d['to_here'] . " ORDER BY int_ssshout_id DESC";
-						if($_REQUEST['dbg'] == 'true') {
-							echo $sql . "<br>";
-						}
-						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					}
-				}
-			}
-		
-		}
-	
-		return;
-
-	}*/
 	
 	public function get_user_ip($user_id)
 	{
@@ -494,6 +422,7 @@ class cls_ssshout
 	
 	public function call_plugins($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins) {
 	    global $cnf;
+	    global $local_server_path;
 	    
 	    if($allowed_plugins != null) {
 	        //OK we have an array of allowed plugins
@@ -508,7 +437,7 @@ class cls_ssshout
 	        $plugin_name = $plugins[$cnt];
 	        
 	       
-	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
@@ -528,6 +457,7 @@ class cls_ssshout
 	
 	public function call_plugins_before_msg($message, $allowed_plugins = null) {
 	    global $cnf;
+	    global $local_server_path;
 	    
 	    if($allowed_plugins != null) {
 	        //OK we have an array of allowed plugins
@@ -542,7 +472,7 @@ class cls_ssshout
 	        $plugin_name = $plugins[$cnt];
 	        
 	       
-	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
@@ -562,6 +492,7 @@ class cls_ssshout
 	
     public function call_plugins_settings($allowed_plugins) {
 	    global $cnf;
+	    global $local_server_path;
 	    
 	    if($allowed_plugins != null) {
 	        //OK we have an array of allowed plugins
@@ -576,7 +507,7 @@ class cls_ssshout
 	        $plugin_name = $plugins[$cnt];
 	        
 	       
-	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
@@ -596,6 +527,7 @@ class cls_ssshout
 
     public function call_plugins_upload($allowed_plugins) {
 	    global $cnf;
+	    global $local_server_path;
 	    
 	    if($allowed_plugins != null) {
 	        //OK we have an array of allowed plugins
@@ -610,7 +542,7 @@ class cls_ssshout
 	        $plugin_name = $plugins[$cnt];
 	        
 	       
-	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
