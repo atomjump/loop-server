@@ -588,6 +588,7 @@ class cls_login
     {
         //$type = SAVE or NEW
         global $cnf;
+        global $local_server_path;
 	    
 	    if($allowed_plugins != null) {
 	        //OK we have an array of allowed plugins
@@ -604,7 +605,7 @@ class cls_login
 	        $plugin_name = $plugins[$cnt];
 	        
 	       
-	        include_once($cnf['fileRoot'] . "plugins/" . $plugin_name . "/index.php");
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
 	        $pg = new $class_name();
