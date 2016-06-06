@@ -88,7 +88,7 @@
 				
 				header("Location: " . $redirecturl);
 			} else {
-				echo echo $msg['msgs'][$lang]['cannotVerifyForPayment'];
+				echo $msg['msgs'][$lang]['cannotVerifyForPayment'];
 			
 			}
 		}
