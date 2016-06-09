@@ -5,7 +5,7 @@ var os = require('os');
 var fs = require('fs');
 
 
-var config = JSON.parse(fs.readFileSync('../config/config.json'));
+var config = JSON.parse(fs.readFileSync(__dirname + '/../config/config.json'));
 
 if((process.argv[2]) && (process.argv[2] == '-production')){
   var cnf = config.production;
