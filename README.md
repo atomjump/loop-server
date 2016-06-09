@@ -8,10 +8,29 @@ interface at http://github.com/atomjump/loop
 
 # Requirements
 
-PHP 5, fully tested on PHP 5.3,  
+PHP 5, fully tested on PHP 5.3 and 5.5 (with Curl added),  
 MySQL 5+, 
 Apache2,  
 Linux server (though a Windows server may be partially functional)  
+
+# Recommended 
+
+Modify upload size in php.ini (usually /etc/php5/apache2/php.ini)
+```
+upload_max_filesize = 10M
+max_execution_time = 200
+service apache2 reload
+```
+
+Imagemagick can be used (Ubuntu command):
+```
+sudo apt-get install imagemagick
+```
+
+To keep timing in-sync (Ubuntu command):
+```
+sudo apt-get install ntp
+```
 
 # Optional
 Amazon MySQL RDS (any number of db servers),  
