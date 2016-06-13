@@ -292,7 +292,7 @@
 				}
 				
 				
-				<?php if($include_image) { ?>
+				<?php if(isset($include_image)) { ?>
 						.wrapper{
 							background: transparent !important;
 							
@@ -334,7 +334,7 @@
 						}
 				<?php } ?>
 				
-				<?php if($include_image == true) { ?>
+				<?php if((isset($include_image))&&($include_image == true)) { ?>
 					.cpy a:link, a:visited {
 						color: #888;
 						
