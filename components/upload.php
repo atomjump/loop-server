@@ -95,12 +95,10 @@
 				
 				}
 				$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . $script . ' ' . $raw_file;
-				file_put_contents('php://stderr', "About to try:" . $cmd);
 				$response = shell_exec($cmd);
 				
 				if($hi_res == true) {
 					$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . $script . ' ' . $hi_raw_file;
-					file_put_contents('php://stderr', "About to try:" . $cmd);
 					$response = shell_exec($cmd);
 			
 				
