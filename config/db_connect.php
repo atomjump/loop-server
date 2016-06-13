@@ -428,10 +428,15 @@
 		
 		
 			//Share across our own servers
+			
+			//Get the domain of the web url, and replace with ip:1080
+			$parse = parse_url($root_server_url);
+			$domain = $parse['host'];
+			
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $servers[] = "http://" . $cnf['ips'][$cnt] . ":1080/copy-image.php";
+				    $servers[] = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
 				}
 				
 			} else {
