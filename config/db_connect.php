@@ -415,7 +415,7 @@
 			global $local_server_path;
 			global $cnf;
 			
-			error_log("Upload to all:" . $filename);
+			
 			require_once($local_server_path . "/vendor/amazon/S3.php");
 	
 			//See: https://github.com/tpyo/amazon-s3-php-class
