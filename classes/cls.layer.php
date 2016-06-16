@@ -253,6 +253,8 @@ class cls_layer
 
 	public function notify_by_email($user_id, $message, $message_id, $is_admin_user = false)
 	{
+
+		error_log("Notifying: " . $user_id . " Message:" . $message);
 		global $root_server_url;
 		global $cnf;
 		global $msg;
@@ -270,6 +272,7 @@ class cls_layer
 				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		
+		    error_log("To email:" . $row['var_email'] . " Check against: " . $cnf['noReplyEmail']);
 		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
 			    cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
 		    }
