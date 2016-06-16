@@ -350,7 +350,9 @@
 	 
 		$message['from'] = $sender_email; 
 		$message['to'] = $to_email;	
-		$message['bcc'] = $bcc_email;
+		if((isset($bcc_email))&&($bcc_email != '')) {
+			$message['bcc'] = $bcc_email;
+		}
 		$message['subject'] = $subject;	 
 		$message['html'] = nl2br($body_text); 
 	
