@@ -146,7 +146,7 @@ must be placed anywhere in the `<body>` section.
 	 
 Note: jQuery ver 1.9.1 is used.  Other jQuery versions will likely work also.
 
-1. Adjust 'uniqueFeedbackId' value to a unique value to suit your feedback.  This can be unique per page or the same throughout the whole site.
+1. Adjust 'uniqueFeedbackId' value to a unique value to suit your forum.  This can be unique per page or the same throughout the whole site.
 
 2. Obtain the 'myMachineUser' value by following the sub-steps below:
 
@@ -157,9 +157,9 @@ Note: jQuery ver 1.9.1 is used.  Other jQuery versions will likely work also.
 	5. Clicking: 'Your password', then 'Advanced'
 	6. Copy the myMachineUser into the myMachineUser value in your html file.
 
-  This ensures only you as a logged in user will receive feedback from your site.
+  This ensures only you as a logged in user will receive messages from your site.
   
-3. If you wish to, you can enter your mobile phone number under Settings to receive SMS messages when there is any feedback
+3. If you wish to, you can enter your mobile phone number under Settings to receive SMS messages when there are any messages
 (at a cost of 16c per message. Messages within 5 minutes of each other do not trigger an SMS).  If you want to 
 include an sms modify the myMachineUser string on your page to include the 3rd term 'sms'
 e.g. "123.456.123.32:1200:sms".  If you don't include an 'sms', you won't receive sms messages.
@@ -167,7 +167,7 @@ e.g. "123.456.123.32:1200:sms".  If you don't include an 'sms', you won't receiv
 If you wish to send SMS messages, we will keep track of messages sent, and charge independently based on usage, on a monthly basis.
 
 
-# To have more than one feedback forum on a single page
+# To have more than one messaging forum on a single page
 
 Add the following data tags, and enter your own names/ips:
 ```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" href="javascript:">Open special forum</a>```
