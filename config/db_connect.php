@@ -424,7 +424,7 @@
 			$s3 = new S3($cnf['amazonAWS']['accessKey'],$cnf['amazonAWS']['secretKey'] );		//Amazon AWS credentials
 	
 	
-			if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+7 days'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
+			if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('-7 days'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
 				//Uploaded correctly
 			}
 		
