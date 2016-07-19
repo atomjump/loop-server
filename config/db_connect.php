@@ -555,7 +555,7 @@
 	{
 		global $db;
 		//Old way: dbquery("SET NAMES 'utf8'");
-		mysqli_set_charset($set);
+		mysqli_set_charset($db, $set);
 	}
 	
 	function db_misc()
