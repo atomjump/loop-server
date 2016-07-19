@@ -208,6 +208,7 @@
 	}
 	dbselect($db_name);
 	db_set_charset('utf8');
+	db_misc();
 
 	if(!isset($start_path)) {
 		$start_path = "";
@@ -307,7 +308,8 @@
     		}
     		
     		dbselect($db_name);
-  		  dbquery("SET NAMES 'utf8'");		
+  		db_set_charset('utf8');
+  		db_misc();
 
     	}
     	
@@ -553,6 +555,13 @@
 		global $db;
 		//Old way: dbquery("SET NAMES 'utf8'");
 		mysqli_set_charset($set);
+	}
+	
+	function db_misc()
+	{
+		//Old way would have nothing in here. mysqli needs it for innodb tables - we have a few.
+		dbquery('SET AUTOCOMMIT = 1');	
+	
 	}
 
 ?>
