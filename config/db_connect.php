@@ -134,7 +134,7 @@
 		
 	} else {
   
-        $cnf = $config['production']; 
+        	$cnf = $config['production']; 
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
@@ -245,7 +245,7 @@
 	function clean_data_keep_tags($string)
 	{
 	
-    //Use for cleaning input data before addition to database
+    	  //Use for cleaning input data before addition to database
 	  if (get_magic_quotes_gpc()) {
 	    $string = stripslashes($string);
 	  }
@@ -257,7 +257,7 @@
 	
 	function check_subdomain()
 	{
-	 global $config;
+	 	global $config;
 	
 		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
 		$server_name = $_SERVER['SERVER_NAME'];
@@ -278,44 +278,44 @@
 	}
 	
 	function make_writable_db()
-    {
-    	global $staging;
-    	global $cnf;
+    	{
+    		global $staging;
+    		global $cnf;
     	
-    	//Ensure we don't need this functionality on a staging server - which is always writable, single node
-    	if($staging == true) { 	
+    		//Ensure we don't need this functionality on a staging server - which is always writable, single node
+    		if($staging == true) { 	
+    			return;
+    		}
+    
+	    	global $db_host;
+	    	global $db_username;
+	    	global $db_password;
+	    	global $db_name;
+	    	global $db;
+    
+	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
+	    	$db_master_host = $cnf['db']['hosts'][0];
+	    	if($db_host != $db_master_host) {
+	    		//Reconnect to the master db to carry out the write operation
+	    		dbclose();		//close off the current db
+	    		
+	    		$db_host = $db_master_host;
+	    		$db = dbconnect($db_host, $db_username, $db_password);
+	    		if(!$db) {
+	    			//No response from the master
+	    			http_response_code(503);
+				exit(0);
+	    		
+	    		}
+	    		
+	    		dbselect($db_name);
+	  		db_set_charset('utf8');
+	  		db_misc();
+	
+	    	}
+    	
     		return;
     	}
-    
-    	global $db_host;
-    	global $db_username;
-    	global $db_password;
-    	global $db_name;
-    	global $db;
-    
-    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
-    	$db_master_host = $cnf['db']['hosts'][0];
-    	if($db_host != $db_master_host) {
-    		//Reconnect to the master db to carry out the write operation
-    		dbclose();		//close off the current db
-    		
-    		$db_host = $db_master_host;
-    		$db = dbconnect($db_host, $db_username, $db_password);
-    		if(!$db) {
-    			//No response from the master
-    			http_response_code(503);
-				   exit(0);
-    		
-    		}
-    		
-    		dbselect($db_name);
-  		db_set_charset('utf8');
-  		db_misc();
-
-    	}
-    	
-    	return;
-    }
 
 	function cc_mail($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
@@ -341,7 +341,7 @@
 	function send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 	
-	 global $cnf;
+	 	global $cnf;
  
 		$config = array();
 	 
