@@ -291,6 +291,7 @@
     	global $db_username;
     	global $db_password;
     	global $db_name;
+    	global $db;
     
     	//Double check we are connected to the master database - which is writable. Note this is amazon specific
     	$db_master_host = $cnf['db']['hosts'][0];
