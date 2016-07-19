@@ -78,10 +78,10 @@ class cls_layer
 			  int_group_id,
 			  var_public_code)
 			  VALUES (
-			  	'". $status . "',
+			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
-			  	" . $group_id . ",
-			  	" . $public_passcode . ")";
+			  	" . clean_data($group_id) . ",
+			  	" . clean_data($public_passcode) . ")";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
@@ -392,13 +392,13 @@ class cls_login
 				//In the group - keep in
 
 				//Update the sms status - note possibly too many update queries here
-				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  $correct_sms . "', enm_active = 'active' WHERE int_user_id = " . $correct_user . " AND int_layer_id = " . $layer_id;
+				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($correct_sms) . "', enm_active = 'active' WHERE int_user_id = " . $correct_user . " AND int_layer_id = " . $layer_id;
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 			} else {
 				
 				//Add into the db
-				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( $layer_id, " . $correct_user . ", 'active', '" . $correct_sms . "')";
+				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( " . clean_data($layer_id) . ", " . $correct_user . ", 'active', '" . clean_data($correct_sms) . "')";
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			}
 			
@@ -414,7 +414,7 @@ class cls_login
 				
 				
 				//Always update the sms status with latest - note this could result in too many queries?
-				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  $user_group[$user_in] . "' WHERE int_user_id = " . $user_in . " AND int_layer_id = " . $layer_id;
+				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($user_group[$user_in]) . "' WHERE int_user_id = " . $user_in . " AND int_layer_id = " . $layer_id;
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			} else {
 				//Remove from the db
@@ -669,10 +669,10 @@ class cls_login
 				
 				
 				//Handle any plugin generated settings
-	            $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                if(strcmp($returns, "RELOAD") == 0) {
-                    $reload = ",RELOAD";
-                }
+	        		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+                		if(strcmp($returns, "RELOAD") == 0) {
+                    			$reload = ",RELOAD";
+                		}
 				
 				return "STORED_PASS" . $reload;
 				
@@ -721,11 +721,11 @@ class cls_login
 					
 					
 					//Handle any plugin generated settings
-	                $returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-	                if(strcmp($returns, "RELOAD") == 0) {
-	                    $reload = ",RELOAD";
+	                		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+	                		if(strcmp($returns, "RELOAD") == 0) {
+	                			$reload = ",RELOAD";
 	                   
-	                }
+	                		}
 				
 					return "LOGGED_IN" . $reload;  
 					
@@ -761,9 +761,9 @@ class cls_login
 			
 			//Handle any plugin generated settings
 			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
-            if(strcmp($returns, "RELOAD") == 0) {
-                $reload = ",RELOAD";
-            }
+        		if(strcmp($returns, "RELOAD") == 0) {
+                		$reload = ",RELOAD";
+            		}
 			
 			
 			return "NEW_USER" . $reload;
