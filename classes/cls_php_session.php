@@ -119,7 +119,7 @@ class php_Session
     function write ($session_id, $session_data)
     // write session data to the database.
     {
-    
+    	global $db;
     	error_log("Db before: " . $db);
         make_writable_db();			//Ensure we are writable
         error_log("Db after: " . $db);
