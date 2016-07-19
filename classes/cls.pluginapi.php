@@ -54,7 +54,7 @@ class cls_plugin_api {
 	    
 	    //TODO: ensure this uses a more modern type of mysql insertion.
 	    $sql = "INSERT INTO " . $table . " " . $insert_field_names_str . " VALUES " . $insert_field_data_str;  
-	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
+	    mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
 	    return;
 	}
 	
@@ -69,7 +69,7 @@ class cls_plugin_api {
 	    
 	    //TODO: ensure this uses a more modern type of mysql insertion.
 	    $sql = "UPDATE " . $table . " SET " . $update_set;  
-	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
+	    mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
 	    return;
 	}
 	
@@ -84,7 +84,7 @@ class cls_plugin_api {
 	    //Returns result array when successful, or breaks the server request if unsuccessful, with an error 
 	    
 	    //TODO: ensure this uses a more modern type of mysql connection.
-	    $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+	    $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
 	    
 	    return $result;
 	}
