@@ -206,7 +206,7 @@
 			exit(0);
 		}
 	}
-	db_select($db_name);
+	dbselect($db_name);
 	dbquery("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
 
 
