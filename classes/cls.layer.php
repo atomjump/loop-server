@@ -18,8 +18,8 @@ class cls_layer
 		if($passcode != "") {
 			//This is a private passcode request
 			$sql = "SELECT * FROM tbl_layer WHERE passcode = '" . md5($passcode). "'";
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
 			{
 				$row['myaccess'] = 'readwrite';
 				if($row['int_group_id']) {
@@ -37,8 +37,8 @@ class cls_layer
 		} else {
 			if($reading != "") {
 				$sql = "SELECT * FROM tbl_layer WHERE int_layer_id = '" . $reading . "'";
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-				if($row = mysql_fetch_array($result))
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				if($row = db_fetch_array($result))
 				{
 					if($row['enm_access'] == 'public-admin-write-only') {
 						//If we're reading and we have public read access then proceed with a search
@@ -82,9 +82,9 @@ class cls_layer
 			  	'" . md5($passcode) . "',
 			  	" . $group_id . ",
 			  	" . $public_passcode . ")";
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());	  	 
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
-		return mysql_insert_id();
+		return db_insert_id();
 	}
 
 	public function getRealIpAddr()
@@ -195,8 +195,8 @@ class cls_layer
 
 		date_default_timezone_set($server_timezone);	 //UTC , TODO: global server_timezone??
 		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:05:00' AND int_ssshout_id <> $just_sent_message_id ORDER BY int_ssshout_id DESC";
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result)) {
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result)) {
 			//Just sent an sms in the last 5 minutes
 		 return true;
 		} else {
@@ -218,8 +218,8 @@ class cls_layer
 	
 		//Notify each member of the group - note tbl_group 
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		while($row = mysql_fetch_array($result)) {
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
 			
 			//Always notify by email - so that a delete can be clicked
@@ -260,8 +260,8 @@ class cls_layer
 	
 		//Send a whisper to a recipient
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			$url = cur_page_url();
 			$email_body = $message . "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
@@ -311,7 +311,7 @@ class cls_layer
 		
 			//Reduce the user's balance by a certain amount (cost 5p from supplier)
 			$sql = "UPDATE tbl_user SET dec_balance = dec_balance - " . CUSTOMER_PRICE_PER_SMS_US_DOLLARS . " WHERE int_user_id = " . $user_from_id;
-			mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());	  	 
+			dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		} catch (Exception $e) {
 				
@@ -377,9 +377,9 @@ class cls_login
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
-		while($row = mysql_fetch_array($result)) {
+		while($row = db_fetch_array($result)) {
 			$in_db[] = $row['int_user_id'];
 
 		}
@@ -393,13 +393,13 @@ class cls_login
 
 				//Update the sms status - note possibly too many update queries here
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  $correct_sms . "', enm_active = 'active' WHERE int_user_id = " . $correct_user . " AND int_layer_id = " . $layer_id;
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 			} else {
 				
 				//Add into the db
 				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( $layer_id, " . $correct_user . ", 'active', '" . $correct_sms . "')";
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			}
 			
 			
@@ -415,11 +415,11 @@ class cls_login
 				
 				//Always update the sms status with latest - note this could result in too many queries?
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  $user_group[$user_in] . "' WHERE int_user_id = " . $user_in . " AND int_layer_id = " . $layer_id;
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			} else {
 				//Remove from the db
 				$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = $layer_id AND int_user_id = " . $user_in;
-				$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 			}
 		
@@ -489,8 +489,8 @@ class cls_login
 		$cnt = 0;
 		
 		$sql = "SELECT *,  ls.int_user_id AS ls_user_id  FROM tbl_layer_subscription ls LEFT JOIN tbl_user u ON ls.int_user_id = u.int_user_id WHERE enm_active = 'active' AND int_layer_id = " . $layer_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		while($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		while($row = db_fetch_array($result))
 		{
 			if($cnt != 0) $output .= ",";
 			$output .= $row['var_last_ip'] . ":" . $row['ls_user_id'];
@@ -526,8 +526,8 @@ class cls_login
 	
 		if(isset($_SESSION['logged-user'])) {
 			$sql = "SELECT int_group_id FROM tbl_layer WHERE int_layer_id = " . $layer_id;
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
 			{
 				if($row['int_group_id']) {
 					$group_user_id = $row['int_group_id'];
@@ -535,8 +535,8 @@ class cls_login
 					
 					//There is a group of more than 1 user, check if it is the same as our self
 					$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND int_user_id = " . $_SESSION['logged-user']; 
-					$resultb = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					if($rowb = mysql_fetch_array($resultb))
+					$resultb = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+					if($rowb = db_fetch_array($resultb))
 					{
 						//Yep this user is correct - set the session to view messages from this user also
 						$_SESSION['logged-group-user'] = $_SESSION['layer-group-user'];	
@@ -552,19 +552,19 @@ class cls_login
 					
 					//Check if there is more than one subscriber to the group now. If so, add an overriding group user.
 					$sql = "SELECT COUNT(*) AS count_in_group FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id;
-					$resultb = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					if($rowb = mysql_fetch_array($resultb))
+					$resultb = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+					if($rowb = db_fetch_array($resultb))
 					{
 					
 						if($rowb['count_in_group'] > 1) {		//There is a new group, more than one private user
 							$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('1.1.1.1', NULL,NULL, NOW())";
-							$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
-							$group_user_id = mysql_insert_id();
+							$group_user_id = db_insert_id();
 							$_SESSION['logged-group-user']  = $group_user_id;
 							//Update 
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
-							$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 						} else {
 						   
 
@@ -639,8 +639,8 @@ class cls_login
 	
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if(($row = mysql_fetch_array($result))&&($email != ""))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if(($row = db_fetch_array($result))&&($email != ""))
 		{
 			//Email exists
 			
@@ -649,17 +649,17 @@ class cls_login
 			if($row['var_pass'] == NULL) {
 				//No password already, so presumably we need to store it
 				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
 				
 				//Update phone if necessary too
 				if($phone != "") {
 					//f($phone != "Your Phone") {
 						$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
-						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				} else {
 						//A blank phone - we want to remove any old phone number
 						$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
-						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					
 					//}
 				}
@@ -691,11 +691,11 @@ class cls_login
 					if($phone != "") {
 						
 							$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
-							$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					} else {
 							//A blank phone - we want to remove any old phone number
 							$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
-							$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 						
 					}
@@ -753,7 +753,7 @@ class cls_login
 			//No password already, so presumably we need to store it
 			if($password) {
 				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
 			
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
@@ -774,15 +774,15 @@ class cls_login
 	{
 		$sql = "SELECT * FROM tbl_user WHERE var_confirmcode = '" . clean_data($code) . "'";
 		
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 	
 			//This confirmcode exists
 			//Update as confirmed
 			$user_id = $row['int_user_id'];
 			$sql = "UPDATE tbl_user SET enm_confirmed = 'confirmed', date_updated = NOW() WHERE int_user_id = " . $user_id;
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			return $msg['msgs'][$lang]['thanksConfirmEmail'];
  
 		} else {
