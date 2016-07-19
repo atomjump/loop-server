@@ -500,7 +500,7 @@
 	{
 		global $db;
 		//Using old style = mysql_select_db($dbname);
-		return mysqli_select_db($dbname);
+		return mysqli_select_db($db, $dbname);
 		
 	}
 	
@@ -522,10 +522,18 @@
 	
 	function db_real_eascape_string($str)
 	{
+		global $db;
 		//Using old style: mysql_real_escape_string
-		mysqli_real_escape_string($str);
+		return mysqli_real_escape_string($db, $str);
 		//Caution character set must be set prior with mysqli_set_charset() 
 		
+	}
+	
+	function dberror()
+	{
+		global $db;
+		//Old style
+		return mysqli_error($db);
 	}
 
 
