@@ -207,7 +207,7 @@
 		}
 	}
 	dbselect($db_name);
-	dbquery("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
+	db_set_charset('utf8');
 
 	if(!isset($start_path)) {
 		$start_path = "";
@@ -548,5 +548,11 @@
 		return mysqli_insert_id();
 	}
 
+	function db_set_charset($set)
+	{
+		global $db;
+		//Old way: dbquery("SET NAMES 'utf8'");
+		mysqli_set_charset($set);
+	}
 
 ?>
