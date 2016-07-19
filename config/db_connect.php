@@ -538,8 +538,15 @@
 	function dberror()
 	{
 		global $db;
-		//Old style
+		//Old style: mysql_error()
 		return mysqli_error($db);
+	}
+	
+	function db_insert_id()
+	{
+		global $db;
+		//Old style: mysql_insert_id();
+		return mysqli_insert_id();
 	}
 
 
