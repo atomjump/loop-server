@@ -520,6 +520,12 @@
 		return mysqli_query($db, $sql);
 	}
 	
+	function db_fetch_array($result)
+	{
+		//Old style: mysql_fetch_array($result)
+		return mysqli_fetch_assoc($result);
+	}
+	
 	function db_real_eascape_string($str)
 	{
 		global $db;
