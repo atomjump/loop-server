@@ -12,8 +12,8 @@ class cls_ssshout
 	public function get_user_ip($user_id)
 	{
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			return $row['var_last_ip'];
 		} else {
@@ -54,22 +54,22 @@ class cls_ssshout
 			        //no existing row with this ip
 			 		//Create a new 'temporary' user
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
 						//Set the logged user to the db user id
-						$_SESSION['logged-user'] = mysql_insert_id();
+						$_SESSION['logged-user'] = db_insert_id();
 					}
 				
-					return mysql_insert_id();
+					return db_insert_id();
 			 
 			 }
 		} else {
 		 //email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
-			if($row = mysql_fetch_array($result))
+			if($row = db_fetch_array($result))
 			{
 			 //existing email
 				$cnt++;		//Count how many results we have from this email address
@@ -95,7 +95,7 @@ class cls_ssshout
 					//Just make sure that we have the current phone number
 					if($insert_phone != "NULL") {
 						$sql = "UPDATE tbl_user SET var_phone = " . $insert_phone . " WHERE int_user_id = " . $row['int_user_id'];
-						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					}
 				}
 			
@@ -111,7 +111,7 @@ class cls_ssshout
 					$confirm_code = md5(uniqid(rand())); 
 			
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . $ip . "', '" . clean_data($email) . "'," . $insert_phone . ",'" . $confirm_code . "', NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 					//Let the user confirm their email address
 			
@@ -123,21 +123,21 @@ class cls_ssshout
 					//Let me know there is a new user
 					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
 		
-					return mysql_insert_id();
+					return db_insert_id();
 			
 				} else {
 				 //email is null
 					//Create a new 'temporary' user
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
 						//Set the logged user to the db user id
-						$_SESSION['logged-user'] = mysql_insert_id();
+						$_SESSION['logged-user'] = db_insert_id();
 					}
 				
 				
-					return mysql_insert_id();
+					return db_insert_id();
 			
 				}
 			} //end email check
@@ -169,8 +169,8 @@ class cls_ssshout
 				}
 				
 		  $sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $from_user_id;
-		  $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		  if($row = mysql_fetch_array($result))
+		  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		  if($row = db_fetch_array($result))
 		  {
 				
 				
@@ -237,8 +237,8 @@ class cls_ssshout
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
 		$sql = "SELECT enm_access FROM tbl_layer WHERE int_layer_id = " . $layer_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
 		}
@@ -249,8 +249,8 @@ class cls_ssshout
 		$from_different = false;
 		if($from_user_id) {
 			$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $from_user_id; 
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row2 = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row2 = db_fetch_array($result))
 			{
 				if((!is_null($row2['var_email']))&&($access=='private')) {
 					$from_email = $row2['var_email'];
@@ -264,8 +264,8 @@ class cls_ssshout
 	
 		//Send a whisper to a recipient
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			if($introducing == false) {
 				//A standard email once they are familiar with the concept
@@ -356,7 +356,7 @@ class cls_ssshout
 
 		
 		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 		
 		if($just_typing == false) {
 			//Warn overall admin - TODO: just layer admin?
@@ -369,9 +369,9 @@ class cls_ssshout
 	public function get_email_from_user_id_insecure($user_id, $checksum)
 	{
 		$sql ="SELECT * FROM tbl_user WHERE int_user_id = " . clean_data($user_id);
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			//If there is no password, and the checksum is correct (checksum based off the user_id)
 			
@@ -395,9 +395,9 @@ class cls_ssshout
 	public function check_email_secure($email, $checksum) {
 		//Get user id
 		$sql ="SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			if($checksum == (($row['int_user_id'] * 19) + 233242)) {
 				return true;
@@ -409,9 +409,9 @@ class cls_ssshout
 	public function check_email_exists($email) {
 		//Get user id
 		$sql ="SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			
 				return true;
