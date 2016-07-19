@@ -146,10 +146,10 @@ class php_Session
             $sql = "INSERT INTO php_session(session_id,
   			date_created,
   			last_updated,
- 			session_data) VALUES ( '" . $array['session_id'] . "',
+ 			session_data) VALUES ( '" . clean_data($array['session_id']) . "',
  						NOW(),
  						NOW(),
- 						'" . $array['session_data'] . "')";
+ 						'" . clean_data($array['session_data']) . "')";
  	          
  	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         
@@ -161,12 +161,12 @@ class php_Session
             } // if
             $array['session_data'] = addslashes($session_data);
             $sql = "UPDATE php_session SET 
-  			user_id = '" . $array['user_id'] .  "' ,
+  			user_id = '" . clean_data($array['user_id']) .  "' ,
   			last_updated = NOW(),
- 			session_data ='" . $array['session_data'] . "'
- 			WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
+ 			session_data ='" . clean_data($array['session_data']) . "'
+ 			WHERE session_id = '" . clean_data($this->fieldarray['session_id']) . "'";
  	          $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-        } // if
+        } // if   NOTE: experimental clean_data()
         
         return TRUE;
         
