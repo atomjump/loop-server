@@ -120,7 +120,10 @@ class php_Session
     // write session data to the database.
     {
     
+    	error_log("Db before: " + $db);
         make_writable_db();			//Ensure we are writable
+        error_log("Db after: " + $db);
+        
     	if($this->bot_detected()) {
     	      //check if bot session is available, if not create it    	    		
     		return TRUE;
