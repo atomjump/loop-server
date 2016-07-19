@@ -482,21 +482,33 @@
 		return $details;
 	}
 	
-	function dbconnect($host, $user, $pass, $dbname)
+	function dbconnect($host, $user, $pass, $dbname = null)
 	{
 		//Using old style:
 		/*
 			mysql_connect($host, $user, $pass);
-			mysql_select_db($db_name);
 		*/
-		return mysqli_connect($host, $user, $pass, $dbname);
+		if($dbname) {
+			return mysqli_connect($host, $user, $pass, $dbname);
+		} else {
+			return mysqli_connect($host, $user, $pass);
+		}
 		
 	}
 	
 	function dbselect($dbname)
 	{
 		global $db;
+		//Using old style = mysql_select_db($dbname);
 		return mysqli_select_db($dbname);
+		
+	}
+	
+	function dbclose()
+	{
+		global $db;
+		//Using old style = mysql_close();
+		mysqli_close($db);
 		
 	}
 	
@@ -506,6 +518,14 @@
 		
 		//Using old style: return mysql_query($sql);
 		return mysqli_query($db, $sql);
+	}
+	
+	function db_real_eascape_string($str)
+	{
+		//Using old style: mysql_real_escape_string
+		mysqli_real_escape_string($str);
+		//Caution character set must be set prior with mysqli_set_charset() 
+		
 	}
 
 
