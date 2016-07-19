@@ -209,6 +209,8 @@
 	dbselect($db_name);
 	dbquery("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
 
+	echo "Connected to DB OK";
+	exit(0);		//TESTING IN
 
 	if(!isset($start_path)) {
 		$start_path = "";
