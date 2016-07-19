@@ -610,8 +610,8 @@ class cls_ssshout
 				if($ssshout_id) {
 					$sql = "SELECT int_ssshout_id  FROM tbl_ssshout WHERE var_ip = '". $ip ."' AND var_shouted = '" . clean_data($message) . "' AND TIMEDIFF(NOW(),date_when_shouted) < '00:05:00'";
 			
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					if($row = mysql_fetch_array($result))
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+					if($row = db_fetch_array($result))
 					{
 						//Already exists - don't repeat.  Unless they're further than 5 minutes appart
 						//e.g. a message like 'hi' which you do want to repeat
@@ -621,7 +621,7 @@ class cls_ssshout
 					
 						$sql = "UPDATE tbl_ssshout SET enm_active = 'false', enm_status = 'final'
 													WHERE int_ssshout_id = " . $ssshout_id;
-						mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					} else {
 						//A new message - we'll print this
@@ -727,7 +727,7 @@ class cls_ssshout
 												enm_active = 'true',
 												enm_status = '$status'
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
-					mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					
 					//If there were multiple users being whispered to, we need to post new individual messages to each of the users.
@@ -801,8 +801,8 @@ class cls_ssshout
 									" . $user_id ."
 									)";	
 									
-						mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-						$ssshout_id = mysql_insert_id();
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+						$ssshout_id = db_insert_id();
 						$message_id = $ssshout_id;
 						
 						
@@ -1301,8 +1301,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			}
 
 			//Go get external searches first
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			while($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			while($row = db_fetch_array($result))
 			{
 				$results_array[] = $row;		
 			}
@@ -1317,8 +1317,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
    if($format == "avg") {
       
       	$results_arrayb = array();
-      	$resultb = mysql_query("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . mysql_error());
-			    if($rowb = mysql_fetch_array($resultb))
+      	$resultb = dbquery("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . dberror());
+			    if($rowb = db_fetch_array($resultb))
 			    {
 				     $results_arrayb[] = $rowb;
 		         $json['sentimentAvg'] = round(floatval($results_arrayb[0][0]), 4);

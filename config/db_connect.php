@@ -173,7 +173,7 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = mysql_connect($db_host, $db_username, $db_password);
+	$db = dbconnect($db_host, $db_username, $db_password);
 	if(!$db) {
 		//TODO: Let us know that a server is down by email - but we only want to do this once!
 		//cc_mail_direct($cfg['adminEmail'], "AtomJump Server " . $_SERVER['SERVER_ADDR'] . "," . gethostname(). " is down", "The most likely cause is the database is not connecting.", $cfg['webmasterEmail'], "", "");
@@ -191,7 +191,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $cnf['db']['hosts'][$db_num];			
-				$db = mysql_connect($db_host, $db_username, $db_password);
+				$db = dbconnect($db_host, $db_username, $db_password);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -206,8 +206,8 @@
 			exit(0);
 		}
 	}
-	mysql_select_db($db_name);
-	mysql_query("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
+	db_select($db_name);
+	dbquery("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
 
 
 	if(!isset($start_path)) {
@@ -239,7 +239,7 @@
 	    $string = stripslashes($string);
 	  }
 	  $string = strip_tags($string);
-	  return mysql_real_escape_string($string);
+	  return db_real_escape_string($string);
 	}
 	
 	function clean_data_keep_tags($string)
@@ -250,7 +250,7 @@
 	    $string = stripslashes($string);
 	  }
 	  
-	  return mysql_real_escape_string($string);
+	  return db_real_escape_string($string);
 	
 	
 	}
@@ -296,10 +296,10 @@
     	$db_master_host = $cnf['db']['hosts'][0];
     	if($db_host != $db_master_host) {
     		//Reconnect to the master db to carry out the write operation
-    		mysql_close();		//close off the current db
+    		dbclose();		//close off the current db
     		
     		$db_host = $db_master_host;
-    		$db = mysql_connect($db_host, $db_username, $db_password);
+    		$db = dbconnect($db_host, $db_username, $db_password);
     		if(!$db) {
     			//No response from the master
     			http_response_code(503);
@@ -307,8 +307,8 @@
     		
     		}
     		
-    		mysql_select_db($db_name);
-  		  mysql_query("SET NAMES 'utf8'");		
+    		dbselect($db_name);
+  		  dbquery("SET NAMES 'utf8'");		
 
     	}
     	
@@ -526,7 +526,7 @@
 		return mysqli_fetch_assoc($result);
 	}
 	
-	function db_real_eascape_string($str)
+	function db_real_escape_string($str)
 	{
 		global $db;
 		//Using old style: mysql_real_escape_string

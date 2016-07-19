@@ -96,8 +96,8 @@ class php_Session
     
     
     	$sql = "SELECT * FROM php_session WHERE session_id='" .addslashes($session_id) ."'";
-        $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-	       while($row = mysql_fetch_array($result))
+        $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+	       while($row = db_fetch_array($result))
 	       {
           	$fieldarray[] = $row;
         }
@@ -151,7 +151,7 @@ class php_Session
  						NOW(),
  						'" . $array['session_data'] . "')";
  	          
- 	     						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+ 	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         
           } else {
         
@@ -165,7 +165,7 @@ class php_Session
   			last_updated = NOW(),
  			session_data ='" . $array['session_data'] . "'
  			WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
- 	          $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+ 	          $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         } // if
         
         return TRUE;
@@ -181,7 +181,7 @@ class php_Session
     	  make_writable_db();			//Ensure we are writable
        
        $sql = "DELETE FROM php_session WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
-       $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+       $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
        
        return TRUE;
         
@@ -210,7 +210,7 @@ class php_Session
    
         
         $sql = "DELETE FROM php_session WHERE last_updated < '$dt2' OR (last_updated < '$dtc2' AND (user_id IS NULL OR user_id = ''))";
-        $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+        $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         //$count = $this->_dml_deleteSelection("last_updated < '$dt2'");
         
         return TRUE;
