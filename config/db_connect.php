@@ -522,7 +522,7 @@
 	function db_fetch_array($result)
 	{
 		//Old style: mysql_fetch_array($result)
-		return mysqli_fetch_assoc($result);
+		return mysqli_fetch_array($result);
 	}
 	
 	function db_real_escape_string($str)
