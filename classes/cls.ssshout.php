@@ -48,12 +48,12 @@ class cls_ssshout
 			 //This is likely a first request for a session - just check for users with no email
 	         //error_log("logged user:" . $_SESSION['logged-user']);
 	         
-	         if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
+	         	if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
 				         return $_SESSION['logged-user'];
-             } else {
+             		} else {
 			        //no existing row with this ip
 			 		//Create a new 'temporary' user
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
@@ -63,7 +63,7 @@ class cls_ssshout
 				
 					return db_insert_id();
 			 
-			 }
+			}
 		} else {
 		 //email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
@@ -94,7 +94,7 @@ class cls_ssshout
 			
 					//Just make sure that we have the current phone number
 					if($insert_phone != "NULL") {
-						$sql = "UPDATE tbl_user SET var_phone = " . $insert_phone . " WHERE int_user_id = " . $row['int_user_id'];
+						$sql = "UPDATE tbl_user SET var_phone = " . clean_data($insert_phone) . " WHERE int_user_id = " . $row['int_user_id'];
 						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					}
 				}
@@ -110,7 +110,7 @@ class cls_ssshout
 			
 					$confirm_code = md5(uniqid(rand())); 
 			
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . $ip . "', '" . clean_data($email) . "'," . $insert_phone . ",'" . $confirm_code . "', NOW())";
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . clean_data($ip) . "', '" . clean_data($email) . "'," . clean_data($insert_phone) . ",'" . clean_data($confirm_code) . "', NOW())";
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 					//Let the user confirm their email address
@@ -128,7 +128,7 @@ class cls_ssshout
 				} else {
 				 //email is null
 					//Create a new 'temporary' user
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
@@ -290,7 +290,7 @@ class cls_ssshout
 				//This is to someone who has been mentioned in the body of the message
 				$checksum = 233242 + $user_id * 19;
 				 
-    		    $components = parse_url(cur_page_url());
+    				$components = parse_url(cur_page_url());
 				$params = parse_str($components['query']);
 				$params['t'] = $user_id;
 				$params['f'] = $from_user_id;
@@ -719,7 +719,7 @@ class cls_ssshout
 					
 					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id, $allow_plugins, $allowed_plugins);
 					
-					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . $date_shouted . ",
+					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . clean_data($date_shouted) . ",
 												var_shouted = '" . clean_data($message) . "',
 												var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "',
 												var_whisper_to = '" . $whisper_to_divided[0] . "',
