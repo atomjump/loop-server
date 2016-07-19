@@ -481,6 +481,32 @@
 		}
 		return $details;
 	}
+	
+	function dbconnect($host, $user, $pass, $dbname)
+	{
+		//Using old style:
+		/*
+			mysql_connect($host, $user, $pass);
+			mysql_select_db($db_name);
+		*/
+		return mysqli_connect($host, $user, $pass, $dbname);
+		
+	}
+	
+	function dbselect($dbname)
+	{
+		global $db;
+		return mysqli_select_db($dbname);
+		
+	}
+	
+	function dbquery($sql)
+	{
+		global $db;
+		
+		//Using old style: return mysql_query($sql);
+		return mysqli_query($db, $sql);
+	}
 
 
 ?>
