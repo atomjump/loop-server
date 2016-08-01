@@ -210,7 +210,11 @@
 	db_set_charset('utf8');
 	db_misc();
 
-	error_log("Db in db_connect.php: " . $db);			//TEMPIN!!
+	if(isset($db)) {
+		error_log("Db in db_connect.php exists");			//TEMPIN!!
+	} else {
+		error_log("Db in db_connect.php does not exist");			//TEMPIN!!
+	}
 
 	if(!isset($start_path)) {
 		$start_path = "";

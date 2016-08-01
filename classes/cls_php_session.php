@@ -120,9 +120,21 @@ class php_Session
     // write session data to the database.
     {
     	global $db;
-    	error_log("Db before: " . $db);
+
+   		if(isset($db)) {
+			error_log("Db before php_session write: exists");			//TEMPIN!!
+		} else {
+			error_log("Db before php_session write: does not exist");			//TEMPIN!!
+		}
+    	
         make_writable_db();			//Ensure we are writable
-        error_log("Db after: " . $db);
+        
+		if(isset($db)) {
+			error_log("Db after php_session write, make writable: exists");			//TEMPIN!!
+		} else {
+			error_log("Db before php_session  write, make writable: exist");			//TEMPIN!!
+		}
+
         
     	if($this->bot_detected()) {
     	      //check if bot session is available, if not create it    	    		
