@@ -207,12 +207,6 @@
 	db_set_charset('utf8');
 	db_misc();
 
-	if(isset($db)) {
-		error_log("Db in db_connect.php exists");			//TEMPIN!!
-	} else {
-		error_log("Db in db_connect.php does not exist");			//TEMPIN!!
-	}
-	error_log("Staging: " . $staging);
 
 	if(!isset($start_path)) {
 		$start_path = "";

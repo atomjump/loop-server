@@ -41,13 +41,11 @@ class cls_ssshout
 			$phone = "";
 			$insert_phone = "NULL";
 		} else {
-			//$phone = " OR var_phone = '" . $phone . "'";  //usually a text string except when null
 			$insert_phone = "'" . $phone . "'";
 		}
 		
 		if((is_null($email))||($email == '')) {
 			 //This is likely a first request for a session - just check for users with no email
-	         //error_log("logged user:" . $_SESSION['logged-user']);
 	         
 	         	if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
 				         return $_SESSION['logged-user'];

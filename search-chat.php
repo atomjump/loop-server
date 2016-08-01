@@ -29,7 +29,6 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	 
     	
 		$ip = $sh->get_user_ip($_SESSION['logged-user']);
-		//error_log("logged user:" . $_SESSION['logged-user'] . " ip:" . $ip);
 
 		$_SESSION['user-ip'] = $ip;					//Save their ip in this session
 	}
