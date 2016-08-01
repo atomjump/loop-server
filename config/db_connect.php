@@ -303,6 +303,11 @@
 					$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
 					$db_host =  $cnf['db']['hosts'][0]; 
 					$db_name = $cnf['db']['name'];
+					$db = dbconnect($db_host, $db_username, $db_password);
+					dbselect($db_name);
+	  				db_set_charset('utf8');
+	  				db_misc();
+					return;
     			}
     		}
     		error_log("Staging is not set, reseting writable db");
@@ -325,7 +330,7 @@
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
-				exit(0);
+					exit(0);
 	    		
 	    		}
 	    		
