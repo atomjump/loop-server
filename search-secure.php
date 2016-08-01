@@ -8,11 +8,6 @@
 	$ly = new cls_layer();
 	$sh = new cls_ssshout();
 	
-	if(isset($db)) {
-		error_log("search-secure.php 1 db: exists");			//TEMPIN!!
-	} else {
-		error_log("search-secure.php 1 db: does not exist");			//TEMPIN!!
-	}
 	
 	
 	//We may have a possible user request in the case of receiving an email
@@ -29,31 +24,26 @@
 	}
 	
 	
-	if(isset($db)) {
-		error_log("search-secure.php 2 db: exists");			//TEMPIN!!
-	} else {
-		error_log("search-secure.php 2 db: does not exist");			//TEMPIN!!
-	}
 	
 	
 	
 	function currentdir($url) {
-    // note: anything without a scheme ("example.com", "example.com:80/", etc.) is a folder
-    // remove query (protection against "?url=http://example.com/")
-    if ($first_query = strpos($url, '?')) $url = substr($url, 0, $first_query);
-    // remove fragment (protection against "#http://example.com/")
-    if ($first_fragment = strpos($url, '#')) $url = substr($url, 0, $first_fragment);
-    // folder only
-    $last_slash = strrpos($url, '/');
-    if (!$last_slash) {
-        return '/';
-    }
-    // add ending slash to "http://example.com"
-    if (($first_colon = strpos($url, '://')) !== false && $first_colon + 2 == $last_slash) {
-        return $url . '/';
-    }
-    return substr($url, 0, $last_slash + 1);
-}
+		// note: anything without a scheme ("example.com", "example.com:80/", etc.) is a folder
+		// remove query (protection against "?url=http://example.com/")
+		if ($first_query = strpos($url, '?')) $url = substr($url, 0, $first_query);
+		// remove fragment (protection against "#http://example.com/")
+		if ($first_fragment = strpos($url, '#')) $url = substr($url, 0, $first_fragment);
+		// folder only
+		$last_slash = strrpos($url, '/');
+		if (!$last_slash) {
+			return '/';
+		}
+		// add ending slash to "http://example.com"
+		if (($first_colon = strpos($url, '://')) !== false && $first_colon + 2 == $last_slash) {
+			return $url . '/';
+		}
+		return substr($url, 0, $last_slash + 1);
+	}
 
 	
 	function urldir($relativeurl, $callerurl) {
@@ -126,15 +116,7 @@
 	header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	header("Pragma: no-cache"); // HTTP/1.0
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-	
-	
-	
-	if(isset($db)) {
-		error_log("search-secure.php 3 db: exists");			//TEMPIN!!
-	} else {
-		error_log("search-secure.php 3 db: does not exist");			//TEMPIN!!
-	}
-	
+		
 	
 ?><!DOCTYPE html>
 <html lang="en">

@@ -566,6 +566,7 @@ class cls_ssshout
 	{
 	    global $msg;
 	    global $lang;
+	    global $db;
 		$email_in_msg = false;
 	
 		//Insert shouted text into database at this time
@@ -594,7 +595,7 @@ class cls_ssshout
 		}
 			
 		
-   	//If we are a user get our id
+   		//If we are a user get our id
 		$user_id = $this->new_user($email, $ip, $phone, $loginas);
 				
 

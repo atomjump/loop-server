@@ -122,9 +122,6 @@ class php_Session
     	global $db;
     	global $staging;
 
-    	if(!isset($db)) {
-    		error_log("Db doesn't exist before make_writable!");
-    	} 
         make_writable_db();			//Ensure we are writable
 	    if(!isset($db)) {
     		error_log("Db doesn't exist after make_writable!");

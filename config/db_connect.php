@@ -304,10 +304,6 @@
     				return;
     			} else {
     				//We need to reconnect at this point anyway - it is likely at the end of a session
-    				/*$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
-					$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
-					$db_host =  $cnf['db']['hosts'][0]; 
-					$db_name = $cnf['db']['name'];*/
 					$db = dbconnect($db_host, $db_username, $db_password);
 					dbselect($db_name);
 	  				db_set_charset('utf8');
