@@ -134,7 +134,7 @@
 		
 	} else {
   
-        	$cnf = $config['production']; 
+        $cnf = $config['production']; 
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
@@ -209,6 +209,8 @@
 	dbselect($db_name);
 	db_set_charset('utf8');
 	db_misc();
+
+	error_log("Db in db_connect.php: " . $db);			//TEMPIN!!
 
 	if(!isset($start_path)) {
 		$start_path = "";

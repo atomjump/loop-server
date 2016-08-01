@@ -97,8 +97,8 @@ class php_Session
     
     	$sql = "SELECT * FROM php_session WHERE session_id='" .clean_data($session_id) ."'";
         $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-	while($row = db_fetch_array($result))
-	{
+		while($row = db_fetch_array($result))
+		{
           	$fieldarray[] = $row;
         }
         
@@ -147,12 +147,12 @@ class php_Session
             $array['session_data'] = clean_data($session_data);
             
             $sql = "INSERT INTO php_session(session_id,
-  			date_created,
-  			last_updated,
- 			session_data) VALUES ( '" . clean_data($array['session_id']) . "',
- 						NOW(),
- 						NOW(),
- 						'" . $array['session_data'] . "')";
+					date_created,
+					last_updated,
+					session_data) VALUES ( '" . clean_data($array['session_id']) . "',
+								NOW(),
+								NOW(),
+								'" . $array['session_data'] . "')";
  	          
  	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         
@@ -164,11 +164,11 @@ class php_Session
             } // if
             $array['session_data'] = clean_data($session_data);
             $sql = "UPDATE php_session SET 
-  			user_id = '" . clean_data($array['user_id']) .  "' ,
-  			last_updated = NOW(),
- 			session_data ='" . $array['session_data'] . "'
- 			WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
- 	     $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				user_id = '" . clean_data($array['user_id']) .  "' ,
+				last_updated = NOW(),
+				session_data ='" . $array['session_data'] . "'
+				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
+			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         } // if   NOTE: experimental clean_data()
         
         return TRUE;
