@@ -293,6 +293,8 @@
     		if($staging == true) { 	
     			return;
     		}
+    		error_log("Staging is not set, reseting writable db");
+    		error_log(debug_backtrace());
     
 	    	global $db_host;
 	    	global $db_username;
