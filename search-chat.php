@@ -77,8 +77,20 @@ if($_SESSION['view-count'] == 0) {
 	$_SESSION['view-count'] = $_SESSION['view-count'] + 1;
 }
 
+if(isset($db)) {
+	error_log("search_chat.php 3 db: exists");			//TEMPIN!!
+} else {
+	error_log("search_chat.php 3 db: does not exist");			//TEMPIN!!
+}
+
 $se = new cls_search();
 
 $se->process(NULL, NULL, $_REQUEST['records']);
+
+if(isset($db)) {
+	error_log("search_chat.php 4 db: exists");			//TEMPIN!!
+} else {
+	error_log("search_chat.php 4 db: does not exist");			//TEMPIN!!
+}
 
 ?>
