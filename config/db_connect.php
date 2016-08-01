@@ -173,7 +173,9 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password);
+	$db = dbconnect("p:" . $db_host, $db_username, $db_password);			//The p: is for a persistent connection. This is necessary with mysqli because
+																			//otherwise the connection dies on an end of file, which with our database handling of 
+																			//sessions is not helpful (it will attempt to write after the script has closed).
 	if(!$db) {
 		//TODO: Let us know that a server is down by email - but we only want to do this once!
 		//cc_mail_direct($cfg['adminEmail'], "AtomJump Server " . $_SERVER['SERVER_ADDR'] . "," . gethostname(). " is down", "The most likely cause is the database is not connecting.", $cfg['webmasterEmail'], "", "");
