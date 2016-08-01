@@ -290,6 +290,11 @@
     	{
     		global $staging;
     		global $cnf;
+    		global $db_host;
+	    	global $db_username;
+	    	global $db_password;
+	    	global $db_name;
+	    	global $db;
     	
     	
     	
@@ -299,10 +304,10 @@
     				return;
     			} else {
     				//We need to reconnect at this point anyway - it is likely at the end of a session
-    				$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
+    				/*$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
 					$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
 					$db_host =  $cnf['db']['hosts'][0]; 
-					$db_name = $cnf['db']['name'];
+					$db_name = $cnf['db']['name'];*/
 					$db = dbconnect($db_host, $db_username, $db_password);
 					dbselect($db_name);
 	  				db_set_charset('utf8');
@@ -313,11 +318,7 @@
     		error_log("Staging is not set, reseting writable db");
     		error_log(debug_backtrace());
     
-	    	global $db_host;
-	    	global $db_username;
-	    	global $db_password;
-	    	global $db_name;
-	    	global $db;
+
     
 	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
 	    	$db_master_host = $cnf['db']['hosts'][0];
