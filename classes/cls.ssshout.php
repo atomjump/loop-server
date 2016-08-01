@@ -31,6 +31,7 @@ class cls_ssshout
 		global $cnf;
 		global $msg;
 		global $lang;
+		global $db;
 		
 	 
 		//Returns user id - old one if a duplicate, new one if new
@@ -98,7 +99,9 @@ class cls_ssshout
 						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					}
 				}
-			
+				
+				error_log("User id returned:" . $row['int_user_id']);		//TEMPIN!!
+						
 				return $row['int_user_id'];
 			
 			
@@ -123,6 +126,9 @@ class cls_ssshout
 					//Let me know there is a new user
 					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
 		
+					error_log("User id returned insert id 1:" . db_insert_id());		//TEMPIN!!
+
+		
 					return db_insert_id();
 			
 				} else {
@@ -135,8 +141,9 @@ class cls_ssshout
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
 					}
-				
-				
+				    
+				    error_log("User id returned insert_id 2:" . db_insert_id());		//TEMPIN!!
+				 
 					return db_insert_id();
 			
 				}

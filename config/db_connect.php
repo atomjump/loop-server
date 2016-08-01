@@ -583,6 +583,7 @@
 	
 	function db_misc()
 	{
+		
 		//Old way would have nothing in here. mysqli needs it for innodb tables - we have a few.
 		dbquery('SET AUTOCOMMIT = 1');	
 	

@@ -88,6 +88,7 @@ class php_Session
     function read ($session_id)
     // read any data for this session.
     {
+      global $db;
 
       if($this->bot_detected()) {
     	      //check if bot session is available, if not create it
