@@ -215,6 +215,7 @@
 	} else {
 		error_log("Db in db_connect.php does not exist");			//TEMPIN!!
 	}
+	error_log("Staging: " . $staging);
 
 	if(!isset($start_path)) {
 		$start_path = "";

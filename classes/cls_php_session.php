@@ -120,20 +120,24 @@ class php_Session
     // write session data to the database.
     {
     	global $db;
+    	global $staging;
 
    		if(isset($db)) {
 			error_log("Db before php_session write: exists");			//TEMPIN!!
 		} else {
 			error_log("Db before php_session write: does not exist");			//TEMPIN!!
 		}
+		
+		error_log("Staging: " . $staging);
     	
         make_writable_db();			//Ensure we are writable
         
 		if(isset($db)) {
 			error_log("Db after php_session write, make writable: exists");			//TEMPIN!!
 		} else {
-			error_log("Db before php_session  write, make writable: exist");			//TEMPIN!!
+			error_log("Db after php_session  write, make writable: exist");			//TEMPIN!!
 		}
+		error_log("Staging: " . $staging);
 
         
     	if($this->bot_detected()) {
