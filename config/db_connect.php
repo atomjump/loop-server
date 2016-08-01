@@ -1,6 +1,10 @@
 <?php
 
-
+  /* 
+  		The main configuration and database connection script, that is included by all
+  		other files.
+  
+  */
   if(!isset($config)) {
      //Get global config - but only once
      $data = file_get_contents (dirname(__FILE__) . "/config.json");
@@ -173,17 +177,8 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password);			//The p: is for a persistent connection. This may be necessary with mysqli because
-																			//otherwise the connection dies on an end of file, which with our database handling of 
-																			//sessions is not helpful?
+	$db = dbconnect($db_host, $db_username, $db_password);			
 	if(!$db) {
-		//TODO: Let us know that a server is down by email - but we only want to do this once!
-		//cc_mail_direct($cfg['adminEmail'], "AtomJump Server " . $_SERVER['SERVER_ADDR'] . "," . gethostname(). " is down", "The most likely cause is the database is not connecting.", $cfg['webmasterEmail'], "", "");
-	
-		
-		//header('HTTP/1.1 503 Service Temporarily Unavailable');
-		//header('Status: 503 Service Temporarily Unavailable', false);	//false allows a second line
-		//header('Retry-After: 300', false);//300 seconds
 		
 		if($db_inc == true) {
 			$cnt = 0;
@@ -311,8 +306,6 @@
 					return;
     			}
     		}
-    		error_log("Staging is not set, reseting writable db");
-    		error_log(debug_backtrace());
     
 
     

@@ -61,9 +61,6 @@ class cls_ssshout
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
 					}
-					
-					error_log("User id returned insert id 0:" . db_insert_id());		//TEMPIN!!
-
 				
 					return db_insert_id();
 			 
@@ -102,8 +99,6 @@ class cls_ssshout
 						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					}
 				}
-				
-				error_log("User id returned:" . $row['int_user_id']);		//TEMPIN!!
 						
 				return $row['int_user_id'];
 			
@@ -128,14 +123,11 @@ class cls_ssshout
 					
 					//Let me know there is a new user
 					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
-		
-					error_log("User id returned insert id 1:" . db_insert_id());		//TEMPIN!!
-
-		
+				
 					return db_insert_id();
 			
 				} else {
-				 //email is null
+				 	//email is null
 					//Create a new 'temporary' user
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -144,8 +136,6 @@ class cls_ssshout
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
 					}
-				    
-				    error_log("User id returned insert_id 2:" . db_insert_id());		//TEMPIN!!
 				 
 					return db_insert_id();
 			
@@ -163,20 +153,20 @@ class cls_ssshout
 	  
 	public function social_post($public_to, $short_code, $user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $sender_title = null)
  	{
- 	    global $staging;
+ 	    	global $staging;
             global $msg;
             global $lang;
  	    
   	
-	  //Get the URL of where it was from  		
-	   $components = parse_url(cur_page_url());
-				$params = parse_str($components['query']);
-				//$params['m'] = $message_id;			//TODO: highlight this message for user
-				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'];
-				$visurl = $replaced;
-				if($params) {
-							$replaced .= "?" . http_build_query($params); 
-				}
+	  	//Get the URL of where it was from  		
+	   	$components = parse_url(cur_page_url());
+		$params = parse_str($components['query']);
+		//$params['m'] = $message_id;			//TODO: highlight this message for user
+		$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'];
+		$visurl = $replaced;
+		if($params) {
+					$replaced .= "?" . http_build_query($params); 
+		}
 				
 		  $sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $from_user_id;
 		  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -1325,21 +1315,21 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			$json = array();
 		
 
-   if($format == "avg") {
-      
-      	$results_arrayb = array();
-      	$resultb = dbquery("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . dberror());
-			    if($rowb = db_fetch_array($resultb))
-			    {
-				     $results_arrayb[] = $rowb;
-		         $json['sentimentAvg'] = round(floatval($results_arrayb[0][0]), 4);
-		         echo $json['sentimentAvg'];
-         			return;  
-			    }
-       
-   }
+		   if($format == "avg") {
+	  
+				$results_arrayb = array();
+				$resultb = dbquery("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . dberror());
+						if($rowb = db_fetch_array($resultb))
+						{
+							 $results_arrayb[] = $rowb;
+						 $json['sentimentAvg'] = round(floatval($results_arrayb[0][0]), 4);
+						 echo $json['sentimentAvg'];
+							return;  
+						}
+	   
+		   }
 			  
-	  $json['res'] = array();
+	  		$json['res'] = array();
 
 
 
