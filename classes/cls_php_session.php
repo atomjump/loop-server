@@ -122,26 +122,8 @@ class php_Session
     	global $db;
     	global $staging;
 
-   		if(isset($db)) {
-			error_log("Db before php_session write: exists");			//TEMPIN!!
-		} else {
-			error_log("Db before php_session write: does not exist:" . $session_data);			//TEMPIN!!
-			for($cnt = 0; $cnt < 10; $cnt++) {
-				error_log("Backtrace $cnt:" . debug_backtrace()[$cnt]['function']);  //
-			}
-		}
-		
-		error_log("Staging: " . $staging);
     	
         make_writable_db();			//Ensure we are writable
-        
-		if(isset($db)) {
-			error_log("Db after php_session write, make writable: exists");			//TEMPIN!!
-		} else {
-			error_log("Db after php_session  write, make writable: does not exist:" . $session_data);			//TEMPIN!!
-			
-		}
-		error_log("Staging: " . $staging);
 
         
     	if($this->bot_detected()) {

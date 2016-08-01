@@ -173,7 +173,7 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect("p:" . $db_host, $db_username, $db_password);			//The p: is for a persistent connection. This may be necessary with mysqli because
+	$db = dbconnect($db_host, $db_username, $db_password);			//The p: is for a persistent connection. This may be necessary with mysqli because
 																			//otherwise the connection dies on an end of file, which with our database handling of 
 																			//sessions is not helpful?
 	if(!$db) {
@@ -291,9 +291,19 @@
     		global $staging;
     		global $cnf;
     	
+    	
+    	
     		//Ensure we don't need this functionality on a staging server - which is always writable, single node
     		if($staging == true) { 	
-    			return;
+    			if($db) {
+    				return;
+    			} else {
+    				//We need to reconnect at this point anyway - it is likely at the end of a session
+    				$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
+					$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
+					$db_host =  $cnf['db']['hosts'][0]; 
+					$db_name = $cnf['db']['name'];
+    			}
     		}
     		error_log("Staging is not set, reseting writable db");
     		error_log(debug_backtrace());
@@ -320,8 +330,8 @@
 	    		}
 	    		
 	    		dbselect($db_name);
-	  		db_set_charset('utf8');
-	  		db_misc();
+	  			db_set_charset('utf8');
+	  			db_misc();
 	
 	    	}
     	
@@ -502,9 +512,9 @@
 			mysql_connect($host, $user, $pass);
 		*/
 		if($dbname) {
-			return mysqli_connect($host, $user, $pass, $dbname);
+			return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
 		} else {
-			return mysqli_connect($host, $user, $pass);
+			return mysqli_connect("p:" . $host, $user, $pass);
 		}
 		
 	}
