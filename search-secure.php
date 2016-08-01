@@ -8,6 +8,12 @@
 	$ly = new cls_layer();
 	$sh = new cls_ssshout();
 	
+	if(isset($db)) {
+		error_log("search-secure.php 1 db: exists");			//TEMPIN!!
+	} else {
+		error_log("search-secure.php 1 db: does not exist");			//TEMPIN!!
+	}
+	
 	
 	//We may have a possible user request in the case of receiving an email
 	if(isset($_REQUEST['possible_user'])) {
@@ -20,6 +26,13 @@
 			}
 		}
 	
+	}
+	
+	
+	if(isset($db)) {
+		error_log("search-secure.php 2 db: exists");			//TEMPIN!!
+	} else {
+		error_log("search-secure.php 2 db: does not exist");			//TEMPIN!!
 	}
 	
 	
@@ -115,6 +128,12 @@
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
 	
+	
+	if(isset($db)) {
+		error_log("search-secure.php 3 db: exists");			//TEMPIN!!
+	} else {
+		error_log("search-secure.php 3 db: does not exist");			//TEMPIN!!
+	}
 	
 	
 ?><!DOCTYPE html>
