@@ -126,8 +126,9 @@ class php_Session
 			error_log("Db before php_session write: exists");			//TEMPIN!!
 		} else {
 			error_log("Db before php_session write: does not exist:" . $session_data);			//TEMPIN!!
-			error_log("Backtrace 2:" . print_r(debug_backtrace()));  //
-			
+			for($cnt = 0; $cnt < 10; $cnt++) {
+				error_log("Backtrace $cnt:" . debug_backtrace()[$cnt]['function']);  //
+			}
 		}
 		
 		error_log("Staging: " . $staging);
@@ -138,7 +139,6 @@ class php_Session
 			error_log("Db after php_session write, make writable: exists");			//TEMPIN!!
 		} else {
 			error_log("Db after php_session  write, make writable: does not exist:" . $session_data);			//TEMPIN!!
-			error_log("Backtrace 2:" . print_r(debug_backtrace()));
 			
 		}
 		error_log("Staging: " . $staging);
