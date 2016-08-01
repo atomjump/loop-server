@@ -18,6 +18,14 @@ require("classes/cls.ssshout.php");
 $sh = new cls_ssshout();
 
 
+if(isset($db)) {
+	error_log("search_chat.php 1 db: exists");			//TEMPIN!!
+} else {
+	error_log("search_chat.php 1 db: does not exist");			//TEMPIN!!
+}
+
+
+
 if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	//Already logged in, but check if we know the ip address
 	if((!isset($_SESSION['user-ip']))||($_SESSION['user-ip'] == '')) {
@@ -54,6 +62,14 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	
 	}
 }
+
+if(isset($db)) {
+	error_log("search_chat.php 2 db: exists");			//TEMPIN!!
+} else {
+	error_log("search_chat.php 2 db: does not exist");			//TEMPIN!!
+}
+
+
 
 //Count the number of times we've searched in this session
 if($_SESSION['view-count'] == 0) {

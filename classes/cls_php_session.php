@@ -135,7 +135,7 @@ class php_Session
 		if(isset($db)) {
 			error_log("Db after php_session write, make writable: exists");			//TEMPIN!!
 		} else {
-			error_log("Db after php_session  write, make writable: exist");			//TEMPIN!!
+			error_log("Db after php_session  write, make writable: does not exist");			//TEMPIN!!
 		}
 		error_log("Staging: " . $staging);
 
