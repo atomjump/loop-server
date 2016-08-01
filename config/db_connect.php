@@ -571,7 +571,7 @@
 	{
 		global $db;
 		//Old style: mysql_insert_id();
-		return mysqli_insert_id();
+		return mysqli_insert_id($db);
 	}
 
 	function db_set_charset($set)

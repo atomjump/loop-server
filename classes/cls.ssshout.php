@@ -61,6 +61,9 @@ class cls_ssshout
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
 					}
+					
+					error_log("User id returned insert id 0:" . db_insert_id());		//TEMPIN!!
+
 				
 					return db_insert_id();
 			 
