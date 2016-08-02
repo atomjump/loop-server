@@ -355,6 +355,14 @@ Parameters
 ($table, $update_set)  
 Server: >= 0.5.0
 
+
+**db_fetch_array()**
+
+Parameters
+($results)  
+Server: > 0.5.21
+
+
 **get_forum_id()**
 
 Parameters
@@ -371,6 +379,11 @@ Server: > 0.5.0
 
 No parameters  
 Server: >= 0.5.0
+
+
+
+
+
 
 
 
