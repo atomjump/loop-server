@@ -66,11 +66,6 @@ chmod 777 /images/im
 ```
 
 
-# Known project issues
-Currently using an old style mysql php connection. We will try to update this
-when possible.
-
-
 # Optional Setup
 
 Add two cron tasks to your server:
