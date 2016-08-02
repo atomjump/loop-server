@@ -59,13 +59,32 @@ class cls_plugin_api {
 	}
 		
 	
-	/* An API wrapper for a generic fetch array */
+	/* API db wrappers  */
 	public function db_fetch_array($result)	
 	{
 		return db_fetch_array($result);
 		
 	}
 	
+	public function db_real_escape_string($str)
+	{	
+		return db_real_escape_string($str);
+	}
+	
+	public function db_error()
+	{
+		return dberror();		//Note different spelling internally
+	}
+	
+	public function db_insert_id()
+	{
+		return db_insert_id();
+	}
+	
+	public function db_real_escape_string($str)
+	{
+		return db_real_escape_string($str);
+	}
 	
 	
 			
