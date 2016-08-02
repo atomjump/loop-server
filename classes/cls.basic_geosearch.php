@@ -616,31 +616,31 @@ class clsBasicGeosearch
 		//Special case ssshout
 		//$sql = "select $id_field from $table_name where $peano1_field=$my_peano1 $index_and ORDER BY $id_field DESC limit $start_record_group,$buff_empty ";  //order by desc is a special change for ssshout
 		//if($show_queries == true) { echo $sql . ";<br/>"; };
-		//mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		//dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "create temporary table nearest_matches  select $id_field from $table_name where $peano1_field>=$my_peano1 $index_and limit $start_record_group,$buff_empty"; //engine=heap
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano1iv_field>$my_peano1iv $index_and limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2_field>$my_peano2 $index_and limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2iv_field>$my_peano2iv $index_and limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "create temporary table grouped_matches($id_field INT NOT NULL, INDEX USING BTREE ($id_field)) "; //engine=heap
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "insert into grouped_matches select $id_field from nearest_matches group by $id_field";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 
 
@@ -652,7 +652,7 @@ class clsBasicGeosearch
 		$sql .= " $misc_fields FROM grouped_matches g JOIN $table_name m ON g.$id_field = m.$id_field $custom_join";
 		//push($drop_tables, 'all_data');
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 
 		//Get a count of the coarse number of results - doesn't take into account lat/lon limits below
@@ -678,8 +678,8 @@ class clsBasicGeosearch
 		if($relevancy_scaler != "") {
 			$sql = "select " . $relevancy_scaler . " as max_relevancy from all_data";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
 			{
 				if($row['max_relevancy']) {
 					$relevancy_max = $row['max_relevancy'];
@@ -703,7 +703,7 @@ class clsBasicGeosearch
 		}
 		$sql .= ") AS proximity $pure_proximity_incl from all_data WHERE (latitude BETWEEN $this->bottom_right_latitude AND $this->top_left_latitude) AND (longitude BETWEEN $this->top_left_longitude AND $this->bottom_right_longitude) $custom_where ORDER BY proximity limit " . $select_limit;
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		$result = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());;
+		$result = dbquery($sql) or die("Unable to execute query $sql " . dberror());;
 
 
 
@@ -712,7 +712,7 @@ class clsBasicGeosearch
 				//This is the results set
 				$results = array();
 				$rows_cnt = 0;
-				while($row = mysql_fetch_array($result))
+				while($row = db_fetch_array($result))
 				{
 					$results[] = $row;
 					$rows_cnt++;
@@ -721,11 +721,11 @@ class clsBasicGeosearch
 				//This was a create table, that we simply want to write out
 				$sql = "SELECT * FROM final_results";
 				if($show_queries == true) { echo $sql . ";<br/>"; };
-				$result = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());;
+				$result = dbquery($sql) or die("Unable to execute query $sql " . dberror());;
 
 				$results = array();
 				$rows_cnt = 0;
-				while($row = mysql_fetch_array($result))
+				while($row = db_fetch_array($result))
 				{
 					$results[] = $row;
 					$rows_cnt++;
@@ -735,11 +735,11 @@ class clsBasicGeosearch
 			//This was a create table, that we want to sort on now for the final sort
 			$sql = "SELECT * FROM final_results ORDER BY $final_sort_field";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			$result = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());;
+			$result = dbquery($sql) or die("Unable to execute query $sql " . dberror());;
 
 			$results = array();
 			$rows_cnt = 0;
-			while($row = mysql_fetch_array($result))
+			while($row = db_fetch_array($result))
 			{
 				$results[] = $row;
 				$rows_cnt++;
@@ -826,20 +826,20 @@ class clsBasicGeosearch
 		if($keep_results_table == false) {
 			$sql = "drop table grouped_matches";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			mysql_query($sql);
+			dbquery($sql);
 
 			$sql = "drop table nearest_matches";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			mysql_query($sql);
+			dbquery($sql);
 
 			$sql = "drop table all_data";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			mysql_query($sql);
+			dbquery($sql);
 
 			if($final_sort_field != "") {
 				$sql = "drop table final_results";
 				if($show_queries == true) { echo $sql . ";<br/>"; };
-				mysql_query($sql);
+				dbquery($sql);
 			}
 		}
 
@@ -870,8 +870,8 @@ class clsBasicGeosearch
 		//I think this is the fastest method which uses the MySQL structure itself (not mysql_num_rows())
 		$sql = "select count(*) as coarse_count from all_data";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		$result_c = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result_c))
+		$result_c = dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result_c))
 		{
 			$rough_results = $row['coarse_count'];
 
@@ -887,8 +887,8 @@ class clsBasicGeosearch
 				//Now scale according to the size of the whole set - get the lat/lon of the last result
 				$sql = "SELECT latitude, longitude FROM all_data LIMIT " . $random_sample . ",1";
 				if($show_queries == true) { echo $sql . ";<br/>"; };
-				$result_l = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-				if($row = mysql_fetch_array($result_l))
+				$result_l = dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				if($row = db_fetch_array($result_l))
 				{
 					//Furtherest point distance
 					$f_lat = (float)$row['latitude'];
@@ -1123,47 +1123,47 @@ class clsBasicGeosearch
 		//Super off
 		$sql = "create temporary table nearest_matches  select $id_field from $table_name where $peano1_field>=$my_peano1 and $super_field = $super_off limit $start_record_group,$buff_empty"; //engine=heap
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano1iv_field>$my_peano1iv and $super_field = $super_off limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2_field>$my_peano2 and $super_field = $super_off limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2iv_field>$my_peano2iv and $super_field = $super_off limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 
 		//Super on search
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano1_field>=$my_peano1 and $super_field = $super_on limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano1iv_field>$my_peano1iv and $super_field = $super_on limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql)or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql)or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2_field>$my_peano2 and $super_field = $super_on limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into nearest_matches select $id_field from $table_name where $peano2iv_field>$my_peano2iv and $super_field = $super_on limit $start_record_group,$buff_empty";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 
 
 		$sql = "create temporary table grouped_matches($id_field INT NOT NULL, INDEX USING BTREE ($id_field)) "; //engine=heap
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 		$sql = "insert into grouped_matches select $id_field from nearest_matches group by $id_field";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 
 
@@ -1175,7 +1175,7 @@ class clsBasicGeosearch
 		$sql .= " $misc_fields FROM grouped_matches g JOIN $table_name m ON g.$id_field = m.$id_field";
 		//push($drop_tables, 'all_data');
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 
 
 		//If we have a relevancy field that includes a number that increases indefinitely e.g. a number of times clicked
@@ -1186,8 +1186,8 @@ class clsBasicGeosearch
 		if($relevancy_scaler != "") {
 			$sql = "select " . $relevancy_scaler . " as max_relevancy from all_data";
 			if($show_queries == true) { echo $sql . ";<br/>"; };
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
 			{
 				if($row['max_relevancy']) {
 					$relevancy_max = $row['max_relevancy'];
@@ -1209,23 +1209,23 @@ class clsBasicGeosearch
 		}
 		$sql .= ") AS proximity from all_data WHERE (latitude BETWEEN $this->bottom_right_latitude AND $this->top_left_latitude) AND (longitude BETWEEN $this->top_left_longitude AND $this->bottom_right_longitude) $custom_where ORDER BY proximity limit $select_limit";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		$result = mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		while($row = mysql_fetch_array($result))
+		$result = dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		while($row = db_fetch_array($result))
 		{
 			$results[] = $row;
 		}
 
 		$sql = "drop table grouped_matches";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "drop table nearest_matches";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "drop table all_data";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 
 		return $results;
@@ -1452,20 +1452,20 @@ class clsBasicGeosearch
 		//Call after keep_results_table => true, to clear the database memory
 		$sql = "drop table grouped_matches";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "drop table nearest_matches";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 		$sql = "drop table all_data";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 
 		$sql = "drop table final_results";
 		if($show_queries == true) { echo $sql . ";<br/>"; };
-		mysql_query($sql);
+		dbquery($sql);
 
 	}
 	

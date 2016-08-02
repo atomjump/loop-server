@@ -12,8 +12,8 @@ class cls_ssshout
 	public function get_user_ip($user_id)
 	{
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			return $row['var_last_ip'];
 		} else {
@@ -31,6 +31,7 @@ class cls_ssshout
 		global $cnf;
 		global $msg;
 		global $lang;
+		global $db;
 		
 	 
 		//Returns user id - old one if a duplicate, new one if new
@@ -40,36 +41,34 @@ class cls_ssshout
 			$phone = "";
 			$insert_phone = "NULL";
 		} else {
-			//$phone = " OR var_phone = '" . $phone . "'";  //usually a text string except when null
 			$insert_phone = "'" . $phone . "'";
 		}
 		
 		if((is_null($email))||($email == '')) {
 			 //This is likely a first request for a session - just check for users with no email
-	         //error_log("logged user:" . $_SESSION['logged-user']);
 	         
-	         if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
+	         	if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
 				         return $_SESSION['logged-user'];
-             } else {
+             		} else {
 			        //no existing row with this ip
 			 		//Create a new 'temporary' user
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
 						//Set the logged user to the db user id
-						$_SESSION['logged-user'] = mysql_insert_id();
+						$_SESSION['logged-user'] = db_insert_id();
 					}
 				
-					return mysql_insert_id();
+					return db_insert_id();
 			 
-			 }
+			}
 		} else {
 		 //email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
-			if($row = mysql_fetch_array($result))
+			if($row = db_fetch_array($result))
 			{
 			 //existing email
 				$cnt++;		//Count how many results we have from this email address
@@ -94,11 +93,11 @@ class cls_ssshout
 			
 					//Just make sure that we have the current phone number
 					if($insert_phone != "NULL") {
-						$sql = "UPDATE tbl_user SET var_phone = " . $insert_phone . " WHERE int_user_id = " . $row['int_user_id'];
-						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+						$sql = "UPDATE tbl_user SET var_phone = " . clean_data($insert_phone) . " WHERE int_user_id = " . $row['int_user_id'];
+						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					}
 				}
-			
+						
 				return $row['int_user_id'];
 			
 			
@@ -110,8 +109,8 @@ class cls_ssshout
 			
 					$confirm_code = md5(uniqid(rand())); 
 			
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . $ip . "', '" . clean_data($email) . "'," . $insert_phone . ",'" . $confirm_code . "', NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . clean_data($ip) . "', '" . clean_data($email) . "'," . clean_data($insert_phone) . ",'" . clean_data($confirm_code) . "', NOW())";
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 					//Let the user confirm their email address
 			
@@ -122,22 +121,21 @@ class cls_ssshout
 					
 					//Let me know there is a new user
 					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
-		
-					return mysql_insert_id();
+				
+					return db_insert_id();
 			
 				} else {
-				 //email is null
+				 	//email is null
 					//Create a new 'temporary' user
-					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . $ip . "', NULL," . $insert_phone . ", NOW())";
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				
 					if($login_as == true) {
 						//Set the logged user to the db user id
-						$_SESSION['logged-user'] = mysql_insert_id();
+						$_SESSION['logged-user'] = db_insert_id();
 					}
-				
-				
-					return mysql_insert_id();
+				 
+					return db_insert_id();
 			
 				}
 			} //end email check
@@ -153,24 +151,24 @@ class cls_ssshout
 	  
 	public function social_post($public_to, $short_code, $user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $sender_title = null)
  	{
- 	    global $staging;
+ 	    	global $staging;
             global $msg;
             global $lang;
  	    
   	
-	  //Get the URL of where it was from  		
-	   $components = parse_url(cur_page_url());
-				$params = parse_str($components['query']);
-				//$params['m'] = $message_id;			//TODO: highlight this message for user
-				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'];
-				$visurl = $replaced;
-				if($params) {
-							$replaced .= "?" . http_build_query($params); 
-				}
+	  	//Get the URL of where it was from  		
+	   	$components = parse_url(cur_page_url());
+		$params = parse_str($components['query']);
+		//$params['m'] = $message_id;			//TODO: highlight this message for user
+		$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'];
+		$visurl = $replaced;
+		if($params) {
+					$replaced .= "?" . http_build_query($params); 
+		}
 				
 		  $sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $from_user_id;
-		  $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		  if($row = mysql_fetch_array($result))
+		  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		  if($row = db_fetch_array($result))
 		  {
 				
 				
@@ -237,8 +235,8 @@ class cls_ssshout
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
 		$sql = "SELECT enm_access FROM tbl_layer WHERE int_layer_id = " . $layer_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
 		}
@@ -249,8 +247,8 @@ class cls_ssshout
 		$from_different = false;
 		if($from_user_id) {
 			$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $from_user_id; 
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			if($row2 = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row2 = db_fetch_array($result))
 			{
 				if((!is_null($row2['var_email']))&&($access=='private')) {
 					$from_email = $row2['var_email'];
@@ -264,8 +262,8 @@ class cls_ssshout
 	
 		//Send a whisper to a recipient
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			if($introducing == false) {
 				//A standard email once they are familiar with the concept
@@ -290,7 +288,7 @@ class cls_ssshout
 				//This is to someone who has been mentioned in the body of the message
 				$checksum = 233242 + $user_id * 19;
 				 
-    		    $components = parse_url(cur_page_url());
+    				$components = parse_url(cur_page_url());
 				$params = parse_str($components['query']);
 				$params['t'] = $user_id;
 				$params['f'] = $from_user_id;
@@ -356,7 +354,7 @@ class cls_ssshout
 
 		
 		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 		
 		if($just_typing == false) {
 			//Warn overall admin - TODO: just layer admin?
@@ -369,9 +367,9 @@ class cls_ssshout
 	public function get_email_from_user_id_insecure($user_id, $checksum)
 	{
 		$sql ="SELECT * FROM tbl_user WHERE int_user_id = " . clean_data($user_id);
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			//If there is no password, and the checksum is correct (checksum based off the user_id)
 			
@@ -395,9 +393,9 @@ class cls_ssshout
 	public function check_email_secure($email, $checksum) {
 		//Get user id
 		$sql ="SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			if($checksum == (($row['int_user_id'] * 19) + 233242)) {
 				return true;
@@ -409,9 +407,9 @@ class cls_ssshout
 	public function check_email_exists($email) {
 		//Get user id
 		$sql ="SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			
 				return true;
@@ -566,6 +564,7 @@ class cls_ssshout
 	{
 	    global $msg;
 	    global $lang;
+	    global $db;
 		$email_in_msg = false;
 	
 		//Insert shouted text into database at this time
@@ -594,7 +593,7 @@ class cls_ssshout
 		}
 			
 		
-   	//If we are a user get our id
+   		//If we are a user get our id
 		$user_id = $this->new_user($email, $ip, $phone, $loginas);
 				
 
@@ -610,8 +609,8 @@ class cls_ssshout
 				if($ssshout_id) {
 					$sql = "SELECT int_ssshout_id  FROM tbl_ssshout WHERE var_ip = '". $ip ."' AND var_shouted = '" . clean_data($message) . "' AND TIMEDIFF(NOW(),date_when_shouted) < '00:05:00'";
 			
-					$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-					if($row = mysql_fetch_array($result))
+					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+					if($row = db_fetch_array($result))
 					{
 						//Already exists - don't repeat.  Unless they're further than 5 minutes appart
 						//e.g. a message like 'hi' which you do want to repeat
@@ -621,7 +620,7 @@ class cls_ssshout
 					
 						$sql = "UPDATE tbl_ssshout SET enm_active = 'false', enm_status = 'final'
 													WHERE int_ssshout_id = " . $ssshout_id;
-						mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					} else {
 						//A new message - we'll print this
@@ -719,7 +718,7 @@ class cls_ssshout
 					
 					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id, $allow_plugins, $allowed_plugins);
 					
-					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . $date_shouted . ",
+					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . clean_data($date_shouted) . ",
 												var_shouted = '" . clean_data($message) . "',
 												var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "',
 												var_whisper_to = '" . $whisper_to_divided[0] . "',
@@ -727,7 +726,7 @@ class cls_ssshout
 												enm_active = 'true',
 												enm_status = '$status'
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
-					mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					
 					//If there were multiple users being whispered to, we need to post new individual messages to each of the users.
@@ -801,8 +800,8 @@ class cls_ssshout
 									" . $user_id ."
 									)";	
 									
-						mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
-						$ssshout_id = mysql_insert_id();
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+						$ssshout_id = db_insert_id();
 						$message_id = $ssshout_id;
 						
 						
@@ -1301,8 +1300,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			}
 
 			//Go get external searches first
-			$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			while($row = mysql_fetch_array($result))
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			while($row = db_fetch_array($result))
 			{
 				$results_array[] = $row;		
 			}
@@ -1314,21 +1313,21 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			$json = array();
 		
 
-   if($format == "avg") {
-      
-      	$results_arrayb = array();
-      	$resultb = mysql_query("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . mysql_error());
-			    if($rowb = mysql_fetch_array($resultb))
-			    {
-				     $results_arrayb[] = $rowb;
-		         $json['sentimentAvg'] = round(floatval($results_arrayb[0][0]), 4);
-		         echo $json['sentimentAvg'];
-         			return;  
-			    }
-       
-   }
+		   if($format == "avg") {
+	  
+				$results_arrayb = array();
+				$resultb = dbquery("SELECT AVG(flt_sentiment) FROM recent WHERE timeAgo <  " .  $avg_over_secs)  or die("Unable to execute query $sql " . dberror());
+						if($rowb = db_fetch_array($resultb))
+						{
+							 $results_arrayb[] = $rowb;
+						 $json['sentimentAvg'] = round(floatval($results_arrayb[0][0]), 4);
+						 echo $json['sentimentAvg'];
+							return;  
+						}
+	   
+		   }
 			  
-	  $json['res'] = array();
+	  		$json['res'] = array();
 
 
 
