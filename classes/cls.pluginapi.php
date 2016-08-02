@@ -57,10 +57,21 @@ class cls_plugin_api {
 	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
 	}
+		
 	
+	/* An API wrapper for a generic fetch array */
+	public function db_fetch_array($result)	
+	{
+		return db_fetch_array($result);
+		
+	}
+	
+	
+	
+			
 	/*
 	   A manual database update for plugins 
-    */
+    	*/
 	
 	public function db_update($table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
 	                            $update_set)    //Update set e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields	                          
