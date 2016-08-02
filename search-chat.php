@@ -34,7 +34,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	}
 } else {
 		
-	//First request from new user, make sure we get the ip address   WAS OR NOT AND BELOW
+	//First request from new user, make sure we get the ip address
 	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
 	  ($_SESSION['view-count'] == 0)||
 	  (!isset($_SESSION['view-count']))) {

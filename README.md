@@ -66,11 +66,6 @@ chmod 777 /images/im
 ```
 
 
-# Known project issues
-Currently using an old style mysql php connection. We will try to update this
-when possible.
-
-
 # Optional Setup
 
 Add two cron tasks to your server:
@@ -360,6 +355,32 @@ Parameters
 ($table, $update_set)  
 Server: >= 0.5.0
 
+
+**db_fetch_array()**
+
+Parameters
+($results)  
+Server: >= 0.5.21
+
+**db_real_escape_string()**
+
+Parameters
+($string)  
+Server: >= 0.5.21
+
+
+**db_error()**
+
+No parameters
+Server: >= 0.5.21
+
+
+**db_insert_id()**
+
+No parameters
+Server: >= 0.5.21
+
+
 **get_forum_id()**
 
 Parameters
@@ -376,6 +397,11 @@ Server: > 0.5.0
 
 No parameters  
 Server: >= 0.5.0
+
+
+
+
+
 
 
 

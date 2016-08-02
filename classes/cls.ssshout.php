@@ -1174,7 +1174,7 @@ class cls_search {
 	  header('Content-Disposition: attachment;filename="messages-' . date('Y-m-d-H:i:s') . '.xlsx"');
 	  header('Cache-Control: max-age=0');
 	  // If you're serving to IE 9, then the following may be needed
-  	header('Cache-Control: max-age=1');
+  	  header('Cache-Control: max-age=1');
 
 	  // If you're serving to IE over SSL, then the following may be needed
 	  header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -1258,45 +1258,45 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			$ip = $ly->getRealIpAddr();
 
 		
-			 if($download == true){
-			  if($db_timezone) {
-			    $src_tz = new DateTimeZone($db_timezone);
-    		} else {
-		    	$src_tz = new DateTimeZone($cnf['db']['timezone']); //eg. EDT
-    		}
-    		$dest_tz = new DateTimeZone('UTC'); // TODO: Note this is a constant I think.
-		    // a download, for now same query
+			if($download == true) {
+			  	if($db_timezone) {
+			    	$src_tz = new DateTimeZone($db_timezone);
+    			} else {
+		    		$src_tz = new DateTimeZone($cnf['db']['timezone']); //eg. EDT
+    			}
+				$dest_tz = new DateTimeZone('UTC'); // TODO: Note this is a constant I think.
+				// a download, for now same query
 		  
 		  
 		  
-		  switch($format) {
-		    case "avg":
-		      if($last_id == 0) {
-		        $last_id = PHP_INT_MAX;
-		      }
-         $sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
-		    break;
-		    
-		    case "excel":
-		      //reverse order get latest only
-		      if($last_id == 0) {
-		        $last_id = PHP_INT_MAX;
-		      }
-		      $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
-  
-		    break;
-		    
-		    default:
-		       //json
-		    
-		        //json so forwards
-		       $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
-  
-		    break;
-		  }
-		 } else {
-		   //Standard search
-			  $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+				  switch($format) {
+					case "avg":
+					  	if($last_id == 0) {
+							$last_id = PHP_INT_MAX;
+					  	}
+				 		$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					break;
+		
+					case "excel":
+					  //reverse order get latest only
+					  if($last_id == 0) {
+						$last_id = PHP_INT_MAX;
+					  }
+					  $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+
+					break;
+		
+					default:
+					   //json
+		
+						//json so forwards
+					   $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+
+					break;
+				  }
+		 	} else {   //End of download == true
+		   		  	//Standard search
+			  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
 			}
 
 			//Go get external searches first

@@ -57,10 +57,36 @@ class cls_plugin_api {
 	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
 	}
+		
 	
+	/* API db wrappers  */
+	public function db_fetch_array($result)	
+	{
+		return db_fetch_array($result);
+		
+	}
+	
+	public function db_real_escape_string($str)
+	{	
+		return db_real_escape_string($str);
+	}
+	
+	public function db_error()
+	{
+		return dberror();		//Note different spelling internally
+	}
+	
+	public function db_insert_id()
+	{
+		return db_insert_id();
+	}
+	
+
+	
+			
 	/*
 	   A manual database update for plugins 
-    */
+    	*/
 	
 	public function db_update($table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
 	                            $update_set)    //Update set e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields	                          
