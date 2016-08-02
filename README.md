@@ -360,7 +360,25 @@ Server: >= 0.5.0
 
 Parameters
 ($results)  
-Server: > 0.5.21
+Server: >= 0.5.21
+
+**db_real_escape_string()**
+
+Parameters
+($string)  
+Server: >= 0.5.21
+
+
+**db_error()**
+
+No parameters
+Server: >= 0.5.21
+
+
+**db_insert_id()**
+
+No parameters
+Server: >= 0.5.21
 
 
 **get_forum_id()**
