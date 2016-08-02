@@ -994,9 +994,9 @@ function doSearch()
 		portReset = true;	
 	}
 	
-	if((portRead)&&(portRead != null)&&(port == "")) {
+	if((readPort)&&(readPort != null)&&(readPort != "")&&(port == "")) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
-		var serv = assignPortToURL(ssshoutServer, portRead);
+		var serv = assignPortToURL(ssshoutServer, readPort);
 	} else {
 	
 		var serv = assignPortToURL(ssshoutServer, port);
