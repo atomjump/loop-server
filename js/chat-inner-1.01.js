@@ -994,7 +994,13 @@ function doSearch()
 		portReset = true;	
 	}
 	
-	var serv = assignPortToURL(ssshoutServer, port);
+	if((portRead)&&(portRead != null)&&(port == "")) {
+		//Use an alternative port for reading - useful by the Loop-server-fast plugin
+		var serv = assignPortToURL(ssshoutServer, portRead);
+	} else {
+	
+		var serv = assignPortToURL(ssshoutServer, port);
+	}
 	
 	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),

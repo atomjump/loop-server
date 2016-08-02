@@ -15,6 +15,7 @@
       "fileRoot": "/home/peter/projects/rose/loop-server",
       "phpPath": "/usr/bin/php",
       "logoutPort": 80,
+      "readPort": null, 
       "serverTimezone": "America/Los_Angeles",
       "ips": [
           "127.0.0.1"
@@ -78,6 +79,7 @@
       "fileRoot": "/home/peter/projects/rose/loop-server",
       "phpPath": "/usr/bin/php",
       "logoutPort": 1444,
+      "readPort": null,
       "serverTimezone": "America/Los_Angeles",
       "ips": [
           "127.0.0.1"

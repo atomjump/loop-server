@@ -148,6 +148,14 @@
 			
 			<script>
 				var initPort = "<?php echo $cnf['logoutPort'] ?>";
+				
+				<?php if(isset($cnf['readPort'])) { //Support a specific port for fast reading with the loop-server-fast plugin 
+				?>
+					var readPort = "<?php echo $cnf['readPort'] ?>";
+				<?php } else { ?>
+					var readPort = null;
+				<?php } ?>
+				
 				var portReset = true;
 			
 				var ajFeedback = {
