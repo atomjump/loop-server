@@ -48,13 +48,13 @@ class cls_plugin_api {
 	
 	public function db_insert(  $table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
 	                            $insert_field_names_str,    //Insert string e.g. "(var_layers, var_title, var_body, date_when_received, var_whisper)"
-	                            $insert_field_data_str)     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . mysql_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
+	                            $insert_field_data_str)     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . db_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
 	{
 	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
 	    
 	    //TODO: ensure this uses a more modern type of mysql insertion.
 	    $sql = "INSERT INTO " . $table . " " . $insert_field_names_str . " VALUES " . $insert_field_data_str;  
-	    mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
 	}
 	
@@ -69,7 +69,7 @@ class cls_plugin_api {
 	    
 	    //TODO: ensure this uses a more modern type of mysql insertion.
 	    $sql = "UPDATE " . $table . " SET " . $update_set;  
-	    mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
 	}
 	
@@ -84,7 +84,7 @@ class cls_plugin_api {
 	    //Returns result array when successful, or breaks the server request if unsuccessful, with an error 
 	    
 	    //TODO: ensure this uses a more modern type of mysql connection.
-	    $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+	    $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 	    
 	    return $result;
 	}

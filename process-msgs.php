@@ -29,14 +29,14 @@
 	
 	//Read the email
 	$sql = "SELECT * FROM tbl_ssshout";
-	$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-	while($row = mysql_fetch_array($result))
+	$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+	while($row = db_fetch_array($result))
 	{
 	
 	
  		list($ssshout_processed, $include_payment) = $sh->process_chars($row['var_shouted'],$row['var_ip'],$row['int_author_id'],$row['int_ssshout_id']);	
 		$sqlb = "UPDATE tbl_ssshout SET var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "' WHERE int_ssshout_id = " . $row['int_ssshout_id'];
-		$resultb = mysql_query($sqlb)  or die("Unable to execute query $sql " . mysql_error());
+		$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
 		echo ".";
 	
 	}

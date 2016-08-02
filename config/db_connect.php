@@ -1,6 +1,10 @@
 <?php
 
-
+  /* 
+  		The main configuration and database connection script, that is included by all
+  		other files.
+  
+  */
   if(!isset($config)) {
      //Get global config - but only once
      $data = file_get_contents (dirname(__FILE__) . "/config.json");
@@ -173,15 +177,8 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = mysql_connect($db_host, $db_username, $db_password);
+	$db = dbconnect($db_host, $db_username, $db_password);			
 	if(!$db) {
-		//TODO: Let us know that a server is down by email - but we only want to do this once!
-		//cc_mail_direct($cfg['adminEmail'], "AtomJump Server " . $_SERVER['SERVER_ADDR'] . "," . gethostname(). " is down", "The most likely cause is the database is not connecting.", $cfg['webmasterEmail'], "", "");
-	
-		
-		//header('HTTP/1.1 503 Service Temporarily Unavailable');
-		//header('Status: 503 Service Temporarily Unavailable', false);	//false allows a second line
-		//header('Retry-After: 300', false);//300 seconds
 		
 		if($db_inc == true) {
 			$cnt = 0;
@@ -191,7 +188,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $cnf['db']['hosts'][$db_num];			
-				$db = mysql_connect($db_host, $db_username, $db_password);
+				$db = dbconnect($db_host, $db_username, $db_password);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -206,8 +203,9 @@
 			exit(0);
 		}
 	}
-	mysql_select_db($db_name);
-	mysql_query("SET NAMES 'utf8'");		//SET NAMES 'utf8'   //_unicode_ci
+	dbselect($db_name);
+	db_set_charset('utf8');
+	db_misc();
 
 
 	if(!isset($start_path)) {
@@ -239,25 +237,25 @@
 	    $string = stripslashes($string);
 	  }
 	  $string = strip_tags($string);
-	  return mysql_real_escape_string($string);
+	  return db_real_escape_string($string);
 	}
 	
 	function clean_data_keep_tags($string)
 	{
 	
-    //Use for cleaning input data before addition to database
+    	  //Use for cleaning input data before addition to database
 	  if (get_magic_quotes_gpc()) {
 	    $string = stripslashes($string);
 	  }
 	  
-	  return mysql_real_escape_string($string);
+	  return db_real_escape_string($string);
 	
 	
 	}
 	
 	function check_subdomain()
 	{
-	 global $config;
+	 	global $config;
 	
 		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
 		$server_name = $_SERVER['SERVER_NAME'];
@@ -278,42 +276,56 @@
 	}
 	
 	function make_writable_db()
-    {
-    	global $staging;
-    	global $cnf;
+    	{
+    		global $staging;
+    		global $cnf;
+    		global $db_host;
+	    	global $db_username;
+	    	global $db_password;
+	    	global $db_name;
+	    	global $db;
     	
-    	//Ensure we don't need this functionality on a staging server - which is always writable, single node
-    	if($staging == true) { 	
+    	
+    	
+    		//Ensure we don't need this functionality on a staging server - which is always writable, single node
+    		if($staging == true) { 	
+    			if($db) {
+    				return;
+    			} else {
+    				//We need to reconnect at this point anyway - it is likely at the end of a session
+					$db = dbconnect($db_host, $db_username, $db_password);
+					dbselect($db_name);
+	  				db_set_charset('utf8');
+	  				db_misc();
+					return;
+    			}
+    		}
+    
+
+    
+	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
+	    	$db_master_host = $cnf['db']['hosts'][0];
+	    	if(($db_host != $db_master_host)||(!isset($db))) {
+	    		//Reconnect to the master db to carry out the write operation
+	    		dbclose();		//close off the current db
+	    		
+	    		$db_host = $db_master_host;
+	    		$db = dbconnect($db_host, $db_username, $db_password);
+	    		if(!$db) {
+	    			//No response from the master
+	    			http_response_code(503);
+					exit(0);
+	    		
+	    		}
+	    		
+	    		dbselect($db_name);
+	  			db_set_charset('utf8');
+	  			db_misc();
+	
+	    	}
+    	
     		return;
     	}
-    
-    	global $db_host;
-    	global $db_username;
-    	global $db_password;
-    	global $db_name;
-    
-    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
-    	$db_master_host = $cnf['db']['hosts'][0];
-    	if($db_host != $db_master_host) {
-    		//Reconnect to the master db to carry out the write operation
-    		mysql_close();		//close off the current db
-    		
-    		$db_host = $db_master_host;
-    		$db = mysql_connect($db_host, $db_username, $db_password);
-    		if(!$db) {
-    			//No response from the master
-    			http_response_code(503);
-				   exit(0);
-    		
-    		}
-    		
-    		mysql_select_db($db_name);
-  		  mysql_query("SET NAMES 'utf8'");		
-
-    	}
-    	
-    	return;
-    }
 
 	function cc_mail($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
@@ -339,7 +351,7 @@
 	function send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 	
-	 global $cnf;
+	 	global $cnf;
  
 		$config = array();
 	 
@@ -481,6 +493,87 @@
 		}
 		return $details;
 	}
+	
+	function dbconnect($host, $user, $pass, $dbname = null)
+	{
+		//Using old style:
+		/*
+			mysql_connect($host, $user, $pass);
+		*/
+		if($dbname) {
+			return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
+		} else {
+			return mysqli_connect("p:" . $host, $user, $pass);
+		}
+		
+	}
+	
+	function dbselect($dbname)
+	{
+		global $db;
+		//Using old style = mysql_select_db($dbname);
+		return mysqli_select_db($db, $dbname);
+		
+	}
+	
+	function dbclose()
+	{
+		global $db;
+		//Using old style = mysql_close();
+		mysqli_close($db);
+		
+	}
+	
+	function dbquery($sql)
+	{
+		global $db;
+		
+		//Using old style: return mysql_query($sql);
+		return mysqli_query($db, $sql);
+	}
+	
+	function db_fetch_array($result)
+	{
+		//Old style: mysql_fetch_array($result)
+		return mysqli_fetch_array($result);
+	}
+	
+	function db_real_escape_string($str)
+	{
+		global $db;
+		//Using old style: mysql_real_escape_string
+		return mysqli_real_escape_string($db, $str);
+		//Caution character set must be set prior with mysqli_set_charset() 
+		
+	}
+	
+	function dberror()
+	{
+		global $db;
+		//Old style: mysql_error()
+		return mysqli_error($db);
+	}
+	
+	function db_insert_id()
+	{
+		global $db;
+		//Old style: mysql_insert_id();
+		return mysqli_insert_id($db);
+	}
 
+	function db_set_charset($set)
+	{
+		global $db;
+		//Old way: dbquery("SET NAMES 'utf8'");
+		mysqli_set_charset($db, $set);
+	}
+	
+	function db_misc()
+	{
+		
+		//Old way would have nothing in here. mysqli needs it for innodb tables - we have a few.
+		dbquery('SET AUTOCOMMIT = 1');	
+	
+	}
 
 ?>

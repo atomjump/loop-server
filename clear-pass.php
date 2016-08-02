@@ -12,7 +12,7 @@
        
        if($_SESSION['temp-email']) {
           $sql = "UPDATE tbl_user SET var_pass = NULL WHERE var_email = '" . $_SESSION['temp-email'] . "'";
-      	    $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+      	    $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			        
 		        	
           header("Location: index.php");
@@ -35,8 +35,8 @@
 			 $email = $_SESSION['logged-email'];
 		} else {
 			   $sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
-      $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-			   if($row = mysql_fetch_array($result)) {
+      $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			   if($row = db_fetch_array($result)) {
 			      //There is an email like this on the system   
 			   		 
 			   } else {

@@ -22,8 +22,8 @@
 		//Get user's email address
 		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $_REQUEST['user_id'];
 		
-		$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-		if($row = mysql_fetch_array($result))
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
 		{
 			$email_to = $row['var_email'];
 		
@@ -32,8 +32,8 @@
 			
 			 $sql = "SELECT * FROM tbl_ssshout WHERE int_ssshout_id = " . $_REQUEST['msgid'];
 		
-				$resultb = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-				if($rowb = mysql_fetch_array($resultb))
+				$resultb = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				if($rowb = db_fetch_array($resultb))
 				 {
 				     $msg = summary($rowb['var_shouted'], 25);
 				  }

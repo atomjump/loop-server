@@ -305,13 +305,10 @@
             while (true) {
 	            sleep(5);
 	            
-	            //error_log("polling");
 	            $r1 = $process_parallel_url->JobPollAsync($process_parallel_url->job);  
-	            //error_log("returned $r1");
 	
 	            if ($r1 === false) break;
 	
-	            //echo "<b>r1 = </b>$r1<br>";
 	            flush(); @ob_flush();
             }
 		

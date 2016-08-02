@@ -88,6 +88,7 @@ class php_Session
     function read ($session_id)
     // read any data for this session.
     {
+      global $db;
 
       if($this->bot_detected()) {
     	      //check if bot session is available, if not create it
@@ -95,10 +96,10 @@ class php_Session
      	}
     
     
-    	$sql = "SELECT * FROM php_session WHERE session_id='" .addslashes($session_id) ."'";
-        $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-	       while($row = mysql_fetch_array($result))
-	       {
+    	$sql = "SELECT * FROM php_session WHERE session_id='" .clean_data($session_id) ."'";
+        $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		while($row = db_fetch_array($result))
+		{
           	$fieldarray[] = $row;
         }
         
@@ -119,13 +120,21 @@ class php_Session
     function write ($session_id, $session_data)
     // write session data to the database.
     {
-    
-        	make_writable_db();			//Ensure we are writable
-    	    if($this->bot_detected()) {
+    	global $db;
+    	global $staging;
+
+        make_writable_db();			//Ensure we are writable
+	    if(!isset($db)) {
+    		error_log("Db doesn't exist after make_writable!");
+    	} 
+
+
+        
+    	if($this->bot_detected()) {
     	      //check if bot session is available, if not create it    	    		
-    	    		return TRUE;
+    		return TRUE;
         	    			 
-    	    }
+    	}
     		
          if (!empty($this->fieldarray)) {
             if ($this->fieldarray['session_id'] != $session_id) {
@@ -141,17 +150,17 @@ class php_Session
            
             // create new record
             $array['session_id']   = $session_id;
-            $array['session_data'] = addslashes($session_data);
+            $array['session_data'] = clean_data($session_data);
             
             $sql = "INSERT INTO php_session(session_id,
-  			date_created,
-  			last_updated,
- 			session_data) VALUES ( '" . $array['session_id'] . "',
- 						NOW(),
- 						NOW(),
- 						'" . $array['session_data'] . "')";
+					date_created,
+					last_updated,
+					session_data) VALUES ( '" . clean_data($array['session_id']) . "',
+								NOW(),
+								NOW(),
+								'" . $array['session_data'] . "')";
  	          
- 	     						$result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+ 	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         
           } else {
         
@@ -159,14 +168,14 @@ class php_Session
             if (isset($_SESSION['logged-user'])) {//was user_id
                 $array['user_id']  = $_SESSION['logged-user'];//was user_id
             } // if
-            $array['session_data'] = addslashes($session_data);
+            $array['session_data'] = clean_data($session_data);
             $sql = "UPDATE php_session SET 
-  			user_id = '" . $array['user_id'] .  "' ,
-  			last_updated = NOW(),
- 			session_data ='" . $array['session_data'] . "'
- 			WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
- 	          $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
-        } // if
+				user_id = '" . clean_data($array['user_id']) .  "' ,
+				last_updated = NOW(),
+				session_data ='" . $array['session_data'] . "'
+				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
+			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+        } // if   NOTE: experimental clean_data()
         
         return TRUE;
         
@@ -181,7 +190,7 @@ class php_Session
     	  make_writable_db();			//Ensure we are writable
        
        $sql = "DELETE FROM php_session WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
-       $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+       $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
        
        return TRUE;
         
@@ -210,7 +219,7 @@ class php_Session
    
         
         $sql = "DELETE FROM php_session WHERE last_updated < '$dt2' OR (last_updated < '$dtc2' AND (user_id IS NULL OR user_id = ''))";
-        $result = mysql_query($sql)  or die("Unable to execute query $sql " . mysql_error());
+        $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         //$count = $this->_dml_deleteSelection("last_updated < '$dt2'");
         
         return TRUE;

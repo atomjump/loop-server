@@ -11,6 +11,6 @@
 	include_once('config/db_connect.php');		
 
 	$sql = "UPDATE tbl_ssshout SET enm_active = false where enm_active = true and enm_status = 'typing' and date_when_shouted < DATE_SUB(NOW(),INTERVAL 15 MINUTE)";
-	mysql_query($sql) or die("Unable to execute query $sql " . mysql_error());
+	dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	
 ?>
