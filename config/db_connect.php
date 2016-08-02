@@ -305,7 +305,7 @@
     
 	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
 	    	$db_master_host = $cnf['db']['hosts'][0];
-	    	if($db_host != $db_master_host) {
+	    	if(($db_host != $db_master_host)||(!isset($db))) {
 	    		//Reconnect to the master db to carry out the write operation
 	    		dbclose();		//close off the current db
 	    		
