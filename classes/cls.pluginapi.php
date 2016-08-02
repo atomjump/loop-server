@@ -81,11 +81,7 @@ class cls_plugin_api {
 		return db_insert_id();
 	}
 	
-	public function db_real_escape_string($str)
-	{
-		return db_real_escape_string($str);
-	}
-	
+
 	
 			
 	/*
