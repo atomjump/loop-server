@@ -76,7 +76,6 @@ function hideKeyboard(element) {
 
 function assignPortToURL(url, portNum) {
     if((portNum)&&(portNum != "")) {
-    	alert("about to replace");
         url = url.replace(/\/\/(.*?)\//, "//$1:" + portNum + "/");
     } else {
         //Do nothing if no port number 
@@ -995,18 +994,15 @@ function doSearch()
 		portReset = true;	
 	}
 	
-	alert("Readport:" + readPort + " port:" + port);
 	
 	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
-		alert("About to aasign readport");
 		var serv = assignPortToURL(ssshoutServer, readPort);
 	} else {
 	
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	alert("Server: " + serv);
 	
 	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),
