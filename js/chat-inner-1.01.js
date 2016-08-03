@@ -996,13 +996,15 @@ function doSearch()
 	
 	alert("Readport:" + readPort + " port:" + port);
 	
-	if((readPort)&&(readPort != null)&&(readPort != "")&&(port == "")) {
+	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
 		var serv = assignPortToURL(ssshoutServer, readPort);
 	} else {
 	
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
+	
+	alert("Server: " + serv);
 	
 	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),
