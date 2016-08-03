@@ -76,7 +76,8 @@ function hideKeyboard(element) {
 
 function assignPortToURL(url, portNum) {
     if((portNum)&&(portNum != "")) {
-        url = url.replace("/\/\/(.*?)\//", "//$1:" + portNum + "/");
+    	alert("about to replace");
+        url = url.replace("/\/\/(.*?)\/(.*?)/", "//$1:" + portNum + "/$2");
     } else {
         //Do nothing if no port number 
            
@@ -998,6 +999,7 @@ function doSearch()
 	
 	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
+		alert("About to aasign readport");
 		var serv = assignPortToURL(ssshoutServer, readPort);
 	} else {
 	
