@@ -77,7 +77,7 @@ function hideKeyboard(element) {
 function assignPortToURL(url, portNum) {
     if((portNum)&&(portNum != "")) {
     	alert("about to replace");
-        url = url.replace("/\/\/(.*?)\/(.*?)/", "//$1:" + portNum + "/$2");
+        url = url.replace(/\/\/(.*?)\//, "//$1:" + portNum + "/");
     } else {
         //Do nothing if no port number 
            
