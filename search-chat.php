@@ -36,7 +36,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 		
 	//First request from new user, make sure we get the ip address
 	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
-	  ($_SESSION['view-count'] == 0)||
+	  (intval($_SESSION['view-count']) == 0)||
 	  (!isset($_SESSION['view-count']))) {
         
         if(!isset($_SESSION['view-count'])) {
@@ -58,9 +58,10 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 
 
 //Count the number of times we've searched in this session
-if($_SESSION['view-count'] == 0) {
+if(intval($_SESSION['view-count']) == 0) {
 	//Note: a db write operation
-	$_SESSION['view-count'] = $_SESSION['view-count'] + 1;
+	
+	$_SESSION['view-count'] = intval($_SESSION['view-count']) + 1;
 }
 
 
