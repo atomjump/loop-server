@@ -70,6 +70,6 @@ $se = new cls_search();
 
 $se->process(NULL, NULL, $_REQUEST['records']);
 
-
+error_log("View count after now:" . $_SESSION['view-count']); 
 
 ?>
