@@ -62,6 +62,7 @@ if(intval($_SESSION['view-count']) == 0) {
 	//Note: a db write operation
 	
 	$_SESSION['view-count'] = intval($_SESSION['view-count']) + 1;
+	error_log("View count now:" . $_SESSION['view-count']); 
 }
 
 
