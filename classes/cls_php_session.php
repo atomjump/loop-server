@@ -122,8 +122,7 @@ class php_Session
     {
     	global $db;
     	global $staging;
-    	error_log("Session write " . $session_id . "  setting to " . $session_data);
-
+    
         make_writable_db();			//Ensure we are writable
 	    if(!isset($db)) {
     		error_log("Db doesn't exist after make_writable!");
@@ -175,7 +174,7 @@ class php_Session
 				last_updated = NOW(),
 				session_data ='" . $array['session_data'] . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
-			 error_log($sql);
+
 			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         } // if   NOTE: experimental clean_data()
         
