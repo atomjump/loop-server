@@ -18,7 +18,7 @@ require("classes/cls.ssshout.php");
 $sh = new cls_ssshout();
 
 
-
+	error.log("Server port:" .$_SERVER['SERVER_PORT'] . " logoutPort:" . $cnf['logoutPort'] . " view-count = " . intval($_SESSION['view-count']). " logged-user:" . $_SESSION['logged-user'] );
 
 if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	//Already logged in, but check if we know the ip address
@@ -34,7 +34,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	}
 } else {
 	
-	error.log("Server port:" .$_SERVER['SERVER_PORT'] . " logoutPort:" . $cnf['logoutPort'] . " view-count = " . intval($_SESSION['view-count']));
+
 		
 	//First request from new user, make sure we get the ip address
 	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
