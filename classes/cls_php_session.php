@@ -174,6 +174,7 @@ class php_Session
 				last_updated = NOW(),
 				session_data ='" . $array['session_data'] . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
+			 error.log($sql);
 			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         } // if   NOTE: experimental clean_data()
         
