@@ -122,6 +122,7 @@ class php_Session
     {
     	global $db;
     	global $staging;
+    	error_log("Session write " . $session_id . "  setting to " . $session_data);
 
         make_writable_db();			//Ensure we are writable
 	    if(!isset($db)) {
