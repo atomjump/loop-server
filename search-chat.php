@@ -19,7 +19,6 @@ $sh = new cls_ssshout();
 
 
 
-
 if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 	//Already logged in, but check if we know the ip address
 	if((!isset($_SESSION['user-ip']))||($_SESSION['user-ip'] == '')) {
@@ -33,10 +32,12 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 		$_SESSION['user-ip'] = $ip;					//Save their ip in this session
 	}
 } else {
+	
+
 		
 	//First request from new user, make sure we get the ip address
 	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
-	  ($_SESSION['view-count'] == 0)||
+	  (intval($_SESSION['view-count']) == 0)||
 	  (!isset($_SESSION['view-count']))) {
         
         if(!isset($_SESSION['view-count'])) {
@@ -58,9 +59,11 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 
 
 //Count the number of times we've searched in this session
-if($_SESSION['view-count'] == 0) {
+if(intval($_SESSION['view-count']) == 0) {
 	//Note: a db write operation
-	$_SESSION['view-count'] = $_SESSION['view-count'] + 1;
+	
+	$_SESSION['view-count'] = intval($_SESSION['view-count']) + 1;
+
 }
 
 
@@ -68,6 +71,6 @@ $se = new cls_search();
 
 $se->process(NULL, NULL, $_REQUEST['records']);
 
-
+session_write_close(); 
 
 ?>
