@@ -19,7 +19,12 @@
         }
     ],
     "homepage" : "https://atomjump.com",
-    "keywords" : "messaging",
+    "keywords" : [
+        "messaging",
+        "messaging server",
+        "instant messaging",
+        "IM"
+    ],
     "suggest": {
         "ext-gd": "To handle image uploading."
     }
