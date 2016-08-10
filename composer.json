@@ -1,8 +1,25 @@
 {
     "name": "atomjump/loop-server",
-    "description": "A short description of what your package does",
+    "description": "A server to the open messaging client AtomJump Loop https://atomjump.com",
     "require": {
-        "php": "^5.3.3 || ^7.0",
-        "another-vendor/package": "1.*"
+        "php": ">=5.3.0",
+        "ext-php-xml": "*",
+        "lib-curl": "*",
+        "ext-php-mbstring": "*",
+        "lib-zip": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AtomJump",
+            "email": "webmaster@atomjump.com",
+            "homepage": "https://atomjump.com",
+            "role": "Developer"
+        }
+    ],
+    "homepage" : "https://atomjump.com",
+    "keywords" : "messaging",
+    "suggest": {
+        "imagemagick": "To handle image uploading better."
     }
 }
