@@ -6,7 +6,7 @@
         "ext-mysqli" : "*",
         "ext-xml": "*",
         "ext-mbstring": "*",
-        "lib-zip": "*",
+        "ext-zip": "*",
         "lib-curl": "*"
     },
     "license": "MIT",
