@@ -23,7 +23,7 @@
     
 
 
-	$ip = $ly->getRealIpAddr();
+	$ip = $ly->getFakeIpAddr();
     $user_id = $sh->new_user('', '', '', true);
     
     $_SESSION['logged-user'] = $user_id;		//This will be a 'temporary user id' - for their ip address only

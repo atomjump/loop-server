@@ -55,7 +55,7 @@
 	//in the middle of the world - only accurate to city level
 
 	//Get ip address
-	$ip = $ly->getRealIpAddr();
+	$ip = $ly->getFakeIpAddr();
 
 
 	//Check to see if we're logging in

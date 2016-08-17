@@ -177,7 +177,7 @@ class cls_plugin_api {
 	public function get_current_user_ip()
     {	
 	    $ly = new cls_layer();
-	    return $ly->getRealIpAddr();
+	    return $ly->getFakeIpAddr();
 	}	
 
 

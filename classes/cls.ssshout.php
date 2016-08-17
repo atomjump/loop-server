@@ -1255,7 +1255,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			
 
 
-			$ip = $ly->getRealIpAddr();
+			$ip = $ly->getFakeIpAddr();
 
 		
 			if($download == true) {

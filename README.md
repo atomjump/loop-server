@@ -241,10 +241,6 @@ https://atomjump.com
 
 
 
-Production:
-The port 1444 code is only used in a production install, and you must have configured haproxy. This is mapped inside the haproxy config 
-back to port 80 for a normal http request.
-
 Staging:
 To ensure you are set to staging, set the 'webDomain' param in the config.json to the raw local domain or hostname actually used.
 E.g. an ip address would be '192.168.40.10' or a domain would be 'subdomain.yourdomain.com'. If you change from an ip
@@ -253,9 +249,11 @@ A staging server does not need haproxy to be configured.
 
 To test the web domain, use the following small PHP script:
 
+```
 <?php
         echo "Server name:" . $_SERVER['SERVER_NAME'];
 ?>
+```
 
 **db** **hosts**: there can be any number of db hosts, but the first one is the only write host, while the others are read.
    We use Amazon MySQL RDS for multiple db hosts.
@@ -272,7 +270,7 @@ To test the web domain, use the following small PHP script:
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
 
-**logoutPort**: Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5
+**logoutPort**: Depreciated ver 0.6.3. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5, ver <= 0.6.2
 
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
 Advanced settings, and write this into the config. This is the default location for private messages if there is no other
@@ -436,7 +434,12 @@ Server: >= 0.5.0
 
 Output parameters
 ($message)  
-Plugin function writes HTML inside ordinary PHP tags e.g. ?>Your settings HTML<?php  
+Plugin function writes HTML inside ordinary PHP tags e.g. 
+
+```php
+?>Your settings HTML<?php  
+```
+
 Server: >= 0.5.9  
 
 
@@ -452,7 +455,12 @@ Plugin function returns
 
 Output parameters
 ($message)  
-Plugin function writes HTML inside ordinary PHP tags e.g. ?>Your settings HTML<?php  
+Plugin function writes HTML inside ordinary PHP tags e.g. 
+
+```php
+?>Your settings HTML<?php  
+```
+
 Server: >= 0.5.9  
 
 

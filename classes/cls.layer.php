@@ -87,6 +87,16 @@ class cls_layer
 		return db_insert_id();
 	}
 
+	public function getFakeIpAddr()
+	{
+		//This is used now as the primary way to differentiate users
+		$name = session_id();
+		$ip = "192." . ord($name[0]) . '.' . ord($name[1]) . '.' . ord($name[2]);
+	    return $ip; 
+	
+	
+	}
+
 	public function getRealIpAddr()
 	{
 		global $cnf;
@@ -364,7 +374,7 @@ class cls_login
 	{
 		//Get a usercode for display
 		$ly = new cls_layer(); 
-		$ip = $ly->getRealIpAddr();  //get new user's ip address
+		$ip = $ly->getFakeIpAddr();  //get new user's ip address
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $this->get_subscription_string());
 	}
@@ -743,7 +753,7 @@ class cls_login
 		} else {
 			//Incorrect email - so, this is a new user
 			$ly = new cls_layer(); 
-			$ip = $ly->getRealIpAddr();  //get new user's ip address	
+			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 			
 			$sh = new cls_ssshout();
 			
