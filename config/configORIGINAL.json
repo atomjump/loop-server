@@ -5,14 +5,14 @@
          "hosts": [
             "127.0.0.1"
          ],
-         "user": "root",
-         "pass": "December18",
+         "user": "yourDBusername",
+         "pass": "yourDBpassword",
          "port": "3306",
          "timezone": "EDT"
       },
-      "webRoot": "http://127.0.0.1/loop-server",
+      "webRoot": "http://127.0.0.1/loop-server-staging",
       "webDomain": "127.0.0.1",
-      "fileRoot": "/home/peter/projects/rose/loop-server",
+      "fileRoot": "/var/www/html/loop-server-staging",
       "phpPath": "/usr/bin/php",
       "logoutPort": 80,
       "readPort" : null,							
@@ -26,9 +26,9 @@
           "ips": [
           ]
       },    
-      "adminEmail": "peter.abrahamson@2degreesenterprise.co.nz",
-      "webmasterEmail": "peter.abrahamson@2degreesenterprise.co.nz",
-      "noReplyEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "adminEmail": "your.name@your.company.com",
+      "webmasterEmail": "your.name@your.company.com",
+      "noReplyEmail": "your.name@your.company.com",
       "adminMachineUser" : "92.27.10.17:1",
       "mailgun": {
          "key":"key-7f6f12be7e62360853e0eff491f89b9d",
@@ -71,14 +71,14 @@
          "hosts": [
             "127.0.0.1"
          ],
-         "user": "root",
-         "pass": "December18",
+         "user": "yourDBusername",
+         "pass": "yourDBpassword",
          "port": "3306",
          "timezone": "EDT"
       },
-      "webRoot": "http://127.0.0.1",
+      "webRoot": "http://127.0.0.1/loop-server",
       "webDomain": "127.0.0.1",
-      "fileRoot": "/home/peter/projects/rose/loop-server",
+      "fileRoot": "/var/www/html/loop-server",
       "phpPath": "/usr/bin/php",
       "logoutPort": 1444,
       "readPort" : null,							
@@ -92,9 +92,9 @@
           "ips": [
           ]
       },    
-      "adminEmail": "peter.abrahamson@2degreesenterprise.co.nz",
-      "webmasterEmail": "peter.abrahamson@2degreesenterprise.co.nz",
-      "noReplyEmail": "peter.abrahamson@2degreesenterprise.co.nz",
+      "adminEmail": "your.name@your.company.com",
+      "webmasterEmail": "your.name@your.company.com",
+      "noReplyEmail": "your.name@your.company.com",
       "adminMachineUser" : "92.27.10.17:1",
       "mailgun": {
          "key":"key-7f6f12be7e62360853e0eff491f89b9d",

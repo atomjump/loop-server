@@ -10,7 +10,7 @@ For a sample plugin called 'hide_aargh':
 
 /plugins/hide_aargh/index.php
 
-```
+```php
 <?php
     include_once("classes/cls.pluginapi.php");
     
@@ -56,6 +56,32 @@ Parameters
 ($table, $update_set)  
 Server: >= 0.5.0
 
+
+**db_fetch_array()**
+
+Parameters
+($results)  
+Server: >= 0.5.21
+
+**db_real_escape_string()**
+
+Parameters
+($string)  
+Server: >= 0.5.21
+
+
+**db_error()**
+
+No parameters
+Server: >= 0.5.21
+
+
+**db_insert_id()**
+
+No parameters
+Server: >= 0.5.21
+
+
 **get_forum_id()**
 
 Parameters
@@ -72,6 +98,11 @@ Server: > 0.5.0
 
 No parameters  
 Server: >= 0.5.0
+
+
+
+
+
 
 
 
@@ -162,4 +193,3 @@ Server: >= 0.5.5
 
 Optional Parameters
 ($platform:'linux'/'windows' default:'linux')
-
