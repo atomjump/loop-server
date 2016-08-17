@@ -147,7 +147,7 @@
 			
 			
 			<script>
-				var initPort = "<?php echo $cnf['logoutPort'] ?>";
+				var initPort = "";
 				
 				<?php if(isset($cnf['readPort'])) { //Support a specific port for fast reading with the loop-server-fast plugin 
 				?>
@@ -164,15 +164,9 @@
 					"server" : "<?php echo trim_trailing_slash($_REQUEST['server']) ?>"
 				}
 				
-				<?php if(($_SESSION['logged-user'])||($staging == true)) { 
-					//We know who we already are. Or we are on staging and don't want a secure ver
-					?>
-					var port = "";
-				<?php } else { 
-					//we don't yet know our ip address - need to make an initial first insecure request 
-					?>
-					var port = initPort;
-				<?php } ?>
+				
+				var port = "";
+				
 				
 				
 				

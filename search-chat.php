@@ -36,8 +36,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 
 		
 	//First request from new user, make sure we get the ip address
-	if(($_SERVER['SERVER_PORT'] == $cnf['logoutPort'])||   // this case is after a logout
-	  (intval($_SESSION['view-count']) == 0)||
+	if((intval($_SESSION['view-count']) == 0)||
 	  (!isset($_SESSION['view-count']))) {
         
         if(!isset($_SESSION['view-count'])) {
@@ -46,7 +45,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 
 		$ly = new cls_layer();
 		
-		$ip = $ly->getRealIpAddr();
+		$ip = $ly->getFakeIpAddr();
 		
 		make_writable_db();
 		$user_id = $sh->new_user('', $ip, null, true);		//Was NULL
