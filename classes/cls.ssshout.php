@@ -725,7 +725,7 @@ class cls_ssshout
 												int_whisper_to_id= " . $whisper_to_id . ",
 												enm_active = 'true',
 												enm_status = '$status',
-												int_author_id = $user_id,
+												int_author_id = $user_id
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
 					dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
