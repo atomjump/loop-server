@@ -1,11 +1,6 @@
-Setting up the Config
-_____________________
+** Setting up the Config
 
-Production:
-The port 1444 code is only used in a production install, and you must have configured haproxy. This is mapped inside the haproxy config 
-back to port 80 for a normal http request.
 
-Staging:
 To ensure you are set to staging, set the 'webDomain' param in the config.json to the raw local domain or hostname actually used.
 E.g. an ip address would be '192.168.40.10' or a domain would be 'subdomain.yourdomain.com'. If you change from an ip
 to a domain, ensure you switch over this param at the time of the switchover, because the server defaults to production.
