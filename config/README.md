@@ -1,4 +1,4 @@
-** Setting up the Config
+## Setting up the Config
 
 
 To ensure you are set to staging, set the 'webDomain' param in the config.json to the raw local domain or hostname actually used.
