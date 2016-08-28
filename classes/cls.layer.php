@@ -27,10 +27,17 @@ class cls_layer
 					$_SESSION['layer-group-user'] = $row['int_group_id'];
 				
 				} else {
-					//Testing:
 					
 					$_SESSION['layer-group-user'] = '';
 					
+				}
+				
+				if($row['var_public_code']) {
+					//Yes, this layer needs access to be granted - set status to false until 
+					$_SESSION['access-layer-granted'] = 'false';
+				} else {
+					$_SESSION['access-layer-granted'] = 'true';
+				
 				}
 				return $row;
 			} 
@@ -645,7 +652,29 @@ class cls_login
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
 	
+		//Check if this is a request to get access to a password protected forum
+	    if(isset($full_request['forumpass'])) {
 	    
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+					//Yes the layer exists
+					if(md5(clean_data($full_request['forumpass'])) == $layer_info['var_public_code']) {
+					
+						//And it is the correct password! Continue below with a login
+						$_SESSION['access-layer'] = $layer_info['int_layer_id'];
+				
+					} else {
+						//Sorry, this was the wrong password
+						return "INCORRECT_PASS";
+				
+					}
+			} else {
+				//Sorry, this was the wrong password
+				return "INCORRECT_PASS";
+			}
+	    
+	    }
 	
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
@@ -679,10 +708,10 @@ class cls_login
 				
 				
 				//Handle any plugin generated settings
-	        		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                		if(strcmp($returns, "RELOAD") == 0) {
-                    			$reload = ",RELOAD";
-                		}
+	        	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+                if(strcmp($returns, "RELOAD") == 0) {
+                	$reload = ",RELOAD";
+                }
 				
 				return "STORED_PASS" . $reload;
 				
@@ -722,7 +751,7 @@ class cls_login
 					//Get the group user if necessary
 					$this->get_group_user();
 					
-					//Udate the group if necessary too 
+					//Update the group if necessary too 
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						if($users) {
 							$this->update_subscriptions($users);
@@ -731,11 +760,11 @@ class cls_login
 					
 					
 					//Handle any plugin generated settings
-	                		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-	                		if(strcmp($returns, "RELOAD") == 0) {
-	                			$reload = ",RELOAD";
-	                   
-	                		}
+					$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+					if(strcmp($returns, "RELOAD") == 0) {
+						$reload = ",RELOAD";
+			   
+					}
 				
 					return "LOGGED_IN" . $reload;  
 					

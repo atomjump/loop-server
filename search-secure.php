@@ -100,9 +100,9 @@
 	
 	
 	
+	//Get the layer info into the session vars
+	$ly->get_layer_id($_REQUEST['uniqueFeedbackId']);
 	
-	
-	//This is called from a different port 1444 rather than 443- which tells the proxy to not
 	//Get new user in here, and set user IP address in session
 	
 	
@@ -123,7 +123,7 @@
   <head>
   	    <meta charset="utf-8">
 		 <!--<meta name="viewport" content="width=device-width, user-scalable=no">-->
-		 <title>AtomJump Loop - a feedback form for your site</title>
+		 <title>AtomJump Loop - messaging for your site</title>
 		 
 		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
 		 
@@ -332,8 +332,10 @@
 				
 				
 			</script>
-	
-	
+			
+			
+			
+			
 			<div id="comment-chat-form" class="container" >
 				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(true);"  autocomplete="off" method="GET">
 							<input type="hidden" name="action" value="ssshout">
@@ -348,9 +350,9 @@
 							<input type="hidden" id="clientremoteurl" name="clientremoteurl" value="<?php echo $_REQUEST['clientremoteurl'] ?>">
 							<input type="hidden" id="remoteurl" name="remoteurl" value="">
 							<input type="hidden" id="units" name="units" value="mi">
-								<input type="hidden" id="short-code" name="short_code" value="">
-								<input type="hidden" id="public-to" name="public_to" value="">
-						<input type="hidden" id="volume" name="volume" value="1.00">
+							<input type="hidden" id="short-code" name="short_code" value="">
+							<input type="hidden" id="public-to" name="public_to" value="">
+						    <input type="hidden" id="volume" name="volume" value="1.00">
 							<input type="hidden" id="ses" name="ses" value="<?php if(isset($_COOKIE['ses'])) { echo $_COOKIE['ses']; } else { echo ''; } ?>">
 							<input type="hidden" name="cs" value="21633478">
 							<input type="hidden" id="typing-now" name="typing" value="off">
@@ -359,20 +361,34 @@
 					   		<input type="hidden" id="message" name="message" value="">
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
-							<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
-							  <div class="">
-								<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
-							  </div>
-							</div>
-							<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
-								<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
-								<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
-								<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
-							</div>
+							
+							<?php if(($_SESSION['access-layer-granted'] == 'true')) || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted ?>
+								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
+								  <div class="">
+									<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
+								  </div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
+									<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
+									<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
+									<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
+								</div>
+							
+							<?php } else { //No access so far - need to log in with the forum password ?>
+								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
+								  <div class="">
+									<input id="forumpass" name="forumpass" type="password" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterForumPass'] ?>" autocomplete="off"> 
+								  </div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
+									<button onclick="return set_options_cookie();" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['enterForumPassButton'] ?></button>
+								</div>
+							<?php } ?>
 					</form>
 			</div>
 			<div id="comment-prev-messages">
 			</div>
+
 		</div>
 		<div id="comment-options" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h4><?php echo $msg['msgs'][$lang]['commentSettings'] ?></h4>
