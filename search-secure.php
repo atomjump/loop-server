@@ -362,7 +362,7 @@
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 							
-							<?php if(($_SESSION['access-layer-granted'] == 'true')) || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted ?>
+							<?php if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted ?>
 								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 								  <div class="">
 									<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
