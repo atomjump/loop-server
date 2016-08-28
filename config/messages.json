@@ -247,7 +247,7 @@
 			"downloadTitle": "Descargar",
 			"downloadDescription": "Descargar hoja de cálculo de mensajes <small>(debe conectarse)</small>.",
 			"downloadButton": "Descargar",
-			"videoSupportedPlatforms": "Las plataformas de apoyo: Reciente Android, iPhone, iPad, Chrome, Firefox, Opera"
+			"videoSupportedPlatforms": "Las plataformas de apoyo: Reciente Android, iPhone, iPad, Chrome, Firefox, Opera",
 			"enterForumPass": "Introduzca la contraseña de grupo de su foro",
             "enterForumPassButton": "Tener acceso"
 		}
