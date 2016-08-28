@@ -102,7 +102,11 @@
 	
 	//Get the layer info into the session vars
 	$ly->get_layer_id($_REQUEST['uniqueFeedbackId']);
-	
+	if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted
+		 $granted = true;
+    } else {
+    	 $granted = false;
+    }
 	//Get new user in here, and set user IP address in session
 	
 	
@@ -166,6 +170,13 @@
 				
 				
 				var port = "";
+				
+				<?php if($granted == true) { ?>
+				   var granted = true;
+				<?php } else { ?>
+				   var granted = false;
+				<?php } ?>
+				
 				
 				
 				
@@ -362,7 +373,7 @@
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
 							
-							<?php if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted ?>
+							<?php if($granted == true) { ?>
 								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 								  <div class="">
 									<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 

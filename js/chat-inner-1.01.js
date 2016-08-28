@@ -585,6 +585,9 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 }
 
 
+
+
+
 function set_options_cookie() {
 
     var yourName = $('#your-name-opt').val();
@@ -1040,10 +1043,12 @@ cs += 9585328;
 function doLoop()
 {
 	
-	if(ssshoutHasFocus == true) {
+	if((ssshoutHasFocus == true)&&(granted == true)) {
 		//Only do searches when have focus
 		doSearch();
 	} 
+	
+	
 	
 	myLoopTimeout = setTimeout(function() {	doLoop(); }, ssshoutFreq);  //Continue loop no matter what
 }
