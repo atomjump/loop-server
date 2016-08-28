@@ -36,7 +36,7 @@ class cls_layer
 					//Yes, this layer needs access to be granted - set status to false until 
 					$_SESSION['access-layer-granted'] = 'false';
 				} else {
-					$_SESSION['access-layer-granted'] = 'true';
+					$_SESSION['access-layer-granted'] = 'false'; //TODO testing only - use 'true' here;
 				
 				}
 				return $row;
