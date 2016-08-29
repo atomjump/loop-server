@@ -656,7 +656,7 @@ class cls_login
 	
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
-	    if(isset($full_request['forumpasscheck'])) {
+	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
 	    
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
