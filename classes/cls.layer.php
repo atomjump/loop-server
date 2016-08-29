@@ -691,15 +691,15 @@ class cls_login
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    	
-				if($layer_info['var_public_code'] == NULL) {
+				
 			
-					//Only the owners can do this
-					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {		
-							//No password protection already - set it in this case
-							$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
-							dbquery($sql) or die("Unable to execute query $sql " . dberror());
-					}	
-				}
+				//Only the owners can do this
+				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {		
+						//No password protection already - set it in this case
+						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				}	
+
 			}
 		}
 	    
