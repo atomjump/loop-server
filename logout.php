@@ -18,6 +18,7 @@
 	$_SESSION['lon'] = '';
 	$_SESSION['logged-group-user'] = '';
 	$_SESSION['layer-group-user'] = '';
+	$_SESSION['access-layer-granted'] = 'false';
 	
 	$_SESSION['view-count'] = 0; //testing this
     
