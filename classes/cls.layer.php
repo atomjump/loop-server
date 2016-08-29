@@ -535,7 +535,7 @@ class cls_login
 			error_log("Row:" . $row);
 			return true;
 		} else {
-			error_log("No Row");
+			error_log("No Row sql:" . $sql);
 			return false;
 		}		
 	
