@@ -1305,7 +1305,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 
 			$ignore_query = false;
-			if(isset($_SESSION['access-layer-granted'])) {
+			if(isset($_SESSION['access-layer-granted'])&&($_SESSION['access-layer-granted'] != 'true')) {
 			
 				if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
 					//No view on this layer
