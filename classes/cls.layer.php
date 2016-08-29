@@ -660,7 +660,7 @@ class cls_login
 			if($layer_info) {
 					//Yes the layer exists
 					
-					
+					echo md5(clean_data($full_request['forumpasscheck'])) . " compared with " . $layer_info['var_public_code'];
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
