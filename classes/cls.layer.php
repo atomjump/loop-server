@@ -653,7 +653,7 @@ class cls_login
 	{
 	
 		//Check if this is a request to get access to a password protected forum
-	    if(isset($full_request['forumpass'])) {
+	    if(isset($full_request['forumpasscheck'])) {
 	    
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
@@ -661,7 +661,7 @@ class cls_login
 					//Yes the layer exists
 					
 					
-					if(md5(clean_data($full_request['forumpass'])) == $layer_info['var_public_code']) {
+					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
 						$_SESSION['access-layer'] = $layer_info['int_layer_id'];

@@ -594,6 +594,7 @@ function set_options_cookie() {
     var yourName = $('#your-name-opt').val();
     var email = $('#email-opt').val();
     var phone = $('#phone-opt').val();
+    
     var sendNewUserMsg = true;
    
     if(yourName == "") {
@@ -622,6 +623,13 @@ function set_options_cookie() {
     	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + ';';
     }
     $("#phone").val(phone);		//Set the form
+    
+    //Check if we are trying to check against a password
+    var forumPass = $('#forumpass').val();
+    if(forumPass != "") {    	
+    	$("#forumpasscheck").val(forumPass);		//Set the form
+    
+    }
     
     
     var data = $('#options-frm').serialize();
