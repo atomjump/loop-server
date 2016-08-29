@@ -399,7 +399,7 @@
 			</div>
 			<div id="comment-prev-messages">
 			</div>
-			<div id="forum-logged-in">
+			<div style="display: none; color: red;" id="forum-logged-in">
 			</div>
 
 		</div>
