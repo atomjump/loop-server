@@ -532,8 +532,10 @@ class cls_login
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result))
 		{
+			error_log("Row:" . $row);
 			return true;
 		} else {
+			error_log("No Row");
 			return false;
 		}		
 	
