@@ -399,6 +399,8 @@
 			</div>
 			<div id="comment-prev-messages">
 			</div>
+			<div id="forum-logged-in">
+			</div>
 
 		</div>
 		<div id="comment-options" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">

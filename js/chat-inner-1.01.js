@@ -663,7 +663,14 @@ function set_options_cookie() {
 				case "FORUM_LOGGED_IN":
 					toggle = false;
 					msg = lsmsg.msgs[lang].loggedIn;
+					$('#forum-logged-in').html(msg);
 					
+				break;
+				
+				case 'FORUM_INCORRECT_PASS':
+				    msg = lsmsg.msgs[lang].passwordWrong;
+					toggle = false;
+					$('#forum-logged-in').html(msg);
 				break;
 				
 				case 'INCORRECT_PASS':		
