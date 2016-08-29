@@ -1012,6 +1012,11 @@ function doSearch()
 		portReset = true;	
 	}
 	
+	if(granted == false) {
+		return;
+	
+	}
+	
 	
 	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
@@ -1105,6 +1110,8 @@ function beforeLogout(cb) {
     $('#password-opt').val('');
     $('#phone-opt').val('');
     $('#name-pass').val('');
+
+ 
     
     //Clear out the local cookies
     document.cookie = "your_name=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
@@ -1123,9 +1130,9 @@ function logout() {
 	$('#comment-not-signed-in').show();
 	$('#ses').val('');  //also sign out the current sess
  
-    granted = false;		//No longer granted to see any password protected forums
     
- 
+    granted = false;		//No longer granted to see any password protected forums
+
     
 
 	portReset = false; 
