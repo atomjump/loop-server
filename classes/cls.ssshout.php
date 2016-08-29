@@ -1304,19 +1304,26 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			}
 
 
-			if((isset($_SESSION['access-layer-granted']))&&($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
-				//No view on this layer
-				$results_array[] = array();
+			$ignore_query = false;
+			if(isset($_SESSION['access-layer-granted']) {
 			
-			} else {
-
+				if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
+					//No view on this layer
+					$results_array = array();
+					$ignore_query = true;
+				}
+			
+			} 
+			
+			
+			if($ignore_query == false) {
 				//Go get external searches first
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				while($row = db_fetch_array($result))
 				{
 					$results_array[] = $row;		
 				}
-			}
+			}			
 
 
 			//TODO: expand on whispering a bit so that only select those which a viewable from us in the top 50 results
