@@ -660,6 +660,12 @@ function set_options_cookie() {
 					
 				break;
 				
+				case "FORUM_LOGGED_IN":
+					toggle = false;
+					msg = lsmsg.msgs[lang].loggedIn;
+					
+				break;
+				
 				case 'INCORRECT_PASS':		
 					msg = lsmsg.msgs[lang].passwordWrong;
 					toggle = false;
