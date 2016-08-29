@@ -27,10 +27,19 @@ class cls_layer
 					$_SESSION['layer-group-user'] = $row['int_group_id'];
 				
 				} else {
-					//Testing:
 					
 					$_SESSION['layer-group-user'] = '';
 					
+				}
+				
+				if($row['var_public_code']) {
+					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+					if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+						$_SESSION['access-layer-granted'] = 'false';
+					}
+				} else {
+					$_SESSION['access-layer-granted'] = 'true';
+				
 				}
 				return $row;
 			} 
@@ -517,7 +526,20 @@ class cls_login
 	}
 	
 				
+	public function is_owner($user_id, $layer_id)
+	{
+		//Returns true if this user is an owner of the group
+		$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND int_user_id = " . $user_id; 
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
+		{
+			return true;
+		} else {
+			
+			return false;
+		}		
 	
+	}
 	
 	
 	public function get_group_user($layer_id = null)
@@ -646,6 +668,57 @@ class cls_login
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
 	
+		//Check if this is a request to get access to a password protected forum
+	    $forum_accessed = false;
+	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
+	    
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+					//Yes the layer exists
+					
+					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
+					
+						//And it is the correct password! Continue below with a login
+						
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
+						
+						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+					
+						return "FORUM_LOGGED_IN,RELOAD";
+						  	
+					} else {
+						//Sorry, this was the wrong password
+						return "FORUM_INCORRECT_PASS";
+				
+					}
+			} else {
+				//Sorry, this was the wrong password
+				return "FORUM_INCORRECT_PASS";
+			}
+	    
+	    }
+	    
+	    //Check if this is saving the passcode - we need to be a group owner to do this.
+	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+	    	
+				//Get the group user if necessary
+			    //$this->get_group_user();
+			
+				//Only the owners can do this
+				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_layer_id']);
+				if($isowner == true) {	
+						//No password protection already - set it in this case
+						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				}	
+
+			}
+		}
+	    
 	    
 	
 		//First check if the email exists
@@ -680,10 +753,10 @@ class cls_login
 				
 				
 				//Handle any plugin generated settings
-	        		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                		if(strcmp($returns, "RELOAD") == 0) {
-                    			$reload = ",RELOAD";
-                		}
+	        	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+                if(strcmp($returns, "RELOAD") == 0) {
+                	$reload = ",RELOAD";
+                }
 				
 				return "STORED_PASS" . $reload;
 				
@@ -723,7 +796,7 @@ class cls_login
 					//Get the group user if necessary
 					$this->get_group_user();
 					
-					//Udate the group if necessary too 
+					//Update the group if necessary too 
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						if($users) {
 							$this->update_subscriptions($users);
@@ -732,13 +805,17 @@ class cls_login
 					
 					
 					//Handle any plugin generated settings
-	                		$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-	                		if(strcmp($returns, "RELOAD") == 0) {
-	                			$reload = ",RELOAD";
-	                   
-	                		}
+					$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+					if(strcmp($returns, "RELOAD") == 0) {
+						$reload = ",RELOAD";
+			   
+					}
 				
+				
+					
+					//Normal forum login
 					return "LOGGED_IN" . $reload;  
+				    
 					
 				
 				} else {

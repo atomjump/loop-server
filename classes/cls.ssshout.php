@@ -64,7 +64,7 @@ class cls_ssshout
 			 
 			}
 		} else {
-		 //email exists
+		    //email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
@@ -102,7 +102,7 @@ class cls_ssshout
 			
 			
 			} else {
-			 //new email
+			    //new email
 				//A new user
 				if(($email != '')&&(!is_null($email))) {
 			
@@ -1226,6 +1226,9 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					$layer = 1;		//Default to about layer
 				}
 			}
+			
+			
+			
 
 			if($_REQUEST['units'] != '') {
 				$units = $_REQUEST['units'];
@@ -1300,13 +1303,27 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
 			}
 
-			//Go get external searches first
-			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-			while($row = db_fetch_array($result))
-			{
-				$results_array[] = $row;		
-			}
 
+			$ignore_query = false;
+			if(isset($_SESSION['access-layer-granted'])&&($_SESSION['access-layer-granted'] != 'true')) {
+			
+				if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
+					//No view on this layer
+					$results_array = array();
+					$ignore_query = true;
+				}
+			
+			} 
+			
+			
+			if($ignore_query == false) {
+				//Go get external searches first
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				while($row = db_fetch_array($result))
+				{
+					$results_array[] = $row;		
+				}
+			}			
 
 
 			//TODO: expand on whispering a bit so that only select those which a viewable from us in the top 50 results

@@ -488,6 +488,7 @@ $(document).ready(function() {
 						
 							$("#group-users").val(response.layerUsers);
 							$("#group-users-form").show();
+							$("#set-forum-password-form").show();
 						});
 				});
 				
@@ -585,11 +586,15 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 }
 
 
+
+
+
 function set_options_cookie() {
 
     var yourName = $('#your-name-opt').val();
     var email = $('#email-opt').val();
     var phone = $('#phone-opt').val();
+    
     var sendNewUserMsg = true;
    
     if(yourName == "") {
@@ -619,6 +624,13 @@ function set_options_cookie() {
     }
     $("#phone").val(phone);		//Set the form
     
+    //Check if we are trying to check against a password
+    var forumPass = $('#forumpass').val();
+    if(forumPass != "") {    	
+    	$("#forumpasscheck").val(forumPass);		//Set the form
+    
+    }
+    
     
     var data = $('#options-frm').serialize();
     
@@ -646,6 +658,22 @@ function set_options_cookie() {
 					$('#comment-not-signed-in').hide();
 					$('#comment-logout').show();	//show the logout button
 					
+				break;
+				
+				case "FORUM_LOGGED_IN":
+					toggle = false;
+					msg = lsmsg.msgs[lang].loggedIn;
+					$('#forum-logged-in').html(msg);
+					$('#forum-logged-in').show();
+					$('#forumpasscheck').val("");
+					
+				break;
+				
+				case 'FORUM_INCORRECT_PASS':
+				    msg = lsmsg.msgs[lang].passwordWrong;
+					toggle = false;
+					$('#forum-logged-in').html(msg);
+					$('#forum-logged-in').show();
 				break;
 				
 				case 'INCORRECT_PASS':		
@@ -994,6 +1022,11 @@ function doSearch()
 		portReset = true;	
 	}
 	
+	if(granted == false) {
+		return;
+	
+	}
+	
 	
 	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
 		//Use an alternative port for reading - useful by the Loop-server-fast plugin
@@ -1040,10 +1073,12 @@ cs += 9585328;
 function doLoop()
 {
 	
-	if(ssshoutHasFocus == true) {
+	if((ssshoutHasFocus == true)&&(granted == true)) {
 		//Only do searches when have focus
 		doSearch();
 	} 
+	
+	
 	
 	myLoopTimeout = setTimeout(function() {	doLoop(); }, ssshoutFreq);  //Continue loop no matter what
 }
@@ -1085,6 +1120,8 @@ function beforeLogout(cb) {
     $('#password-opt').val('');
     $('#phone-opt').val('');
     $('#name-pass').val('');
+
+ 
     
     //Clear out the local cookies
     document.cookie = "your_name=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
@@ -1103,10 +1140,10 @@ function logout() {
 	$('#comment-not-signed-in').show();
 	$('#ses').val('');  //also sign out the current sess
  
+    
 
-    
- 
-    
+    $('#comment-prev-messages').html('');   //remove any existing messages
+   
 
 	portReset = false; 
 	port=initPort;
