@@ -665,6 +665,7 @@ function set_options_cookie() {
 					msg = lsmsg.msgs[lang].loggedIn;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
+					$('#forumpasscheck').val("");
 					
 				break;
 				
