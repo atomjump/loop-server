@@ -33,8 +33,10 @@ class cls_layer
 				}
 				
 				if($row['var_public_code']) {
-					//Yes, this layer needs access to be granted - set status to false until 
-					$_SESSION['access-layer-granted'] = 'false';
+					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+					if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+						$_SESSION['access-layer-granted'] = 'false';
+					}
 				} else {
 					$_SESSION['access-layer-granted'] = 'true';
 				
