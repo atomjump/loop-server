@@ -1123,7 +1123,7 @@ function logout() {
 	$('#comment-not-signed-in').show();
 	$('#ses').val('');  //also sign out the current sess
  
-
+    granted = false;		//No longer granted to see any password protected forums
     
  
     
