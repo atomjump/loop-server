@@ -1132,6 +1132,9 @@ function logout() {
  
     
 
+    $('#comment-prev-messages').html('');   //remove any existing messages
+   
+
 	portReset = false; 
 	port=initPort;
 	

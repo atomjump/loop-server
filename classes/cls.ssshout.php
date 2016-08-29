@@ -1227,11 +1227,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				}
 			}
 			
-			if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
-				//No view on this layer
-				$layer = 1;			//Default back to the default layer
 			
-			}
 			
 
 			if($_REQUEST['units'] != '') {
@@ -1307,13 +1303,20 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
 			}
 
-			//Go get external searches first
-			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-			while($row = db_fetch_array($result))
-			{
-				$results_array[] = $row;		
-			}
 
+			if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
+				//No view on this layer
+				$results_array[] = array();
+			
+			} else {
+
+				//Go get external searches first
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				while($row = db_fetch_array($result))
+				{
+					$results_array[] = $row;		
+				}
+			}
 
 
 			//TODO: expand on whispering a bit so that only select those which a viewable from us in the top 50 results
