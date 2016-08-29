@@ -254,10 +254,10 @@
 			"videoSupportedPlatforms": "Las plataformas de apoyo: Reciente Android, iPhone, iPad, Chrome, Firefox, Opera",
 			"enterForumPass": "Introduzca la contraseña de grupo de su foro",
             "enterForumPassButton": "Tener acceso",
-            "setForumPass": "Set forum password",
-            "setForumPassReason":"This forum's password, which ensure only private access for people who know the password",
-            "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
-            "setForumPassEnter":"Enter a password"
+            "setForumPass": "Set Password",
+            "setForumPassReason":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
+            "setForumPassReasonExtended":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
+            "setForumPassEnter":"Ingrese una contraseña"
 		}
     }
 }
