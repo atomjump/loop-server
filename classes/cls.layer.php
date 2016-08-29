@@ -525,7 +525,19 @@ class cls_login
 	}
 	
 				
+	public function is_owner($layer_id, $user_id)
+	{
+		//Returns true if this user is an owner of the group
+		$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND int_user_id = " . $user_id; 
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
+		{
+			return true;
+		} else {
+			return false;
+		}		
 	
+	}
 	
 	
 	public function get_group_user($layer_id = null)
@@ -695,7 +707,7 @@ class cls_login
 			    $this->get_group_user();
 			
 				//Only the owners can do this
-				if(($_SESSION['logged-group-user'] != "")&&($_SESSION['logged-group-user'] == $_SESSION['layer-group-user'])) {		
+				if($this->is_owner($_SESSION['logged-user'], $layer_info['int_layer_id'])) {		
 						//No password protection already - set it in this case
 						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
 						dbquery($sql) or die("Unable to execute query $sql " . dberror());
