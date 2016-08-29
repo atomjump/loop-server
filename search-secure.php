@@ -101,8 +101,9 @@
 	
 	
 	//Get the layer info into the session vars
-	$ly->get_layer_id($_REQUEST['uniqueFeedbackId'], null);
-	if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $_REQUEST['uniqueFeedbackId'])) { 	//Normal access has been granted
+	$layer_info = $ly->get_layer_id($_REQUEST['uniqueFeedbackId'], null);
+	
+	if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) { 	//Normal access has been granted
 		 $granted = true;
     } else {
     	 $granted = false;

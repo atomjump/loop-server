@@ -664,7 +664,7 @@ class cls_login
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
-						echo "Layer id:" .$layer_info['int_layer_id'];
+						
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
