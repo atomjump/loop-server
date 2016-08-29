@@ -441,6 +441,10 @@
 										<div><?php echo $msg['msgs'][$lang]['privateOwners'] ?> <a href="javascript:" onclick="$('#users-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['privateOwnersReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="users-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['privateOwnersReasonExtended'] ?></span></div>
 										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 									</div>
+									<div id="set-forum-password-form" class="form-group" style="display:none;">
+										<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span></div>
+										 <input  id="set-forum-password" name="forumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
+									</div>
 									
 						  			</div>
 								<div  class="form-group">

@@ -124,7 +124,11 @@
             "downloadButton": "Download",
             "videoSupportedPlatforms": "Supported platforms: Recent Android, iPhone, iPad, Chrome, Firefox, Opera",
             "enterForumPass": "Enter your forum's group password",
-            "enterForumPassButton": "Get Access"
+            "enterForumPassButton": "Get Access",
+            "setForumPass": "Set forum password",
+            "setForumPassReason":"This forum's password.",
+            "setForumPassReasonExtended":"This forum's password.",
+            "setForumPassEnter":"Set the password for this forum."
         },
 		"es": {
 			"fullnameEnglish": "Spanish",
@@ -249,7 +253,11 @@
 			"downloadButton": "Descargar",
 			"videoSupportedPlatforms": "Las plataformas de apoyo: Reciente Android, iPhone, iPad, Chrome, Firefox, Opera",
 			"enterForumPass": "Introduzca la contraseña de grupo de su foro",
-            "enterForumPassButton": "Tener acceso"
+            "enterForumPassButton": "Tener acceso",
+            "setForumPass": "Set forum password",
+            "setForumPassReason":"This forum's password.",
+            "setForumPassReasonExtended":"This forum's password.",
+            "setForumPassEnter":"Set the password for this forum."
 		}
     }
 }
