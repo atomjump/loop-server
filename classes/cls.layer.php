@@ -653,6 +653,7 @@ class cls_login
 	{
 	
 		//Check if this is a request to get access to a password protected forum
+	    $forum_accessed = false;
 	    if(isset($full_request['forumpasscheck'])) {
 	    
 	    	$ly = new cls_layer();
@@ -664,7 +665,8 @@ class cls_login
 					
 						//And it is the correct password! Continue below with a login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
-						return "FORUM_LOGGED_IN,RELOAD";  	
+						$forum_accessed = true;
+						  	
 					} else {
 						//Sorry, this was the wrong password
 						return "INCORRECT_PASS";
@@ -787,7 +789,13 @@ class cls_login
 			   
 					}
 				
-					return "LOGGED_IN" . $reload;  
+				
+					if($forum_accessed == true) {
+						return "FORUM_LOGGED_IN,RELOAD";
+					} else {
+						//Normal forum login
+						return "LOGGED_IN" . $reload;  
+				    }
 					
 				
 				} else {
