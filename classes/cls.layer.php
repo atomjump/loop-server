@@ -665,7 +665,10 @@ class cls_login
 					
 						//And it is the correct password! Continue below with a login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
-						$forum_accessed = true;
+						
+						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+					
+						return "FORUM_LOGGED_IN,RELOAD";
 						  	
 					} else {
 						//Sorry, this was the wrong password
@@ -790,12 +793,10 @@ class cls_login
 					}
 				
 				
-					if($forum_accessed == true) {
-						return "FORUM_LOGGED_IN,RELOAD";
-					} else {
-						//Normal forum login
-						return "LOGGED_IN" . $reload;  
-				    }
+					
+					//Normal forum login
+					return "LOGGED_IN" . $reload;  
+				    
 					
 				
 				} else {
