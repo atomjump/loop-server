@@ -691,7 +691,8 @@ class cls_login
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    	
-				
+				//Get the group user if necessary
+			    $this->get_group_user();
 			
 				//Only the owners can do this
 				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {		
