@@ -126,9 +126,9 @@
             "enterForumPass": "Enter your forum's group password",
             "enterForumPassButton": "Get Access",
             "setForumPass": "Set forum password",
-            "setForumPassReason":"This forum's password.",
-            "setForumPassReasonExtended":"This forum's password.",
-            "setForumPassEnter":"Set the password for this forum."
+            "setForumPassReason":"This forum's password, which ensure only private access for people who know the password.",
+            "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
+            "setForumPassEnter":"Enter a password"
         },
 		"es": {
 			"fullnameEnglish": "Spanish",
@@ -255,9 +255,9 @@
 			"enterForumPass": "Introduzca la contraseña de grupo de su foro",
             "enterForumPassButton": "Tener acceso",
             "setForumPass": "Set forum password",
-            "setForumPassReason":"This forum's password.",
-            "setForumPassReasonExtended":"This forum's password.",
-            "setForumPassEnter":"Set the password for this forum."
+            "setForumPassReason":"This forum's password, which ensure only private access for people who know the password",
+            "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
+            "setForumPassEnter":"Enter a password"
 		}
     }
 }

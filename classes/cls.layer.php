@@ -659,6 +659,8 @@ class cls_login
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 					//Yes the layer exists
+					
+					
 					if(md5(clean_data($full_request['forumpass'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
@@ -675,6 +677,21 @@ class cls_login
 			}
 	    
 	    }
+	    
+	    //Check if this is saving the passcode - we need to be a group owner to do this.
+	    if(isset($full_request['setforumpassword'])) {
+	    	if($layer_info['var_public_code'] == NULL) {
+	    	
+	    		//Only the owners can do this
+				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {		
+						//No password protection already - set it in this case
+						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				}	
+			}
+		}
+	    
+	    
 	
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
