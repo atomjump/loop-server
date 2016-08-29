@@ -488,6 +488,7 @@ $(document).ready(function() {
 						
 							$("#group-users").val(response.layerUsers);
 							$("#group-users-form").show();
+							$("#set-forum-password-form").show();
 						});
 				});
 				
