@@ -1,11 +1,6 @@
-Setting up the Config
-_____________________
+## Setting up the Config
 
-Production:
-The port 1444 code is only used in a production install, and you must have configured haproxy. This is mapped inside the haproxy config 
-back to port 80 for a normal http request.
 
-Staging:
 To ensure you are set to staging, set the 'webDomain' param in the config.json to the raw local domain or hostname actually used.
 E.g. an ip address would be '192.168.40.10' or a domain would be 'subdomain.yourdomain.com'. If you change from an ip
 to a domain, ensure you switch over this param at the time of the switchover, because the server defaults to production.
@@ -32,7 +27,7 @@ To test the web domain, use the following small PHP script:
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
 
-**logoutPort**: Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5
+**logoutPort**: Discontinued >= 0.7.0. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5
 
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
 Advanced settings, and write this into the config. This is the default location for private messages if there is no other
@@ -56,6 +51,6 @@ message via twitter).
 
 **readPort**:  optional. The port to put the plugin 'loop-server-fast' daemon on, see https://www.npmjs.com/package/loop-server-fast						
 
-**httpsKey**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsCert', which is needed too.
+**httpsKey**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsCert', which is needed too. Ver >= 0.7.0
 
-**httpsCert**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsKey', which is needed too.
+**httpsCert**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsKey', which is needed too. Ver >= 0.7.0
