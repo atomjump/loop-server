@@ -1131,12 +1131,6 @@ function logout() {
 	$('#ses').val('');  //also sign out the current sess
  
     
-    if(granted == true) {
-    	//Clear any existing display
-    	$('#comment-prev-messages').html('');
-    	granted = false;		//No longer granted to see any password protected forums
-	}
-    
 
 	portReset = false; 
 	port=initPort;

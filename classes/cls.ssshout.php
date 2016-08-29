@@ -64,7 +64,7 @@ class cls_ssshout
 			 
 			}
 		} else {
-		 //email exists
+		    //email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
@@ -102,7 +102,7 @@ class cls_ssshout
 			
 			
 			} else {
-			 //new email
+			    //new email
 				//A new user
 				if(($email != '')&&(!is_null($email))) {
 			
@@ -1226,6 +1226,13 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					$layer = 1;		//Default to about layer
 				}
 			}
+			
+			if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
+				//No view on this layer
+				$layer = 1;			//Default back to the default layer
+			
+			}
+			
 
 			if($_REQUEST['units'] != '') {
 				$units = $_REQUEST['units'];
