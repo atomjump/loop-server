@@ -707,6 +707,7 @@ class cls_login
 			    //$this->get_group_user();
 			
 				//Only the owners can do this
+				error_log("Logged user=" . $_SESSION['logged-user'] . " layerid=" . $layer_info['int_layer_id']);
 				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_layer_id']);
 				error_log("Is owner=" . $isowner);
 				if($isowner == true) {	
