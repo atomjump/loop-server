@@ -707,7 +707,7 @@ class cls_login
 			    $this->get_group_user();
 			
 				//Only the owners can do this
-				if($this->is_owner($_SESSION['logged-user'], $layer_info['int_layer_id'])) {		
+				if($this->is_owner($_SESSION['logged-user'], $layer_info['int_layer_id']) == true) {		
 						//No password protection already - set it in this case
 						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
 						dbquery($sql) or die("Unable to execute query $sql " . dberror());
