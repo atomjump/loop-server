@@ -186,7 +186,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.02.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.03.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
