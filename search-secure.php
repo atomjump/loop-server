@@ -177,14 +177,16 @@
 				   var granted = false;
 				<?php } ?>
 				
-				
-				
-				
+				var sendPublic = true;
+				var sendPrivatelyMsg = '<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>';
+				var sendPubliclyMsg = '<?php echo $msg['msgs'][$lang]['sendButton'] ?>';
+				var goPrivateMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?>';
+				var goPublicMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPublic'] ?>';
 				
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.02.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.03.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
@@ -341,6 +343,40 @@
 				var appearin;
 				
 				
+				function switchPublic()
+				{
+					//Reset any
+					shortCode = "";
+            		publicTo = "";
+				
+					if(sendPublic == true) {
+						//Switch to private
+						sendPublic = false;
+						
+						//Hide the public button
+						$('#public-button').hide();
+						$('#private-button').show();
+						$('#private-button').html(sendPrivatelyMsg);
+						
+						//Show the public option on the link
+						$('#private-public-link').html(goPublicMsg);
+					} else {
+						
+						//Switch to public
+						sendPublic = true;
+						
+						//Hide the private button
+						$('#public-button').show();
+						$('#private-button').hide();
+						$('#public-button').html(sendPubliclyMsg);
+						
+						//Show the private option on the link
+						$('#private-public-link').html(goPrivateMsg);
+					
+					}
+				
+					return false;
+				}
 				
 			</script>
 			
@@ -348,7 +384,7 @@
 			
 			
 			<div id="comment-chat-form" class="container" >
-				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(true);"  autocomplete="off" method="GET">
+				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(sendPublic);"  autocomplete="off" method="GET">
 							<input type="hidden" name="action" value="ssshout">
 							<input type="hidden" id="lat" name="lat" value="">
 							<input type="hidden" id="lon" name="lon" value="">
@@ -380,8 +416,9 @@
 								  </div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
-									<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
-									<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
+									<button type="submit" id="private-button"  class="btn btn-info" style="margin-bottom:3px; display: none;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
+									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
+									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
 									<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 								</div>
 							

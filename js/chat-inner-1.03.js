@@ -98,7 +98,7 @@ var startShoutId = 0;		//start of a typing session
 var currentlyTyping = false;
 var records = 25;			//once more is clicked we will allow more
 var showMore = 25;
-var sendPublic = false;  //if true, override to a public social network response
+//Moved to seach-secure.php: var sendPublic = false;  //if true, override to a public social network response
 var shortCode = "";  //shortcode for social network eg. twt, fbk
 var publicTo = "";  //who on social network we are sending to eg. twitter handle
 
@@ -218,9 +218,6 @@ var msg = function() {
 
 		return false;
 	}
-	this.newMsg = newMsg;
-
-
 	
 	
 	function commitMsg(whisper)
@@ -230,6 +227,8 @@ var msg = function() {
 		if(sendPublic == true) {
 		   //override
 		   whisper = false;
+		} else {
+		   whisper = true;
 		}
 		this.localMsg[this.localMsgId].whisper = whisper;
 		this.localMsg[this.localMsgId].whisperOften = whisperOften;
@@ -263,7 +262,7 @@ var msg = function() {
 		
 		return false;
 	}
-	this.commitMsg = commitMsg;
+	
 
 	function finishMsg(msgId)
 	{
@@ -271,7 +270,6 @@ var msg = function() {
 		this.localMsg[msgId] = {};
 		delete this.localMsg[msgId];
 	}
-	this.finishMsg = finishMsg;
 
 	function updateMsg(msgId, shoutId, status)
 	{
@@ -280,7 +278,6 @@ var msg = function() {
 
 	}
 
-	this.updateMsg = updateMsg;
 
 	function deactivateMsg(msgId)
 	{
@@ -293,7 +290,6 @@ var msg = function() {
 		}
 	}
 
-	this.deactivateMsg = deactivateMsg;
 	
 	function reactivateMsg(msgId)
 	{
@@ -309,7 +305,6 @@ var msg = function() {
 		}
 	}
 	
-	this.reactivateMsg = reactivateMsg;
 
 
 	function deactivateAll()
@@ -330,7 +325,6 @@ var msg = function() {
 
 	
 	}
-	this.deactivateAll = deactivateAll;
 
 	function processEachMsg()
 	{
@@ -413,6 +407,15 @@ var msg = function() {
 		});
 
 	}
+	
+	this.newMsg = newMsg;
+	this.commitMsg = commitMsg;
+	this.deactivateAll = deactivateAll;
+	this.reactivateMsg = reactivateMsg;
+	this.deactivateMsg = deactivateMsg;
+	this.updateMsg = updateMsg;
+	this.finishMsg = finishMsg;
+
 
 	this.processEachMsg = processEachMsg;
 }
@@ -559,7 +562,12 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
    		if((priv === false)||(priv == 0)) {
 		      //Via a social network - still public. TODO change colour of button?
 		 	  whisperOften = whisper_to;		//set global
-			  $('#private-button').html("Public to " + targetName);
+			  $('#public-button').html("Public to " + targetName);
+		 	  $('#private-button').hide();
+	          $('#public-button').show();
+		 	  
+		 	  //Show the private option on the link
+			  $('#private-public-link').html(goPrivateMsg);
 		 
 		      sendPublic = true;
 		      shortCode = socialNetwork;
@@ -567,9 +575,12 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 		} else {
 		    whisperOften = whisper_to;		//set global
 	        $('#private-button').html("Send to " + targetName);
+	        $('#private-button').show();
+	        $('#public-button').hide();
             sendPublic = false;
             shortCode = "";
             publicTo = "";
+            $('#private-public-link').html(goPublicMsg);
 		   
 		}
      
@@ -577,9 +588,12 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
    
       whisperOften = whisper_to;		//set global
 	  $('#private-button').html("Send to " + targetName);
+	  $('#private-button').show();
+	  $('#public-button').hide();
       sendPublic = false;
       shortCode = "";
       publicTo = "";
+      $('#private-public-link').html(goPublicMsg);
    
    }
    
