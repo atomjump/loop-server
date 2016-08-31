@@ -351,6 +351,7 @@
 						//Hide the public button
 						$('#public-button').hide();
 						$('#private-button').show();
+						$('#private-button').val('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
 						
 						//Show the public option on the link
 						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
@@ -362,6 +363,7 @@
 						//Hide the private button
 						$('#public-button').show();
 						$('#private-button').hide();
+						$('#public-button').val('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
 						
 						//Show the public option on the link
 						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
