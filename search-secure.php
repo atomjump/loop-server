@@ -341,6 +341,34 @@
 				var appearin;
 				
 				
+				function switchPublic()
+				{
+					if(sendPublic == true) {
+						//Switch to private
+						sendPublic = false;
+						
+						//Hide the public button
+						$('#public-button').hide();
+						$('#private-button').show();
+						
+						//Show the public option on the link
+						$('#private-public-link').val('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
+					} else {
+						
+						//Switch to public
+						sendPublic = true;
+						
+						//Hide the private button
+						$('#public-button').show();
+						$('#private-button').hide();
+						
+						//Show the public option on the link
+						$('#private-public-link').val('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
+					
+					}
+				
+					return false;
+				}
 				
 			</script>
 			
@@ -348,7 +376,7 @@
 			
 			
 			<div id="comment-chat-form" class="container" >
-				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(true);"  autocomplete="off" method="GET">
+				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(sendPublic);"  autocomplete="off" method="GET">
 							<input type="hidden" name="action" value="ssshout">
 							<input type="hidden" id="lat" name="lat" value="">
 							<input type="hidden" id="lon" name="lon" value="">
@@ -380,8 +408,9 @@
 								  </div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
-									<button id="private-button"  class="btn btn-info" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
-									<button type="submit" onclick="return mg.commitMsg(false);" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
+									<button type="submit" id="private-button"  class="btn btn-info" style="margin-bottom:3px; display: none;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
+									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?></button>
+									<a href="javscript:" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></a>
 									<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 								</div>
 							

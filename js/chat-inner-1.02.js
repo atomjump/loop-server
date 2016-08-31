@@ -218,9 +218,6 @@ var msg = function() {
 
 		return false;
 	}
-	this.newMsg = newMsg;
-
-
 	
 	
 	function commitMsg(whisper)
@@ -263,7 +260,7 @@ var msg = function() {
 		
 		return false;
 	}
-	this.commitMsg = commitMsg;
+	
 
 	function finishMsg(msgId)
 	{
@@ -271,7 +268,6 @@ var msg = function() {
 		this.localMsg[msgId] = {};
 		delete this.localMsg[msgId];
 	}
-	this.finishMsg = finishMsg;
 
 	function updateMsg(msgId, shoutId, status)
 	{
@@ -280,7 +276,6 @@ var msg = function() {
 
 	}
 
-	this.updateMsg = updateMsg;
 
 	function deactivateMsg(msgId)
 	{
@@ -293,7 +288,6 @@ var msg = function() {
 		}
 	}
 
-	this.deactivateMsg = deactivateMsg;
 	
 	function reactivateMsg(msgId)
 	{
@@ -309,7 +303,6 @@ var msg = function() {
 		}
 	}
 	
-	this.reactivateMsg = reactivateMsg;
 
 
 	function deactivateAll()
@@ -330,7 +323,6 @@ var msg = function() {
 
 	
 	}
-	this.deactivateAll = deactivateAll;
 
 	function processEachMsg()
 	{
@@ -413,6 +405,15 @@ var msg = function() {
 		});
 
 	}
+	
+	this.newMsg = newMsg;
+	this.commitMsg = commitMsg;
+	this.deactivateAll = deactivateAll;
+	this.reactivateMsg = reactivateMsg;
+	this.deactivateMsg = deactivateMsg;
+	this.updateMsg = updateMsg;
+	this.finishMsg = finishMsg;
+
 
 	this.processEachMsg = processEachMsg;
 }
