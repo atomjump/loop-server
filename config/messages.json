@@ -88,7 +88,7 @@
             "sendButton": "Send",
             "sendSwitchToPrivate": "Go Private",
             "sendSwitchToPublic": "Go Public",
-            "sendPrivatelyButton": "Send Privately",
+            "sendPrivatelyButton": "Send to Owner",
             "sendPubliclyButton": "Send Publicly",
             "commentSettings": "Comment Settings",
             "logoutLink": "Logout",
