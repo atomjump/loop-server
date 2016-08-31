@@ -114,8 +114,6 @@
 	$_SESSION['view-count'] = 0;
 	
 	
-	//Do we have a single line text input? Set to true if we do.
-	$single_line = false;
 	
 	//Ensure no caching
 	header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
@@ -415,12 +413,7 @@
 							<?php if($granted == true) { ?>
 								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 								  <div class="">
-									<?php if($single_line == true) { ?>
-										<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
-									<?php } else { ?>
 										<textarea id="shouted" name="shouted" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"></textarea>
-									
-									<?php } ?>
 								  </div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
