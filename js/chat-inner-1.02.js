@@ -227,6 +227,8 @@ var msg = function() {
 		if(sendPublic == true) {
 		   //override
 		   whisper = false;
+		} else {
+		   whisper = true;
 		}
 		this.localMsg[this.localMsgId].whisper = whisper;
 		this.localMsg[this.localMsgId].whisperOften = whisperOften;
