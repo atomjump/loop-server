@@ -177,6 +177,7 @@
 				   var granted = false;
 				<?php } ?>
 				
+				var sendPublic = true;
 				
 				
 				

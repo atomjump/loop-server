@@ -98,7 +98,7 @@ var startShoutId = 0;		//start of a typing session
 var currentlyTyping = false;
 var records = 25;			//once more is clicked we will allow more
 var showMore = 25;
-var sendPublic = false;  //if true, override to a public social network response
+//Moved to seach-secure.php: var sendPublic = false;  //if true, override to a public social network response
 var shortCode = "";  //shortcode for social network eg. twt, fbk
 var publicTo = "";  //who on social network we are sending to eg. twitter handle
 
