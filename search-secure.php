@@ -352,7 +352,7 @@
 						$('#private-button').show();
 						
 						//Show the public option on the link
-						$('#private-public-link').val('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
+						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
 					} else {
 						
 						//Switch to public
@@ -363,7 +363,7 @@
 						$('#private-button').hide();
 						
 						//Show the public option on the link
-						$('#private-public-link').val('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
+						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
 					
 					}
 				
