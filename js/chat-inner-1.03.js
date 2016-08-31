@@ -527,7 +527,10 @@ $(document).ready(function() {
 					
          			if((keyCode === 13)||(keyCode === 10)) {
 						    //If a return, rely on the submit not the key. On iphone return is 10
-						    return false;
+						    //For a textarea
+						    return mg.commitMsg(sendPublic);
+						    //For a single text input
+						    //return false;
        				}
 					
 					
