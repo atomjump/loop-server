@@ -567,7 +567,7 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 	          $('#public-button').show();
 		 	  
 		 	  //Show the private option on the link
-			  $('#private-public-link').html(sendPrivatelyMsg);
+			  $('#private-public-link').html(goPrivateMsg);
 		 
 		      sendPublic = true;
 		      shortCode = socialNetwork;
@@ -580,7 +580,7 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
             sendPublic = false;
             shortCode = "";
             publicTo = "";
-            $('#private-public-link').html(sendPubliclyMsg);
+            $('#private-public-link').html(goPublicMsg);
 		   
 		}
      
@@ -593,7 +593,7 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
       sendPublic = false;
       shortCode = "";
       publicTo = "";
-      $('#private-public-link').html(sendPubliclyMsg);
+      $('#private-public-link').html(goPublicMsg);
    
    }
    

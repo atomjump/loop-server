@@ -180,8 +180,8 @@
 				var sendPublic = true;
 				var sendPrivatelyMsg = '<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>';
 				var sendPubliclyMsg = '<?php echo $msg['msgs'][$lang]['sendButton'] ?>';
-				
-				
+				var goPrivateMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?>';
+				var goPublicMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPublic'] ?>';
 				
 
 				
@@ -359,7 +359,7 @@
 						$('#private-button').html(sendPrivatelyMsg);
 						
 						//Show the public option on the link
-						$('#private-public-link').html(sendPubliclyMsg);
+						$('#private-public-link').html(goPublicMsg);
 					} else {
 						
 						//Switch to public
@@ -370,8 +370,8 @@
 						$('#private-button').hide();
 						$('#public-button').html(sendPubliclyMsg);
 						
-						//Show the public option on the link
-						$('#private-public-link').html(sendPrivatelyMsg);
+						//Show the private option on the link
+						$('#private-public-link').html(goPrivateMsg);
 					
 					}
 				
@@ -418,7 +418,7 @@
 								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
 									<button type="submit" id="private-button"  class="btn btn-info" style="margin-bottom:3px; display: none;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
 									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
-									<a href="javscript:" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></a>
+									<a href="javscript:" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
 									<a href="javascript:" onclick="return showVid();" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 								</div>
 							
