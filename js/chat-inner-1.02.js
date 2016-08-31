@@ -562,9 +562,9 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
    		if((priv === false)||(priv == 0)) {
 		      //Via a social network - still public. TODO change colour of button?
 		 	  whisperOften = whisper_to;		//set global
-			  $('#private-button').html("Public to " + targetName);
-		 	  $('#private-button').show();
-	          $('#public-button').hide();
+			  $('#public-button').html("Public to " + targetName);
+		 	  $('#private-button').hide();
+	          $('#public-button').show();
 		 
 		      sendPublic = true;
 		      shortCode = socialNetwork;
