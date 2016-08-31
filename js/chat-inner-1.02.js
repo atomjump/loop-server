@@ -563,6 +563,8 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 		      //Via a social network - still public. TODO change colour of button?
 		 	  whisperOften = whisper_to;		//set global
 			  $('#private-button').html("Public to " + targetName);
+		 	  $('#private-button').show();
+	          $('#public-button').hide();
 		 
 		      sendPublic = true;
 		      shortCode = socialNetwork;
@@ -570,6 +572,8 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 		} else {
 		    whisperOften = whisper_to;		//set global
 	        $('#private-button').html("Send to " + targetName);
+	        $('#private-button').show();
+	        $('#public-button').hide();
             sendPublic = false;
             shortCode = "";
             publicTo = "";
@@ -580,6 +584,8 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
    
       whisperOften = whisper_to;		//set global
 	  $('#private-button').html("Send to " + targetName);
+	  $('#private-button').show();
+	  $('#public-button').hide();
       sendPublic = false;
       shortCode = "";
       publicTo = "";
