@@ -178,7 +178,8 @@
 				<?php } ?>
 				
 				var sendPublic = true;
-				
+				var sendPrivatelyMsg = '<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>';
+				var sendPubliclyMsg = '<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>';
 				
 				
 				
@@ -344,6 +345,10 @@
 				
 				function switchPublic()
 				{
+					//Reset any
+					shortCode = "";
+            		publicTo = "";
+				
 					if(sendPublic == true) {
 						//Switch to private
 						sendPublic = false;
@@ -351,10 +356,10 @@
 						//Hide the public button
 						$('#public-button').hide();
 						$('#private-button').show();
-						$('#private-button').html('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
+						$('#private-button').html(sendPrivatelyMsg);
 						
 						//Show the public option on the link
-						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
+						$('#private-public-link').html(sendPubliclyMsg);
 					} else {
 						
 						//Switch to public
@@ -363,10 +368,10 @@
 						//Hide the private button
 						$('#public-button').show();
 						$('#private-button').hide();
-						$('#public-button').html('<?php echo $msg['msgs'][$lang]['sendPubliclyButton'] ?>');
+						$('#public-button').html(sendPubliclyMsg);
 						
 						//Show the public option on the link
-						$('#private-public-link').html('<?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?>');
+						$('#private-public-link').html(sendPrivatelyMsg);
 					
 					}
 				
