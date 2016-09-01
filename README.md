@@ -319,7 +319,7 @@ For a sample plugin called 'hide_aargh':
     
     class plugin_hide_aargh
     {
-        public function on_message($message_forum_name, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
+        public function on_message($message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $sender_email, $sender_phone)
         {
             //Do your thing in here. Here is a sample.
             $api = new cls_plugin_api();
