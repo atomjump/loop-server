@@ -114,6 +114,7 @@
 	$_SESSION['view-count'] = 0;
 	
 	
+	
 	//Ensure no caching
 	header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
 	header("Cache-Control: post-check=0, pre-check=0", false);
@@ -186,7 +187,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.03.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.04.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
@@ -412,7 +413,7 @@
 							<?php if($granted == true) { ?>
 								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
 								  <div class="">
-									<input id="shouted" name="shouted" type="text" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"> 
+										<textarea id="shouted" name="shouted" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"></textarea>
 								  </div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-4">
