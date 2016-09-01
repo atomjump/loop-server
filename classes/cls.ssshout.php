@@ -442,7 +442,14 @@ class cls_ssshout
 	        
 	        if(method_exists($pg,"on_message") == true) {
 	            //OK call the on_message function of the plugin
-	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone);
+	            
+	            if(isset($_REQUEST['passcode'])) {
+	            	$layer_name = $_REQUEST['passcode'];
+	            } else {
+	            	$layer_name = "";
+	            }
+	            
+	            $pg->on_message($layer, $message, $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $layer_name);
 	        
 	        } else {
 	            //No on_message() in plugin - do nothing

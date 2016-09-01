@@ -114,7 +114,7 @@ class cls_plugin_api {
 	    
 	    return $result;
 	}
-	                            
+	                                     
 	
 	/*
 	    Get a forum id from a forum name for plugins
