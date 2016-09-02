@@ -347,11 +347,19 @@ Parameters
 ($table, $insert_field_names_str, $insert_field_data_str)  
 Server: >= 0.5.0
 
+```
+  $table                     //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+  $insert_field_names_str    //Insert string e.g. "(var_layers, var_title, var_body, date_when_received, var_whisper)"
+  $insert_field_data_str     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . db_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
+```
+
 **db_select()**
 
 Parameters
 ($sql)  
 Server: >= 0.5.0
+
+An ordinary SELECT SQL query.
 
 **db_update()**
 
@@ -359,6 +367,7 @@ Parameters
 ($table, $update_set)  
 Server: >= 0.5.0
 
+Update_set is the SQL after an 'UPDATE table SET' e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields
 
 **db_fetch_array()**
 
@@ -366,11 +375,15 @@ Parameters
 ($results)  
 Server: >= 0.5.21
 
+Get an array of rows from a database query.
+
 **db_real_escape_string()**
 
 Parameters
 ($string)  
 Server: >= 0.5.21
+
+Ensure the string is escaped for input into the database.
 
 
 **db_error()**
@@ -378,12 +391,15 @@ Server: >= 0.5.21
 No parameters
 Server: >= 0.5.21
 
+Returns the database error text.
+
 
 **db_insert_id()**
 
 No parameters
 Server: >= 0.5.21
 
+Get the last database inserted id field value.
 
 **get_forum_id()**
 
@@ -391,10 +407,22 @@ Parameters
 ($message_forum_name)  
 Server: >= 0.5.0
 
+```
+Output is an array:
+[ forum_id, access_type, forum_group_user_id ]
+
+Where 'forum_id' e.g. 34
+	  'access_type' eg. "readwrite", "read"
+	  'forum_owner_user_id' is the user id to send a message to, to become visible to all the private forum owners.
+```
+
+
 **get_current_user_ip()**
 
 No parameters  
 Server: > 0.5.0
+
+Get the user's ip address, although this is now an artificial ip address, or a unique number based off their user id.
 
 
 **get_current_user_id()**
@@ -402,7 +430,7 @@ Server: > 0.5.0
 No parameters  
 Server: >= 0.5.0
 
-
+Returns the integer user id value of the current user.
 
 
 
@@ -421,6 +449,8 @@ Plugin function returns
 Server: >= 0.5.1
 ($message_forum_name >= 0.7.6)
 
+Occurs after a message being posted.
+
 
 **before_message()**
 
@@ -429,6 +459,8 @@ Output parameters
 Plugin function returns  
 ($message)  
 Server: >= 0.5.0
+
+Occurs just before a message is posted, allowing changes to the message text.
 
 
 **on_more_settings()**
@@ -450,6 +482,7 @@ Output parameters
 ($user_id, $full_request: array of options, $type: NEW or SAVE)
 Plugin function returns  
 (true/false)  
+
 
 
 **on_upload_screen()**
@@ -484,6 +517,8 @@ Additions:
 
 Output parameters
 ($message_id)
+
+
 
 
 **hide_message()**
