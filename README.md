@@ -592,5 +592,8 @@ Contributions are welcome, and they can take the shape of:
 3. Translations: We are looking for any translations of the conf/messages.json file from English into your language. We have machine translated Spanish as a first step, but we need help in ensuring this is a good translation, and applying other languages.
 
 
+# License
+
+This software is open source under the MIT license. Copyright is with AtomJump Ltd. (New Zealand).  You can use this software for any commercial purposes.
 
 
