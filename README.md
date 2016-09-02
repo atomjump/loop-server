@@ -422,7 +422,7 @@ Where 'forum_id' e.g. 34
 No parameters  
 Server: > 0.5.0
 
-Get the user's ip address, although this is now an artificial ip address, or a unique number based off their user id.
+Get the user's ip address, although this is now an artificial ip address, actually a unique 'ip' based off their user id.
 
 
 **get_current_user_id()**
@@ -483,6 +483,7 @@ Output parameters
 Plugin function returns  
 (true/false)  
 
+Called when the settings are saved. $user_id is the integer user's id being saved. $full_request is the $_REQUEST array with the user's entered values. $type can be 'NEW' if it is a new record, or 'SAVE' to save an existing record.
 
 
 **on_upload_screen()**
@@ -518,7 +519,33 @@ Additions:
 Output parameters
 ($message_id)
 
+```php
+	$sender_name_str,                           //e.g. 'Fred'
+	$message,                                   //Message being sent e.g "Hello world!"
+	$recipient_id,                              //User id of recipient e.g. "123.123.123.123:436" 
+	$sender_email,                              //Sender's email address e.g. "fred@company.com"
+	$sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
+	$message_forum_name,                        //Forum name e.g. 'aj_interesting'
 
+Options
+
+	$sender_still_typing = false;               //Set to true if this is a partially completed message
+	$known_message_id = null;                   //If received an id from this function in the past
+	$sender_phone = null;                       //Include the phone number for configuration purposes
+	$javascript_client_msg_id = null;           //Browser id for this message. Important for 
+	$forum_owner_id = null;                     //User id of forum owner
+	$social_post_short_code = null;             //eg 'twt' for twitter, 'fcb' for facebook
+	$social_recipient_handle_str = null;        //eg. 'atomjump' for '@atomjump' on Twitter
+	$date_override = null;                      //optional string for a custom date (as opposed to now) 
+	$latitude = 0.0;                            //for potential future location expansion
+	$longitude = 0.0;                            //for potential future location expansion
+	$login_as = false;                          //Also login as this user
+	$allow_plugins = false;                     //To prevent infinite message sending loops, we don't refer to any other plugins
+												//after a message send
+	$allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
+												//developer. However, plugins that work with before_msg will continue to work 
+
+```
 
 
 **hide_message()**
@@ -531,6 +558,8 @@ Optional Parameters
 ($warn_admin)  
 Server: >= 0.5.0
 
+Hides a message from view, where $message_id is an integer. $warn_admin can be true/false to warn the owner of the forum of the message being hidden.
+
 
 ## Misc
 
@@ -542,6 +571,8 @@ Server: >= 0.5.5
 
 Optional Parameters
 ($platform:'linux'/'windows' default:'linux')
+
+Run a unix shell command in a parallel process. This allows e.g. a process to run in the background and after a period of time do some action.
 
 
 
