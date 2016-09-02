@@ -532,7 +532,7 @@ Options
 	$sender_still_typing = false;               //Set to true if this is a partially completed message
 	$known_message_id = null;                   //If received an id from this function in the past
 	$sender_phone = null;                       //Include the phone number for configuration purposes
-	$javascript_client_msg_id = null;           //Browser id for this message. Important for 
+	$javascript_client_msg_id = null;           //Browser id for this message.
 	$forum_owner_id = null;                     //User id of forum owner
 	$social_post_short_code = null;             //eg 'twt' for twitter, 'fcb' for facebook
 	$social_recipient_handle_str = null;        //eg. 'atomjump' for '@atomjump' on Twitter
