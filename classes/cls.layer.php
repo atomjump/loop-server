@@ -666,6 +666,10 @@ class cls_login
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
+		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
+		//
+		//user_id has been added for the app, which doesn't have sessions as such.
+		//Note: if RELOAD doesn't exist, user_id may be in 2nd place
 	
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
@@ -757,7 +761,7 @@ class cls_login
                 	$reload = ",RELOAD";
                 }
 				
-				return "STORED_PASS" . $reload;
+				return "STORED_PASS" . $reload . "," .$user_id;
 				
 			} else {
 				//A password already - compare with existing password
@@ -813,7 +817,7 @@ class cls_login
 				
 					
 					//Normal forum login
-					return "LOGGED_IN" . $reload;  
+					return "LOGGED_IN" . $reload . "," .$user_id;  
 				    
 					
 				
@@ -853,7 +857,7 @@ class cls_login
             		}
 			
 			
-			return "NEW_USER" . $reload;
+			return "NEW_USER" . $reload . "," .$user_id;
 		}
 	}
 	
