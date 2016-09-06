@@ -517,10 +517,13 @@ class cls_ssshout
 	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
-	        if($pg == null) {
+	        if($pg_incoming == null) {
 	        	//Allow renentrant calls - if the plugin is already defined, keep it
 	        	$pg = new $class_name();
 	        	error_log("Notification class defined OK");
+	        } else {
+	        	$pg = $pg_incoming;
+	        	error_log("Notification class using incoming");
 	        }
 	        
 	        if(method_exists($pg,"on_notify") == true) {
