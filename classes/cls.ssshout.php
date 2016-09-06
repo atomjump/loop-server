@@ -517,7 +517,7 @@ class cls_ssshout
 	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
-	        if(!$pg) {
+	        if($pg == null) {
 	        	//Allow renentrant calls - if the plugin is already defined, keep it
 	        	$pg = new $class_name();
 	        }
