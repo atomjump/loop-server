@@ -1,6 +1,9 @@
 <?php 
 	require('config/db_connect.php');
-
+   global $cfg; 
+   global $msg;
+   global $lang;
+ 
  if($_REQUEST['action']) {
    
    //decrypt 
@@ -14,8 +17,8 @@
           $sql = "UPDATE tbl_user SET var_pass = NULL WHERE var_email = '" . $_SESSION['temp-email'] . "'";
       	    $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			        
-		        	
-          header("Location: index.php");
+		       	
+           header("Location: " . $cnf['webRoot']);
           //Password cleared
           
        } else {
@@ -35,7 +38,7 @@
 			 $email = $_SESSION['logged-email'];
 		} else {
 			   $sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
-      $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+      		   $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			   if($row = db_fetch_array($result)) {
 			      //There is an email like this on the system   
 			   		 
@@ -51,7 +54,7 @@
 	  if($email != '') {
 	     //Send an email to the logged email
 	     $_SESSION['temp-email'] = $email;
-	     $link =$root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . 'sckskfjfnsll24hdb'); //todo improve this algo
+	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . 'sckskfjfnsll24hdb'); //todo improve this algo
 	     cc_mail($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
 	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
