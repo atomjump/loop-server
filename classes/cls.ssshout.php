@@ -330,9 +330,8 @@ class cls_ssshout
 					}
 					
 					$remove_message = $msg['msgs'][$lang]['removeComment'];
-					$remove_url 
-					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
+					$remove_url = $root_server_url . "/de.php?mid=" . $message_id;
+					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
