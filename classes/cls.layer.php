@@ -234,6 +234,8 @@ class cls_layer
 		global $local_server_path;
 		global $notify;
 		global $staging;
+		$sh = new cls_ssshout(); 
+		$cnt = 0;
 	
 		//Notify each member of the group - note tbl_group 
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
@@ -241,13 +243,32 @@ class cls_layer
 		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
 			
-			//Always notify by email - so that a delete can be clicked
-			$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+			if($cnt == 0) {
+				//Init a message for notification - only on the first run through
+				
+				$message_details = array("observe_message" => $msg['msgs'][$lang]['observeMessage'],
+										 "observe_url" => cur_page_url();,
+										 "forum_message" => $layer_message,
+										 "forum_name" => $msg['msgs'][$lang]['layerName'],
+										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
+										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
+				
+				$sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null);
+			}
+			
+
+			
+			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
+			$with_app = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id']);
+			if($with_app == false) {
+
+				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+			}
 					
 			if($row['int_user_id'] != $message_sender_user_id) {		//Don't sms to yourself
 			
 				if($row['enm_sms'] == 'send') {
-					//Also let user by know sms TODO: modify message for sms?
+					//Also let user by know sms
 					if($this->just_sent_sms($layer_id, $message_id) == false) {
 					
 						//Asyncronously call our sms
@@ -264,8 +285,14 @@ class cls_layer
 					}
 				}	
 			}		//send to my own user if commented out
+			
+			$cnt ++;		//increment so that we don't keep initing 
+			
 		
-		}
+		}  //End while
+	
+		//Send off any/all plugin notifications together
+		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null);
 	
 	}
 	

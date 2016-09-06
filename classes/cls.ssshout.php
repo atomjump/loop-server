@@ -271,24 +271,44 @@ class cls_ssshout
 				
 				if($access == 'public') {
 					$url = cur_page_url();
-					$email_body .= "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
+					$observe_url = $url;
+					$observe_message = $msg['msgs'][$lang]['observeMessage'];
+					$layer_message = $msg['msgs'][$lang]['layerName'];
+					$layer_name = $this->layer_name;
+					$email_body .= 	"\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>\n" . $layer_message . ": " . $layer_name;
+; 
 				
 					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . " <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
+					$remove_url = $url;
+					$remove_message = $msg['msgs'][$lang]['removeComment'];
+					$email_body .= "\n\n" . $remove_message . " <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
+					
 				} else {
 					//Sent from a private email forum - append our logo
 					$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				}
 				
-		
-				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+				$message_details = array("observe_message" => $observe_message,
+										 "observe_url" => $observe_url,
+										 "forum_message" => $layer_message,
+										 "forum_name" => $layer_name,
+										 "remove_message" => $remove_message,
+										 "remove_url" => $remove_url);
+				
+				$this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
+				$with_app = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id);
+				if($with_app == false) {
+					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+				}
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id);
+				
 				
 			} else {
 				//This is to someone who has been mentioned in the body of the message
 				$checksum = 233242 + $user_id * 19;
 				 
-    				$components = parse_url(cur_page_url());
+    			$components = parse_url(cur_page_url());
 				$params = parse_str($components['query']);
 				$params['t'] = $user_id;
 				$params['f'] = $from_user_id;
@@ -299,21 +319,37 @@ class cls_ssshout
 				
 				if($access == 'public') { 
 					if($from_different == false) {
-						$email_body .= "\n\n" . $msg['msgs'][$lang]['toReplySee'] . " <a href=\"$replaced\">$replaced</a>";
+						$observe_message = $msg['msgs'][$lang]['toReplySee'];
+						$observe_url = $replaced;
+						$email_body .= "\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>";
 					} else {
-						$email_body .= "\n\n" . $msg['msgs'][$lang]['replyOrChat'] . " <a href=\"$replaced\">$replaced</a>";
+						$observe_message =$msg['msgs'][$lang]['replyOrChat'];
+						$observe_url = $replaced;
+						$email_body .= "\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>";
 				
 					}
-					 
+					
+					$remove_message = $msg['msgs'][$lang]['removeComment'];
+					$remove_url 
 					$url = $root_server_url . "/de.php?mid=" . $message_id;
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
+				$message .= $msg['msgs'][$lang]['fromShortMail'];
 				
+				$message_details = array("observe_message" => $observe_message,
+										 "observe_url" => $observe_url,
+										 "forum_message" => "",
+										 "forum_name" => "",
+										 "remove_message" => $remove_message,
+										 "remove_url" => $remove_url);
 				
-				$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
-			
+				$this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
+				$with_app = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id);
+				if($with_app == false) {	
+					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+				}
 			}
 		
 			if($row['var_phone']) {	//TODO: consider only smsing when the group is set?
@@ -458,6 +494,41 @@ class cls_ssshout
 	    }
 	    return true;
 	}
+	
+	
+	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name, $allowed_plugins = null) {
+	    global $cnf;
+	    global $local_server_path;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    
+	    //Loop through each class and call each plugin_* -> before_notification() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_notify") == true) {
+	            //OK call the on_notify function of the plugin
+	            $ret = $pg->on_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name);
+	        
+	        } else {
+	            //No before_notification() in plugin - do nothing
+	        }
+	    }
+	    return $ret;
+	}
+	
 	
 	
 	public function call_plugins_before_msg($message, $allowed_plugins = null) {
