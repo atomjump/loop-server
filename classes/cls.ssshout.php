@@ -530,7 +530,7 @@ class cls_ssshout
 	            //No before_notification() in plugin - do nothing
 	        }
 	    }
-	    return ($ret, $pg);
+	    return array($ret, $pg);
 	}
 	
 	
