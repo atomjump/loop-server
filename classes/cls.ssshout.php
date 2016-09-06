@@ -296,12 +296,12 @@ class cls_ssshout
 										 "remove_message" => $remove_message,
 										 "remove_url" => $remove_url);
 				
-				$this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
-				$with_app = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id);
+				list($ret, $pg) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
+				list($with_app, $pg) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
 				if($with_app == false) {
 					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id);
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
 				
 				
 			} else {
@@ -344,11 +344,13 @@ class cls_ssshout
 										 "remove_message" => $remove_message,
 										 "remove_url" => $remove_url);
 				
-				$this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
-				$with_app = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id);
+				list($ret, $pg) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
+				list($with_app, $pg) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
 				if($with_app == false) {	
 					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 				}
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
+
 			}
 		
 			if($row['var_phone']) {	//TODO: consider only smsing when the group is set?
@@ -495,7 +497,7 @@ class cls_ssshout
 	}
 	
 	
-	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name, $allowed_plugins = null) {
+	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name, $pg = null, $allowed_plugins = null) {
 	    global $cnf;
 	    global $local_server_path;
 	    
@@ -515,7 +517,10 @@ class cls_ssshout
 	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
-	        $pg = new $class_name();
+	        if(!$pg) {
+	        	//Allow renentrant calls - if the plugin is already defined, keep it
+	        	$pg = new $class_name();
+	        }
 	        
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
@@ -525,7 +530,7 @@ class cls_ssshout
 	            //No before_notification() in plugin - do nothing
 	        }
 	    }
-	    return $ret;
+	    return ($ret, $pg);
 	}
 	
 	
