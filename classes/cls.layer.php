@@ -247,7 +247,7 @@ class cls_layer
 				//Init a message for notification - only on the first run through
 				
 				$message_details = array("observe_message" => $msg['msgs'][$lang]['observeMessage'],
-										 "observe_url" => cur_page_url();,
+										 "observe_url" => cur_page_url(),
 										 "forum_message" => $layer_message,
 										 "forum_name" => $msg['msgs'][$lang]['layerName'],
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
