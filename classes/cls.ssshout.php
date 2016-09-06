@@ -296,12 +296,13 @@ class cls_ssshout
 										 "remove_message" => $remove_message,
 										 "remove_url" => $remove_url);
 				
-				list($ret, $pg) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
-				list($with_app, $pg) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
+				$data = array();
+				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
 					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				
 				
 			} else {
@@ -344,12 +345,13 @@ class cls_ssshout
 										 "remove_message" => $remove_message,
 										 "remove_url" => $remove_url);
 				
-				list($ret, $pg) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id);
-				list($with_app, $pg) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
+				$data = array();
+				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {	
 					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $pg);
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 
 			}
 		
@@ -517,25 +519,18 @@ class cls_ssshout
 	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
 	        $class_name = "plugin_" . $plugin_name;
 	        
-	        if($pg_incoming == null) {
-	        	//Allow renentrant calls - if the plugin is already defined, keep it
-	        	$pg = new $class_name();
-	        	error_log("Notification class defined OK");
-	        } else {
-	        	$pg = $pg_incoming;
-	        	error_log("Notification class using incoming");
-	        }
-	        
+	        $pg = new $class_name();
+        
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
 	            error_log("Calling notify");
-	            $ret = $pg->on_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name);
+	            list($ret, $combined_data) = $pg->on_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name);
 	        
 	        } else {
-	            //No before_notification() in plugin - do nothing
+	            //No on_notify() in plugin - do nothing
 	        }
 	    }
-	    return array($ret, $pg);
+	    return array($ret, $combined_data);
 	}
 	
 	

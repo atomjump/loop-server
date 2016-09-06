@@ -253,13 +253,14 @@ class cls_layer
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
 										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
 				
-				list($ret, $pg) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null);
+				$data = array();
+				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 			}
 			
 
 			
 			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
-			list($with_app, $pg) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $pg);
+			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
 			if($with_app == false) {
 
 				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
