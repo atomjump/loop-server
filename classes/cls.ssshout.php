@@ -497,7 +497,7 @@ class cls_ssshout
 	}
 	
 	
-	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name, $pg = null, $allowed_plugins = null) {
+	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $pg = null, $allowed_plugins = null) {
 	    global $cnf;
 	    global $local_server_path;
 	    
@@ -520,10 +520,12 @@ class cls_ssshout
 	        if($pg == null) {
 	        	//Allow renentrant calls - if the plugin is already defined, keep it
 	        	$pg = new $class_name();
+	        	error_log("Notification class defined OK");
 	        }
 	        
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
+	            error_log("Calling notify");
 	            $ret = $pg->on_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name);
 	        
 	        } else {
