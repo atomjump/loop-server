@@ -293,7 +293,7 @@ class cls_layer
 		}  //End while
 	
 		//Send off any/all plugin notifications together
-		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $pg);
+		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
 	
