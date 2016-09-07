@@ -196,6 +196,39 @@ Plugin function writes HTML inside ordinary PHP tags e.g.
 Server: >= 0.5.9  
 
 
+**on_notify()**
+
+Output parameters
+($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $in_data)  
+Plugin function should return
+($ret, $ret_data)
+where $ret is true, unless a recipient is not to get a message, when your plugin function should return $ret = false
+
+$ret_data should be used to forward the data on to the next stage function, in the $in_data parameter.
+
+Server: >= 0.7.7  
+
+Used at 3 stages of the notification process, defined by $stage. Stages are:
+
+```
+1. init          - this call occurs once the first notification in a group is reached
+2. addrecipient  - this occurs for each recipient in the group
+3. send			 - this occurs on being ready to send 
+```
+
+$message_details will be an array in the following format:
+
+```
+array("observe_message" => $observe_message,		//This is the message to be written next to the visual link to the forum
+		 "observe_url" => $observe_url,             //This is the URL of the visual link to the forum
+		 "forum_message" => $layer_message,			//A message that preceeds the name of the forum the message was sent from
+		 "forum_name" => $layer_name,				//The name of the forum the message was sent from
+		 "remove_message" => $remove_message,		//A description of what to do to remove the message
+		 "remove_url" => $remove_url);              //The URL to remove the message
+```
+
+
+
 
 ## Writing functions
 
