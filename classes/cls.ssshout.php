@@ -499,7 +499,7 @@ class cls_ssshout
 	}
 	
 	
-	public function call_plugins_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $pg = null, $allowed_plugins = null) {
+	public function call_plugins_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $data = null, $allowed_plugins = null) {
 	    global $cnf;
 	    global $local_server_path;
 	    
@@ -524,13 +524,13 @@ class cls_ssshout
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
 	            error_log("Calling notify");
-	            list($ret, $combined_data) = $pg->on_notify($stage, $message_forum_id, $message, $message_id, $sender_id, $recipient_id, $sender_name, $message_forum_name);
+	            list($ret, $data) = $pg->on_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $data);
 	        
 	        } else {
 	            //No on_notify() in plugin - do nothing
 	        }
 	    }
-	    return array($ret, $combined_data);
+	    return array($ret, $data);
 	}
 	
 	
