@@ -236,6 +236,11 @@ class cls_layer
 		global $staging;
 		$sh = new cls_ssshout(); 
 		$cnt = 0;
+		
+		//Make sure we have the layer name
+		if(isset($_REQUEST['passcode'])) {
+			$this->layer_name = $_REQUEST['passcode'];
+		}
 	
 		//Notify each member of the group - note tbl_group 
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
