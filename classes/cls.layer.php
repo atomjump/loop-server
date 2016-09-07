@@ -238,6 +238,7 @@ class cls_layer
 		global $lang;
 		
 		$sh = new cls_ssshout();
+		print_r($sh);		//Testing
 		$data = array(); 
 		$cnt = 0;
 		
