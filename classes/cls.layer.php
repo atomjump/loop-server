@@ -248,8 +248,8 @@ class cls_layer
 				
 				$message_details = array("observe_message" => $msg['msgs'][$lang]['observeMessage'],
 										 "observe_url" => cur_page_url(),
-										 "forum_message" => $layer_message,
-										 "forum_name" => $msg['msgs'][$lang]['layerName'],
+										 "forum_message" => $msg['msgs'][$lang]['layerName'],
+										 "forum_name" => $this->layer_name,
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
 										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
 				
