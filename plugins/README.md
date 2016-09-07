@@ -208,6 +208,8 @@ $ret_data should be used to forward the data on to the next stage function, in t
 
 Server: >= 0.7.7  
 
+This hook allows you to embed custom code into a notification e.g. the plugin 'notifications' uses this function to send messages to the AtomJump phone app.
+
 Used at 3 stages of the notification process, defined by $stage. Stages are:
 
 ```
