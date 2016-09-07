@@ -8,7 +8,7 @@ define("CUSTOMER_PRICE_PER_SMS_US_DOLLARS", $cnf['USDollarsPerSMS']);  //$0.16 o
 class cls_layer
 {
 
- public $layer_name;
+ 	public $layer_name;
 
 	public function get_layer_id($passcode, $reading)
 	{
@@ -234,6 +234,18 @@ class cls_layer
 		global $local_server_path;
 		global $notify;
 		global $staging;
+		global $msg;
+		global $lang;
+		
+		$sh = new cls_ssshout();
+		$data = array(); 
+		$cnt = 0;
+		
+		//Make sure we have the layer name
+		if(isset($_REQUEST['passcode'])) {
+			$layer_name = $_REQUEST['passcode'];
+		}
+		 
 	
 		//Notify each member of the group - note tbl_group 
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
@@ -241,13 +253,36 @@ class cls_layer
 		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
 			
-			//Always notify by email - so that a delete can be clicked
-			$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+			if($cnt == 0) {
+				//Init a message for notification - only on the first run through
+				
+				$message_details = array("observe_message" => $msg['msgs'][$lang]['observeMessage'],
+										 "observe_url" => cur_page_url(),
+										 "forum_message" => $msg['msgs'][$lang]['layerName'],
+										 "forum_name" => $layer_name,
+										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
+										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
+				
+				
+				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
+			}
+			
+
+			
+			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
+			
+			
+			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
+			
+			if($with_app == false) {
+
+				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+			}
 					
 			if($row['int_user_id'] != $message_sender_user_id) {		//Don't sms to yourself
 			
 				if($row['enm_sms'] == 'send') {
-					//Also let user by know sms TODO: modify message for sms?
+					//Also let user by know sms
 					if($this->just_sent_sms($layer_id, $message_id) == false) {
 					
 						//Asyncronously call our sms
@@ -264,8 +299,17 @@ class cls_layer
 					}
 				}	
 			}		//send to my own user if commented out
+			
+			$cnt ++;		//increment so that we don't keep initing 
+			
 		
-		}
+		}  //End while
+	
+	
+	
+	
+		//Send off any/all plugin notifications together
+		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
 	
@@ -462,6 +506,7 @@ class cls_login
 		}
 	
 		//Input is a string with all users  1.1.1.1:145:sms,2.2.2.2:32:sms in group
+		// Or user entered emails: test@atomjump.com,hello@atomjump.com
 		
 		$sh = new cls_ssshout(); 
 		
@@ -470,6 +515,17 @@ class cls_login
 		$whisper_to_site_group = explode(",",$whisper_site);
 		$group_user_ids = array();
 		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
+				$user_id = $sh->new_user($email, $ip, null, false);
+				$user_machine = $ip . ":" . $user_id;
+				
+			}
+			
 			$whisper_to_divided = explode(":",$user_machine);
 			if(($whisper_to_divided[1] == '')||($whisper_to_divided[1] == 0)) {
 				//Pass on this one
@@ -481,6 +537,7 @@ class cls_login
 				}
 				$group_user_ids[$whisper_to_divided[1]] = $sms;		//2 is the sms
 			}
+			
 			
 		}
 		
@@ -667,6 +724,10 @@ class cls_login
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
+		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
+		//
+		//user_id has been added for the app, which doesn't have sessions as such.
+		//Note: if RELOAD doesn't exist, user_id may be in 2nd place
 	
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
@@ -758,7 +819,7 @@ class cls_login
                 	$reload = ",RELOAD";
                 }
 				
-				return "STORED_PASS" . $reload;
+				return "STORED_PASS" . $reload . "," .$user_id;
 				
 			} else {
 				//A password already - compare with existing password
@@ -814,7 +875,7 @@ class cls_login
 				
 					
 					//Normal forum login
-					return "LOGGED_IN" . $reload;  
+					return "LOGGED_IN" . $reload . "," .$user_id;  
 				    
 					
 				
@@ -854,7 +915,7 @@ class cls_login
             		}
 			
 			
-			return "NEW_USER" . $reload;
+			return "NEW_USER" . $reload . "," .$user_id;
 		}
 	}
 	
