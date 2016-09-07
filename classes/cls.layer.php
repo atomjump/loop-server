@@ -238,9 +238,6 @@ class cls_layer
 		global $lang;
 		
 		$sh = new cls_ssshout();
-		if(!$sh) {
-			error_log("No $sh!");
-		}
 		$data = array(); 
 		$cnt = 0;
 		
@@ -312,7 +309,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
-		list($ret, $data) = $sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
+		/*TEMPOUTlist($ret, $data) = $sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);*/
 	
 	}
 	
