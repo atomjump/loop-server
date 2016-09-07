@@ -310,6 +310,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
+		$sh = new cls_ssshout();	//TESTING IN
 		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
@@ -516,14 +517,14 @@ class cls_login
 		$group_user_ids = array();
 		foreach($whisper_to_site_group as $user_machine) {
 			//Check if this is an email address
-			/*if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
 				//Convert user entered email into a user id
 				$email = trim($user_machine);
 				$ip = $this->getFakeIpAddr();
 				$user_id = $sh->new_user($email, $ip, null, false);
 				$user_machine = $ip . ":" . $user_id;
 				
-			} */
+			}
 			
 			$whisper_to_divided = explode(":",$user_machine);
 			if(($whisper_to_divided[1] == '')||($whisper_to_divided[1] == 0)) {
