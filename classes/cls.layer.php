@@ -501,6 +501,7 @@ class cls_login
 		}
 	
 		//Input is a string with all users  1.1.1.1:145:sms,2.2.2.2:32:sms in group
+		// Or user entered emails: test@atomjump.com,hello@atomjump.com
 		
 		$sh = new cls_ssshout(); 
 		
@@ -509,6 +510,16 @@ class cls_login
 		$whisper_to_site_group = explode(",",$whisper_site);
 		$group_user_ids = array();
 		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ip = $this->getFakeIpAddr();
+				$user_id = $sh->new_user($email, $ip, null, false);
+				$user_machine = $ip . ":" . $user_id;
+				
+			} 
+			
 			$whisper_to_divided = explode(":",$user_machine);
 			if(($whisper_to_divided[1] == '')||($whisper_to_divided[1] == 0)) {
 				//Pass on this one
@@ -520,6 +531,7 @@ class cls_login
 				}
 				$group_user_ids[$whisper_to_divided[1]] = $sms;		//2 is the sms
 			}
+			
 			
 		}
 		
