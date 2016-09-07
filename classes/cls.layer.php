@@ -271,9 +271,9 @@ class cls_layer
 			
 			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
 			
-			
+			error_log("About to add group recipient:" . $row['int_user_id'] . " with data:" . json_encode($data));
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
-			
+			error_log("Completed adding group recipient. Data now:" . json_encode($data));
 			if($with_app == false) {
 
 				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
@@ -307,7 +307,7 @@ class cls_layer
 	
 	
 	
-	
+		error_log("About to send to group recipient. With data:" . json_encode($data));
 		//Send off any/all plugin notifications together
 		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
