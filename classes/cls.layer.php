@@ -239,7 +239,7 @@ class cls_layer
 		
 		//Make sure we have the layer name
 		if(isset($_REQUEST['passcode'])) {
-			$this->layer_name = $_REQUEST['passcode'];
+			$layer_name = $_REQUEST['passcode'];
 		}
 		error_log("Notifying group from layer:" .$this->layer_name);
 		 
@@ -256,7 +256,7 @@ class cls_layer
 				$message_details = array("observe_message" => $msg['msgs'][$lang]['observeMessage'],
 										 "observe_url" => cur_page_url(),
 										 "forum_message" => $msg['msgs'][$lang]['layerName'],
-										 "forum_name" => $this->layer_name,
+										 "forum_name" => $layer_name,
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
 										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
 				
