@@ -269,7 +269,13 @@ class cls_layer
 
 			
 			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
-			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
+			if($row['int_user_id'] != $message_sender_user_id) {
+				//Don't send to your own user
+				list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
+			} else {
+				$with_app = false;
+			
+			}
 			if($with_app == false) {
 
 				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
