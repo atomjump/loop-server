@@ -530,6 +530,8 @@ class cls_ssshout
 	            //No on_notify() in plugin - do nothing
 	        }
 	    }
+	    error_log("Returning:" . $ret . " Data:" . json_encode($data));
+	    
 	    return array($ret, $data);
 	}
 	
