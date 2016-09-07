@@ -523,14 +523,12 @@ class cls_ssshout
         
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
-	            error_log("Calling notify");
 	            list($ret, $data) = $pg->on_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $indata);
 	        
 	        } else {
 	            //No on_notify() in plugin - do nothing
 	        }
 	    }
-	    error_log("Returning:" . $ret . " Data:" . json_encode($data));
 	    
 	    return array($ret, $data);
 	}
