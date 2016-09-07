@@ -8,7 +8,7 @@ define("CUSTOMER_PRICE_PER_SMS_US_DOLLARS", $cnf['USDollarsPerSMS']);  //$0.16 o
 class cls_layer
 {
 
- public $layer_name;
+ 	public $layer_name;
 
 	public function get_layer_id($passcode, $reading)
 	{
@@ -273,7 +273,7 @@ class cls_layer
 			
 			
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
-			}
+			
 			if($with_app == false) {
 
 				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
@@ -309,7 +309,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
-		/*TEMPOUTlist($ret, $data) = $sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);*/
+		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
 	
