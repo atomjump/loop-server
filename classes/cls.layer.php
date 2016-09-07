@@ -850,6 +850,9 @@ class cls_login
 					$layer_info = $ly->get_layer_id($layer_visible);
 					if($layer_info) {
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+					} else {
+						//unset the authenticated layer - TESTING
+						$_SESSION['authenticated-layer'] = '';
 					}
 					
 					
