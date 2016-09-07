@@ -234,6 +234,7 @@ class cls_layer
 		global $local_server_path;
 		global $notify;
 		global $staging;
+		global $msg;
 		$sh = new cls_ssshout(); 
 		$cnt = 0;
 		
