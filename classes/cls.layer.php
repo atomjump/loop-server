@@ -518,7 +518,8 @@ class cls_login
 			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
 				//Convert user entered email into a user id
 				$email = trim($user_machine);
-				$ip = $this->getFakeIpAddr();
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
 				$user_id = $sh->new_user($email, $ip, null, false);
 				$user_machine = $ip . ":" . $user_id;
 				
