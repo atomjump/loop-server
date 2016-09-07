@@ -237,7 +237,8 @@ class cls_layer
 		global $msg;
 		global $lang;
 		
-		$sh = new cls_ssshout(); 
+		$sh = new cls_ssshout();
+		$data = array(); 
 		$cnt = 0;
 		
 		//Make sure we have the layer name
@@ -263,7 +264,7 @@ class cls_layer
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
 										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
 				
-				$data = array();
+				
 				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 			}
 			
