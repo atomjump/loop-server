@@ -345,13 +345,15 @@ class cls_ssshout
 										 "remove_message" => $remove_message,
 										 "remove_url" => $remove_url);
 				
-				$data = array();
+				$mydata = array();
 				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
-				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$mydata = $data;
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $mydata);
+				$mydata = $data;
 				if($with_app == false) {	
 					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $mydata);
 
 			}
 		
@@ -499,7 +501,7 @@ class cls_ssshout
 	}
 	
 	
-	public function call_plugins_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $data = null, $allowed_plugins = null) {
+	public function call_plugins_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $indata = null, $allowed_plugins = null) {
 	    global $cnf;
 	    global $local_server_path;
 	    
@@ -524,7 +526,7 @@ class cls_ssshout
 	        if(method_exists($pg,"on_notify") == true) {
 	            //OK call the on_notify function of the plugin
 	            error_log("Calling notify");
-	            list($ret, $data) = $pg->on_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $data);
+	            list($ret, $data) = $pg->on_notify($stage, $message, $message_details, $message_id, $sender_id, $recipient_id, $indata);
 	        
 	        } else {
 	            //No on_notify() in plugin - do nothing
