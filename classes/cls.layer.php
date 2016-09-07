@@ -245,7 +245,6 @@ class cls_layer
 		if(isset($_REQUEST['passcode'])) {
 			$layer_name = $_REQUEST['passcode'];
 		}
-		error_log("Notifying group from layer:" .$this->layer_name);
 		 
 	
 		//Notify each member of the group - note tbl_group 
@@ -310,8 +309,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
-		$sh = new cls_ssshout();	//TESTING IN
-		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
+		list($ret, $data) = $sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
 	
