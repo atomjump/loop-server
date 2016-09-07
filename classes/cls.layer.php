@@ -241,6 +241,8 @@ class cls_layer
 		if(isset($_REQUEST['passcode'])) {
 			$this->layer_name = $_REQUEST['passcode'];
 		}
+		error_log("Notifying group from layer:" .$this->layer_name);
+		 
 	
 		//Notify each member of the group - note tbl_group 
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
