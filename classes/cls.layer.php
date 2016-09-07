@@ -238,7 +238,9 @@ class cls_layer
 		global $lang;
 		
 		$sh = new cls_ssshout();
-		print_r($sh);		//Testing
+		if(!$sh) {
+			error_log("No $sh!");
+		}
 		$data = array(); 
 		$cnt = 0;
 		
