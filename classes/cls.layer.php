@@ -517,7 +517,7 @@ class cls_login
 				$email = trim($user_machine);
 				$ly = new cls_layer();
 				$ip = $ly->getFakeIpAddr();
-				$user_id = $sh->new_user($email, $ip, null, false);
+				$user_id = $sh->new_user($email, $ip, null, true);
 				$user_machine = $ip . ":" . $user_id;
 				
 			}
