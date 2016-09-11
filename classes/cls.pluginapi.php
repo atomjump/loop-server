@@ -287,7 +287,7 @@ class cls_plugin_api {
 	                            $recipient_id,                              //User id of recipient e.g. "123.123.123.123:436" 
 	                            $sender_email,                              //Sender's email address e.g. "fred@company.com"
 	                            $sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
-	                            $message_forum_name,                        //Forum name e.g. 'aj_interesting'
+	                            $message_forum_id,                        //Forum id e.g. 23, which is derived from a forum name e.g. 'aj_test'
 	                            $options = null
 	                            )
 	 {
@@ -338,7 +338,7 @@ class cls_plugin_api {
 	                        $sender_email,
 	                        $sender_ip, 
 	                        $bg,
-	                        $message_forum_name,
+	                        $message_forum_id,
 	                        $sender_still_typing,
 	                        $known_message_id,
 	                        $sender_phone,
