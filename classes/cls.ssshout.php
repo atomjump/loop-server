@@ -649,11 +649,16 @@ class cls_ssshout
 	    global $db;
 		$email_in_msg = false;
 	
+		error_log("Got here 4");
+	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
 		$peano2 = $bg->generate_peano2($latitude, $longitude);
 		$peano1iv = $bg->generate_peano_iv($peano1);
 		$peano2iv = $bg->generate_peano_iv($peano2);
+		
+		error_log("Got here 5");
+		
 		
 		if($typing == true) {
 			$shouted = $msg['msgs'][$lang]['typing'];
@@ -786,6 +791,8 @@ class cls_ssshout
 					$whisper_to_divided[1] = 0;
 				}
 			
+				error_log("Got here 6");
+			
 			
 				if($ssshout_id) {
 					//Check if we already exist
@@ -882,6 +889,8 @@ class cls_ssshout
 									" . $whisper_to_id . ",
 									" . $user_id ."
 									)";	
+									
+						error_log("Got here 5 sql:" . $sql);			
 									
 						dbquery($sql) or die("Unable to execute query $sql " . dberror());
 						$ssshout_id = db_insert_id();
