@@ -293,13 +293,11 @@ class cls_plugin_api {
 	 {
 	     //Returns the message id if successful, or false if not successful.
 	     
-	     error_log("Got here 1");
 	     
 	     $bg = new clsBasicGeosearch();
 	     $ly = new cls_layer();
 	     $sh = new cls_ssshout();
 	 
-	 	error_log("Got here 2");
 	 
         $sender_still_typing = false;               //Set to true if this is a partially completed message
         $known_message_id = null;                   //If received an id from this function in the past
@@ -333,7 +331,6 @@ class cls_plugin_api {
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	    }
 	 
-	 	error_log("Got here 3");
 	 	
 	     return $sh->insert_shout($latitude,
 	                        $longitude,
