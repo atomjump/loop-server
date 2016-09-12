@@ -287,15 +287,17 @@ class cls_plugin_api {
 	                            $recipient_id,                              //User id of recipient e.g. "123.123.123.123:436" 
 	                            $sender_email,                              //Sender's email address e.g. "fred@company.com"
 	                            $sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
-	                            $message_forum_name,                        //Forum name e.g. 'aj_interesting'
+	                            $message_forum_id,                        //Forum id e.g. 23, which is derived from a forum name e.g. 'aj_test'
 	                            $options = null
 	                            )
 	 {
 	     //Returns the message id if successful, or false if not successful.
 	     
+	     
 	     $bg = new clsBasicGeosearch();
 	     $ly = new cls_layer();
 	     $sh = new cls_ssshout();
+	 
 	 
         $sender_still_typing = false;               //Set to true if this is a partially completed message
         $known_message_id = null;                   //If received an id from this function in the past
@@ -329,7 +331,7 @@ class cls_plugin_api {
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	    }
 	 
-	 
+	 	
 	     return $sh->insert_shout($latitude,
 	                        $longitude,
 	                        $sender_name_str,
@@ -338,7 +340,7 @@ class cls_plugin_api {
 	                        $sender_email,
 	                        $sender_ip, 
 	                        $bg,
-	                        $message_forum_name,
+	                        $message_forum_id,
 	                        $sender_still_typing,
 	                        $known_message_id,
 	                        $sender_phone,

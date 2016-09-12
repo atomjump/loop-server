@@ -649,11 +649,14 @@ class cls_ssshout
 	    global $db;
 		$email_in_msg = false;
 	
+	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
 		$peano2 = $bg->generate_peano2($latitude, $longitude);
 		$peano1iv = $bg->generate_peano_iv($peano1);
 		$peano2iv = $bg->generate_peano_iv($peano2);
+		
+		
 		
 		if($typing == true) {
 			$shouted = $msg['msgs'][$lang]['typing'];
@@ -786,6 +789,7 @@ class cls_ssshout
 					$whisper_to_divided[1] = 0;
 				}
 			
+
 			
 				if($ssshout_id) {
 					//Check if we already exist
@@ -809,8 +813,10 @@ class cls_ssshout
 												enm_status = '$status',
 												int_author_id = $user_id
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
-					dbquery($sql) or die("Unable to execute query $sql " . dberror());
-					
+					if(!dbquery($sql)) {
+							error_log("Unable to execute query $sql " . dberror());
+							die("Unable to execute query $sql " . dberror());
+					}
 					
 					//If there were multiple users being whispered to, we need to post new individual messages to each of the users.
 					
@@ -883,7 +889,11 @@ class cls_ssshout
 									" . $user_id ."
 									)";	
 									
-						dbquery($sql) or die("Unable to execute query $sql " . dberror());
+									
+						if(!dbquery($sql)) {
+							error_log("Unable to execute query $sql " . dberror());
+							die("Unable to execute query $sql " . dberror());
+						} 
 						$ssshout_id = db_insert_id();
 						$message_id = $ssshout_id;
 						
