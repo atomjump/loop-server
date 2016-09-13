@@ -784,13 +784,16 @@ class cls_login
 		if($layer_info != false) {
 			if($this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id'])) {
 				//Cool is owner, so authenticate this layer
+				error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
 				$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 			} else {
 				//unset the authenticated layer
+				error_log("Nope is not an owner - set authenticated-layer to blank");
 				$_SESSION['authenticated-layer'] = '';
 			}
 		} else {
 			//unset the authenticated layer
+			error_log("Nope is not a valid layer - set authenticated-layer to blank");
 			$_SESSION['authenticated-layer'] = '';
 		}
 	    
