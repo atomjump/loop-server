@@ -485,8 +485,8 @@ $(document).ready(function() {
 							dataType: "jsonp"
 						}).done(function(response) {
 							var msg = 'myMachineUser: ' + response.thisUser;
-							$("#comment-messages").html(msg);
-							$("#comment-messages").show();
+							$("#user-id-show-set").html(msg);
+							$("#user-id-show").toggle();
 							
 						
 							$("#group-users").val(response.layerUsers);
@@ -665,6 +665,7 @@ function set_options_cookie() {
 			//Always hide the advanced section - we need to click to refresh the data 
 			$("#group-users-form").hide();
 			$("#set-forum-password-form").hide();
+			$("#user-id-show").hide();
 			
 			
 		

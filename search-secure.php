@@ -486,7 +486,8 @@
 										 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 										 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 									</div>
-									
+									<div id="user-id-show" class="form-group">
+										<div style="display: none; color: red;" id="user-id-show-set"></div>
 						  			</div>
 								<div  class="form-group">
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
