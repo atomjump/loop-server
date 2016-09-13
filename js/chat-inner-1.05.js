@@ -663,9 +663,9 @@ function set_options_cookie() {
 			var mytype = response.split(','); 
 			
 			//Always hide the advanced section - we need to click to refresh the data 
-			$("#group-users-form").hide();
-			$("#set-forum-password-form").hide();
-			$("#user-id-show").hide();
+			$('#group-users-form').hide();
+			$('#set-forum-password-form').hide();
+			$('#user-id-show').hide();
 			
 			
 		
