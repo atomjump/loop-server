@@ -777,6 +777,24 @@ class cls_login
 		}
 	    
 	    
+	    //Get the current layer - use to view 
+		
+		$ly = new cls_layer();
+		$layer_info = $ly->get_layer_id($layer_visible);
+		if($layer_info != false) {
+			if($this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id'])) {
+				//Cool is owner, so authenticate this layer
+				$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+			} else {
+				//unset the authenticated layer
+				$_SESSION['authenticated-layer'] = '';
+			}
+		} else {
+			//unset the authenticated layer
+			$_SESSION['authenticated-layer'] = '';
+		}
+	    
+	    
 	
 		//First check if the email exists
 		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
@@ -842,17 +860,7 @@ class cls_login
 					}
 					
 					
-					//Get the current layer - use to view 
-					//unset the authenticated layer by default
-					$_SESSION['authenticated-layer'] = '';
-					$ly = new cls_layer();
-					$layer_info = $ly->get_layer_id($layer_visible);
-					if($layer_info != false) {
-						if($this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id'])) {
-							//Cool is owner, so authenticate this layer
-							$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
-						}
-					} 
+					
 					
 					
 					//Get the group user if necessary
