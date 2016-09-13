@@ -34,7 +34,7 @@ class cls_layer
 				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-					if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+							if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 						$_SESSION['access-layer-granted'] = 'false';
 					}
 				} else {
@@ -843,14 +843,16 @@ class cls_login
 					
 					
 					//Get the current layer - use to view 
+					//unset the authenticated layer by default
+					$_SESSION['authenticated-layer'] = '';
 					$ly = new cls_layer();
 					$layer_info = $ly->get_layer_id($layer_visible);
-					if($layer_info) {
-						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
-					} else {
-						//unset the authenticated layer
-						$_SESSION['authenticated-layer'] = '';
-					}
+					if($layer_info != false) {
+						if($this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id'])) {
+							//Cool is owner, so authenticate this layer
+							$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+						}
+					} 
 					
 					
 					//Get the group user if necessary
