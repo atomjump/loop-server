@@ -491,7 +491,7 @@ $(document).ready(function() {
 						
 							$("#group-users").val(response.layerUsers);
 							$("#group-users-form").toggle();
-							$("#set-forum-password-form").show();
+							$("#set-forum-password-form").toggle();
 						});
 				});
 				
@@ -664,6 +664,7 @@ function set_options_cookie() {
 			
 			//Always hide the advanced section - we need to click to refresh the data 
 			$("#group-users-form").hide();
+			$("#set-forum-password-form").hide();
 			
 			
 		
