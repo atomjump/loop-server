@@ -486,12 +486,12 @@
 										 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 										 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 									</div>
-									<div id="user-id-show" class="form-group">
-										<div style="display: none; color: red;" id="user-id-show-set"></div>
+									<div id="user-id-show" class="form-group" style="display:none;">
+										<div style="color: red;" id="user-id-show-set"></div>
 						  			</div>
-								<div  class="form-group">
+									<div class="form-group">
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
-								</div>
+									</div>
 							 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?></button>
 							<br/>
 							<br/>
