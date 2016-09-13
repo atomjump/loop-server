@@ -15,6 +15,12 @@ class cls_layer
 
 		$this->layer_name = $passcode; //store
 
+	
+	
+		
+	
+
+
 		if($passcode != "") {
 			//This is a private passcode request
 			$sql = "SELECT * FROM tbl_layer WHERE passcode = '" . md5($passcode). "'";
@@ -41,6 +47,24 @@ class cls_layer
 					$_SESSION['access-layer-granted'] = 'true';
 				
 				}
+				
+				//Check we're an owner of the layer
+				if($this->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
+						//Cool is owner, so authenticate this layer
+						error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
+						$_SESSION['authenticated-layer'] = $row['int_layer_id'];
+					} else {
+						//unset the authenticated layer
+						error_log("Nope is not an owner - set authenticated-layer to blank");
+						$_SESSION['authenticated-layer'] = '';
+					}
+				} else {
+					//unset the authenticated layer
+					error_log("Nope is not a valid layer - set authenticated-layer to blank");
+					$_SESSION['authenticated-layer'] = '';
+				}
+				
+				
 				return $row;
 			} 
 		} else {
@@ -59,15 +83,34 @@ class cls_layer
 				
 						} else {
 					     
-				       $_SESSION['layer-group-user'] = '';
+				       		$_SESSION['layer-group-user'] = '';
 				
-				    }
+				    	}
+				    	
+				    	//Check we're an owner of the layer
+						if($this->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
+								//Cool is owner, so authenticate this layer
+								error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
+								$_SESSION['authenticated-layer'] = $row['int_layer_id'];
+							} else {
+								//unset the authenticated layer
+								error_log("Nope is not an owner - set authenticated-layer to blank");
+								$_SESSION['authenticated-layer'] = '';
+							}
+						} else {
+							//unset the authenticated layer
+							error_log("Nope is not a valid layer - set authenticated-layer to blank");
+							$_SESSION['authenticated-layer'] = '';
+						}
 						
 						return $row;
 					}
 				}
 			} 
 		}
+		
+		//Definitely not an owner
+		$_SESSION['authenticated-layer'] = '';
 	
 		return false;
 
@@ -779,23 +822,7 @@ class cls_login
 	    
 	    //Get the current layer - use to view 
 		
-		$ly = new cls_layer();
-		$layer_info = $ly->get_layer_id($layer_visible);
-		if($layer_info != false) {
-			if($this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id'])) {
-				//Cool is owner, so authenticate this layer
-				error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
-				$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
-			} else {
-				//unset the authenticated layer
-				error_log("Nope is not an owner - set authenticated-layer to blank");
-				$_SESSION['authenticated-layer'] = '';
-			}
-		} else {
-			//unset the authenticated layer
-			error_log("Nope is not a valid layer - set authenticated-layer to blank");
-			$_SESSION['authenticated-layer'] = '';
-		}
+
 	    
 	    
 	
