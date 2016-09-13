@@ -52,7 +52,7 @@ class cls_layer
 				$lg = new cls_login();
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
-					error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
+					error_log("Goodo, is owner - set authenticated-layer to " .  $row['int_layer_id']); 
 					$_SESSION['authenticated-layer'] = $row['int_layer_id'];
 				} else {
 					//unset the authenticated layer
@@ -88,7 +88,7 @@ class cls_layer
 				    	$lg = new cls_login();
 						if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 							//Cool is owner, so authenticate this layer
-							error_log("Goodo, is owner - set authenticated-layer to " .  $layer_info['int_layer_id']); 
+							error_log("Goodo, is owner - set authenticated-layer to " .  $row['int_layer_id']); 
 							$_SESSION['authenticated-layer'] = $row['int_layer_id'];
 						} else {
 							//unset the authenticated layer
