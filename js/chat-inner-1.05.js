@@ -485,13 +485,13 @@ $(document).ready(function() {
 							dataType: "jsonp"
 						}).done(function(response) {
 							var msg = 'myMachineUser: ' + response.thisUser;
-							$("#comment-messages").html(msg);
-							$("#comment-messages").show();
+							$("#user-id-show-set").html(msg);
+							$("#user-id-show").toggle();
 							
 						
 							$("#group-users").val(response.layerUsers);
-							$("#group-users-form").show();
-							$("#set-forum-password-form").show();
+							$("#group-users-form").toggle();
+							$("#set-forum-password-form").toggle();
 						});
 				});
 				
@@ -661,6 +661,13 @@ function set_options_cookie() {
 			var timeMult= 1;
 			
 			var mytype = response.split(','); 
+			
+			//Always hide the advanced section - we need to click to refresh the data 
+			$('#group-users-form').hide();
+			$('#set-forum-password-form').hide();
+			$('#user-id-show').hide();
+			
+			
 		
 			switch(mytype[0])
 			{
@@ -1135,6 +1142,10 @@ function beforeLogout(cb) {
     $('#password-opt').val('');
     $('#phone-opt').val('');
     $('#name-pass').val('');
+    
+    $('#group-users-form').hide();
+	$('#set-forum-password-form').hide();
+	$('#user-id-show').hide();
 
  
     

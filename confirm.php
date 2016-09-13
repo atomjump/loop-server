@@ -10,9 +10,13 @@ require("classes/cls.ssshout.php");
 
 
 $lg = new cls_login();
+$ly = new cls_layer();
 
 
 if($_REQUEST['usercode']) {
+
+	//Get the layer id
+	$ly->get_layer_id($_REQUEST['passcode']);
 
 	//Read
 	$json = $lg->get_usercode();
