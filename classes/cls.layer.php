@@ -616,7 +616,10 @@ class cls_login
 	public function is_owner($user_id, $group_user_id, $layer_id)
 	{
 		//Returns true if this user is an owner of the group
-		if($user_id) {
+		if($user_id && $layer_id) {
+			if(!$group_user_id) {
+				$group_user_id = $user_id;
+			}
 			$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND (int_user_id = " . $user_id . " OR int_user_id = " . $group_user_id . ")"; 
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			if($row = db_fetch_array($result))
