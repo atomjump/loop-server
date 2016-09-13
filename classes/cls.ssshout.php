@@ -25,6 +25,8 @@ class cls_ssshout
 	
 	}
 	
+
+	
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
 	{
 		global $root_server_url;
@@ -33,6 +35,10 @@ class cls_ssshout
 		global $lang;
 		global $db;
 		
+	 
+	 
+
+	 
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
@@ -48,8 +54,8 @@ class cls_ssshout
 			 //This is likely a first request for a session - just check for users with no email
 	         
 	         	if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
-				         return $_SESSION['logged-user'];
-             		} else {
+				    return $_SESSION['logged-user'];
+             	} else {
 			        //no existing row with this ip
 			 		//Create a new 'temporary' user
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, date_created) VALUES ('" . clean_data($ip) . "', NULL," . clean_data($insert_phone) . ", NOW())";
