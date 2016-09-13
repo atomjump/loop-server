@@ -1142,6 +1142,10 @@ function beforeLogout(cb) {
     $('#password-opt').val('');
     $('#phone-opt').val('');
     $('#name-pass').val('');
+    
+    $('#group-users-form').hide();
+	$('#set-forum-password-form').hide();
+	$('#user-id-show').hide();
 
  
     
