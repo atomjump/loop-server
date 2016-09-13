@@ -493,6 +493,7 @@
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
 									</div>
 								</div>
+								<br/><br/>
 							 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?></button>
 							<br/>
 							<br/>
