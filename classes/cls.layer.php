@@ -296,7 +296,7 @@ class cls_layer
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
 										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
 				
-				
+				error_log("Prepping message:" . $message);
 				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 			}
 			
@@ -339,6 +339,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
+		error_log("Sending message:" . $message . " to:" . json_encode($data));
 		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}

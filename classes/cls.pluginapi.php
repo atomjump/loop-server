@@ -276,6 +276,46 @@ class cls_plugin_api {
 	    return;
 	}
 	
+	
+	public function complete_parallel_calls()
+	{
+		//Handle any post processing
+		global $process_parallel;
+		global $process_parallel_url;
+		if((isset($process_parallel_url))&&($process_parallel_url != null)) {
+		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
+
+            while (true) {
+	            sleep(5);
+	            
+	            $r1 = $process_parallel_url->JobPollAsync($process_parallel_url->job);  
+	
+	            if ($r1 === false) break;
+	
+	            flush(); @ob_flush();
+            }
+		
+		}
+		
+		if(count($process_parallel) > 0) {
+		    //We have an array of shell commands to run
+		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
+		    flush(); @ob_flush();
+		    
+		    for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
+		    
+		        $ret = shell_exec($process_parallel[$cnt]);
+		    
+		    }
+		
+		}
+		
+
+		exit(0);		//We don't want to do anything else after a shout, now that it is ajax
+	
+	}
+	
+	
 		
 	
 	/*
@@ -307,7 +347,7 @@ class cls_plugin_api {
         $social_post_short_code = null;             //eg 'twt' for twitter, 'fcb' for facebook
         $social_recipient_handle_str = null;        //eg. 'atomjump' for '@atomjump' on Twitter
         $date_override = null;                      //optional string for a custom date (as opposed to now) 
-        $latitude = 0.0;                            //for potential future location expansion
+        $latitude = 51.0;                            //for potential future location expansion
         $longitude = 0.0;                            //for potential future location expansion
 	    $login_as = false;                          //Also login as this user
 	    $allow_plugins = false;                     //To prevent infinite message sending loops, we don't refer to any other plugins

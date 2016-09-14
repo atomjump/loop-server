@@ -924,6 +924,9 @@ class cls_ssshout
 				//Handle a whisper option
 				if($typing == false) {
 					
+					
+					error_log("Inserting and typing is false");
+					
 					if($short_code) {
 					   //We are also posting to a social network
 									 $result = $this->social_post($public_to, $short_code, $new_user_id, $message, $message_id, $layer, true, $user_id, $your_name);	//true is because we are introducing
@@ -932,6 +935,7 @@ class cls_ssshout
 					
 					if($email_in_msg == true) {
 						//We are sending off a whisper to an email address
+						
 						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id);	//true is because we are introducing
 					} else {
 				
@@ -946,11 +950,13 @@ class cls_ssshout
 								//Keep all relevant users updated by email or sms
 								$ly = new cls_layer();
 								$ly->layer_name = $this->layer_name;
+								error_log("Inserting notify_group");
 								$ly->notify_group($layer, $message, $message_id, $user_id);
 							
 							} else {
 						
 								//Just one recipient - only let them know
+								error_log("Inserting whisper_by_email");
 								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
 							
 							}
@@ -960,6 +966,7 @@ class cls_ssshout
 							//Keep all relevant users updated by email or sms
 							$ly = new cls_layer();
 							$ly->layer_name = $this->layer_name;
+							error_log("Inserting notify_group");
 							$ly->notify_group($layer, $message, $message_id, $user_id);
 						
 						}
