@@ -535,9 +535,9 @@
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
-				<form id="emojis-frm" class="form" role="form" action="" onsubmit="return false;"  method="POST">		
+					
 				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
-				</form>
+				
 		</div>
 		
 		
