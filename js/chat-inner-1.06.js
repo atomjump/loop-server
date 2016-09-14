@@ -200,33 +200,6 @@ function receiveMessage(msg)
 					}
 				break;
 			}
-			
-			/* Old style: 
-			if(msg == "upload") {
-				//Upload
-				if($("#comment-popup-content").is(':visible')) {
-					$("#comment-popup-content").hide(); 
-					$("#comment-upload").show();
-					$("#comment-options").hide();
-				} else {
-					$("#comment-popup-content").show();
-					$("#comment-upload").hide();
-					$("#comment-options").hide();
-				}
-			} else {
-				//Settings
-				if($("#comment-popup-content").is(':visible')) {
-					$("#comment-popup-content").hide();
-					$("#comment-upload").hide();
-					$("#comment-options").show();
-				} else {
-					$("#comment-popup-content").show();
-					$("#comment-upload").hide();
-					$("#comment-options").hide();
-				}
-			
-			}
-			*/
 		
 		}
 	}
