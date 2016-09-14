@@ -534,6 +534,13 @@
 				 </form>
 		</div>
 		
+		<div id="comment-emojis" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+				<h4><?php echo $msg['msgs'][$lang]['emojisTitle'] ?></h4>
+				
+				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
+		</div>
+		
+		
 		
 		
 		<script>
