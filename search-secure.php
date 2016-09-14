@@ -95,7 +95,11 @@
 	        
 	        
 	} else {
-	    $cssFeedback = "https://atomjump.com/css/comments-0.1.css";
+		if($staging == true) {
+			$cssFeedback = "https://staging.atomjump.com/css/comments-0.1.css";
+		} else {
+	    	$cssFeedback = "https://atomjump.com/css/comments-0.1.css";
+	    }
 	}
 	
 	
