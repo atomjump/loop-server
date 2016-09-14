@@ -152,6 +152,39 @@ function receiveMessage(msg)
 				$("#comment-options").hide();
 			}
 		} else {
+			switch(msg) {
+				case 'upload':
+					//Upload
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide(); 
+						$("#comment-upload").show();
+						$("#comment-options").hide();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-upload").hide();
+						$("#comment-options").hide();
+					}
+				break;
+				
+				case 'emoji':
+					alert("Emojis here");
+				break;
+			
+				default:
+					//Settings
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide();
+						$("#comment-upload").hide();
+						$("#comment-options").show();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-upload").hide();
+						$("#comment-options").hide();
+					}
+				break;
+			}
+			
+			/* Old style: 
 			if(msg == "upload") {
 				//Upload
 				if($("#comment-popup-content").is(':visible')) {
@@ -176,6 +209,7 @@ function receiveMessage(msg)
 				}
 			
 			}
+			*/
 		
 		}
 	}
