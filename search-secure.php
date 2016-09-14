@@ -441,7 +441,7 @@
 			</div>
 
 		</div>
-		<div id="comment-options" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-options" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h4><?php echo $msg['msgs'][$lang]['commentSettings'] ?></h4>
 				
 				<div style="float: right;" id="comment-logout" <?php if($_SESSION['logged-user']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>>
@@ -503,7 +503,7 @@
 							 
 				 </form>
 		</div>
-		<div id="comment-upload" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-upload" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				
 				
@@ -534,7 +534,7 @@
 				 </form>
 		</div>
 		
-		<div id="comment-emojis" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-emojis" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<form id="emojis-frm" class="form" role="form" action="" onsubmit="return false;"  method="POST">		
 				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
 				</form>
