@@ -167,7 +167,16 @@ function receiveMessage(msg)
 				break;
 				
 				case 'emojis':
-					alert("Emojis here");
+					//Emojis
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide(); 
+						$("#comment-emojis").show();
+						$("#comment-options").hide();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-emojis").hide();
+						$("#comment-options").hide();
+					}
 				break;
 			
 				default:
