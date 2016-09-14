@@ -339,7 +339,7 @@ class cls_layer
 	
 	
 		//Send off any/all plugin notifications together
-		error_log("Sending message:" . $message . " to:" . $data);
+		error_log("Sending message:" . $message . " to:" . json_encode($data));
 		$sh->call_plugins_notify("send", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 	
 	}
