@@ -304,5 +304,18 @@ Server: >= 0.5.5
 Optional Parameters
 ($platform:'linux'/'windows' default:'linux')
 
-Run a unix shell command in a parallel process. This allows e.g. a process to run in the background and after a period of time do some action.
+Run a unix shell command in a parallel process. This allows e.g. a process to run in the background and after a period of time do some action.  Also see complete_parallel_calls().
+
+
+
+**complete_parallel_calls()**
+
+No parameters.
+
+Server: >= 0.9.0
+
+This should be called at the end of your script to complete all of the parallel_system_call() commands, if your script is a standalone script (i.e. not called via a hook).  It will hard exit the script after completion.
+
+
+
 
