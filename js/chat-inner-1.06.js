@@ -145,36 +145,60 @@ function receiveMessage(msg)
 			if($("#comment-popup-content").is(':visible')) {
 				$("#comment-popup-content").hide();
 				$("#comment-upload").hide();
+				$("#comment-emojis").hide();
 				$("#comment-options").show();
 			} else {
 				$("#comment-popup-content").show();
 				$("#comment-upload").hide();
+				$("#comment-emojis").hide();
 				$("#comment-options").hide();
 			}
 		} else {
-			if(msg == "upload") {
-				//Upload
-				if($("#comment-popup-content").is(':visible')) {
-					$("#comment-popup-content").hide(); 
-					$("#comment-upload").show();
-					$("#comment-options").hide();
-				} else {
-					$("#comment-popup-content").show();
-					$("#comment-upload").hide();
-					$("#comment-options").hide();
-				}
-			} else {
-				//Settings
-				if($("#comment-popup-content").is(':visible')) {
-					$("#comment-popup-content").hide();
-					$("#comment-upload").hide();
-					$("#comment-options").show();
-				} else {
-					$("#comment-popup-content").show();
-					$("#comment-upload").hide();
-					$("#comment-options").hide();
-				}
+			switch(msg) {
+				case 'upload':
+					//Upload
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide(); 
+						$("#comment-upload").show();
+						$("#comment-options").hide();
+						$("#comment-emojis").hide();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-upload").hide();
+						$("#comment-options").hide();
+						$("#comment-emojis").hide();
+					}
+				break;
+				
+				case 'emojis':
+					//Emojis
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide(); 
+						$("#comment-emojis").show();
+						$("#comment-options").hide();
+						$("#comment-upload").hide();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-emojis").hide();
+						$("#comment-options").hide();
+						$("#comment-upload").hide();
+					}
+				break;
 			
+				default:
+					//Settings
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide();
+						$("#comment-upload").hide();
+						$("#comment-options").show();
+						$("#comment-emojis").hide();
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-upload").hide();
+						$("#comment-options").hide();
+						$("#comment-emojis").hide();
+					}
+				break;
 			}
 		
 		}

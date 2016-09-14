@@ -645,6 +645,41 @@ class cls_ssshout
 	    return true;
 	}
 	
+	
+	public function call_plugins_emojis($allowed_plugins) {
+	    global $cnf;
+	    global $local_server_path;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_emojis_screen") == true) {
+	            //OK call the on_settings function of the plugin
+	            $pg->on_emojis_screen();
+	        
+	        } else {
+	            //No on_emojis_screen() in plugin - do nothing
+
+	        }
+	    }
+	    return true;
+	}
+	
 
 	
 	

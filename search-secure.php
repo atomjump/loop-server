@@ -95,7 +95,11 @@
 	        
 	        
 	} else {
-	    $cssFeedback = "https://atomjump.com/css/comments-0.1.css";
+		if($staging == true) {
+			$cssFeedback = "https://staging.atomjump.com/css/comments-0.1.css";
+		} else {
+	    	$cssFeedback = "https://atomjump.com/css/comments-0.1.css";
+	    }
 	}
 	
 	
@@ -187,7 +191,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.05.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.06.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
@@ -441,7 +445,7 @@
 			</div>
 
 		</div>
-		<div id="comment-options" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-options" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h4><?php echo $msg['msgs'][$lang]['commentSettings'] ?></h4>
 				
 				<div style="float: right;" id="comment-logout" <?php if($_SESSION['logged-user']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>>
@@ -503,7 +507,7 @@
 							 
 				 </form>
 		</div>
-		<div id="comment-upload" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-upload" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				
 				
@@ -533,6 +537,13 @@
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
 		</div>
+		
+		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+				<div style="z-index: 5000">	
+				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
+				</div>
+		</div>
+		
 		
 		
 		
