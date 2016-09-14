@@ -534,7 +534,7 @@
 				 </form>
 		</div>
 		
-		<div id="comment-emojis" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 5000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<div style="z-index: 5000">	
 				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
 				</div>
