@@ -307,7 +307,7 @@ class cls_plugin_api {
         $social_post_short_code = null;             //eg 'twt' for twitter, 'fcb' for facebook
         $social_recipient_handle_str = null;        //eg. 'atomjump' for '@atomjump' on Twitter
         $date_override = null;                      //optional string for a custom date (as opposed to now) 
-        $latitude = 0.0;                            //for potential future location expansion
+        $latitude = 51.0;                            //for potential future location expansion
         $longitude = 0.0;                            //for potential future location expansion
 	    $login_as = false;                          //Also login as this user
 	    $allow_plugins = false;                     //To prevent infinite message sending loops, we don't refer to any other plugins
