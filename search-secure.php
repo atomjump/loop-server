@@ -187,7 +187,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.05.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.06.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
@@ -534,9 +534,7 @@
 				 </form>
 		</div>
 		
-		<div id="comment-emojis" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
-				<h4><?php echo $msg['msgs'][$lang]['emojisTitle'] ?></h4>
-				
+		<div id="comment-emojis" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">		
 				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
 		</div>
 		
