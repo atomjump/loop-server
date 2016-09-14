@@ -166,7 +166,7 @@ function receiveMessage(msg)
 					}
 				break;
 				
-				case 'emoji':
+				case 'emojis':
 					alert("Emojis here");
 				break;
 			
