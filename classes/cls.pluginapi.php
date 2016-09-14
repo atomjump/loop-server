@@ -277,7 +277,7 @@ class cls_plugin_api {
 	}
 	
 	
-	public function complete_parallel_call()
+	public function complete_parallel_calls()
 	{
 		//Handle any post processing
 		global $process_parallel;
