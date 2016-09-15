@@ -1030,6 +1030,7 @@ function refreshResults(results)
 	 				if(results.res[cnt].text) {
 	 					
 	 					var line = '<tr ' + priv + ' onclick=\'var text=\"' + encodeURIComponent(results.res[cnt].text) + '\"; return displaySingleMsg(' + results.res[cnt].id + ',text);\'><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+		 				alert(line);
 		 				newLine = newLine + line;
 		 				
 		 				
