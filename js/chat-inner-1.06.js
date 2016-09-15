@@ -101,6 +101,7 @@ var showMore = 25;
 //Moved to seach-secure.php: var sendPublic = false;  //if true, override to a public social network response
 var shortCode = "";  //shortcode for social network eg. twt, fbk
 var publicTo = "";  //who on social network we are sending to eg. twitter handle
+var globResults = {};
 
 
 //Check for android browser
@@ -999,15 +1000,16 @@ function submitShoutAjax(whisper, commit, msgId)
 }
 
 
-function displaySingleMsg(id, text)
+function displaySingleMsg(msgId, localId)
 {
-	$('#comment-single-msg').html("Msg id=" + id);
+	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text + ");
 	$('#comment-single-msg').show();
 	return false;
 }
 
 function refreshResults(results)
 {
+	globResults = results; //Get a pointer to these results
 	
 	if(results.res) {
 		if(results.res.length) {
@@ -1029,7 +1031,7 @@ function refreshResults(results)
 	 			
 	 				if(results.res[cnt].text) {
 	 					
-	 					var line = '<tr ' + priv + ' onclick=\'var text=\"' + encodeURIComponent(results.res[cnt].text) + '\"; return displaySingleMsg(' + results.res[cnt].id + ',text);\'><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(' + results.res[cnt].id + ', ' + cnt + ');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
 		 				alert(line);
 		 				newLine = newLine + line;
 		 				
