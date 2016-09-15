@@ -1026,9 +1026,8 @@ function hideSingleMsg(id)
 	return false;
 }
 
-function displaySingleMsg(event, msgId, localId)
+function displaySingleMsg(msgId, localId)
 {
-	alert(JSON.stringify(event));
 	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');">Hide Message</a>';
 	$('#comment-single-msg').html(content);
 
@@ -1079,9 +1078,17 @@ function refreshResults(results)
 				$('#comment-prev-messages').html(newLine);
 				
 				$('.backmsg').click(function (e) {
-					alert("Clicked");
-					alert(e.target.nodeName);
-					alert($(this).attr("data-id"));
+					if((e.target.nodeName == 'TD')
+						|| (e.target.nodeName == 'td')
+						|| (e.target.nodeName == 'DIV')
+						|| (e.target.nodeName == 'div')
+						) {
+							//We know it is a background element - not a link
+							var thisdat = $(this).attr("data-id").split(","); 
+							displaySingleMsg(thisdat[0], thisdat[1]);
+					} else {
+						return false;
+					}
 				});
 		}
 	}
