@@ -544,7 +544,7 @@
 				</div>
 		</div>
 		
-		<div id="comment-single-msg" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+		<div id="comment-single-msg" class="comment-frm-scroller" style="display: block; z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h2>Single Message</h2>
 		</div>
 		
