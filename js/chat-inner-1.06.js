@@ -1024,7 +1024,7 @@ function hideSingleMsg(id)
 
 function displaySingleMsg(event, msgId, localId)
 {
-	alert(event.target.id);
+	alert(JSON.stringify(event));
 	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');">Hide Message</a>';
 	$('#comment-single-msg').html(content);
 
