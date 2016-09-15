@@ -1000,10 +1000,33 @@ function submitShoutAjax(whisper, commit, msgId)
 }
 
 
+function closeSingleMsg()
+{
+	//Close the single message form
+	$('#comment-single-msg').hide();
+	$("#comment-popup-content").show();
+	return false;
+}
+
+function hideSingleMsg(id)
+{
+	//Hide the message and then refresh the results, and close the form 
+	closeSingleMsg();
+	$.getJSON(ssshoutServer + "/de.php?callback=?", {
+						mid: id,
+						just_typing: 'off'
+					}, function(response){ 
+						var results = response;
+						refreshResults(results);
+					});
+	return false;
+}
+
 function displaySingleMsg(msgId, localId)
 {
-	alert("Message" + msgId +  " Message=" + globResults.res[localId].text);
-	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text);
+
+	var content = '<a href="javascript:" onclick="return closeSingleMsg();"><img src="images/multiply.png"></a><br/><br/><h2>This Message</h2><br/><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');">Hide Message</a>';
+
 	$("#comment-popup-content").hide();
 	$('#comment-single-msg').show();
 	
