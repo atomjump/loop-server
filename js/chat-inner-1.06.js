@@ -1002,6 +1002,7 @@ function submitShoutAjax(whisper, commit, msgId)
 
 function displaySingleMsg(msgId, localId)
 {
+	alert("Message" + msgId);
 	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text);
 	$('#comment-single-msg').show();
 	return false;
@@ -1032,7 +1033,6 @@ function refreshResults(results)
 	 				if(results.res[cnt].text) {
 	 					
 	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(' + results.res[cnt].id + ', ' + cnt + ');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
-		 				alert(line);
 		 				newLine = newLine + line;
 		 				
 		 				
