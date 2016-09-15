@@ -576,6 +576,14 @@ $(document).ready(function() {
 				$('#chat-input-block').append('<input' + ' type="hidden" ' + 'name="cs" ' + ' value="'+ cs + '">');
 				
 				
+
+				$('.backmsg').click(function (e) {
+					alert($(e.target).text());
+					alert($(this).attr("data-id"));
+					alert($(this).attr("data-msgid"));
+				});
+
+
 		
 		});
 
@@ -1058,7 +1066,7 @@ function refreshResults(results)
 	 			
 	 				if(results.res[cnt].text) {
 	 					
-	 					var line = '<tr ' + priv + ' id=\"backmsg\" onclick=\"return displaySingleMsg(event, ' + results.res[cnt].id + ', ' + cnt + ');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' class=\"backmsg\" data-id=\"' + results.res[cnt].id + '\" data-localid=\"' + cnt + '\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
