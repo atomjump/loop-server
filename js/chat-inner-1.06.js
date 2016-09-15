@@ -1087,7 +1087,7 @@ function refreshResults(results)
 							var thisdat = $(this).attr("data-id").split(","); 
 							displaySingleMsg(thisdat[0], thisdat[1]);
 					} else {
-						return false;
+						
 					}
 				});
 		}
