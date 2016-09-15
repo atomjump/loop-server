@@ -1080,9 +1080,8 @@ function refreshResults(results)
 				
 				$('.backmsg').click(function (e) {
 					alert("Clicked");
-					alert($(e.target).attr('class'));
+					alert(e.target.nodeName());
 					alert($(this).attr("data-id"));
-					alert($(this).attr("data-localid"));
 				});
 		}
 	}
