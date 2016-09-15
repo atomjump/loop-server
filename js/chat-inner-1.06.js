@@ -1080,7 +1080,7 @@ function refreshResults(results)
 				
 				$('.backmsg').click(function (e) {
 					alert("Clicked");
-					alert(e.target.nodeName());
+					alert(e.target.nodeName);
 					alert($(this).attr("data-id"));
 				});
 		}
