@@ -1004,6 +1004,7 @@ function displaySingleMsg(msgId, localId)
 {
 	alert("Message" + msgId +  " Message=" + globResults.res[localId].text);
 	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text);
+	$("#comment-popup-content").hide();
 	$('#comment-single-msg').show();
 	
 	return false;
