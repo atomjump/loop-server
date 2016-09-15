@@ -1002,7 +1002,7 @@ function submitShoutAjax(whisper, commit, msgId)
 
 function displaySingleMsg(msgId, localId)
 {
-	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text + ");
+	$('#comment-single-msg').html("Msg id=" + msgId +  " Message=" + globResults.res[localId].text);
 	$('#comment-single-msg').show();
 	return false;
 }
