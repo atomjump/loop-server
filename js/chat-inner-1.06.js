@@ -1022,10 +1022,10 @@ function hideSingleMsg(id)
 	return false;
 }
 
-function displaySingleMsg(msgId, localId)
+function displaySingleMsg(event, msgId, localId)
 {
-
-	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img src="images/multiply.png"></a></div>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');">Hide Message</a>';
+	alert(event.target.id);
+	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');">Hide Message</a>';
 	$('#comment-single-msg').html(content);
 
 	$("#comment-popup-content").hide();
@@ -1058,7 +1058,7 @@ function refreshResults(results)
 	 			
 	 				if(results.res[cnt].text) {
 	 					
-	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(' + results.res[cnt].id + ', ' + cnt + ');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(event, ' + results.res[cnt].id + ', ' + cnt + ');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
