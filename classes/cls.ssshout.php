@@ -1583,7 +1583,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 		    
 		                    } else {
 							
-							  $json['res'][] = array('text' => $result['var_shouted_processed'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
+							  $json['res'][] = array('id' => $result['int_ssshout_id'],
+							  				'text' => $result['var_shouted_processed'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'lat' => $result['latitude'],
 											'lon' => $result['longitude'],
 											'dist' => $result['dist'],
