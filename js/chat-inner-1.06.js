@@ -1028,7 +1028,7 @@ function refreshResults(results)
 	 			
 	 				if(results.res[cnt].text) {
 	 					
-	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(' + results.res[cnt].id + ',\'' + family(results.res[cnt].text) + '\');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' onclick=\"return displaySingleMsg(' + results.res[cnt].id + ',\'' + encodeURIComponent(results.res[cnt].text) + '\');\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
