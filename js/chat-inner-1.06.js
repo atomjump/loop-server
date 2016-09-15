@@ -577,11 +577,7 @@ $(document).ready(function() {
 				
 				
 
-				$('.backmsg').click(function (e) {
-					alert($(e.target).text());
-					alert($(this).attr("data-id"));
-					alert($(this).attr("data-msgid"));
-				});
+				
 
 
 		
@@ -1081,6 +1077,13 @@ function refreshResults(results)
 			
 				newLine = newLine + '</table>';
 				$('#comment-prev-messages').html(newLine);
+				
+				$('.backmsg').text(newLine).click(function (e) {
+					alert("Clicked");
+					alert($(e.target).text());
+					alert($(this).attr("data-id"));
+					alert($(this).attr("data-msgid"));
+				});
 		}
 	}
 	
