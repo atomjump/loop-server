@@ -1,0 +1,132 @@
+{
+   "staging": {
+      "db": {
+         "name": "ssshout",
+         "hosts": [
+            "127.0.0.1"
+         ],
+         "user": "yourDBusername",
+         "pass": "yourDBpassword",
+         "port": "3306",
+         "timezone": "EDT"
+      },
+      "webRoot": "http://127.0.0.1/loop-server-staging",
+      "webDomain": "127.0.0.1",
+      "fileRoot": "/var/www/html/loop-server-staging",
+      "phpPath": "/usr/bin/php",
+      "readPort" : null,							
+      "httpsKey" : null,
+      "httpsCert": null,
+      "serverTimezone": "America/Los_Angeles",
+      "ips": [
+          "127.0.0.1"
+      ],
+      "loadbalancer": {
+          "ips": [
+          ]
+      },    
+      "adminEmail": "your.name@your.company.com",
+      "webmasterEmail": "your.name@your.company.com",
+      "noReplyEmail": "your.name@your.company.com",
+      "adminMachineUser" : "92.27.10.17:1",
+      "mailgun": {
+         "key":"key-7f6f12be7e62360853e0eff491f89b9d",
+         "url":"https://api.mailgun.net/v2/yoursite.com/messages"
+      },
+      "amazonAWS": {
+        "accessKey": "AKIAI4KWI7L4EP286J5Q",
+        "secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+        "imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
+      },
+      "USDollarsPerSMS": 0.16,
+      "twilioSMS" : {
+         "accountSid" : "ACb19ff95e669b415f894dfc6021638a2d",
+         "authToken" : "caf125b5g526508a1cad4ff790fb4416",
+         "fromNum" : "+441435605048"
+      },
+      "pixabay": {
+         "key": "732578-c13e679fdc3e025ec7368a32a"
+      },
+      "piwik": {
+         "url" : "//yoursite.com/analytics/piwik/",
+         "image" : "//yoursite.com/analytics/piwik/piwik.php?idsite=1"
+      },
+      "social": {
+         "twitter": {
+             "consumerKey": "uSiU4bstZpYxSseFBuFMuvljJ",
+             "consumerSecret": "tK1B2odtFVZBZbYFJtAxtLzzGmP00EoKIeQTTwlXHI5xAWdME6",
+             "accessToken": "4482926932-bIwh4g7p5KBsCbmKsF7Yh88sdHicIvz7EE7Z2DO",
+             "accessTokenSecret": "n2MGSBDYBS78nsU6ZBKRU7bbkldji6EyDlHMnDZ723hUA"
+         },
+         "facebook": {
+         }
+      },
+      "plugins": [
+      ]
+   }, 
+   "production": {      
+     "db": {
+         "name": "ssshout",
+         "hosts": [
+            "127.0.0.1"
+         ],
+         "user": "yourDBusername",
+         "pass": "yourDBpassword",
+         "port": "3306",
+         "timezone": "EDT"
+      },
+      "webRoot": "http://127.0.0.1/loop-server",
+      "webDomain": "127.0.0.1",
+      "fileRoot": "/var/www/html/loop-server",
+      "phpPath": "/usr/bin/php",
+      "readPort" : null,							
+      "httpsKey" : null,
+      "httpsCert": null,
+      "serverTimezone": "America/Los_Angeles",
+      "ips": [
+          "127.0.0.1"
+      ],
+      "loadbalancer": {
+          "ips": [
+          ]
+      },    
+      "adminEmail": "your.name@your.company.com",
+      "webmasterEmail": "your.name@your.company.com",
+      "noReplyEmail": "your.name@your.company.com",
+      "adminMachineUser" : "92.27.10.17:1",
+      "mailgun": {
+         "key":"key-7f6f12be7e62360853e0eff491f89b9d",
+         "url":"https://api.mailgun.net/v2/yoursite.com/messages"
+      },
+      "amazonAWS": {
+        "accessKey": "AKIAI4KWI7L4EP286J5Q",
+        "secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+        "imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"
+      },
+      "USDollarsPerSMS": 0.16,
+      "twilioSMS" : {
+         "accountSid" : "ACb19ff95e669b415f894dfc6021638a2d",
+         "authToken" : "caf125b5g526508a1cad4ff790fb4416",
+         "fromNum" : "+441435605048"
+      },
+      "pixabay": {
+         "key": "732578-c13e679fdc3e025ec7368a32a"
+      },
+      "piwik": {
+         "url" : "//yoursite.com/analytics/piwik/",
+         "image" : "//yoursite.com/analytics/piwik/piwik.php?idsite=1"
+      },
+      "social": {
+         "twitter": {
+             "consumerKey": "uSiU4bstZpYxSseFBuFMuvljJ",
+             "consumerSecret": "tK1B2odtFVZBZbYFJtAxtLzzGmP00EoKIeQTTwlXHI5xAWdME6",
+             "accessToken": "4482926932-bIwh4g7p5KBsCbmKsF7Yh88sdHicIvz7EE7Z2DO",
+             "accessTokenSecret": "n2MGSBDYBS78nsU6ZBKRU7bbkldji6EyDlHMnDZ723hUA"
+         },
+         "facebook": {
+         }
+      },
+      "plugins": [
+      ]
+  }
+}
