@@ -1078,7 +1078,7 @@ function refreshResults(results)
 				newLine = newLine + '</table>';
 				$('#comment-prev-messages').html(newLine);
 				
-				$('.backmsg').text(newLine).click(function (e) {
+				$('.backmsg').click(function (e) {
 					alert("Clicked");
 					alert($(e.target).text());
 					alert($(this).attr("data-id"));
