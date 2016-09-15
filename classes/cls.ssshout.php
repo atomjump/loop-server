@@ -1574,8 +1574,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 							
 		                      $json['res'][] = array(
-		                       'id' => $result['int_ssshout_id'],
-		                       'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
+										   'id' => $result['int_ssshout_id'],
+										   'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'timestamp' => $dt->format('Y-m-d\TH:i:s\Z'),
 											'private' => $whisper,
 											'sentiment' => round($result['flt_sentiment'],1)
