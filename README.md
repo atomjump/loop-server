@@ -177,7 +177,9 @@ Open the messaging forum in your browser.
 3. Click save
 4. Settings
 5. Clicking: 'Your password', then 'Advanced'
-6. Edit the 'This forum's private owners' and put in each myMachineUser separated by a comma. 'sms' can be added individually to each user to optionally send an sms also.
+6. Edit the 'This forum's private owners' and put in each email separated by a comma. 
+
+Note: you can also add individuals with their ip/user id. In this case 'sms' can be added individually to each user to optionally send an sms also.
 
 e.g. "123.456.123.32:1200:sms,123.456.123.32:1201:sms"
 
