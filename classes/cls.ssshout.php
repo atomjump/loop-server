@@ -411,7 +411,8 @@ class cls_ssshout
 		}
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 		
-		if($just_typing == false) {
+		if(($just_typing == false)&&
+		   ($cnf['db']['deleteDeletes'] == false)) {
 			//Warn overall admin - TODO: just layer admin?
 			cc_mail($cnf['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['webmasterEmail']);
 			echo "Deactivated message.";		//TODO more descriptive comment here.	
