@@ -396,9 +396,19 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		
-
+		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
+		//            == false, for when want full deactivation
 		
-		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		if((isset($cnf['db']['deleteDeletes']))
+			&& ($cnf['db']['deleteDeletes'] == true)
+			&& ($just_typing == false)) {
+			
+			//This is a genuine call to delete the message, and we need to remove it from the database completely.
+			$sql = "DELETE FROM tbl_ssshout WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		} else { 
+			//A regular deactivate
+			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		}
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 		
 		if($just_typing == false) {
