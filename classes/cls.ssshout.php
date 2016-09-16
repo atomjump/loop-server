@@ -398,7 +398,7 @@ class cls_ssshout
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
-		
+		error_log("Delete delete:" . $cnf['db']['deleteDeletes'] . " Just typing:" . $just_typing);
 		if((isset($cnf['db']['deleteDeletes']))
 			&& ($cnf['db']['deleteDeletes'] == true)
 			&& ($just_typing == false)) {
