@@ -306,7 +306,10 @@ class cls_ssshout
 				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
-					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+					$ly = new cls_layer();
+					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
+						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+					}
 				}
 				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				
@@ -355,7 +358,13 @@ class cls_ssshout
 				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {	
-					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+					
+					$ly = new cls_layer();
+					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
+						//If haven't already sent a message from this
+
+						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+					}
 				}
 				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 
@@ -364,7 +373,7 @@ class cls_ssshout
 			if($row['var_phone']) {	//TODO: consider only smsing when the group is set?
 				
 				$ly = new cls_layer();
-				if($ly->just_sent_sms($layer_id, $message_id) == false) {
+				if($ly->just_sent_message($layer_id, $message_id) == false) {
 					
 				
 					if($notify == true) {
@@ -398,7 +407,6 @@ class cls_ssshout
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
-		error_log("Delete delete:" . $cnf['db']['deleteDeletes'] . " Just typing:" . $just_typing);
 		if((isset($cnf['db']['deleteDeletes']))
 			&& ($cnf['db']['deleteDeletes'] == true)
 			&& ($just_typing == false)) {
