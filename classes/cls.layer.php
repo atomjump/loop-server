@@ -777,7 +777,7 @@ class cls_login
 					
 						//And it is the correct password! Continue below with a login
 						
-						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 					
