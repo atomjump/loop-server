@@ -1008,6 +1008,7 @@ function closeSingleMsg()
 {
 	//Close the single message form
 	$('#comment-single-msg').hide();
+							
 	$("#comment-popup-content").show();
 	return false;
 }
@@ -1032,6 +1033,9 @@ function displaySingleMsg(msgId, localId)
 	$('#comment-single-msg').html(content);
 
 	$("#comment-popup-content").hide();
+	$("#comment-emojis").hide();
+	$("#comment-options").hide();
+	$("#comment-upload").hide();
 	$('#comment-single-msg').show();
 	
 	return false;
