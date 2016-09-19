@@ -23,6 +23,8 @@ To test the web domain, use the following small PHP script:
 
 **serverTimezone**: Change this to the location of the physical server eg. Pacific/Auckland
 
+**deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
+
 **loadbalancer**: Required for a production setup - any number of machines. Can be blank in a staging setup.
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5

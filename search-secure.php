@@ -191,7 +191,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.06.js"></script> <!-- TODO - keep path as js/chat.js -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.7.js"></script> <!-- TODO - keep path as js/chat.js -->
 			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
 			
 	</head>
@@ -542,6 +542,10 @@
 				<div style="z-index: 5000">	
 				 <?php $sh->call_plugins_emojis(null); //User added plugins here ?>
 				</div>
+		</div>
+		
+		<div id="comment-single-msg" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+				<h2>Single Message</h2>
 		</div>
 		
 		

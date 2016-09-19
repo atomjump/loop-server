@@ -101,6 +101,7 @@ var showMore = 25;
 //Moved to seach-secure.php: var sendPublic = false;  //if true, override to a public social network response
 var shortCode = "";  //shortcode for social network eg. twt, fbk
 var publicTo = "";  //who on social network we are sending to eg. twitter handle
+var globResults = {};
 
 
 //Check for android browser
@@ -575,6 +576,10 @@ $(document).ready(function() {
 				$('#chat-input-block').append('<input' + ' type="hidden" ' + 'name="cs" ' + ' value="'+ cs + '">');
 				
 				
+
+				
+
+
 		
 		});
 
@@ -998,8 +1003,46 @@ function submitShoutAjax(whisper, commit, msgId)
 
 }
 
+
+function closeSingleMsg()
+{
+	//Close the single message form
+	$('#comment-single-msg').hide();
+							
+	$("#comment-popup-content").show();
+	return false;
+}
+
+function hideSingleMsg(id)
+{
+	//Hide the message and then refresh the results, and close the form 
+	closeSingleMsg();
+	$.getJSON(ssshoutServer + "/de.php?callback=?", {
+						mid: id
+					}, function(response){ 
+						var results = response;
+						refreshResults(results);
+					});
+	return false;
+}
+
+function displaySingleMsg(msgId, localId)
+{
+	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img style="margin:20px;" src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');"><img src="images/bin.png"></a>';
+	$('#comment-single-msg').html(content);
+
+	$("#comment-popup-content").hide();
+	$("#comment-emojis").hide();
+	$("#comment-options").hide();
+	$("#comment-upload").hide();
+	$('#comment-single-msg').show();
+	
+	return false;
+}
+
 function refreshResults(results)
 {
+	globResults = results; //Get a pointer to these results
 	
 	if(results.res) {
 		if(results.res.length) {
@@ -1013,15 +1056,15 @@ function refreshResults(results)
 	 			for(var cnt=0; cnt<results.res.length; cnt++) {
 	 				
 	 				if(results.res[cnt].whisper == true) {
-	 					var priv = "title=\"Private\" class=\"info\"";
+	 					var priv = "title=\"Private\" class=\"info backmsg\"";
 	 				} else {
 	 				
-	 					var priv = "";
+	 					var priv = "class=\"backmsg\"";
 	 				}
 	 			
 	 				if(results.res[cnt].text) {
 	 					
-	 					var line = '<tr ' + priv + '><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' data-id=\"' + results.res[cnt].id + ',' + cnt + '\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
@@ -1036,6 +1079,20 @@ function refreshResults(results)
 			
 				newLine = newLine + '</table>';
 				$('#comment-prev-messages').html(newLine);
+				
+				$('.backmsg').click(function (e) {
+					if((e.target.nodeName == 'TD')
+						|| (e.target.nodeName == 'td')
+						|| (e.target.nodeName == 'DIV')
+						|| (e.target.nodeName == 'div')
+						) {
+							//We know it is a background element - not a link
+							var thisdat = $(this).attr("data-id").split(","); 
+							displaySingleMsg(thisdat[0], thisdat[1]);
+					} else {
+						
+					}
+				});
 		}
 	}
 	
