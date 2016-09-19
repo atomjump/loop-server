@@ -306,7 +306,10 @@ class cls_ssshout
 				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
-					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+					$ly = new cls_layer();
+					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
+						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+					}
 				}
 				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				
@@ -355,7 +358,13 @@ class cls_ssshout
 				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {	
-					$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+					
+					$ly = new cls_layer();
+					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
+						//If haven't already sent a message from this
+
+						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+					}
 				}
 				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 
@@ -364,7 +373,7 @@ class cls_ssshout
 			if($row['var_phone']) {	//TODO: consider only smsing when the group is set?
 				
 				$ly = new cls_layer();
-				if($ly->just_sent_sms($layer_id, $message_id) == false) {
+				if($ly->just_sent_message($layer_id, $message_id) == false) {
 					
 				
 					if($notify == true) {
@@ -396,12 +405,22 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		
-
-		
-		$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
+		//            == false, for when want full deactivation
+		if((isset($cnf['db']['deleteDeletes']))
+			&& ($cnf['db']['deleteDeletes'] == true)
+			&& ($just_typing == false)) {
+			
+			//This is a genuine call to delete the message, and we need to remove it from the database completely.
+			$sql = "DELETE FROM tbl_ssshout WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		} else { 
+			//A regular deactivate
+			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
+		}
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());
 		
-		if($just_typing == false) {
+		if(($just_typing == false)&&
+		   ($cnf['db']['deleteDeletes'] == false)) {
 			//Warn overall admin - TODO: just layer admin?
 			cc_mail($cnf['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['webmasterEmail']);
 			echo "Deactivated message.";		//TODO more descriptive comment here.	
@@ -1574,8 +1593,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 							
 		                      $json['res'][] = array(
-		                       'id' => $result['int_ssshout_id'],
-		                       'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
+										   'id' => $result['int_ssshout_id'],
+										   'text' => $result['var_shouted'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'timestamp' => $dt->format('Y-m-d\TH:i:s\Z'),
 											'private' => $whisper,
 											'sentiment' => round($result['flt_sentiment'],1)
@@ -1583,7 +1602,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 		    
 		                    } else {
 							
-							  $json['res'][] = array('text' => $result['var_shouted_processed'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
+							  $json['res'][] = array('id' => $result['int_ssshout_id'],
+							  				'text' => $result['var_shouted_processed'],  // . $dbg  : $dbg in temporarily  $this->process_chars( , $combined_author, $author_user_id, $result['int_ssshout_id']) taken out
 											'lat' => $result['latitude'],
 											'lon' => $result['longitude'],
 											'dist' => $result['dist'],

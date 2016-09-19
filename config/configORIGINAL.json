@@ -8,7 +8,8 @@
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
-         "timezone": "EDT"
+         "timezone": "EDT",
+         "deleteDeletes": true
       },
       "webRoot": "http://127.0.0.1/loop-server-staging",
       "webDomain": "127.0.0.1",
@@ -73,7 +74,8 @@
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
-         "timezone": "EDT"
+         "timezone": "EDT",
+         "deleteDeletes": true
       },
       "webRoot": "http://127.0.0.1/loop-server",
       "webDomain": "127.0.0.1",
