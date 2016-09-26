@@ -306,7 +306,7 @@ class cls_layer
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
 			if($with_app == false) {
 
-				$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+				$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
 			}
 					
 			if($row['int_user_id'] != $message_sender_user_id) {		//Don't sms to yourself
@@ -343,7 +343,7 @@ class cls_layer
 	}
 	
 
-	public function notify_by_email($user_id, $message, $message_id, $is_admin_user = false)
+	public function notify_by_email($user_id, $message, $message_id, $is_admin_user = false, $layer_id = null)
 	{
 		global $root_server_url;
 		global $cnf;
@@ -363,7 +363,24 @@ class cls_layer
 			}
 		
 		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
-			    cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
+		    	$send_message = false;
+		    	
+		    	if($layer_id) {
+					//This is on a particular layer - only send messages if they're after 20 minutes, so that we don't get a flurry of emails per message.
+					if($this->just_sent_message($layer_id, $message_id, '20') == false) {
+						$send_message = true;
+					}
+				} else {
+					//No layer id specified - always email the message
+					$send_message = true;
+				
+				}		    	
+		    	
+		    	if($send_message == true) {
+			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
+			    }
+		    
+			    
 		    }
 		
 		}
