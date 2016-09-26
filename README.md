@@ -268,6 +268,8 @@ To test the web domain, use the following small PHP script:
 
 **serverTimezone**: Change this to the location of the physical server eg. Pacific/Auckland
 
+**deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
+
 **loadbalancer**: Required for a production setup - any number of machines. Can be blank in a staging setup.
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
@@ -631,7 +633,7 @@ This should be called at the end of your script to complete all of the parallel_
 
 Performance depends on a number of factors. In general, since the Loop Server can be configured with a load balancer, multiple PHP servers and multiple database servers, the number of users supported can scale <i>almost</i> by adding more servers to the cluster. The basic PHP script on one server should handle (in the order of) one hundred simultaneous users, but this will vary considerably on the hardware used, the amount of usage and the type of usage by these users.
 
-However, to extend performance into larger scale environments, we have released the NodeJS 'loop-server-fast' plugin at https://www.npmjs.com/package/loop-server-fast.  This aims to scale to thousands, or tens of thousand, simultaneous users per server. The server is currently in Beta testing. You can start by installing the PHP version, and then install the NodeJS version as you expand (you can revert back to the PHP version, also, if the Beta has any issues).
+However, to extend performance into larger scale environments, we have released the NodeJS 'loop-server-fast' plugin at https://www.npmjs.com/package/loop-server-fast.  This aims to scale to thousands, or tens of thousand, simultaneous users per server. You can start by installing the PHP version, and then install the NodeJS version as you expand (you can revert back to the PHP version, also, if you have any issues).
 
 
 # Contributing

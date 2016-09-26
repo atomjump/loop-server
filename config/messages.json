@@ -14,8 +14,8 @@
                 "title": "AtomJump Messaging Welcome",
                 "pleaseClick": "Hello,\n\nWelcome to AtomJump Messaging. To confirm your email address is valid, please click the following link:\n\n",
                 "confirm": "\n\nYou will have 1 day in which to confirm this.",
-                "setupSMS": "\n\nTo set up SMS alerts to your phone, which are priced at $CUSTOMER_PRICE_PER_SMS_US_DOLLARS, when there is a new message, enter your mobile number on the settings. Alternatively, install the AtomJump Messaging app on your phone to get them freely.",
-                "questions": "\n\nIf you have any questions or suggestions, you're welcome to get in touch via our main messaging button at ROOT_SERVER_URL",
+                "setupSMS": "\n\nWe would recommend installing the 'AtomJump Messaging' app on your phone to get instant notifications of new messages, and enter shortcuts. You can log out of here to switch off notifications at any time, and notifications will go to your email instead.",
+                "questions": "\n\nIf you have any questions or suggestions, you're welcome to get in touch via our main messaging button at https://atomjump.com",
                 "regards": "\n\nBest regards,\nAtomJump Team",
                 "warnAdminNewUser": "New Messaging user!"
             },
@@ -146,8 +146,8 @@
 				"title": "AtomJump comentarios Bienvenida",
 				"pleaseClick": "Hola,\n\nBienvenido a AtomJump mensajería . Para confirmar su dirección de correo electrónico es válida, por favor haga clic en el siguiente enlace: \n\n",
 			    "confirm": "\n\nNo tendrá 1 día de lo que para confirmar esto.",
-				"setupSMS": "\n\nPara configurar alertas SMS a su teléfono, que tienen un precio de $ CUSTOMER_PRICE_PER_SMS_US_DOLLARS, cuando hay un mensaje nuevo, introduzca su número de móvil en la configuración. Como alternativa, instalar la aplicación de mensajería AtomJump en su teléfono para obtener libremente.",
-				"questions": "\n\nSi usted tiene alguna pregunta o sugerencia, le invitamos a ponerse en contacto a través de nuestro botón de mensajería principal en ROOT_SERVER_URL",
+				"setupSMS": "\n\nLe recomendaríamos instalar la aplicación 'AtomJump Messaging' en el teléfono para obtener notificaciones instantáneas de los nuevos mensajes, e introduzca los accesos directos. Puede iniciar una sesión de aquí para desactivar las notificaciones en cualquier momento, y las notificaciones se vaya a su correo electrónico en su lugar.",
+				"questions": "\n\nSi usted tiene alguna pregunta o sugerencia, le invitamos a ponerse en contacto a través de nuestro botón de mensajería principal en https://atomjump.com",
 				"regards": "\n\nQue se refiere a best,\nAtomJump del equipo",
 				"warnAdminNewUser": "Nuevo usuario de mensajería!"
 			

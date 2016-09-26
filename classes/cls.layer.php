@@ -240,17 +240,19 @@ class cls_layer
 	}
 
 	
-	public function just_sent_sms($layer_id, $just_sent_message_id)
+	public function just_sent_message($layer_id, $just_sent_message_id, $mins = '05')
 	{
+		//Input mins as a string from 00 to 59
 		//TODO check indexes on this query
+		//TODO does this need to be for a particular user target?
 		global $server_timezone;
 
 		date_default_timezone_set($server_timezone);	 //UTC , TODO: global server_timezone??
-		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:05:00' AND int_ssshout_id <> $just_sent_message_id ORDER BY int_ssshout_id DESC";
+		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:" . $mins . ":00' AND int_ssshout_id <> $just_sent_message_id ORDER BY int_ssshout_id DESC";
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result)) {
 			//Just sent an sms in the last 5 minutes
-		 return true;
+		 	return true;
 		} else {
 				return false;
 		}
@@ -306,14 +308,16 @@ class cls_layer
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
 			if($with_app == false) {
 
-				$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
+				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
+					$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+				}
 			}
 					
 			if($row['int_user_id'] != $message_sender_user_id) {		//Don't sms to yourself
 			
 				if($row['enm_sms'] == 'send') {
 					//Also let user by know sms
-					if($this->just_sent_sms($layer_id, $message_id) == false) {
+					if($this->just_sent_message($layer_id, $message_id) == false) {
 					
 						//Asyncronously call our sms
 						if($notify == true) {
