@@ -309,7 +309,7 @@ class cls_layer
 			if($with_app == false) {
 
 				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
-					$this->notify_by_email($row['int_user_id'], $message, $message_id, true);		//true defaults to admin user 
+					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
 				}
 			}
 					
