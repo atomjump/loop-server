@@ -702,7 +702,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true)
 	{
 	    global $msg;
 	    global $lang;
@@ -1000,24 +1000,33 @@ class cls_ssshout
 							//The number after the : is the user id
 							if($notify_group == true) {
 								//More than one user in the company - notify the whole group
-								//Keep all relevant users updated by email or sms
-								$ly = new cls_layer();
-								$ly->layer_name = $this->layer_name;
-								$ly->notify_group($layer, $message, $message_id, $user_id);
+								
+								if($notification == true) {
+								
+									//Keep all relevant users updated by email or sms
+									$ly = new cls_layer();
+									$ly->layer_name = $this->layer_name;
+									$ly->notify_group($layer, $message, $message_id, $user_id);
+								}
 							
 							} else {
 						
-								//Just one recipient - only let them know
-								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
+								if($notification == true) {
+									//Just one recipient - only let them know
+									$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
+								}
 							
 							}
 		
 						} else {
 				
-							//Keep all relevant users updated by email or sms
-							$ly = new cls_layer();
-							$ly->layer_name = $this->layer_name;
-							$ly->notify_group($layer, $message, $message_id, $user_id);
+							if($notification == true) {
+				
+								//Keep all relevant users updated by email or sms
+								$ly = new cls_layer();
+								$ly->layer_name = $this->layer_name;
+								$ly->notify_group($layer, $message, $message_id, $user_id);
+							}
 						
 						}
 					}
