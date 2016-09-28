@@ -276,7 +276,16 @@ Options
 												//after a message send
 	$allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
 												//developer. However, plugins that work with before_msg will continue to work 
+	$notification = true;						//Set to false to switch off notifications from this message
+```
 
+Usage example:
+
+```php
+    $options = array('notification' => false);		//turn off any notifications from these messages
+                        
+                        
+    $new_message_id = $api->new_message($helper, $new_message, $sender_ip . ":" . $sender_id, $helper_email, $sender_ip, $message_forum_id, $options);
 ```
 
 
