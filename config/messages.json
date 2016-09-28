@@ -65,6 +65,7 @@
             "isPrivate": "private",
             "isPublic": "public",
             "passwordNotReset": "Sorry, that link has not reset your password. Please try again, and ensure you use the same device and browser.",
+            "passwordBeenResetApp": "Your password has been reset, please return to your app, and enter a new password.",
             "emailNotExist": "Sorry, that email does not exist.",
             "pass": {
                 "title": "AtomJump Loop password reset",
@@ -198,6 +199,7 @@
 			"isPrivate": "privado",
 			"isPublic": "público",
 			"passwordNotReset": "En este momento, ese vínculo no ha restablecer su contraseña Por favor, inténtelo de nuevo y asegúrese de que utiliza el mismo dispositivo y del navegador.",
+			"passwordBeenResetApp": "Su contraseña ha sido-reset, por favor regrese a su aplicación, e introduzca una nueva contraseña.",
 			"emailNotExist": "En este momento, no existe ese correo electrónico.",
 			"pass": {
 				"title": "AtomJump bucle de restablecimiento de contraseña",

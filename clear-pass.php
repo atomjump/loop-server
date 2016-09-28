@@ -1,21 +1,23 @@
 <?php 
-	require('config/db_connect.php');
-   global $cfg; 
-   global $msg;
-   global $lang;
+ require('config/db_connect.php');
+ global $cfg; 
+ global $msg;
+ global $lang;
+ 
+ $unique_pass_reset = $cfg['db']['user'] . $cfg['mailgun']['key'];	//This should be unique per installation.	
  
  if($_REQUEST['action']) {
    
    //decrypt 
-   $action = md5(date('Ymd') . $_SESSION['temp-email'] . 'sckskfjfnsll24hdb');
-	   if($action == $_REQUEST['action']) {
+   $action = md5(date('Ymd') . $_SESSION['temp-email'] . $unique_pass_reset);
+   if($action == $_REQUEST['action']) {
        //check is valid timewise
    
        //clear user's password
        
        if($_SESSION['temp-email']) {
           $sql = "UPDATE tbl_user SET var_pass = NULL WHERE var_email = '" . $_SESSION['temp-email'] . "'";
-      	    $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+      	  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			        
 		       	
            header("Location: " . $cnf['webRoot']);
@@ -54,7 +56,7 @@
 	  if($email != '') {
 	     //Send an email to the logged email
 	     $_SESSION['temp-email'] = $email;
-	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . 'sckskfjfnsll24hdb'); //todo improve this algo
+	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset); 
 	     cc_mail($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
 	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
