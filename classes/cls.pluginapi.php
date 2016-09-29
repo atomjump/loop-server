@@ -302,11 +302,12 @@ class cls_plugin_api {
 		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
 		    flush(); @ob_flush();
 		    
-		    for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
 		    
-		        $ret = shell_exec($process_parallel[$cnt]);
-		    
-		    }
+		    global $cnf;
+		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
+		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
+		    $ret = shell_exec($cmd);
+
 		
 		}
 		
