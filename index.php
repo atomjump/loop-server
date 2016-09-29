@@ -276,7 +276,7 @@
 
 		//A simple hidden checksum to prevent basic robots - as a sum of all the javascript values
 		if($_REQUEST['cs'] == '21633478') {
-		 $sh->layer_name = $_REQUEST['passcode'];
+		    $sh->layer_name = $_REQUEST['passcode'];
 			$shout_id = $sh->insert_shout($start_lat, $start_lon, $user_name, $_REQUEST['message'], $_REQUEST['whisper_to'], $_SESSION['logged-email'], $ip, $bg, $layer, $typing, $_REQUEST['shout_id'], $_REQUEST['phone'], $_REQUEST['msg_id'], $_REQUEST['whisper_site'], $_REQUEST['short_code'], $_REQUEST['public_to']);
 		}
 
@@ -319,11 +319,11 @@
 		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
 		    flush(); @ob_flush();
 		    
-		    for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
-		    
-		        $ret = shell_exec($process_parallel[$cnt]);
-		    
-		    }
+		    //Now run a single shell_exec() that runs all of these commands
+		    global $cnf;
+		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
+		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
+		    $ret = shell_exec($cmd);
 		
 		}
 		
