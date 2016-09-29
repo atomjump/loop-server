@@ -381,10 +381,10 @@ class cls_ssshout
 						if($access == 'public') {		//a private message forum only sends emails, not text messages. TODO but must have a reply option..
 						
 						 //note: from user id is recipient - it is their account we are reducing
-							$cmd = "nohup nice -n 10 /usr/bin/php  " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
+							$cmd = "nohup nice -n 10 " . $cnf['phpPath'] . " " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
 					
 		
-							$output = shell_exec($cmd);
+							array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 						}
 					}
 					
