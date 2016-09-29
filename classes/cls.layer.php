@@ -243,12 +243,12 @@ class cls_layer
 	public function just_sent_message($layer_id, $just_sent_message_id, $mins = '05')
 	{
 		//Input mins as a string from 00 to 59
-		//TODO check indexes on this query
-		//TODO does this need to be for a particular user target?
 		global $server_timezone;
 
 		date_default_timezone_set($server_timezone);	 //UTC , TODO: global server_timezone??
-		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:" . $mins . ":00' AND int_ssshout_id <> $just_sent_message_id ORDER BY int_ssshout_id DESC";
+		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:" . $mins . ":00' AND int_ssshout_id <> $just_sent_message_id ORDER BY date_when_shouted DESC LIMIT 1";
+		
+		
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result)) {
 			//Just sent an sms in the last 5 minutes

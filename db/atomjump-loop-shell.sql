@@ -250,3 +250,6 @@ CREATE INDEX social ON tbl_feed (int_social_id, int_uid_id);
 ALTER TABLE tbl_subdomain ADD COLUMN `var_search_words` VARCHAR(255) DEFAULT NULL;
 ALTER TABLE tbl_subdomain ADD COLUMN `int_freq` INT(10) DEFAULT NULL;
 ALTER TABLE tbl_subdomain ADD COLUMN `var_whisper_to` VARCHAR(255) DEFAULT NULL;
+
+
+CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
