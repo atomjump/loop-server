@@ -333,13 +333,14 @@
 		global $local_server_path;
 		global $notify;
 		global $staging;
+		global $process_parallel;
 		
 		
 
 		if($notify == true) {
 			$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . $bcc_email . ' > /dev/null 2>&1 &';	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
 		
-			$output = shell_exec($cmd);
+			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 		}
 
 		//To test: https://atomjump.com/send-email.php?to=test@yourmail.com&subject=Test&body=test&sender_email=noreply@atomjump.com&sender_name=AtomJump
