@@ -615,7 +615,9 @@
 					} else {
 						var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 						if(iOS == false) {
-							vidDeactivate();
+														vidiOS();  //TESTING IN REMOVE ME! 
+							
+							//TEMPOUTvidDeactivate();
 						} else {
 							//we want iOS to still popup with the app version
 							vidiOS();
