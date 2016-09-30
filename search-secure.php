@@ -593,7 +593,7 @@
 				function vidiOS()
 				{
 					//Show the iphone download
-					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8'><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" border=\"0\"></a> <span style=\"color: white;\">and enter what is in the 'Link' below into your app.</span>");
+					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8' target=\"_parent\"><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" border=\"0\"></a> <span style=\"color: white;\">and enter the 'Link' below into your app.</span>");
 				}
 				
 				function vidDeactivateIE8()
