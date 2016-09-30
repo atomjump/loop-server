@@ -211,7 +211,7 @@
 			<div id="video-chat-container" style="position: relative; width: <?php echo $width ?>px; margin-left: auto; margin-right: auto; display: none; margin-bottom: 10px; display: none; background-color: #444;">
 				<div id="video-chat-iframe-container" style="width:<?php echo $width; ?>px; height: <?php echo $maxheight ?>px;"><iframe id="video-chat" style="z-index: 1000;" width="100%" height="100%" frameborder="0"></iframe></div>
 				<div style="position: relative; float: right; padding: 5px;  z-index: 5000;"><a href="javascript:" title="<?php echo $msg['msgs'][$lang]['goFullscreen'] ?>" onclick="toggleVideoFullScreen(); return false;"><img src="images/largerscreen.svg"></a></div>
-				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: <?php echo $_REQUEST['clientremoteurl'] ?></div> 
+				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: https://appear.in/aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?></div> 
 				<div style="clear: both; height: 2px;"></div>
 			</div>
 			
@@ -590,6 +590,12 @@
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
+				function vidiOS()
+				{
+					//Show the iphone download
+					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8'><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" border=\"0\"></a> and enter what is in the 'Link' below into your app.");
+				}
+				
 				function vidDeactivateIE8()
 				{
 					$('#video-button').hide();
@@ -612,6 +618,7 @@
 							vidDeactivate();
 						} else {
 							//we want iOS to still popup with the app version
+							vidiOS();
 						}
 						
 					}
