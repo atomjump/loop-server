@@ -131,7 +131,6 @@
 <html lang="en">
   <head>
   	    <meta charset="utf-8">
-		 <!--<meta name="viewport" content="width=device-width, user-scalable=no">-->
 		 <title>AtomJump Loop - messaging for your site</title>
 		 
 		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
@@ -191,8 +190,8 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.7.js"></script> <!-- TODO - keep path as js/chat.js -->
-			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.7.js"></script> 
+			
 			
 	</head>
 	<body class="comment-popup-body">
@@ -211,12 +210,11 @@
 			<div id="video-chat-container" style="position: relative; width: <?php echo $width ?>px; margin-left: auto; margin-right: auto; display: none; margin-bottom: 10px; display: none; background-color: #444;">
 				<div id="video-chat-iframe-container" style="width:<?php echo $width; ?>px; height: <?php echo $maxheight ?>px;"><iframe id="video-chat" style="z-index: 1000;" width="100%" height="100%" frameborder="0"></iframe></div>
 				<div style="position: relative; float: right; padding: 5px;  z-index: 5000;"><a href="javascript:" title="<?php echo $msg['msgs'][$lang]['goFullscreen'] ?>" onclick="toggleVideoFullScreen(); return false;"><img src="images/largerscreen.svg"></a></div>
-				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: <?php echo $_REQUEST['clientremoteurl'] ?></div> 
+				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: https://appear.in/aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?></div> 
 				<div style="clear: both; height: 2px;"></div>
 			</div>
 			
 			
-			 <!--TODO <video id="video-chat" autoplay style="display:none; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;"></video> left: <?php echo $width - 260; ?>px; width: 260px;-->
 			
 			<script>
 				
@@ -246,37 +244,9 @@
 				{
 				
 				
-					//'use strict';
-					// variables in global scope so available to console
-					/*TODO var video = document.querySelector('video');
-					var constraints = {
-						audio: false,
-						video: true
-					};
-					navigator.getUserMedia = navigator.getUserMedia ||
-					navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-					function successCallback(stream) {
-						window.stream = stream; // stream available to console
-						if (window.URL) {
-							video.src = window.URL.createObjectURL(stream);
-						} else {
-							video.src = stream;
-						}
-					}
-					function errorCallback(error) {
-						console.log('navigator.getUserMedia error: ', error);
-					}
-					navigator.getUserMedia(constraints, successCallback, errorCallback);
-					*/
-				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
 					appearin.addRoomToIframe(iframe, roomName);
-					
-					
-					
-					
-					
 					
 					$('#video-chat-container').slideToggle();
 					return false;
@@ -303,7 +273,7 @@
 						      window.focus();
 					     }
 						
-											//resize to fit the new screen size
+						//resize to fit the new screen size
 				});
 					
 				
@@ -325,11 +295,7 @@
 						//exit fullscreen
 					
 					
-						
-						
-						
 						//Duplicate of chat.js functionality
-						
 						
 						
 					}
@@ -590,16 +556,21 @@
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
+				function vidiOS()
+				{
+					//Show the iphone download
+					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8' target=\"_parent\"><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" border=\"0\"></a> <span style=\"color: white;\">and enter the 'Link' below into your app.</span>");
+				}
+				
 				function vidDeactivateIE8()
 				{
 					$('#video-button').hide();
-					}
+				}
 					
 			
 				function decideVideo()
 				{
 					//Appear.in
-					
 					var AppearIn = window.AppearIn;
 					appearin = new AppearIn();
 					
@@ -609,9 +580,12 @@
 					} else {
 						var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 						if(iOS == false) {
+														
+							
 							vidDeactivate();
 						} else {
 							//we want iOS to still popup with the app version
+							vidiOS();
 						}
 						
 					}
