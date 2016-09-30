@@ -271,10 +271,10 @@
 				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					appearin.addRoomToIframe(iframe, roomName);
+					//TEMPOUT PUT BACK IN!!appearin.addRoomToIframe(iframe, roomName);
 					
 					
-					
+					vidiOS();
 					
 					
 					
@@ -599,7 +599,7 @@
 				function vidDeactivateIE8()
 				{
 					$('#video-button').hide();
-					}
+				}
 					
 			
 				function decideVideo()
@@ -615,9 +615,9 @@
 					} else {
 						var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 						if(iOS == false) {
-														vidiOS();  //TESTING IN REMOVE ME! 
+														
 							
-							//TEMPOUTvidDeactivate();
+							vidDeactivate();
 						} else {
 							//we want iOS to still popup with the app version
 							vidiOS();
