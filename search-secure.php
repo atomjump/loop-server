@@ -131,7 +131,6 @@
 <html lang="en">
   <head>
   	    <meta charset="utf-8">
-		 <!--<meta name="viewport" content="width=device-width, user-scalable=no">-->
 		 <title>AtomJump Loop - messaging for your site</title>
 		 
 		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
@@ -191,8 +190,8 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.7.js"></script> <!-- TODO - keep path as js/chat.js -->
-			<!--<script type="text/javascript" src="<?php echo $root_server_url ?>/js/adapter.js"></script>--> <!-- For video chat -->
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.7.js"></script> 
+			
 			
 	</head>
 	<body class="comment-popup-body">
@@ -216,7 +215,6 @@
 			</div>
 			
 			
-			 <!--TODO <video id="video-chat" autoplay style="display:none; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;"></video> left: <?php echo $width - 260; ?>px; width: 260px;-->
 			
 			<script>
 				
@@ -246,37 +244,9 @@
 				{
 				
 				
-					//'use strict';
-					// variables in global scope so available to console
-					/*TODO var video = document.querySelector('video');
-					var constraints = {
-						audio: false,
-						video: true
-					};
-					navigator.getUserMedia = navigator.getUserMedia ||
-					navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-					function successCallback(stream) {
-						window.stream = stream; // stream available to console
-						if (window.URL) {
-							video.src = window.URL.createObjectURL(stream);
-						} else {
-							video.src = stream;
-						}
-					}
-					function errorCallback(error) {
-						console.log('navigator.getUserMedia error: ', error);
-					}
-					navigator.getUserMedia(constraints, successCallback, errorCallback);
-					*/
-				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					//TEMPOUT PUT BACK IN!!appearin.addRoomToIframe(iframe, roomName);
-					
-					
-					vidiOS();
-					
-					
+					appearin.addRoomToIframe(iframe, roomName);
 					
 					$('#video-chat-container').slideToggle();
 					return false;
@@ -303,7 +273,7 @@
 						      window.focus();
 					     }
 						
-											//resize to fit the new screen size
+						//resize to fit the new screen size
 				});
 					
 				
@@ -325,11 +295,7 @@
 						//exit fullscreen
 					
 					
-						
-						
-						
 						//Duplicate of chat.js functionality
-						
 						
 						
 					}
@@ -605,7 +571,6 @@
 				function decideVideo()
 				{
 					//Appear.in
-					
 					var AppearIn = window.AppearIn;
 					appearin = new AppearIn();
 					
