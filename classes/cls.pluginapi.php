@@ -282,6 +282,7 @@ class cls_plugin_api {
 		//Handle any post processing
 		global $process_parallel;
 		global $process_parallel_url;
+		global $local_server_path;
 		if((isset($process_parallel_url))&&($process_parallel_url != null)) {
 		    session_write_close();      //Ensure we don't have anything that runs after this command that uses the sessions 
 
