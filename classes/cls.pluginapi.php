@@ -307,7 +307,6 @@ class cls_plugin_api {
 		    global $cnf;
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
-		    error_log($cmd);
 		    $ret = shell_exec($cmd);
 
 		
