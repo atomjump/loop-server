@@ -246,7 +246,7 @@
 				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					if(iOS != true) {
+					if((iOS)&&(iOS !== true)) {
 						appearin.addRoomToIframe(iframe, roomName);
 					}
 					
