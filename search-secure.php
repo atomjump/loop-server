@@ -246,7 +246,9 @@
 				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					appearin.addRoomToIframe(iframe, roomName);
+					if(iOS == false) {
+						appearin.addRoomToIframe(iframe, roomName);
+					}
 					
 					$('#video-chat-container').slideToggle();
 					return false;
@@ -312,6 +314,7 @@
 				
 				
 				var appearin;
+				var iOS;
 				
 				
 				function switchPublic()
@@ -559,9 +562,7 @@
 				function vidiOS()
 				{
 					//Show the iphone download
-					alert("In here 2");  //REMOVE ME!!!
 					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8' target=\"_parent\"><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" border=\"0\"></a> <span style=\"color: white;\">and enter the 'Link' below into your app.</span>");
-					alert("In here 3");  //REMOVE ME!!!
 				}
 				
 				function vidDeactivateIE8()
@@ -574,20 +575,19 @@
 				{
 					//Appear.in
 					var AppearIn = window.AppearIn;
-					appearin = new AppearIn();
+					appearin = new AppearIn();		//Set global
 					
 					var isWebRtcCompatible = appearin.isWebRtcCompatible();
 					if(isWebRtcCompatible == true) {
 					
 					} else {
-						var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+						iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 						if(iOS == false) {
 														
 							
 							vidDeactivate();
 						} else {
 							//we want iOS to still popup with the app version
-							alert("In here 1");  //REMOVE ME!!!
 							vidiOS();
 						}
 						
