@@ -246,7 +246,7 @@
 				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					if((iOS)&&(iOS !== true)) {
+					if(iOS !== true) {
 						appearin.addRoomToIframe(iframe, roomName);
 					}
 					
@@ -300,7 +300,7 @@
 				
 				
 				var appearin;
-				var iOS;
+				var iOS = false;
 				
 				
 				function switchPublic()
