@@ -246,7 +246,7 @@
 				
 					var iframe = document.getElementById("video-chat");
 					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					if(iOS == false) {
+					if(iOS != true) {
 						appearin.addRoomToIframe(iframe, roomName);
 					}
 					
@@ -263,9 +263,6 @@
        				 	$('#video-chat-container').width(screen.width);
 						$('#video-chat-iframe-container').width("100%");
 						$('#video-chat-iframe-container').height(screen.height - 60);
-       				 	
-       				 	
-						
        				 } else {
        				 
        				 	$('#video-chat-container').width("<?php echo $width ?>px");
@@ -283,31 +280,20 @@
 				
 				function toggleVideoFullScreen()
 				{
-				
-					
-					
 					e = document.getElementById("video-chat-container");
 					
 					if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen") || startedFullScreen == true) {
-						
-						
+												
 						startedFullScreen = false;
-						RunPrefixMethod(document, "CancelFullScreen");
-					
+						RunPrefixMethod(document, "CancelFullScreen");					
 						//exit fullscreen
 					
-					
 						//Duplicate of chat.js functionality
-						
-						
 					}
 					else {
-						//start fullscreen
-						
+						//start fullscreen						
 						startedFullScreen = true;
 						RunPrefixMethod(e, "RequestFullScreen");
-						
-					
 					}
 				}
 				
