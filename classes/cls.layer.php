@@ -725,6 +725,8 @@ class cls_login
 		
 		}
 		
+		error_log("Group user set to:" . $group_user_id);
+		
 		return $group_user_id;
 	
 	}
