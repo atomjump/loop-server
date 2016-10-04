@@ -921,6 +921,7 @@ class cls_login
 					
 					
 					//Get the group user if necessary
+					error_log("About to call the group user on login");
 					$this->get_group_user();
 					
 					//Update the group if necessary too 
