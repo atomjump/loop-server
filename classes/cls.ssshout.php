@@ -25,6 +25,23 @@ class cls_ssshout
 	
 	}
 	
+	
+	public function clear_old_session_data()
+	{
+	
+		//$_SESSION['logged-user']  - this shouldn't be here. This is the user id of the signed in user.
+		$_SESSION['logged-email'] = '';			//Set on sign in. This is the email of the signed in user.
+		$_SESSION['user-ip'] = '';				//The logged in user's artificial ip address.
+		$_SESSION['temp-user-name'] = '';		//This username us used potentially before another name is set e.g. Anon 55
+		$_SESSION['lat'] = '';					//User's latitude, blank until this is supported
+		$_SESSION['lon'] = '';					//User's longitude, blank until this is spupported
+		$_SESSION['logged-group-user'] = '';	//This means we are logged in to view messages from this group user, if the same as the layer-group-user then it will be for this layer. Blank if not authorised. 
+		$_SESSION['layer-group-user'] = '';		//The group user for this layer.
+		$_SESSION['access-layer-granted'] = 'false';   //Either 'false' or a layer id if we have access to this layer (multiple user access with a password).
+	
+		$_SESSION['view-count'] = 0;			//0 or 1 for the number of times this layer has been viewed. 	
+	
+	}
 
 	
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
@@ -64,6 +81,7 @@ class cls_ssshout
 					if($login_as == true) {
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
+						$this->clear_old_session_data();
 					}
 				
 					return db_insert_id();
@@ -87,12 +105,14 @@ class cls_ssshout
 						  if($row['int_user_id'] != $_SESSION['logged-user']) {
 							  //OK - we were logged in as logged-user, but now we need to switch
 						   	$_SESSION['logged-user'] = $row['int_user_id'];
+						   	$this->clear_old_session_data();
 					
 						  }
 				
 				 	} else {
 				 		//Ok we need to set the temp user
 				 		$_SESSION['logged-user'] = $row['int_user_id'];
+				 		$this->clear_old_session_data();
 				 		
 				 	}
 			
@@ -123,6 +143,10 @@ class cls_ssshout
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
 						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['webmasterEmail']);
+						
+						//TESTING this line:
+						$_SESSION['logged-user'] = db_insert_id();
+						$this->clear_old_session_data();
 					}
 					
 					//Let me know there is a new user
@@ -139,6 +163,7 @@ class cls_ssshout
 					if($login_as == true) {
 						//Set the logged user to the db user id
 						$_SESSION['logged-user'] = db_insert_id();
+						$this->clear_old_session_data();
 					}
 				 
 					return db_insert_id();
