@@ -60,12 +60,12 @@ class cls_layer
 							
 				//Get the group user if necessary
 				error_log("About to call the group user");
-				$this->get_group_user();
+				$lg->get_group_user();
 			
 				//Update the group if necessary too 
 				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 					if($users) {
-						$this->update_subscriptions($users);
+						$lg->update_subscriptions($users);
 					}
 				}
 				
@@ -104,12 +104,12 @@ class cls_layer
 						
 						//Get the group user if necessary
 						error_log("About to call the group user");
-						$this->get_group_user();
+						$lg->get_group_user();
 					
 						//Update the group if necessary too 
 						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 							if($users) {
-								$this->update_subscriptions($users);
+								$lg->update_subscriptions($users);
 							}
 						}
 								
