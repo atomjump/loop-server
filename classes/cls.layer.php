@@ -941,7 +941,7 @@ class cls_login
 					//Update the group if necessary too 
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						if($users) {
-							$lg->update_subscriptions($users);
+							$this->update_subscriptions($users);
 						}
 					}
 					
