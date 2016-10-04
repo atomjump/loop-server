@@ -106,12 +106,7 @@ class cls_layer
 						error_log("About to call the group user");
 						$lg->get_group_user();
 					
-						//Update the group if necessary too 
-						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-							if($users) {
-								$lg->update_subscriptions($users);
-							}
-						}
+			
 								
 						
 						return $row;
@@ -935,6 +930,19 @@ class cls_login
 					if(strcmp($returns, "RELOAD") == 0) {
 						$reload = ",RELOAD";
 			   
+					}
+					
+					
+					
+					//Get the group user if necessary
+					error_log("About to update the subscriptions");
+					$this->get_group_user();
+				
+					//Update the group if necessary too 
+					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+						if($users) {
+							$lg->update_subscriptions($users);
+						}
 					}
 					
 					//Normal forum login
