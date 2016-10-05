@@ -58,7 +58,16 @@ class cls_layer
 					$_SESSION['authenticated-layer'] = '';
 				}
 							
-				
+				//Get the group user if necessary
+				error_log("About to call the group user");
+				$lg->get_group_user();
+			
+				//Update the group if necessary too 
+				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+					if($users) {
+						$lg->update_subscriptions($users);
+					}
+				}
 				
 				return $row;
 			} 
@@ -91,6 +100,13 @@ class cls_layer
 							//unset the authenticated layer
 							$_SESSION['authenticated-layer'] = '';
 						}
+						
+						
+						//Get the group user if necessary
+						error_log("About to call the group user");
+						$lg->get_group_user();
+					
+			
 								
 						
 						return $row;
@@ -708,6 +724,7 @@ class cls_login
 				
 							$group_user_id = db_insert_id();
 							$_SESSION['logged-group-user']  = $group_user_id;
+							$_SESSION['layer-group-user'] = $group_user_id;		//TESTING THIS IN HERE
 							//Update 
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -724,6 +741,8 @@ class cls_login
 			}
 		
 		}
+		
+		error_log("Group user set to:" . $group_user_id);
 		
 		return $group_user_id;
 	
@@ -822,8 +841,6 @@ class cls_login
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    	
-				//Get the group user if necessary
-			    //$this->get_group_user();
 			
 				//Only the owners can do this
 				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
@@ -874,6 +891,7 @@ class cls_login
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
 				
+			
 				
 				//Handle any plugin generated settings
 	        	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
@@ -907,29 +925,26 @@ class cls_login
 						
 					}
 					
-					
-					
-					
-					
-					//Get the group user if necessary
-					$this->get_group_user();
-					
-					//Update the group if necessary too 
-					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-						if($users) {
-							$this->update_subscriptions($users);
-						}
-					}
-					
-					
+				
 					//Handle any plugin generated settings
 					$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
 					if(strcmp($returns, "RELOAD") == 0) {
 						$reload = ",RELOAD";
 			   
 					}
+					
+					
+					
+					//Get the group user if necessary
+					error_log("About to update the subscriptions");
+					$this->get_group_user();
 				
-				
+					//Update the group if necessary too 
+					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+						if($users) {
+							$this->update_subscriptions($users);
+						}
+					}
 					
 					//Normal forum login
 					return "LOGGED_IN" . $reload . "," .$user_id;  
@@ -965,6 +980,7 @@ class cls_login
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
 			}
+			
 			
 			//Handle any plugin generated settings
 			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
