@@ -59,7 +59,6 @@ class cls_layer
 				}
 							
 				//Get the group user if necessary
-				error_log("About to call the group user");
 				$lg->get_group_user();
 			
 				//Update the group if necessary too 
@@ -103,7 +102,6 @@ class cls_layer
 						
 						
 						//Get the group user if necessary
-						error_log("About to call the group user");
 						$lg->get_group_user();
 					
 			
