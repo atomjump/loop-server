@@ -48,7 +48,7 @@ class cls_layer
 				
 				}
 				
-				//Check we're an owner of the layer
+				//Check we're an owner of the layer.
 				$lg = new cls_login();				
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
@@ -59,7 +59,6 @@ class cls_layer
 				}
 							
 				//Get the group user if necessary
-				error_log("About to call the group user");
 				$lg->get_group_user();
 			
 				//Update the group if necessary too 
@@ -103,7 +102,6 @@ class cls_layer
 						
 						
 						//Get the group user if necessary
-						error_log("About to call the group user");
 						$lg->get_group_user();
 					
 			
@@ -741,7 +739,6 @@ class cls_login
 		
 		}
 		
-		error_log("Group user set to:" . $group_user_id);
 		
 		return $group_user_id;
 	
@@ -935,7 +932,6 @@ class cls_login
 					
 					
 					//Get the group user if necessary
-					error_log("About to update the subscriptions");
 					$this->get_group_user();
 				
 					//Update the group if necessary too 
