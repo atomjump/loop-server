@@ -332,7 +332,7 @@ class cls_layer
 						
 					}
 				}	
-			}		//send to my own user if commented out
+			}		//send to my own user if commented out.
 			
 			$cnt ++;		//increment so that we don't keep initing 
 			
