@@ -48,7 +48,7 @@ class cls_layer
 				
 				}
 				
-				//Check we're an owner of the layer
+				//Check we're an owner of the layer.
 				$lg = new cls_login();				
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
@@ -733,7 +733,6 @@ class cls_login
 		
 		}
 		
-
 		return $group_user_id;
 	
 	}
