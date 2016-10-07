@@ -61,12 +61,6 @@ class cls_layer
 				//Get the group user if necessary
 				$lg->get_group_user();
 			
-				//Update the group if necessary too 
-				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-					if($users) {
-						$lg->update_subscriptions($users);
-					}
-				}
 				
 				return $row;
 			} 
@@ -739,8 +733,7 @@ class cls_login
 		
 		}
 		
-		error_log("Group user set to:" . $group_user_id);
-		
+
 		return $group_user_id;
 	
 	}
@@ -933,7 +926,6 @@ class cls_login
 					
 					
 					//Get the group user if necessary
-					error_log("About to update the subscriptions");
 					$this->get_group_user();
 				
 					//Update the group if necessary too 
