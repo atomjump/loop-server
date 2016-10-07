@@ -144,7 +144,7 @@ class cls_ssshout
 					if($login_as == true) {
 						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['webmasterEmail']);
 						
-						//TESTING this line:
+						
 						$_SESSION['logged-user'] = db_insert_id();
 						$this->clear_old_session_data();
 					}
@@ -911,10 +911,6 @@ class cls_ssshout
 						$message_id = $ssshout_id;
 						$ssshout_id = "";		//this is the return value of null beacuse want a new message
 						
-						//Hook into plugins here
-						/*if($allow_plugins == true) {
-						    $this->call_plugins($layer, clean_data($message), $message_id, $user_id, $whisper_to_id, $your_name, $email, $phone, $allowed_plugins);
-						}*/
 					} else {
 						//A continuation request
 						$message_id = "";
