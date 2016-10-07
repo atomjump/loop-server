@@ -48,7 +48,7 @@ class cls_layer
 				
 				}
 				
-				//Check we're an owner of the layer
+				//Check we're an owner of the layer.
 				$lg = new cls_login();				
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
@@ -59,15 +59,8 @@ class cls_layer
 				}
 							
 				//Get the group user if necessary
-				error_log("About to call the group user");
 				$lg->get_group_user();
 			
-				//Update the group if necessary too 
-				if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-					if($users) {
-						$lg->update_subscriptions($users);
-					}
-				}
 				
 				return $row;
 			} 
@@ -103,7 +96,6 @@ class cls_layer
 						
 						
 						//Get the group user if necessary
-						error_log("About to call the group user");
 						$lg->get_group_user();
 					
 			
@@ -348,7 +340,7 @@ class cls_layer
 						
 					}
 				}	
-			}		//send to my own user if commented out
+			}		//send to my own user if commented out.
 			
 			$cnt ++;		//increment so that we don't keep initing 
 			
@@ -724,7 +716,8 @@ class cls_login
 				
 							$group_user_id = db_insert_id();
 							$_SESSION['logged-group-user']  = $group_user_id;
-							$_SESSION['layer-group-user'] = $group_user_id;		//TESTING THIS IN HERE
+							$_SESSION['layer-group-user'] = $group_user_id;		
+							
 							//Update 
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -741,8 +734,6 @@ class cls_login
 			}
 		
 		}
-		
-		error_log("Group user set to:" . $group_user_id);
 		
 		return $group_user_id;
 	
@@ -936,7 +927,6 @@ class cls_login
 					
 					
 					//Get the group user if necessary
-					error_log("About to update the subscriptions");
 					$this->get_group_user();
 				
 					//Update the group if necessary too 
