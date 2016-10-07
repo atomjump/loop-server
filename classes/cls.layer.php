@@ -715,7 +715,8 @@ class cls_login
 				
 							$group_user_id = db_insert_id();
 							$_SESSION['logged-group-user']  = $group_user_id;
-							$_SESSION['layer-group-user'] = $group_user_id;		//TESTING THIS IN HERE
+							$_SESSION['layer-group-user'] = $group_user_id;		
+							
 							//Update 
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
