@@ -1013,7 +1013,7 @@ class cls_ssshout
 					if($email_in_msg == true) {
 						//We are sending off a whisper to an email address
 						
-						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id);	//true is because we are introducing
+						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id, $always_send_email);	//true is because we are introducing
 					} else {
 				
 				
