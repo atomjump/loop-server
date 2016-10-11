@@ -9,6 +9,16 @@ class cls_layer
 {
 
  	public $layer_name;
+ 	public $always_send_email;
+ 	
+ 	
+ 	function __construct()
+ 	{
+ 		$always_send_email = false;			//By default we don't always send an email i.e. we check if we have already sent one. But there are some examples where we do always want to send an email, e.g. shortmail
+ 	
+ 	}
+ 	
+ 	
 
 	public function get_layer_id($passcode, $reading)
 	{
@@ -252,6 +262,11 @@ class cls_layer
 	{
 		//Input mins as a string from 00 to 59
 		global $server_timezone;
+		
+		if($this->always_send_email == true) {
+			//An override to say always send an email e.g. from within shortmail which requires every email to be sent
+			return false;
+		}
 
 		date_default_timezone_set($server_timezone);	 //UTC , TODO: global server_timezone??
 		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer_id . " AND TIMEDIFF(NOW(),date_when_shouted) < '00:" . $mins . ":00' AND int_ssshout_id <> $just_sent_message_id ORDER BY date_when_shouted DESC LIMIT 1";

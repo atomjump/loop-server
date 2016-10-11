@@ -241,7 +241,7 @@ Required Parameters
 Server: >= 0.5.0
 
 Optional Parameters in an $options object:
-($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude, $login_as, $allow_plugins, $allowed_plugins)  
+($sender_still_typing, $known_message_id, $sender_phone, $javascript_client_msg_id, $forum_owner_id, $social_post_short_code,   $social_recipient_handle_str, $date_override, $latitude, $longitude, $login_as, $allow_plugins, $allowed_plugins, $notification, $always_send_email)  
 Server: >= 0.5.0
 
 Additions:
@@ -277,6 +277,7 @@ Options
 	$allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
 												//developer. However, plugins that work with before_msg will continue to work 
 	$notification = true;						//Set to false to switch off notifications from this message
+	$always_send_email = false;					//Set to true to ensure an email will always be sent to the recipient(s). Usually, messages within around 20 minutes won't multiple-email the user (when false).
 ```
 
 Usage example:
