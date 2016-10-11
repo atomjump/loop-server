@@ -375,7 +375,7 @@ class cls_plugin_api {
 	     if(isset($options['allow_plugins']))  $allow_plugins = $options['allow_plugins'];
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	     if(isset($options['notification']))  $notification = $options['notification'];
-	     if(isset($options['always_send_email']) $ly->always_send_email = $options['always_send_email'];
+	     if(isset($options['always_send_email'])) $ly->always_send_email = $options['always_send_email'];
 	    }
 	 
 	 	
