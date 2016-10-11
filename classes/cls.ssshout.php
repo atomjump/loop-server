@@ -253,7 +253,7 @@ class cls_ssshout
 	
 	}	 
 	
-	public function whisper_by_email($user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null)
+	public function whisper_by_email($user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
 	{
 		global $root_server_url;
 		global $local_server_path;
@@ -332,6 +332,7 @@ class cls_ssshout
 				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
 					$ly = new cls_layer();
+					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
 					}
@@ -385,6 +386,7 @@ class cls_ssshout
 				if($with_app == false) {	
 					
 					$ly = new cls_layer();
+					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
 
@@ -398,6 +400,7 @@ class cls_ssshout
 			if($row['var_phone']) {	//TODO: consider only smsing when the group is set?
 				
 				$ly = new cls_layer();
+				$ly->always_send_email = $always_send_email;
 				if($ly->just_sent_message($layer_id, $message_id) == false) {
 					
 				
@@ -727,7 +730,7 @@ class cls_ssshout
 
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
 	{
 	    global $msg;
 	    global $lang;
@@ -1026,6 +1029,7 @@ class cls_ssshout
 								
 									//Keep all relevant users updated by email or sms
 									$ly = new cls_layer();
+									$ly->always_send_email = $always_send_email;
 									$ly->layer_name = $this->layer_name;
 									$ly->notify_group($layer, $message, $message_id, $user_id);
 								}
@@ -1034,7 +1038,7 @@ class cls_ssshout
 						
 								if($notification == true) {
 									//Just one recipient - only let them know
-									$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id);
+									$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id, $always_send_email);
 								}
 							
 							}
@@ -1045,6 +1049,7 @@ class cls_ssshout
 				
 								//Keep all relevant users updated by email or sms
 								$ly = new cls_layer();
+								$ly->always_send_email = $always_send_email;
 								$ly->layer_name = $this->layer_name;
 								$ly->notify_group($layer, $message, $message_id, $user_id);
 							}
