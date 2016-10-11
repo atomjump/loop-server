@@ -359,6 +359,7 @@ class cls_plugin_api {
 	 	$notification = true;						//Can switch off notifications from this message when set to false.
 	 	$always_send_email = false;					//Set to true to ensure an email will always be sent to the recipient(s). Usually, messages within around 20 minutes won't multiple-email the user (when false).
 
+		error_log("pluginapi new message 1" . $always_send_email);
 	 
 	 
 	    if(isset($options)) {
@@ -378,6 +379,8 @@ class cls_plugin_api {
 	     if(isset($options['notification']))  $notification = $options['notification'];
 	     if(isset($options['always_send_email'])) $always_send_email = $options['always_send_email'];
 	    }
+	 
+	 	error_log("pluginapi new message 2" . $always_send_email);
 	 
 	 	
 	     return $sh->insert_shout($latitude,
