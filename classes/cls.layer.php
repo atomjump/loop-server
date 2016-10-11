@@ -263,6 +263,8 @@ class cls_layer
 		//Input mins as a string from 00 to 59
 		global $server_timezone;
 		
+		error_log("always_send_email:" . $this->always_send_email);		//TEMPORARY REMOVE ME
+		
 		if($this->always_send_email == true) {
 			//An override to say always send an email e.g. from within shortmail which requires every email to be sent
 			return false;
