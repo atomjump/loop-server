@@ -357,7 +357,8 @@ class cls_plugin_api {
 	    $allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
 	                                                //developer. However, plugins that work with before_msg will continue to work 
 	 	$notification = true;						//Can switch off notifications from this message when set to false.
-	 	
+	 	$always_send_email = false;					//Set to true to ensure an email will always be sent to the recipient(s). Usually, messages within around 20 minutes won't multiple-email the user (when false).
+
 	 
 	 
 	    if(isset($options)) {
@@ -399,7 +400,8 @@ class cls_plugin_api {
 	                        $login_as,
 	                        $allow_plugins,
 	                        $allowed_plugins,
-	                        $notification);
+	                        $notification,
+	                        $always_send_email);
 	 
 	 }	
 	 
