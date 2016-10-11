@@ -556,7 +556,9 @@ Server: >= 0.5.0
 
 Additions:
 ($login_as), server >= 0.5.1  
-($allow_plugins, $allowed_plugins), server >= 0.55
+($allow_plugins, $allowed_plugins), server >= 0.5.5
+($notification, $always_send_email), server >= 1.0.4
+
 
 Output parameters
 ($message_id)
