@@ -357,6 +357,8 @@ class cls_plugin_api {
 	    $allowed_plugins = null;                    //Use the standard plugins (null), or an array of approved plugins from the plugin
 	                                                //developer. However, plugins that work with before_msg will continue to work 
 	 	$notification = true;						//Can switch off notifications from this message when set to false.
+	 	
+	 
 	 
 	    if(isset($options)) {
 	     if(isset($options['sender_still_typing'])) $sender_still_typing = $options['sender_still_typing'];
@@ -373,6 +375,7 @@ class cls_plugin_api {
 	     if(isset($options['allow_plugins']))  $allow_plugins = $options['allow_plugins'];
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	     if(isset($options['notification']))  $notification = $options['notification'];
+	     if(isset($options['always_send_email'])) $ly->always_send_email = $options['always_send_email'];
 	    }
 	 
 	 	
