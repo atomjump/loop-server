@@ -284,6 +284,7 @@ class cls_ssshout
 				if((!is_null($row2['var_email']))&&($access=='private')) {
 					$from_email = $row2['var_email'];
 					$from_different = true;
+					$always_send_email = true;		//A private forum will always send an email - this is used by shortmail
 				}
 			
 			}
