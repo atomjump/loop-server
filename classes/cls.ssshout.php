@@ -334,8 +334,6 @@ class cls_ssshout
 				if($with_app == false) {
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
-					
-					error_log("Always send email whisper_by_email:" . $always_send_email);
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
 					}
