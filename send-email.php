@@ -20,7 +20,7 @@ require("classes/cls.basic_geosearch.php");
 require("classes/cls.layer.php");
 require("classes/cls.ssshout.php");
 
-error_log("About to send email for real:" json_encode($_REQUEST));
+error_log("About to send email for real:" . json_encode($_REQUEST));
 echo cc_mail_direct($_REQUEST['to'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['sender_email'], $_REQUEST['sender_name'], $_REQUEST['to_name'], $_REQUEST['bcc']);
 
 
