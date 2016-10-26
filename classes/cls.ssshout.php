@@ -738,8 +738,6 @@ class cls_ssshout
 	    global $db;
 		$email_in_msg = false;
 	
-	    //error_log($your_name . " ". $shouted . " ". $whisper_to . " " . $email. " ". $ip . " " .  $layer . " " .  $typing . " " . $ssshout_id . " " . $phone . " " . $local_msg_id . " " . $whisper_site . " " . $short_code . " " . $public_to . " " . $date_override . " " . $loginas . " " . $allow_plugins . " " . $allowed_plugins . " " . $notification, $always_send_email);
-	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
 		$peano2 = $bg->generate_peano2($latitude, $longitude);
@@ -879,9 +877,7 @@ class cls_ssshout
 					$whisper_to_divided[1] = 0;
 				}
 				
-				error_log("Notify_group:" . $notify_group . "   whisper_to_id:" . $whisper_to_id);
-				
-			
+
 
 			
 				if($ssshout_id) {
@@ -1000,8 +996,6 @@ class cls_ssshout
 						
 				}
 						
-				
-				error_log("Notification:" . $notification . "   whisper_to_divided[1]:" . $whisper_to_divided[1]);
 				
 				
 				//Handle a whisper option

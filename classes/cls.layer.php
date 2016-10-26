@@ -48,7 +48,7 @@ class cls_layer
 					
 				}
 				
-				error_log("From inside get_layer_id() a, " . $_SESSION['access-layer-granted'] .  " public_code:" . $row['var_public_code']);
+				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
 									if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
@@ -95,14 +95,11 @@ class cls_layer
 				
 				    	}
 				    	
-				    	//Should this be here?
-				    	error_log("From inside get_layer_id() b, " . $_SESSION['access-layer-granted'] .  " public_code:" . $row['var_public_code']);
+				    	
 				    	
 				    	if($row['var_public_code']) {
 							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-							
-							
-											if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+																		if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 								$_SESSION['access-layer-granted'] = 'false';
 							}
 						} else {
@@ -313,9 +310,7 @@ class cls_layer
 		global $msg;
 		global $lang;
 		global $cnf;
-		
-		error_log("notify_group() notify:" . $notify . " staging:" . $staging);
-		
+				
 		$sh = new cls_ssshout();
 		$data = array(); 
 		$cnt = 0;
@@ -331,9 +326,7 @@ class cls_layer
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
-			
-			error_log(json_encode($row));
-			
+						
 			if($cnt == 0) {
 				//Init a message for notification - only on the first run through
 				
@@ -352,12 +345,9 @@ class cls_layer
 			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
 
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
-			error_log("With app:" . $with_app);
 			if($with_app == false) {
 
-				error_log("int_user_id:" . $row['int_user_id'] . " Messge sender id:" .  $message_sender_user_id);
 				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
-					error_log("Sending email:" . $with_app);
 					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
 				}
 			}
@@ -418,7 +408,6 @@ class cls_layer
 		    	$send_message = false;
 		    	
 		    	
-		    	error_log("$layer_id:" . $layer_id);
 		    	
 		    	if($layer_id) {
 					//This is on a particular layer - only send messages if they're after 20 minutes, so that we don't get a flurry of emails per message.
@@ -431,7 +420,6 @@ class cls_layer
 				
 				}		    	
 		    	
-		    	error_log("send_message:" . $send_message);
 		    	
 		    	if($send_message == true) {
 			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
@@ -864,8 +852,6 @@ class cls_login
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
-						
-						error_log("Access-layer-granted set to:" . $layer_info['int_layer_id']);
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
