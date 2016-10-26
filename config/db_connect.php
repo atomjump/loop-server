@@ -216,11 +216,8 @@
 	ini_set('session.gc_maxlifetime', 60*60*24*365*3);// expand
 	ini_set('session.cookie_lifetime', 60*60*24*365*3);// expand
 
-	 echo "Start path for sessions = " . $start_path . "classes/cls_php_session.php\n";
-
 	require_once $start_path . 'classes/cls_php_session.php';	
 	
-	echo "Required OK\n";
 	$session_class = new php_Session;
    	session_set_save_handler(array(&$session_class, 'open'),
                          array(&$session_class, 'close'),
