@@ -644,7 +644,7 @@ No parameters.
 
 Server: >= 0.9.0
 
-This should be called at the end of your script to complete all of the parallel_system_call() commands, if your script is a standalone script (i.e. not called via a hook).  It will hard exit the script after completion.
+This should be called at the end of your script to complete all of the parallel_system_call() commands, if your script is a standalone script (i.e. not called via a hook).  It will hard exit the script after completion, and close down the sessions.
 
 
 
