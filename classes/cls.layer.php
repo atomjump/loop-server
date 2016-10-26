@@ -355,6 +355,7 @@ class cls_layer
 			error_log("With app:" . $with_app);
 			if($with_app == false) {
 
+				error_log("int_user_id:" . $row['int_user_id'] . " Messge sender id:" .  $message_sender_user_id);
 				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
 					error_log("Sending email:" . $with_app);
 					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
