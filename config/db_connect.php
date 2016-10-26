@@ -209,7 +209,7 @@
 
 
 	if(!isset($start_path)) {
-		$start_path = $cnf['fileRoot'];
+		$start_path = $local_server_path;
 	}
 
 
