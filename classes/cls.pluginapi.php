@@ -305,7 +305,6 @@ class cls_plugin_api {
 		    
 		    
 		    global $cnf;
-		    chdir($local_server_path);	//Always need to run these processes from our server path
 		    
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
