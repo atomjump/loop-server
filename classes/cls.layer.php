@@ -297,6 +297,8 @@ class cls_layer
 		global $lang;
 		global $cnf;
 		
+		error_log("notify_group() notify:" . $notify . " staging:" . $staging);
+		
 		$sh = new cls_ssshout();
 		$data = array(); 
 		$cnt = 0;
