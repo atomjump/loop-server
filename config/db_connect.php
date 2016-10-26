@@ -101,7 +101,7 @@
 
 	$db_name = $config['production']['db']['name'];			//Unless on the cloud below
 	if(!isset($notify)) {
-		$notify = true;					//Notify users by email and sms, unless we are specified difrferently
+		$notify = true;					//Notify users by email and sms, unless we are specified differently
 	}
 
 
@@ -117,7 +117,7 @@
 	$db_timezone = $server_timezone;
 			
   
-	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)) {
+	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
 		//Staging
 		
 		
@@ -209,7 +209,7 @@
 
 
 	if(!isset($start_path)) {
-		$start_path = "";
+		$start_path = $cnf['fileRoot'];
 	}
 
 
