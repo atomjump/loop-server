@@ -877,6 +877,9 @@ class cls_ssshout
 					$whisper_to_divided[0] = '';
 					$whisper_to_divided[1] = 0;
 				}
+				
+				error_log("Notify_group:" . $notify_group . "   whisper_to_id:" . $whisper_to_id);
+				
 			
 
 			
@@ -997,7 +1000,7 @@ class cls_ssshout
 				}
 						
 				
-				
+				error_log("Notification:" . $notification . "   whisper_to_divided[1]:" . $whisper_to_divided[1]);
 				
 				
 				//Handle a whisper option
