@@ -601,6 +601,15 @@ Usage example:
     $new_message_id = $api->new_message($helper, $new_message, $sender_ip . ":" . $sender_id, $helper_email, $sender_ip, $message_forum_id, $options);
 ```
 
+Warning: if your plugin is a standalone script (as opposed to being called from the main server), you will need to also
+call
+
+```
+$api->complete_parallel_calls(); 
+```
+if you want the notifications to be sent, as these happen in parallel.
+
+
 **hide_message()**
 
 Required Parameters
