@@ -2,6 +2,8 @@
 
 //Send off an email
 //eg. https://yoursite.com/send-email.php?to=peter@yoursite.com&subject=test&body=hi&staging=1&sender_email=webmaster@yoursite.com
+//Or 
+//php send-email.php to=peter@yoursite.com subject=test body=hi staging=1 sender_email=webmaster@yoursite.com
 foreach ($argv as $arg) {
     $e=explode("=",$arg);
     if(count($e)==2)
@@ -15,10 +17,11 @@ if(isset($_REQUEST['staging'])) {
 
 }
 
-error_log("Sending email " . json_encode($_REQUEST));
+
 
 //note: this script can be run from e.g. a plugin's path, therefore it needs to be able to be run independently
 //from it's own directory.
+
 require(__DIR__ . '/config/db_connect.php');
 
 require(__DIR__ . "/classes/cls.basic_geosearch.php");
