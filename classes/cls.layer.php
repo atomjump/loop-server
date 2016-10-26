@@ -315,6 +315,8 @@ class cls_layer
 		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
 			
+			error_log(json_encode($row));
+			
 			if($cnt == 0) {
 				//Init a message for notification - only on the first run through
 				
