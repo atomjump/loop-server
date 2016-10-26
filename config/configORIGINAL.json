@@ -1,4 +1,5 @@
 {
+   "usingStaging": true,	
    "staging": {
       "db": {
          "name": "ssshout",

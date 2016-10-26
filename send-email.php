@@ -2,6 +2,8 @@
 
 //Send off an email
 //eg. https://yoursite.com/send-email.php?to=peter@yoursite.com&subject=test&body=hi&staging=1&sender_email=webmaster@yoursite.com
+//Or 
+//php send-email.php to=peter@yoursite.com subject=test body=hi staging=1 sender_email=webmaster@yoursite.com
 foreach ($argv as $arg) {
     $e=explode("=",$arg);
     if(count($e)==2)
@@ -16,11 +18,17 @@ if(isset($_REQUEST['staging'])) {
 	$staging = $_REQUEST['staging'];
 
 }
-require('config/db_connect.php');
 
-require("classes/cls.basic_geosearch.php");
-require("classes/cls.layer.php");
-require("classes/cls.ssshout.php");
+
+
+//note: this script can be run from e.g. a plugin's path, therefore it needs to be able to be run independently
+//from it's own directory.
+
+require(__DIR__ . '/config/db_connect.php');
+
+require(__DIR__ . "/classes/cls.basic_geosearch.php");
+require(__DIR__ . "/classes/cls.layer.php");
+require(__DIR__ . "/classes/cls.ssshout.php");
 
 error_log("About to send email for real:" . json_encode($_REQUEST));
 echo cc_mail_direct($_REQUEST['to'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['sender_email'], $_REQUEST['sender_name'], $_REQUEST['to_name'], $_REQUEST['bcc']);
