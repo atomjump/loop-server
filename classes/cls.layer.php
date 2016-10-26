@@ -50,7 +50,7 @@ class cls_layer
 				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-							if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+									if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 						$_SESSION['access-layer-granted'] = 'false';
 					}
 				} else {
@@ -93,6 +93,18 @@ class cls_layer
 				       		$_SESSION['layer-group-user'] = '';
 				
 				    	}
+				    	
+				    	//Should this be here?
+				    	if($row['var_public_code']) {
+							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+											if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+								$_SESSION['access-layer-granted'] = 'false';
+							}
+						} else {
+							$_SESSION['access-layer-granted'] = 'true';
+				
+						}
+				    	
 				    	
 				    	//Check we're an owner of the layer
 				    	$lg = new cls_login();
@@ -834,6 +846,7 @@ class cls_login
 					
 						//And it is the correct password! Continue below with a login
 						
+						error_log("Access-layer-granted set to:" . $layer_info['int_layer_id']);
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
