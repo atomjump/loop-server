@@ -738,7 +738,6 @@ class cls_ssshout
 	    global $db;
 		$email_in_msg = false;
 	
-	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
 		$peano2 = $bg->generate_peano2($latitude, $longitude);
@@ -877,7 +876,8 @@ class cls_ssshout
 					$whisper_to_divided[0] = '';
 					$whisper_to_divided[1] = 0;
 				}
-			
+				
+
 
 			
 				if($ssshout_id) {
@@ -996,8 +996,6 @@ class cls_ssshout
 						
 				}
 						
-				
-				
 				
 				
 				//Handle a whisper option

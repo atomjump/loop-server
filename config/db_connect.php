@@ -217,6 +217,7 @@
 	ini_set('session.cookie_lifetime', 60*60*24*365*3);// expand
 
 	require_once $start_path . 'classes/cls_php_session.php';	
+	
 	$session_class = new php_Session;
    	session_set_save_handler(array(&$session_class, 'open'),
                          array(&$session_class, 'close'),

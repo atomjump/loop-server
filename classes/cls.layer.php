@@ -48,9 +48,10 @@ class cls_layer
 					
 				}
 				
+				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-							if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+									if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 						$_SESSION['access-layer-granted'] = 'false';
 					}
 				} else {
@@ -93,6 +94,19 @@ class cls_layer
 				       		$_SESSION['layer-group-user'] = '';
 				
 				    	}
+				    	
+				    	
+				    	
+				    	if($row['var_public_code']) {
+							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+																		if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+								$_SESSION['access-layer-granted'] = 'false';
+							}
+						} else {
+							$_SESSION['access-layer-granted'] = 'true';
+				
+						}
+				    	
 				    	
 				    	//Check we're an owner of the layer
 				    	$lg = new cls_login();
@@ -296,7 +310,7 @@ class cls_layer
 		global $msg;
 		global $lang;
 		global $cnf;
-		
+				
 		$sh = new cls_ssshout();
 		$data = array(); 
 		$cnt = 0;
@@ -312,7 +326,7 @@ class cls_layer
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		while($row = db_fetch_array($result)) {
 			//Don't want to send a message we've sent to ourselves (wastes email and sms)
-			
+						
 			if($cnt == 0) {
 				//Init a message for notification - only on the first run through
 				
@@ -394,6 +408,8 @@ class cls_layer
 		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
 		    	$send_message = false;
 		    	
+		    	
+		    	
 		    	if($layer_id) {
 					//This is on a particular layer - only send messages if they're after 20 minutes, so that we don't get a flurry of emails per message.
 					if($this->just_sent_message($layer_id, $message_id, '20') == false) {
@@ -404,6 +420,7 @@ class cls_layer
 					$send_message = true;
 				
 				}		    	
+		    	
 		    	
 		    	if($send_message == true) {
 			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
@@ -815,7 +832,20 @@ class cls_login
 	    $forum_accessed = false;
 	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
 	    
-	    	$ly = new cls_layer();
+	    	$ly = new cls_layer(); 
+			
+			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+				//We are a new user
+				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+			
+				$sh = new cls_ssshout();
+			
+				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
+				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+			}	    
+	    
+	    
+	    	
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 					//Yes the layer exists
@@ -823,7 +853,6 @@ class cls_login
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
-						
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
