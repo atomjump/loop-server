@@ -335,9 +335,11 @@ class cls_layer
 			//Always notify by email (if we don't have notifications enabled on our phone app - so that a delete can be clicked
 
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
+			error_log("With app:" . $with_app);
 			if($with_app == false) {
 
 				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
+					error_log("Sending email:" . $with_app);
 					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
 				}
 			}
@@ -397,6 +399,9 @@ class cls_layer
 		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
 		    	$send_message = false;
 		    	
+		    	
+		    	error_log("$layer_id:" . $layer_id);
+		    	
 		    	if($layer_id) {
 					//This is on a particular layer - only send messages if they're after 20 minutes, so that we don't get a flurry of emails per message.
 					if($this->just_sent_message($layer_id, $message_id, '20') == false) {
@@ -407,6 +412,8 @@ class cls_layer
 					$send_message = true;
 				
 				}		    	
+		    	
+		    	error_log("send_message:" . $send_message);
 		    	
 		    	if($send_message == true) {
 			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
