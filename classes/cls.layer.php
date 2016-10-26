@@ -48,6 +48,7 @@ class cls_layer
 					
 				}
 				
+				error_log("From inside get_layer_id() a, " . $_SESSION['access-layer-granted'] .  " public_code:" . $row['var_public_code']);
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
 									if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
@@ -95,8 +96,12 @@ class cls_layer
 				    	}
 				    	
 				    	//Should this be here?
+				    	error_log("From inside get_layer_id() b, " . $_SESSION['access-layer-granted'] .  " public_code:" . $row['var_public_code']);
+				    	
 				    	if($row['var_public_code']) {
 							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+							
+							
 											if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 								$_SESSION['access-layer-granted'] = 'false';
 							}
