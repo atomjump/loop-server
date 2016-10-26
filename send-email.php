@@ -10,6 +10,8 @@ foreach ($argv as $arg) {
         $_REQUEST[$e[0]]=0;
 }
 
+error_log("send-email.php getcwd:" . getcwd());
+
 if(isset($_REQUEST['staging'])) {
 	$staging = $_REQUEST['staging'];
 
