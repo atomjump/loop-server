@@ -15,6 +15,8 @@ if(isset($_REQUEST['staging'])) {
 
 }
 
+error_log("Sending email " . json_encode($_REQUEST));
+
 //note: this script can be run from e.g. a plugin's path, therefore it needs to be able to be run independently
 //from it's own directory.
 require(__DIR__ . '/config/db_connect.php');
