@@ -6,9 +6,9 @@
 	$agent = "AJ feed bot - https://atomjump.com";
 	ini_set("user_agent",$agent);
 	$_SERVER['HTTP_USER_AGENT'] = $agent;
-	$start_path = "/var/www/html/feedback/";
 
-	include_once('config/db_connect.php');		
+
+	include_once(__DIR__ . '/config/db_connect.php');		
 
 	$sql = "UPDATE tbl_ssshout SET enm_active = false where enm_active = true and enm_status = 'typing' and date_when_shouted < DATE_SUB(NOW(),INTERVAL 15 MINUTE)";
 	dbquery($sql) or die("Unable to execute query $sql " . dberror());

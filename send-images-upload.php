@@ -5,7 +5,6 @@
 	//			eg php send-images.php all      (transfers all images to all servers)
 	//				php send-images.php all http://172.100.21.34:1080/copy-image.php (Transfers all images to 172.100.21.34 server)
 
-	//$staging = true;		//TEMPIN, only during testing
 	$start_path = getcwd() . "/";
 	//Send all .jpg images in this folder - to be run from the command line. If a param is set - just send that image
 	include_once('config/db_connect.php');		

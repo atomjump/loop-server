@@ -1,14 +1,8 @@
 <?php
 
- //On a one-off, convert all messages into processed version of message.
+    //On a one-off, convert all messages into processed version of message. You would use this script
+    //if the software for processing messages had changed, and you needed to refresh for the new format.
 
-	$start_path = "/var/www/html/feedback/";
-
-	//Only include the following three lines when testing on staging server
-	/*$start_path = "/var/www/html/atomjump_staging/";
-	$_SERVER["SERVER_NAME"] = "staging.atomjump.com";		//TESTING ONLY!
-	$staging = true;			//TESTING ONLY
-	*/
 	
 	$notify = false;
 	include_once('config/db_connect.php');	

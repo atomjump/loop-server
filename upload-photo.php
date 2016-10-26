@@ -1,18 +1,16 @@
 <?php
-		//Upload a photo to Amazon
+	//Upload a photo to Amazon
 		
-		//$staging = true;		//TESTING ON STAGING ONLY
 
-	
-	include_once("config/db_connect.php");
+	include_once(__DIR__ ."/config/db_connect.php");
 
 
 
 	$_REQUEST['title'] = "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);		//random image name for now - TODO better with ID
 	$image_path = "/images/im/";
 	$message = "";
-	$images_script = "send-images-upload.php";
-	require_once("components/upload.php");
+	$images_script = __DIR__ . "/send-images-upload.php";
+	require_once(__DIR__ . "/components/upload.php");
 	
 	if($uploaded == true) {		
 		$url = $cnf['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";

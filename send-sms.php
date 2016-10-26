@@ -12,11 +12,14 @@ if(isset($_REQUEST['staging'])) {
    $staging = $_REQUEST['staging'];
 }
 
-require('config/db_connect.php');
+//note: this script can be run from e.g. a plugin's path, therefore it needs to be able to be run independently
+//from it's own directory.
+require(__DIR__ . '/config/db_connect.php');
 
-require("classes/cls.basic_geosearch.php");
-require("classes/cls.layer.php");
-require("classes/cls.ssshout.php");
+require(__DIR__ . "/classes/cls.basic_geosearch.php");
+require(__DIR__ . "/classes/cls.layer.php");
+require(__DIR__ . "/classes/cls.ssshout.php");
+
 
 
 
