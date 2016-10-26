@@ -842,7 +842,20 @@ class cls_login
 	    $forum_accessed = false;
 	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
 	    
-	    	$ly = new cls_layer();
+	    	$ly = new cls_layer(); 
+			
+			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+				//We are a new user
+				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+			
+				$sh = new cls_ssshout();
+			
+				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
+				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+			}	    
+	    
+	    
+	    	
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 					//Yes the layer exists
