@@ -731,6 +731,7 @@ function set_options_cookie() {
 				
 				case 'INCORRECT_PASS':		
 					msg = lsmsg.msgs[lang].passwordWrong;
+					$('#comment-password-vis').show();
 					toggle = false;
 				break;
 				
