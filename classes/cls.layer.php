@@ -824,6 +824,7 @@ class cls_login
 	{
 		//Convert email into latin
 		$email = iconv("UTF-8", "ISO-8859-1", $email_utf8);
+		error_log("Email: " . $email);
 		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
