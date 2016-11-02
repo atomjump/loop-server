@@ -171,7 +171,7 @@
 
 		if(($_REQUEST['your_name'] != "")&&($_REQUEST['your_name'] != "Your Name"))  {
 			$user_name = $_REQUEST['your_name'];
-			$_SESSION['temp-user-name'] = $user_name;
+			$_SESSION['temp-user-name'] = urldecode($user_name);
 		} else {
 			if($_SESSION['temp-user-name']) {
 				$user_name = $_SESSION['temp-user-name'];
