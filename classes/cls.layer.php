@@ -822,13 +822,6 @@ class cls_login
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
-		//Convert email into latin REMOVE ME
-		/*$email = iconv("UTF-8", "ISO-8859-1", $email_utf8);
-		if(($email_utf8 != "")&&($email == false)) {
-			//We currently don't support utf8 chars in email addresses
-			return "We currently don't support UTF8 characters in your email address.";
-		
-		}*/
 		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
