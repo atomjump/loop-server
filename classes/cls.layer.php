@@ -825,6 +825,11 @@ class cls_login
 		//Convert email into latin
 		$email = iconv("UTF-8", "ISO-8859-1", $email_utf8);
 		error_log("Email: " . $email);
+		if(($email_utf8 != "")&&($email == false)) {
+			//We currently don't support utf8 chars in email addresses
+			return "Sorry, we currently don't support UTF8 characters in your email address.";
+		
+		}
 		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
