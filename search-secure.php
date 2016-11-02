@@ -448,9 +448,10 @@
 									<div id="user-id-show" class="form-group" style="display:none;">
 										<div style="color: red;" id="user-id-show-set"></div>
 						  			</div>
-									<div class="form-group">
+									
+								</div>
+								<div class="form-group">
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
-									</div>
 								</div>
 								<br/>
 							 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?></button>
