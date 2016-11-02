@@ -827,7 +827,7 @@ class cls_login
 		error_log("Email: " . $email);
 		if(($email_utf8 != "")&&($email == false)) {
 			//We currently don't support utf8 chars in email addresses
-			return "Sorry, we currently don't support UTF8 characters in your email address.";
+			return "We currently don't support UTF8 characters in your email address.";
 		
 		}
 		
