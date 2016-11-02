@@ -150,7 +150,7 @@ class php_Session
            
             // create new record
             $array['session_id']   = $session_id;
-            $array['session_data'] = clean_data($session_data);
+            $array['session_data'] = clean_data(iconv("UTF-8", "ISO-8859-1", $session_data));
             
             $sql = "INSERT INTO php_session(session_id,
 					date_created,
@@ -168,11 +168,11 @@ class php_Session
             if (isset($_SESSION['logged-user'])) {//was user_id
                 $array['user_id']  = $_SESSION['logged-user'];//was user_id
             } // if
-            $array['session_data'] = clean_data($session_data);
+            $array['session_data'] = clean_data(iconv("UTF-8", "ISO-8859-1", $session_data));
             $sql = "UPDATE php_session SET 
 				user_id = '" . clean_data($array['user_id']) .  "' ,
 				last_updated = NOW(),
-				session_data ='" . utf8_decode($array['session_data']) . "'
+				session_data ='" . $array['session_data'] . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
 
 			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
