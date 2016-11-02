@@ -42,7 +42,7 @@ function getCookie(cname)
 	var ca = document.cookie.split(';');
 	for(var i=0; i<ca.length; i++)
 	{
-		var c = myTrim(ca[i]);// ie8 didn't support .trim();
+		var c = myTrim(decodeURIComponent(ca[i]));// ie8 didn't support .trim();
 		if (c.indexOf(name)==0) return c.substring(name.length,c.length);
 	}
 	return "";
@@ -636,9 +636,10 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 
 function set_options_cookie() {
 
-    var yourName = $('#your-name-opt').val();
-    var email = $('#email-opt').val();
-    var phone = $('#phone-opt').val();
+	//See http://stackoverflow.com/questions/4901633/how-to-store-other-languages-unicode-in-cookies-and-get-it-back-again
+    var yourName = encodeURIComponent($('#your-name-opt').val());
+    var email = encodeURIComponent($('#email-opt').val());
+    var phone = encodeURIComponent($('#phone-opt').val());
     
     var sendNewUserMsg = true;
    
@@ -730,6 +731,7 @@ function set_options_cookie() {
 				
 				case 'INCORRECT_PASS':		
 					msg = lsmsg.msgs[lang].passwordWrong;
+					$('#comment-password-vis').show();
 					toggle = false;
 				break;
 				

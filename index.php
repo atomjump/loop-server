@@ -170,7 +170,7 @@
 
 
 		if(($_REQUEST['your_name'] != "")&&($_REQUEST['your_name'] != "Your Name"))  {
-			$user_name = $_REQUEST['your_name'];
+			$user_name = urldecode($_REQUEST['your_name']);
 			$_SESSION['temp-user-name'] = $user_name;
 		} else {
 			if($_SESSION['temp-user-name']) {
@@ -344,7 +344,7 @@
 	}
 
 	if($_COOKIE["your_name"]) {
-		$_REQUEST['your_name'] = $_COOKIE["your_name"];
+		$_REQUEST['your_name'] = urldecode($_COOKIE["your_name"]);
 
 	}
 
