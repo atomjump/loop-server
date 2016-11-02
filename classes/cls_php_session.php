@@ -158,7 +158,7 @@ class php_Session
 					session_data) VALUES ( '" . clean_data($array['session_id']) . "',
 								NOW(),
 								NOW(),
-								'" . $array['session_data'] . "')";
+								'" . utf8_decode($array['session_data']) . "')";
  	          
  	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
         
@@ -172,7 +172,7 @@ class php_Session
             $sql = "UPDATE php_session SET 
 				user_id = '" . clean_data($array['user_id']) .  "' ,
 				last_updated = NOW(),
-				session_data ='" . $array['session_data'] . "'
+				session_data ='" . utf8_decode($array['session_data']) . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
 
 			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
