@@ -30,9 +30,9 @@ CREATE TABLE `php_session` (
   `session_data` longtext,
   PRIMARY KEY (`session_id`),
   KEY `last_updated` (`last_updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+-- TODO: ALTER TABLE php_session CONVERT TO CHARACTER SET utf8;
 --
 -- Table structure for table `tbl_email`
 --
@@ -88,7 +88,7 @@ CREATE TABLE `tbl_group` (
   PRIMARY KEY (`int_group_id`),
   KEY `tbl_group12_id` (`int_user1_id`,`int_user2_id`),
   KEY `tbl_group21_id` (`int_user2_id`,`int_user1_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `tbl_user` (
   KEY `tbl_user_FKIndex1` (`int_user_id`),
   KEY `tbl_user_last_ip` (`var_last_ip`),
   KEY `tbl_user_email` (`var_email`)
-) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=414 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -253,3 +253,8 @@ ALTER TABLE tbl_subdomain ADD COLUMN `var_whisper_to` VARCHAR(255) DEFAULT NULL;
 
 
 CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
+
+
+ALTER TABLE php_session CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
+ALTER TABLE tbl_user CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
+ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
