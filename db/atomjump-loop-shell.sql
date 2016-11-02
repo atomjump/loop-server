@@ -254,7 +254,7 @@ ALTER TABLE tbl_subdomain ADD COLUMN `var_whisper_to` VARCHAR(255) DEFAULT NULL;
 
 CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
 
-
+-- Modify for international UTF-8 everywhere
 ALTER TABLE php_session CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 ALTER TABLE tbl_user CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
