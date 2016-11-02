@@ -823,6 +823,7 @@ class cls_login
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
+		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
 		//user_id has been added for the app, which doesn't have sessions as such.
