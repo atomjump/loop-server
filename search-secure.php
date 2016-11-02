@@ -14,10 +14,10 @@
 	if(isset($_REQUEST['possible_user'])) {
 	
 		if(isset($_REQUEST['check'])) {
-			if($sh->check_email_secure($_COOKIE['email'], $_REQUEST['check'])) {
+			if($sh->check_email_secure(urldecode($_COOKIE['email']), $_REQUEST['check'])) {
 				//Test if there is no password on this email account, and set ourselves as the logged in user
 				$sh->new_user($_COOKIE['email'], '');
-				$_SESSION['logged-email'] = $_COOKIE['email'];
+				$_SESSION['logged-email'] = urldecode($_COOKIE['email']);
 			}
 		}
 	
@@ -350,7 +350,7 @@
 							<input type="hidden" id="lon" name="lon" value="">
 							<input type="hidden" id="whisper_to" name="whisper_to" value="">
 							<input type="hidden" id="whisper_site" name="whisper_site" value="">
-							<input type="hidden" id="name-pass" name="your_name" value="<?php echo $_COOKIE['your_name']; ?>">
+							<input type="hidden" id="name-pass" name="your_name" value="<?php echo urldecode($_COOKIE['your_name']); ?>">
 							<input type="hidden" name="passcode" id="passcode-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 							<input type="hidden" id="reading" name="reading" value="">
 							<input type="hidden" name="remoteapp" value="true">
@@ -366,8 +366,8 @@
 							<input type="hidden" id="shout-id" name="shout_id" value="">
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
-							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
-							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
+							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
+							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
 							
 							<?php if($granted == true) { ?>
 								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-8">
@@ -407,20 +407,20 @@
 				
 					
 					<a id="comment-logout-text" href="javascript:" onclick="beforeLogout(function() {
-					             $.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );  });" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>><?php echo $msg['msgs'][$lang]['logoutLink'] ?></a>
+					             $.get( '<?php echo $root_server_url ?>/logout.php', function( data ) { logout(); } );  });" <?php if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) { ?>style="display: block;"<?php } else { ?>style="display: none;"<?php } ?>><?php echo $msg['msgs'][$lang]['logoutLink'] ?></a>
 					
-					<span id="comment-not-signed-in" <?php if($_COOKIE['email'] == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>><?php echo $msg['msgs'][$lang]['notSignedIn'] ?></span>
+					<span id="comment-not-signed-in" <?php if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>><?php echo $msg['msgs'][$lang]['notSignedIn'] ?></span>
 				</div>
 					
 				 <form id="options-frm" class="form" role="form" action="" onsubmit="return set_options_cookie();"  method="POST">
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
-							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo $_COOKIE['your_name']; } else { echo ''; } ?>" >
+							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo urldecode($_COOKIE['your_name']); } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
 		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
-						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterEmail'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['email'])) { echo $_COOKIE['email']; } else { echo ''; } ?>">
+						  					<input id="email-opt" name="email-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterEmail'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
 								</div>
 								<div><a id="comment-show-password" href="javascript:"><?php echo $msg['msgs'][$lang]['more'] ?></a></div>
 								<div id="comment-password-vis" style="display: none;">
@@ -430,7 +430,7 @@
 									</div>
 									<div  class="form-group">
 										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
-										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['phone'])) { echo $_COOKIE['phone']; } else { echo ''; } ?>">
+										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
 									</div>
 									<?php $sh->call_plugins_settings(null); //User added plugins here ?>									
 									<div style="float: right;">
@@ -525,7 +525,7 @@
 					ur = ur + '?email=' + email;
 					
 					//Also save this cookie
-					document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
+					document.cookie = 'email=' + encodeURIComponent(email) + '; path=/; expires=' + cookieOffset() + ';';
 				}
 				
 			

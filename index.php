@@ -344,7 +344,7 @@
 	}
 
 	if($_COOKIE["your_name"]) {
-		$_REQUEST['your_name'] = $_COOKIE["your_name"];
+		$_REQUEST['your_name'] = urldecode($_COOKIE["your_name"]);
 
 	}
 
