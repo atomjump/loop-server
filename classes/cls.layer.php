@@ -820,8 +820,11 @@ class cls_login
     }
 
 
-	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
+	public function confirm($email_utf8, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
+		//Convert email into latin
+		$email = iconv("UTF-8", "ISO-8859-1", $email_utf8)
+		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
 		//user_id has been added for the app, which doesn't have sessions as such.
