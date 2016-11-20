@@ -261,4 +261,5 @@ ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- Modify for ordered messages based on date/time, not id.
 CREATE INDEX ordered_ssshout ON tbl_ssshout (date_when_shouted);
-
+CREATE INDEX ordered_ssshout_full ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip);
+CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip, int_author_id, int_whisper_to_id);
