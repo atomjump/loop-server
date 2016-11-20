@@ -553,6 +553,12 @@ $(document).ready(function() {
 					
          			if((keyCode === 13)||(keyCode === 10)) {
 						    //If a return, override the submit not the key. On iphone return is 10
+						    
+					    	if(typingTimer) {
+								clearTimeout(typingTimer);
+							}		//Remove any 'typing' timers, to prevent any sort of overlap with a slow commit which would potentially deactivate the message before it was commited
+
+						    
 						    return mg.commitMsg(sendPublic);
 
        				}
