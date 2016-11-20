@@ -778,14 +778,14 @@ class cls_ssshout
 				$new_message = true;
 			} else {
 			
-				//Check the message is not a repeat from the same ip
+				//Check the message is not a repeat from the same ip, within the last 5 seconds
 				if($ssshout_id) {
-					$sql = "SELECT int_ssshout_id  FROM tbl_ssshout WHERE var_ip = '". $ip ."' AND var_shouted = '" . clean_data($message) . "' AND TIMEDIFF(NOW(),date_when_shouted) < '00:05:00'";
+					$sql = "SELECT int_ssshout_id  FROM tbl_ssshout WHERE var_ip = '". $ip ."' AND var_shouted = '" . clean_data($message) . "' AND TIMEDIFF(NOW(),date_when_shouted) < '00:00:05'";
 			
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					if($row = db_fetch_array($result))
 					{
-						//Already exists - don't repeat.  Unless they're further than 5 minutes appart
+						//Already exists - don't repeat.  Unless they're further than 5 seconds apart
 						//e.g. a message like 'hi' which you do want to repeat
 						$new_message = false;
 					
