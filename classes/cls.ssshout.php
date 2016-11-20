@@ -1489,7 +1489,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				  }
 		 	} else {   //End of download == true
 		   		  	//Standard search
-			  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+			  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY date_when_shouted DESC LIMIT $initial_records";
 			}
 
 

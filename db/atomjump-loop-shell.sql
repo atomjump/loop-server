@@ -258,3 +258,7 @@ CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
 ALTER TABLE php_session CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 ALTER TABLE tbl_user CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
+
+-- Modify for ordered messages based on date/time, not id.
+CREATE INDEX ordered_ssshout ON tbl_ssshout (date_when_shouted);
+
