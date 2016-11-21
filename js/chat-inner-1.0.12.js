@@ -321,7 +321,7 @@ var msg = function() {
 	function updateMsg(msgId, shoutId, status)
 	{
 		if(this.localMsg[msgId]) {
-			if(shoutId) {  
+			if((shoutId)&&(shoutId != "")) {  
 				this.localMsg[msgId].shoutId = shoutId;
 			}
 			if(status) {
