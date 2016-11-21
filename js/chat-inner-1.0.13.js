@@ -226,6 +226,21 @@ var msg = function() {
 	this.localMsgId = 1;
 	this.localMsg = {};	//Must be an object for iteration
 	
+	/*
+	
+		msg.status:
+		"requestId" :  started typing a new message, so waiting for an id back from the server
+		"committed" :  message has been committed locally (and is on a queue), but not actually started to be sent
+		"deactivate" :  message should be deactivated/hidden
+		"restarting" :  typing is restarting, so the 'typing' message needs to be shown again
+		"typing" :    user is currently typing
+		"sending" :   message has been taken onto the sending queue to the server
+		"complete" :   message confirmation back from the server - has been sent to the server
+		"gotid"   :  have received a reply from the server - and the server message id has been set.
+		"lostid"   : have received a message from the server and didn't get an id, or we had an error from the server and so got no id either
+	
+	*/
+	
 	function newMsg(whisper)
 	{
 		this.localMsg[this.localMsgId] = {};
@@ -250,12 +265,7 @@ var msg = function() {
 		
 		//Commiting a new message locally		
 		if(this.localMsg[this.localMsgId]) {
-		
-			if(typingTimer) {
-				clearTimeout(typingTimer);
-			}		//Remove any 'typing' timers, to prevent any sort of overlap with a slow commit which would potentially deactivate the message before it was commited
-
-		
+				
 			if(sendPublic == true) {
 			   //override
 			   whisper = false;
@@ -306,8 +316,14 @@ var msg = function() {
 
 	function updateMsg(msgId, shoutId, status)
 	{
-		this.localMsg[msgId].shoutId = shoutId;
-		this.localMsg[msgId].status = status;
+		if(this.localMsg[msgId]) {
+			if(shoutId) {  
+				this.localMsg[msgId].shoutId = shoutId;
+			}
+			if(status) {
+				this.localMsg[msgId].status = status;
+			}
+		}
 
 	}
 
@@ -315,12 +331,9 @@ var msg = function() {
 	function deactivateMsg(msgId)
 	{
 		//Remove message from server side
-		if(msgId == this.localMsgId) {	//only if the current message
-			this.localMsg[msgId].status = "deactivate";
+		this.localMsg[msgId].status = "deactivate";
 			
-			this.processEachMsg();
-			
-		}
+		this.processEachMsg();
 	}
 
 	
@@ -399,7 +412,8 @@ var msg = function() {
 
 
 						if((value.status != "complete")&&
-						   (value.status != "sending")) {
+						   (value.status != "sending")) {  		
+						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
 							
 							
 							//Check if we have our id yet
@@ -412,9 +426,22 @@ var msg = function() {
 								$('#shout-id').val(value.shoutId);
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
+							} else {
+								if(value.status == 'lostid') {
+									//OK, we entered something, it timed-out on the server or some other error,
+									//so we can try to commit the whole message now as a new server message anyway
+									$('#typing-now').val('off');
+									$('#message').val(value.shouted);
+									$('#msg-id').val(key);
+									$('#shout-id').val('');		//a blank id
+									submitShoutAjax(value.whisper, true, key);	//true for commit
+									mythis.localMsg[key].status = "sending";
+								
+								}
 							}
 
 						} else {
+							//Either 'complete' or 'sending'
 							if(value.status == "complete") {
 								//Complete - let's remove from our local array
 								mythis.finishMsg(key);
@@ -424,7 +451,7 @@ var msg = function() {
 						
 						if(value.shoutId) {
 								//Ready to restart
-								if(value.status =="restarting") {
+								if(value.status == "restarting") {
 									$('#typing-now').val('on');
 									$('#message').val(value.shouted);
 									$('#msg-id').val(key);
@@ -981,10 +1008,18 @@ function submitShoutAjax(whisper, commit, msgId)
 			if(mycommit == true) {
 				//If we clicked a commit button
 				
-				mg.updateMsg(myMsgId, myShoutId, "complete");
+				
 				
 				var results = response;
 				refreshResults(results);
+			
+				//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+				if(results.sid) {
+					//Session results
+					mg.updateMsg(myMsgId, results.sid, "complete");	
+				} else {
+					mg.updateMsg(myMsgId, myShoutId, "complete");
+				}
 			
 				clearTimeout(myLoopTimeout);		//reset the main timeout
 				doLoop();		//Then refresh the main list
@@ -993,6 +1028,11 @@ function submitShoutAjax(whisper, commit, msgId)
 				//Just a push button
 				var results = response;
 				refreshResults(results);
+				
+				if(!results.sid) {
+					mg.updateMsg(myMsgId, "", "lostid");
+					
+				}
 			
 			}
 			
@@ -1002,6 +1042,17 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 					
 		
+		})
+		.fail(function(err) {
+			
+			//OK no response
+			if(mycommit == true) {
+				//Failure to send a message - TODO warn user here.
+				
+			} else {
+				//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+				mg.updateMsg(myMsgId, "", "lostid");
+			}
 		});
 		
 	} else {
