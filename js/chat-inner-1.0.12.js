@@ -320,11 +320,13 @@ var msg = function() {
 
 	function updateMsg(msgId, shoutId, status)
 	{
-		if(typeof(shoutId) != 'undefined') {
-			this.localMsg[msgId].shoutId = shoutId;
-		}
-		if(status) {
-			this.localMsg[msgId].status = status;
+		if(this.localMsg[msgId]) {
+			if(shoutId) {  
+				this.localMsg[msgId].shoutId = shoutId;
+			}
+			if(status) {
+				this.localMsg[msgId].status = status;
+			}
 		}
 
 	}
