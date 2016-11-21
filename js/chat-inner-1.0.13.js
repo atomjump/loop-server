@@ -237,6 +237,7 @@ var msg = function() {
 		"sending" :   message has been taken onto the sending queue to the server
 		"complete" :   message confirmation back from the server - has been sent to the server
 		"gotid"   :  have received a reply from the server - and the server message id has been set.
+		"lostid"   : have received a message from the server and didn't get an id, or we had an error from the server and so got no id either
 	
 	*/
 	
@@ -264,12 +265,7 @@ var msg = function() {
 		
 		//Commiting a new message locally		
 		if(this.localMsg[this.localMsgId]) {
-		
-			/*This in here? if(typingTimer) {
-				clearTimeout(typingTimer);
-			}		//Remove any 'typing' timers, to prevent any sort of overlap with a slow commit which would potentially deactivate the message before it was commited
-			*/
-		
+				
 			if(sendPublic == true) {
 			   //override
 			   whisper = false;
@@ -335,12 +331,9 @@ var msg = function() {
 	function deactivateMsg(msgId)
 	{
 		//Remove message from server side
-		//TESTING OUTif(msgId == this.localMsgId) {	//only if the current message
-			this.localMsg[msgId].status = "deactivate";
+		this.localMsg[msgId].status = "deactivate";
 			
-			this.processEachMsg();
-			
-		//}
+		this.processEachMsg();
 	}
 
 	
