@@ -434,7 +434,7 @@ var msg = function() {
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
 							} else {
-								if(value.status = 'lostid') {
+								if(value.status == 'lostid') {
 									//OK, we entered something, it timed-out on the server or some other error,
 									//so we can try to commit the whole message now as a new server message anyway
 									$('#typing-now').val('off');
@@ -458,7 +458,7 @@ var msg = function() {
 						
 						if(value.shoutId) {
 								//Ready to restart
-								if(value.status =="restarting") {
+								if(value.status == "restarting") {
 									$('#typing-now').val('on');
 									$('#message').val(value.shouted);
 									$('#msg-id').val(key);
