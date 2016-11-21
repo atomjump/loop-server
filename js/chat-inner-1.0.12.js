@@ -236,7 +236,7 @@ var msg = function() {
 		"typing" :    user is currently typing
 		"sending" :   message has been taken onto the sending queue to the server
 		"complete" :   message confirmation back from the server - has been sent to the server
-		
+		"gotid"   :  have received a reply from the server - and the server message id has been set.
 	
 	*/
 	
@@ -420,7 +420,7 @@ var msg = function() {
 
 						if((value.status != "complete")&&
 						   (value.status != "sending")) {  		
-						   //  So either: "committed", "restarting",  "typing"
+						   //  So either: "committed", "restarting",  "typing", "gotid"
 							
 							
 							//Check if we have our id yet
@@ -1015,10 +1015,13 @@ function submitShoutAjax(whisper, commit, msgId)
 			if(mycommit == true) {
 				//If we clicked a commit button
 				
-				mg.updateMsg(myMsgId, myShoutId, "complete");
+				
 				
 				var results = response;
 				refreshResults(results);
+			
+				//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+				mg.updateMsg(myMsgId, myShoutId, "complete");
 			
 				clearTimeout(myLoopTimeout);		//reset the main timeout
 				doLoop();		//Then refresh the main list
