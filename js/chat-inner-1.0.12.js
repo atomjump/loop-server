@@ -265,10 +265,10 @@ var msg = function() {
 		//Commiting a new message locally		
 		if(this.localMsg[this.localMsgId]) {
 		
-			if(typingTimer) {
+			/*This in here? if(typingTimer) {
 				clearTimeout(typingTimer);
 			}		//Remove any 'typing' timers, to prevent any sort of overlap with a slow commit which would potentially deactivate the message before it was commited
-
+			*/
 		
 			if(sendPublic == true) {
 			   //override
