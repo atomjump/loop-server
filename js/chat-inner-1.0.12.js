@@ -1021,7 +1021,12 @@ function submitShoutAjax(whisper, commit, msgId)
 				refreshResults(results);
 			
 				//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-				mg.updateMsg(myMsgId, myShoutId, "complete");
+				if(results.sid) {
+					//Session results
+					mg.updateMsg(myMsgId, results.sid, "complete");	
+				} else {
+					mg.updateMsg(myMsgId, myShoutId, "complete");
+				}
 			
 				clearTimeout(myLoopTimeout);		//reset the main timeout
 				doLoop();		//Then refresh the main list
