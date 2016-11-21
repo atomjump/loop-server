@@ -321,7 +321,7 @@ var msg = function() {
 	function updateMsg(msgId, shoutId, status)
 	{
 		if(this.localMsg[msgId]) {
-			if((shoutId)&&(shoutId != "")) {  
+			if(shoutId) {  
 				this.localMsg[msgId].shoutId = shoutId;
 			}
 			if(status) {
@@ -420,7 +420,7 @@ var msg = function() {
 
 						if((value.status != "complete")&&
 						   (value.status != "sending")) {  		
-						   //  So either: "committed", "restarting",  "typing", "gotid"
+						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
 							
 							
 							//Check if we have our id yet
@@ -434,17 +434,17 @@ var msg = function() {
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
 							} else {
-								
-								if(value.status == "committed") {
-									//Send a new message - we never got an initial shout id, for whatever reason
+								if(value.status = 'lostid') {
+									//OK, we entered something, it timed-out on the server or some other error,
+									//so we can try to commit the whole message now as a new server message anyway
 									$('#typing-now').val('off');
 									$('#message').val(value.shouted);
 									$('#msg-id').val(key);
-									$('#shout-id').val("");
+									$('#shout-id').val('');		//a blank id
 									submitShoutAjax(value.whisper, true, key);	//true for commit
 									mythis.localMsg[key].status = "sending";
-								}
 								
+								}
 							}
 
 						} else {
@@ -1035,6 +1035,11 @@ function submitShoutAjax(whisper, commit, msgId)
 				//Just a push button
 				var results = response;
 				refreshResults(results);
+				
+				if(!results.sid) {
+					mg.updateMsg(myMsgId, "", "lostid");
+					
+				}
 			
 			}
 			
@@ -1044,6 +1049,17 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 					
 		
+		})
+		.fail(function(err) {
+			
+			//OK no response
+			if(mycommit == true) {
+				//Failure to send a message - TODO warn user here.
+				
+			} else {
+				//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+				mg.updateMsg(myMsgId, "", "lostid");
+			}
 		});
 		
 	} else {
