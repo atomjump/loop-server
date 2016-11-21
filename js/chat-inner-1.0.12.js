@@ -320,7 +320,7 @@ var msg = function() {
 
 	function updateMsg(msgId, shoutId, status)
 	{
-		if(shoutId) {
+		if(typeof(shoutId) != 'undefined') {
 			this.localMsg[msgId].shoutId = shoutId;
 		}
 		if(status) {
