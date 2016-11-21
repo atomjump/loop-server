@@ -320,8 +320,12 @@ var msg = function() {
 
 	function updateMsg(msgId, shoutId, status)
 	{
-		this.localMsg[msgId].shoutId = shoutId;
-		this.localMsg[msgId].status = status;
+		if(shoutId) {
+			this.localMsg[msgId].shoutId = shoutId;
+		}
+		if(status) {
+			this.localMsg[msgId].status = status;
+		}
 
 	}
 
@@ -429,13 +433,15 @@ var msg = function() {
 								mythis.localMsg[key].status = "sending";
 							} else {
 								
-								//Send a new message - we never got an initial shout id, for whatever reason
-								$('#typing-now').val('off');
-								$('#message').val(value.shouted);
-								$('#msg-id').val(key);
-								$('#shout-id').val("");
-								submitShoutAjax(value.whisper, true, key);	//true for commit
-								mythis.localMsg[key].status = "sending";
+								if(value.status == "committed") {
+									//Send a new message - we never got an initial shout id, for whatever reason
+									$('#typing-now').val('off');
+									$('#message').val(value.shouted);
+									$('#msg-id').val(key);
+									$('#shout-id').val("");
+									submitShoutAjax(value.whisper, true, key);	//true for commit
+									mythis.localMsg[key].status = "sending";
+								}
 								
 							}
 
