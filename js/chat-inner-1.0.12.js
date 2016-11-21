@@ -335,12 +335,12 @@ var msg = function() {
 	function deactivateMsg(msgId)
 	{
 		//Remove message from server side
-		if(msgId == this.localMsgId) {	//only if the current message
+		//TESTING OUTif(msgId == this.localMsgId) {	//only if the current message
 			this.localMsg[msgId].status = "deactivate";
 			
 			this.processEachMsg();
 			
-		}
+		//}
 	}
 
 	
