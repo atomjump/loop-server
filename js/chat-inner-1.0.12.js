@@ -226,6 +226,20 @@ var msg = function() {
 	this.localMsgId = 1;
 	this.localMsg = {};	//Must be an object for iteration
 	
+	/*
+	
+		msg.status:
+		"requestId" :  started typing a new message, so waiting for an id back from the server
+		"committed" :  message has been committed locally (and is on a queue), but not actually started to be sent
+		"deactivate" :  message should be deactivated/hidden
+		"restarting" :  typing is restarting, so the 'typing' message needs to be shown again
+		"typing" :    user is currently typing
+		"sending" :   message has been taken onto the sending queue to the server
+		"complete" :   message confirmation back from the server - has been sent to the server
+		
+	
+	*/
+	
 	function newMsg(whisper)
 	{
 		this.localMsg[this.localMsgId] = {};
@@ -399,7 +413,8 @@ var msg = function() {
 
 
 						if((value.status != "complete")&&
-						   (value.status != "sending")) {
+						   (value.status != "sending")) {  		
+						   //  So either: "committed", "restarting",  "typing"
 							
 							
 							//Check if we have our id yet
@@ -412,9 +427,20 @@ var msg = function() {
 								$('#shout-id').val(value.shoutId);
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
+							} else {
+								
+								//Send a new message - we never got an initial shout id, for whatever reason
+								$('#typing-now').val('off');
+								$('#message').val(value.shouted);
+								$('#msg-id').val(key);
+								$('#shout-id').val("");
+								submitShoutAjax(value.whisper, true, key);	//true for commit
+								mythis.localMsg[key].status = "sending";
+								
 							}
 
 						} else {
+							//Either 'complete' or 'sending'
 							if(value.status == "complete") {
 								//Complete - let's remove from our local array
 								mythis.finishMsg(key);
