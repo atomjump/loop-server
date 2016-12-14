@@ -89,21 +89,21 @@
 				global $cnf;
 				
 				if(!isset($images_script)) {
-					$script = "send-images.php";
+					$script = $local_server_path . "send-images.php";
 				
 				} else {
 					$script = $images_script;
 				
 				}
 				//$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $raw_file;
-				$cmd = $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $raw_file;
+				$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $raw_file;
 				error_log("Running " . $cmd);
 				
 				$response = shell_exec($cmd);
 				
 				if($hi_res == true) {
 					//$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $hi_raw_file;
-					$cmd = $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $hi_raw_file;
+					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $hi_raw_file;
 					error_log("Running " . $cmd);
 					
 					$response = shell_exec($cmd);
