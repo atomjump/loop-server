@@ -625,7 +625,6 @@ class S3
 	*/
 	public static function putObject($input, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $requestHeaders = array(), $storageClass = self::STORAGE_CLASS_STANDARD, $serverSideEncryption = self::SSE_NONE)
 	{
-		error_log("Putting Object: " . $input . " to bucket " . $bucket . " uri:" . $uri);
 		if ($input === false) return false;
 		$rest = new S3Request('PUT', $bucket, $uri, self::$endpoint);
 
