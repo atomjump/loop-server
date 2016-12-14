@@ -357,6 +357,7 @@ class S3
 	*/
 	private static function __triggerError($message, $file, $line, $code = 0)
 	{
+		error_log($message);			//Added by AtomJump
 		if (self::$useExceptions)
 			throw new S3Exception($message, $file, $line, $code);
 		else
