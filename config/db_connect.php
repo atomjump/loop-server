@@ -431,6 +431,7 @@
 	{
 			//$raw_file is the hello.jpg, $filename is test/hello.jog
 			//Share to Amazon S3
+			//Returns 'false' if image is not successfully put to Amazon, but otherwise 'true'
 			global $local_server_path;
 			global $cnf;
 			
@@ -443,6 +444,9 @@
 	
 			if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
 				//Uploaded correctly
+			} else {
+				//Error uploading to Amazon
+				return false;
 			}
 		
 		
@@ -483,6 +487,8 @@
 
 		        
 		     }
+		     
+		     return true;
 		
 	
 	}

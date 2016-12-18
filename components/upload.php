@@ -43,16 +43,16 @@
 			$message .= "&nbsp;Your file was not uploaded.";
 		// if everything is ok, try to upload file
 		} else {
-					if (move_uploaded_file($file["tmp_name"], $target_file)) {
+			if (move_uploaded_file($file["tmp_name"], $target_file)) {
 			
-					$message .= "The file ". basename( $file["name"]). " has been uploaded.";
+				$message .= "The file ". basename( $file["name"]). " has been uploaded.";
 				
 				//Resize the image
 				$src = imagecreatefromjpeg($target_file);        
 				list($width, $height) = getimagesize($target_file); 
 
 				$ratio = $height / $width;
-				$resize = true;	//false;
+				$resize = true;
 					
 				$base_size = 800;
 				
@@ -63,16 +63,16 @@
 					imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
 					imagejpeg($tmp, $filename, 75);		//75% quality - this saves a lot on download space
 					
-						$hi_res = true;
-						//We want a hi res version too
-						$base_size = 1280;
-						
-						$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
-						$filename = $hi_target_file;
+					$hi_res = true;
+					//We want a hi res version too
+					$base_size = 1280;
+					
+					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
+					$filename = $hi_target_file;
 
-						imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
-						imagejpeg($tmp, $filename, 95);		//95% quality - this produces a good quality image for slower secondary downloads	
-						
+					imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
+					imagejpeg($tmp, $filename, 95);		//95% quality - this produces a good quality image for slower secondary downloads	
+					
 				}
 
 			
@@ -86,25 +86,39 @@
 				//Copy across to the other servers for future reference - but do in a separate process
 
 				global $local_server_path;
+				global $cnf;
 				
 				if(!isset($images_script)) {
-					$script = "send-images.php";
+					$script = $local_server_path . "send-images.php";
 				
 				} else {
 					$script = $images_script;
 				
 				}
-				$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . $script . ' ' . $raw_file;
+				//$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $raw_file;
+				$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $raw_file;
+				error_log("Running " . $cmd);
+				
 				$response = shell_exec($cmd);
 				
 				if($hi_res == true) {
-					$cmd = 'nohup nice -n 10 /usr/bin/php  ' . $local_server_path . $script . ' ' . $hi_raw_file;
+					//$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] . ' ' . $local_server_path . $script . ' ' . $hi_raw_file;
+					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $hi_raw_file;
+					error_log("Running " . $cmd);
+					
 					$response = shell_exec($cmd);
-			
+					
 				
 				}
-			
+				
+				if($response == '') {
+					//A blank response signals all clear
 					$uploaded = true;
+				} else {
+					$uploaded = false;
+					$message .= "&nbsp;Sorry, there was an error uploading your file to Amazon.";
+				
+				}
 				
 			} else {
 				$message .= "&nbsp;Sorry, there was an error uploading your file.";
