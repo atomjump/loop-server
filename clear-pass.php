@@ -57,7 +57,7 @@
 	     //Send an email to the logged email
 	     $_SESSION['temp-email'] = $email;
 	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset); 
-	     cc_mail($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
+	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
 	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
 	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
