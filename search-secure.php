@@ -125,7 +125,7 @@
 	header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 	header("Pragma: no-cache"); // HTTP/1.0
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-		
+	header('P3P: CP="NOI ADM DEV COM NAV OUR STP"');		//This is a test to work on ajmp.co in Safari. See http://stackoverflow.com/questions/389456/cookie-blocked-not-saved-in-iframe-in-internet-explorer	
 	
 ?><!DOCTYPE html>
 <html lang="en">
