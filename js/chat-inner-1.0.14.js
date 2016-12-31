@@ -846,7 +846,7 @@ function set_options_cookie() {
 	            if(mytype[1]) {
 			        //carry out a reload of the page too
 			        if(mytype[1] === "RELOAD") {
-			            location.reload(true);		//Testing true
+			            location.reload();		
 			        }
 			    }
 	
