@@ -1152,7 +1152,7 @@ class cls_ssshout
 			//In this case we have a slightly different url definition, because we don't want to replace the dollar amount with a url link:
 			//Turn any strings which are entirely chars (and not numbers) and include dots into urls
 			//Convert any links into a href links
-			$my_line= preg_replace('@(\s)((https?://)?([-\D]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 			
 		} else {		
 				
