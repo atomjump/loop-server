@@ -1188,7 +1188,7 @@ class cls_ssshout
 			}
 			
 			
-			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '" onclick="return false;">$1</a>', $my_line);
+			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
 			$include_payment = true;  //switch on flag	
 			
 		}
