@@ -48,9 +48,6 @@ function getCookie(cname)
 	return "";
 }
 
-function setCookieNew(name,value,expires){
-   document.cookie = name + "=" + value + ((expires==null) ? "" : ";expires=" + expires.toGMTString());
-}
 
 function cookieOffset()
 {

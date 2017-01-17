@@ -21,6 +21,7 @@ upload_max_filesize = 10M
 max_execution_time = 200
 service apache2 reload
 ```
+Ram's first Change from Local Machine.
 
 Imagemagick can be used (Ubuntu command):
 ```

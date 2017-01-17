@@ -1098,6 +1098,7 @@ class cls_ssshout
         $orig_line = $my_line;
         global $msg;
         global $lang;
+        global $root_server_url;
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
@@ -1106,57 +1107,14 @@ class cls_ssshout
         }
 		
 		
+		
+		
+		
 		//Turn xxx@ into clickable atomjump links
 		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
-				
-		//Turn any strings which are entirely chars/numbers and include dots into urls
-		//Convert any links into a href links
-		
-		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
-		
-		
-		//Turn video links on youtube into embedded thumbnail which plays at youtube  
-		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
-		
-
-		//Turn uploaded images into responsive images, with a click through to the hi-res image
-		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	//<a href='$1'></a> 
-
-
-		//Turn images into responsive images, with a click through to the image itself
-		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	//<a href='$1'></a> 
-		
-		
-
-
-		//because you want the url to be an external link the href needs to start with 'http://'
-		//Replace any href which doesn't have htt at the start
-		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
-		
-		
-		//Turn .atomjump.com links into xxx@ clickable links
-		$my_line = preg_replace("/>(http:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
-
-
-		//Turn long links into smaller 'More Info' text only (except where an image)
-		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
-		
-
-		
-
-		//Turn names into an ip address private whisper link
-		if($ip != "") {
-		
-		 $privately = $msg['msgs'][$lang]['social']['privately'];
-		 $private = "true";  //true
-		 $shortcode = $this->is_social($my_line);
-		 if($shortcode != "") {
-		    $private = "false";  //false
-		    $privately = $msg['msgs'][$lang]['social']['publiclyViaSocial'];
-		 } 
-			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		//old /(.*?):\s/i
-		}
-		
+			
+			
+		//Check for a payment link					
 		if(preg_match('/pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar)/i', $my_line, $pay)) {
 			//Generate the user's email address for correct payment link
 			//$pay[1] = amount, $pay[2] = currency
@@ -1188,10 +1146,68 @@ class cls_ssshout
 			}
 			
 			
-			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
+			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
 			$include_payment = true;  //switch on flag	
 			
+			//In this case we have a slightly different url definition, because we don't want to replace the dollar amount with a url link:
+			//Turn any strings which are entirely chars (and not numbers) and include dots into urls
+			//Convert any links into a href links
+			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+			
+		} else {		
+				
+			//Turn any strings which are entirely chars/numbers and include dots into urls
+			//Convert any links into a href links
+			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		
 		}
+		
+		
+		//Turn video links on youtube into embedded thumbnail which plays at youtube  
+		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
+		
+
+		//Turn uploaded images into responsive images, with a click through to the hi-res image
+		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
+
+
+		//Turn images into responsive images, with a click through to the image itself
+		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
+		
+		
+		//Turn remote images by themselves into responsive images, with a click through to the image itself
+		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
+
+
+		//because you want the url to be an external link the href needs to start with 'http://'
+		//Replace any href which doesn't have htt at the start
+		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
+		
+		
+		//Turn .atomjump.com links into xxx@ clickable links
+		$my_line = preg_replace("/>(http:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
+
+
+		//Turn long links into smaller 'More Info' text only (except where an image)
+		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
+		
+
+		
+
+		//Turn names into an ip address private whisper link
+		if($ip != "") {
+		
+		 $privately = $msg['msgs'][$lang]['social']['privately'];
+		 $private = "true";  //true
+		 $shortcode = $this->is_social($my_line);
+		 if($shortcode != "") {
+		    $private = "false";  //false
+		    $privately = $msg['msgs'][$lang]['social']['publiclyViaSocial'];
+		 } 
+			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		
+		}
+		
+		
 		
 		
 		
