@@ -1175,7 +1175,7 @@ class cls_ssshout
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 		
 		
-		//Experimental: Turn remote images into responsive images, with a click through to the image itself
+		//Turn remote images by themselves into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
 
