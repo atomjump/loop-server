@@ -1168,13 +1168,15 @@ class cls_ssshout
 		
 
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
-		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	//<a href='$1'></a> 
+		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
 
 
 		//Turn images into responsive images, with a click through to the image itself
-		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	//<a href='$1'></a> 
+		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 		
 		
+		//Experimental: Turn remote images into responsive images, with a click through to the image itself
+		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
 
 		//because you want the url to be an external link the href needs to start with 'http://'
@@ -1202,7 +1204,7 @@ class cls_ssshout
 		    $private = "false";  //false
 		    $privately = $msg['msgs'][$lang]['social']['publiclyViaSocial'];
 		 } 
-			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		//old /(.*?):\s/i
+			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		
 		}
 		
 		
