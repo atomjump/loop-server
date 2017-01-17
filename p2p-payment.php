@@ -86,7 +86,7 @@
 				$redirecturl = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=" . urlencode($email_to) . "&lc=US&item_name=". urlencode($msg). "&amount=".urlencode($_REQUEST['amount']). "&currency_code=". $_REQUEST['currencyCode'] ."&button_subtype=services&no_note=0&bn=PP%2dBuyNowBF%3abtn_buynowCC_LG%2egif%3aNonHostedGuest";
 				
 				
-				//Good but testing with js below: header("Location: " . $redirecturl);
+				header("Location: " . $redirecturl);
 			} else {
 				echo $msg['msgs'][$lang]['cannotVerifyForPayment'];
 				exit(0);
@@ -94,10 +94,3 @@
 		}
 
 ?>
-<html>
-    <head>
-    	<script>
-    	window.location = "<?php echo $redirecturl ?>";
-    	</script>
-	</head>
-</html>
