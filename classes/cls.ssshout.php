@@ -1112,7 +1112,7 @@ class cls_ssshout
 		//Turn any strings which are entirely chars/numbers and include dots into urls
 		//Convert any links into a href links
 		
-		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\D/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 		
 		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
