@@ -1107,13 +1107,52 @@ class cls_ssshout
         }
 		
 		
+		if(preg_match('/pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar)/i', $my_line, $pay)) {
+			//Generate the user's email address for correct payment link
+			//$pay[1] = amount, $pay[2] = currency
+			switch($pay[2]) {
+				case "pounds":
+					$currency = "GBP";
+				
+				break;
+				
+				case "pound":
+					$currency = "GBP";
+				
+				break;
+				
+				case "dollars":
+					$currency = "USD";
+				
+				break;
+				
+				case "dollar":
+					$currency = "USD";
+				break;
+				
+				default:
+					$currency = "USD";
+				
+				break;
+				
+			}
+			
+			
+			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
+			$include_payment = true;  //switch on flag	
+			
+		}
+		
+		
 		//Turn xxx@ into clickable atomjump links
 		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
+							
+				
 				
 		//Turn any strings which are entirely chars/numbers and include dots into urls
 		//Convert any links into a href links
-		
-		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		//Experiment: $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 		
 		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
@@ -1158,41 +1197,7 @@ class cls_ssshout
 			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		//old /(.*?):\s/i
 		}
 		
-		if(preg_match('/pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar)/i', $my_line, $pay)) {
-			//Generate the user's email address for correct payment link
-			//$pay[1] = amount, $pay[2] = currency
-			switch($pay[2]) {
-				case "pounds":
-					$currency = "GBP";
-				
-				break;
-				
-				case "pound":
-					$currency = "GBP";
-				
-				break;
-				
-				case "dollars":
-					$currency = "USD";
-				
-				break;
-				
-				case "dollar":
-					$currency = "USD";
-				break;
-				
-				default:
-					$currency = "USD";
-				
-				break;
-				
-			}
-			
-			
-			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="#" onclick="window.open(\"' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '\", \"_parent\"); return false;">$1</a>', $my_line);
-			$include_payment = true;  //switch on flag	
-			
-		}
+		
 		
 		
 		
