@@ -1107,6 +1107,14 @@ class cls_ssshout
         }
 		
 		
+		
+		
+		
+		//Turn xxx@ into clickable atomjump links
+		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
+			
+			
+		//Check for a payment link					
 		if(preg_match('/pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar)/i', $my_line, $pay)) {
 			//Generate the user's email address for correct payment link
 			//$pay[1] = amount, $pay[2] = currency
@@ -1141,18 +1149,18 @@ class cls_ssshout
 			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
 			$include_payment = true;  //switch on flag	
 			
+			//In this case we have a slightly different url definition, because we don't want to replace the dollar amount with a url link:
+			//Turn any strings which are entirely chars (and not numbers) and include dots into urls
+			//Convert any links into a href links
+			$my_line= preg_replace('@(\s)((https?://)?([-\D]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+			
+		} else {		
+				
+			//Turn any strings which are entirely chars/numbers and include dots into urls
+			//Convert any links into a href links
+			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		
 		}
-		
-		
-		//Turn xxx@ into clickable atomjump links
-		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
-							
-				
-				
-		//Turn any strings which are entirely chars/numbers and include dots into urls
-		//Convert any links into a href links
-		$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
-		//Experiment: $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);   //good $my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 		
 		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
