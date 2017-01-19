@@ -1221,7 +1221,8 @@ function doSearch()
 					records: records,
 					whisper_site: whisperSite
 											
-		}, function(response){ 
+		})
+		.done(function(response){ 
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
