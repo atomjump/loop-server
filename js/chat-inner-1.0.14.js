@@ -1211,7 +1211,45 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	
+	$.ajax(
+  		dataType: "json",
+  		url: serv + "/search-chat.php?callback=?",
+  		data: {
+					lat: $('#lat').val(),
+					lon: $('#lon').val(),
+					passcode: commentLayer,
+					units: 'mi',
+					volume: 1.00,
+					records: records,
+					whisper_site: whisperSite
+											
+		},
+		success: function(response){ 
+			 	if(portReset == true) {
+			 		port = "";			//reset the port if it had been set	
+			 	} else {
+			 		//This was still a residual reset middway when we clicked logout
+			 		//OK now we can reset the port next time we call - this is particularly after a logout is called
+			 		portReset = true;
+			 		return;		//Don't refresh the results on this request
+			 		
+			 			
+			 	}	  			
+				
+				
+				
+				var results = response;
+				refreshResults(results);
+				
+				
+		},
+		timeout: 2000, //1s timeout
+        complete: function () {
+        	$("#warnings").html("Warning: Waiting for a good connection.");
+			$("#warnings").show();
+        }
+    );
+	  /* Old way:
 	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),
 					lon: $('#lon').val(),
@@ -1221,8 +1259,9 @@ function doSearch()
 					records: records,
 					whisper_site: whisperSite
 											
-		})
-		.then(function(response){ 
+		}),
+		
+		,function(response){ 
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
@@ -1251,7 +1290,7 @@ function doSearch()
 		$("#warnings").show();
 				
 
-	});
+	}); */
 }
 
 
