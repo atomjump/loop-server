@@ -593,7 +593,7 @@ $(document).ready(function() {
 					//Register that we have started typing
 					if(currentlyTyping == false) {
 						currentlyTyping = true;
-						mg.newMsg(true);  //start typing private message
+			//TESTING OUT!!			mg.newMsg(true);  //start typing private message
 						registerNewKeypress();
 						
 					} else {
