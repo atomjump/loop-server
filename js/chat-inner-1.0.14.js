@@ -424,6 +424,7 @@ var msg = function() {
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
 							} else {
+								alert("Status" + value.status);		//TESTING IN!!!
 								if(value.status == 'lostid') {
 									//OK, we entered something, it timed-out on the server or some other error,
 									//so we can try to commit the whole message now as a new server message anyway
