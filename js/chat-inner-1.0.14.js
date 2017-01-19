@@ -400,7 +400,7 @@ var msg = function() {
 					$('#msg-id').val(key);		
 					$('#shout-id').val("");
 					
-					submitShoutAjax(whisper, false, key);	//false for typing
+	//TESTING THIS OUT!!!				submitShoutAjax(whisper, false, key);	//false for typing
 					
 				} else {
 					//Typing or waiting for completion
@@ -593,7 +593,7 @@ $(document).ready(function() {
 					//Register that we have started typing
 					if(currentlyTyping == false) {
 						currentlyTyping = true;
-			//TESTING OUT!!			mg.newMsg(true);  //start typing private message
+						mg.newMsg(true);  //start typing private message
 						registerNewKeypress();
 						
 					} else {
