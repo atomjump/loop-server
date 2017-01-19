@@ -998,67 +998,70 @@ function submitShoutAjax(whisper, commit, msgId)
 			url: ssshoutServer + '/index.php', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp"
-		}).done(function(response) {
+			dataType: "jsonp",
+			success: function(response) {
 	
-			ssshoutHasFocus = true;
+				ssshoutHasFocus = true;
 			
-			if(mycommit == true) {
-				//If we clicked a commit button
+				if(mycommit == true) {
+					//If we clicked a commit button
 				
 				
 				
-				var results = response;
-				refreshResults(results);
+					var results = response;
+					refreshResults(results);
 			
-				//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-				if(results.sid) {
-					//Session results
-					mg.updateMsg(myMsgId, results.sid, "complete");	
+					//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+					if(results.sid) {
+						//Session results
+						mg.updateMsg(myMsgId, results.sid, "complete");	
+					} else {
+						mg.updateMsg(myMsgId, myShoutId, "complete");
+					}
+			
+					clearTimeout(myLoopTimeout);		//reset the main timeout
+					doLoop();		//Then refresh the main list
 				} else {
-					mg.updateMsg(myMsgId, myShoutId, "complete");
-				}
-			
-				clearTimeout(myLoopTimeout);		//reset the main timeout
-				doLoop();		//Then refresh the main list
-			} else {
-				//Update screen and get the shout id only
-				//Just a push button
-				var results = response;
-				refreshResults(results);
+					//Update screen and get the shout id only
+					//Just a push button
+					var results = response;
+					refreshResults(results);
 				
-				if(!results.sid) {
-					mg.updateMsg(myMsgId, "", "lostid");
+					if(!results.sid) {
+						mg.updateMsg(myMsgId, "", "lostid");
 					
+					}
+			
 				}
 			
-			}
-			
-			//Go ahead and continue processing all messages outstanding
-			mg.processEachMsg();
+				//Go ahead and continue processing all messages outstanding
+				mg.processEachMsg();
 	
 		
 					
 		
-		})
-		.fail(function(err) {
+			},
+			timeout: 3000,
+			error: function(err) {
 			
-			//OK no response
-			if(mycommit == true) {
-				//Failure to send a message - warn user here.
+				//OK no response
+				if(mycommit == true) {
+					//Failure to send a message - warn user here.
+			
+					//Warn the user
+					$("#warnings").html("Warning: Waiting for a good connection.");
+					$("#warnings").show();
+			
+					//Process messages again in 10 seconds
+					setTimeout(function() {
+						mg.processEachMsg();
+					}, 10000);
+			
+				} else {
+					//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+					mg.updateMsg(myMsgId, "", "lostid");
+				}
 				
-				//Warn the user
-				$("#warnings").html("Warning: Waiting for a good connection.");
-				$("#warnings").show();
-				
-				//Process messages again in 10 seconds
-				setTimeout(function() {
-					mg.processEachMsg();
-				}, 10000);
-				
-			} else {
-				//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-				mg.updateMsg(myMsgId, "", "lostid");
 			}
 		});
 		
@@ -1243,54 +1246,12 @@ function doSearch()
 				
 				
 		},
-		timeout: 2000, //2s timeout
+		timeout: 3000, //3s timeout
         error: function () {
         	$("#warnings").html("Warning: Waiting for a good connection.");
 			$("#warnings").show();
         }
     });
-	  /* Old way:
-	 $.getJSON(serv + "/search-chat.php?callback=?", {
-					lat: $('#lat').val(),
-					lon: $('#lon').val(),
-					passcode: commentLayer,
-					units: 'mi',
-					volume: 1.00,
-					records: records,
-					whisper_site: whisperSite
-											
-		}),
-		
-		,function(response){ 
-			 	if(portReset == true) {
-			 		port = "";			//reset the port if it had been set	
-			 	} else {
-			 		//This was still a residual reset middway when we clicked logout
-			 		//OK now we can reset the port next time we call - this is particularly after a logout is called
-			 		portReset = true;
-			 		return;		//Don't refresh the results on this request
-			 		
-			 			
-			 	}	  			
-				
-				
-				
-				var results = response;
-				refreshResults(results);
-				
-				
-	})
-	.fail(function(err) {
-			
-		//OK no response
-		//Failure to read messages - warn user here.
-				
-		//Warn the user
-		$("#warnings").html("Warning: Waiting for a good connection.");
-		$("#warnings").show();
-				
-
-	}); */
 }
 
 
