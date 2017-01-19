@@ -1045,7 +1045,16 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 			//OK no response
 			if(mycommit == true) {
-				//Failure to send a message - TODO warn user here.
+				//Failure to send a message - warn user here.
+				
+				//Warn the user
+				$("#warnings").html("Warning: Waiting for a good connection.");
+				$("#warnings").show();
+				
+				//Process messages again in 10 seconds
+				setTimeout(function() {
+					mg.processEachMsg();
+				}, 10000);
 				
 			} else {
 				//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
@@ -1055,7 +1064,9 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 	} else {
 	
-		//TODO: Show warning for blank message sent?
+		//Show warning for blank message sent
+		$("#warnings").html("Warning: you tried to send a blank message.");
+		$("#warnings").show();
 	}
 	
 	
@@ -1106,6 +1117,7 @@ function refreshResults(results)
 	
 	if(results.res) {
 		if(results.res.length) {
+				$("#warnings").hide();		//All good - no warnings
 			
 			
 				var newLine = "";
@@ -1227,6 +1239,17 @@ function doSearch()
 				refreshResults(results);
 				
 				
+	})
+	.fail(function(err) {
+			
+		//OK no response
+		//Failure to read messages - warn user here.
+				
+		//Warn the user
+		$("#warnings").html("Warning: Waiting for a good connection.");
+		$("#warnings").show();
+				
+
 	});
 }
 

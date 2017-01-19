@@ -393,7 +393,7 @@
 							<?php } ?>
 					</form>
 			</div>
-			<div id="warnings" class="alert alert-warning" role="alert">TEST</div>
+			<div id="warnings" class="alert alert-warning" role="alert"></div>
 			<div id="comment-prev-messages">
 			</div>
 			<div style="display: none; color: #800000;" id="forum-logged-in">
