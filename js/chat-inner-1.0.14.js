@@ -400,7 +400,7 @@ var msg = function() {
 					$('#msg-id').val(key);		
 					$('#shout-id').val("");
 					
-	//TESTING THIS OUT!!!				submitShoutAjax(whisper, false, key);	//false for typing
+					submitShoutAjax(whisper, false, key);	//false for typing
 					
 				} else {
 					//Typing or waiting for completion
@@ -424,7 +424,6 @@ var msg = function() {
 								submitShoutAjax(value.whisper, true, key);	//true for commit
 								mythis.localMsg[key].status = "sending";
 							} else {
-								//alert("Status" + value.status);		//TESTING IN!!!
 								if((value.status == 'lostid')||
 								   (value.status == 'committed')) {
 									//OK, we entered something, it timed-out on the server or some other error,
