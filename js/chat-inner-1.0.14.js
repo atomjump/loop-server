@@ -1211,7 +1211,7 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	$.ajax(
+	$.ajax({
   		dataType: "json",
   		url: serv + "/search-chat.php?callback=?",
   		data: {
@@ -1248,7 +1248,7 @@ function doSearch()
         	$("#warnings").html("Warning: Waiting for a good connection.");
 			$("#warnings").show();
         }
-    );
+    });
 	  /* Old way:
 	 $.getJSON(serv + "/search-chat.php?callback=?", {
 					lat: $('#lat').val(),
