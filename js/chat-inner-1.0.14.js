@@ -1222,7 +1222,7 @@ function doSearch()
 					whisper_site: whisperSite
 											
 		})
-		.done(function(response){ 
+		.then(function(response){ 
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
