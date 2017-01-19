@@ -1243,8 +1243,8 @@ function doSearch()
 				
 				
 		},
-		timeout: 2000, //1s timeout
-        complete: function () {
+		timeout: 2000, //2s timeout
+        error: function () {
         	$("#warnings").html("Warning: Waiting for a good connection.");
 			$("#warnings").show();
         }
