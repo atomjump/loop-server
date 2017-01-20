@@ -1074,10 +1074,11 @@ function submitShoutAjax(whisper, commit, msgId)
 					//Failure to send a message - warn user here.
 			
 					//Warn the user
-					$("#warnings").html("Warning: Waiting for a good connection.");
+					$("#warnings").html("Warning: your message '" + mg.localMsg[myMsgId].shouted + "' will be sent when a connection is re-established.");
 					$("#warnings").show();
 					
-					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again
+					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+										//Note: Don't update the shoutID because we don't have it
 			
 					//Process messages again in 10 seconds
 					setTimeout(function() {
