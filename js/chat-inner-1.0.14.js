@@ -306,6 +306,12 @@ var msg = function() {
 
 		
 			records = showMore;	//If we had clicked more before, we want to reduce again
+		} else {
+			//Show warning for blank message sent
+			$("#warnings").html(lsmsg.msgs[lang].blankMessage);
+			$("#warnings").show();
+			$("#shouted").val('');	//Clear off
+		
 		}
 		return false;
 	}
