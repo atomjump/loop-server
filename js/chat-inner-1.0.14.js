@@ -14,7 +14,7 @@ var lsmsg = {
               more: 'More',
               lostConnection: 'Warning: Waiting for a good connection.',
               blankMessage: 'Warning: you tried to send a blank message.',
-              messageQueued: 'Warning: your message MESSAGE will be sent when a connection is re-established.'
+              messageQueued: 'Warning: your message \'MESSAGE\' will be sent when a connection is re-established.'
               
         },
         "es":{
@@ -28,7 +28,7 @@ var lsmsg = {
               more: 'Mas',
               lostConnection: 'Advertencia: Esperando una buena conexión.',
               blankMessage: 'Advertencia: ha intentado enviar un mensaje en blanco.',
-              messageQueued: 'Advertencia: su mensaje MESSAGE será enviado cuando se restablezca una conexión.'
+              messageQueued: 'Advertencia: su mensaje \'MESSAGE\' será enviado cuando se restablezca una conexión.'
         }       
     }
 }
