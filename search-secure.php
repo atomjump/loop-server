@@ -189,7 +189,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.14.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.0.15.js"></script> 
 			
 			
 	</head>
@@ -393,6 +393,7 @@
 							<?php } ?>
 					</form>
 			</div>
+			<div id="warnings" class="alert alert-warning" role="alert" style="display: none;"></div>
 			<div id="comment-prev-messages">
 			</div>
 			<div style="display: none; color: #800000;" id="forum-logged-in">

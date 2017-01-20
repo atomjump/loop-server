@@ -11,7 +11,11 @@ var lsmsg = {
               passwordStored: 'Thanks, your password is now set.',
               registration: 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.',
               badResponse: 'Sorry, response is: ',
-              more: 'More'
+              more: 'More',
+              lostConnection: 'Warning: Waiting for a good connection.',
+              blankMessage: 'Warning: you tried to send a blank message.',
+              messageQueued: 'Warning: your message \'MESSAGE\' will be sent when a connection is re-established.'
+              
         },
         "es":{
               defaultYourName: 'Tu Nombre',
@@ -21,7 +25,10 @@ var lsmsg = {
               passwordStored: 'Gracias, su contraseña se establece ahora.',
               registration: 'Gracias por registrarse. Para confirmar su dirección de correo electrónico que\'ve enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.',
               badResponse: 'Lo siento, la respuesta es: ',
-              more: 'Mas'
+              more: 'Mas',
+              lostConnection: 'Advertencia: Esperando una buena conexión.',
+              blankMessage: 'Advertencia: ha intentado enviar un mensaje en blanco.',
+              messageQueued: 'Advertencia: su mensaje \'MESSAGE\' será enviado cuando se restablezca una conexión.'
         }       
     }
 }
@@ -279,7 +286,7 @@ var msg = function() {
 
 			//Clear the shout input box
 			$('#shouted').val('');
-			$('#shouted').removeAttr('value');	//testing iphone
+			$('#shouted').removeAttr('value');	
 			if(isNativeAndroid) {
 				//If the keyboard is left on, the DOM isn't updated
 				hideKeyboard($('#shouted'));
@@ -299,6 +306,12 @@ var msg = function() {
 
 		
 			records = showMore;	//If we had clicked more before, we want to reduce again
+		} else {
+			//Show warning for blank message sent
+			$("#warnings").html(lsmsg.msgs[lang].blankMessage);
+			$("#warnings").show();
+			$("#shouted").val('');	//Clear off
+		
 		}
 		return false;
 	}
@@ -380,14 +393,31 @@ var msg = function() {
 					var myShoutId = value.shoutId;
 					var myKey = key;
 					
-					
-					$.getJSON(ssshoutServer + "/de.php?callback=?", {
-						mid: value.shoutId,
-						just_typing: 'on'
-					}, function(response){ 
-						var results = response;
-						refreshResults(results);
+					var thisThis = mythis;
+					$.ajax({
+						dataType: "json",
+						url: ssshoutServer + "/de.php?callback=?",
+						data: {
+							mid: value.shoutId,
+							just_typing: 'on'
+						},
+						success: function(response){ 
+							var results = response;
+							refreshResults(results);
+						},
+						timeout: 3000, //3s timeout
+						error: function () {
+							$("#warnings").html("Warning: Waiting for a good connection.");
+							$("#warnings").show();
+							
+							//Process messages again in 10 seconds
+							setTimeout(function() {
+								mg.processEachMsg();
+							}, 10000);
+						}
 					});
+					
+				
 				}
 			} else {
 
@@ -963,7 +993,7 @@ function submitShoutAjax(whisper, commit, msgId)
 	}
 	
 	
-	if(mg.localMsg[msgId].shouted) {
+	if((mg.localMsg[msgId].shouted)&& (mg.localMsg[msgId].shouted!='') && (mg.localMsg[msgId].shouted!='\n')) {
 		
 		if(window.location.href) {
 			var str = encodeURIComponent(window.location.href);
@@ -998,64 +1028,87 @@ function submitShoutAjax(whisper, commit, msgId)
 			url: ssshoutServer + '/index.php', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp"
-		}).done(function(response) {
+			dataType: "jsonp",
+			success: function(response) {
 	
-			ssshoutHasFocus = true;
+				ssshoutHasFocus = true;
 			
-			if(mycommit == true) {
-				//If we clicked a commit button
+				if(mycommit == true) {
+					//If we clicked a commit button
 				
 				
 				
-				var results = response;
-				refreshResults(results);
+					var results = response;
+					refreshResults(results);
 			
-				//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-				if(results.sid) {
-					//Session results
-					mg.updateMsg(myMsgId, results.sid, "complete");	
+					//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+					if(results.sid) {
+						//Session results
+						mg.updateMsg(myMsgId, results.sid, "complete");	
+					} else {
+						mg.updateMsg(myMsgId, myShoutId, "complete");
+					}
+			
+					clearTimeout(myLoopTimeout);		//reset the main timeout
+					doLoop();		//Then refresh the main list
 				} else {
-					mg.updateMsg(myMsgId, myShoutId, "complete");
-				}
-			
-				clearTimeout(myLoopTimeout);		//reset the main timeout
-				doLoop();		//Then refresh the main list
-			} else {
-				//Update screen and get the shout id only
-				//Just a push button
-				var results = response;
-				refreshResults(results);
+					//Update screen and get the shout id only
+					//Just a push button
+					var results = response;
+					refreshResults(results);
 				
-				if(!results.sid) {
-					mg.updateMsg(myMsgId, "", "lostid");
+					if(!results.sid) {
+						mg.updateMsg(myMsgId, "", "lostid");
 					
+					}
+			
 				}
 			
-			}
-			
-			//Go ahead and continue processing all messages outstanding
-			mg.processEachMsg();
+				//Go ahead and continue processing all messages outstanding
+				mg.processEachMsg();
 	
 		
 					
 		
-		})
-		.fail(function(err) {
+			},
+			timeout: 3000,
+			error: function(err) {
 			
-			//OK no response
-			if(mycommit == true) {
-				//Failure to send a message - TODO warn user here.
+				//OK no response
+				if(mycommit == true) {
+					//Failure to send a message - warn user here.
+			
+					//Warn the user
+					var wrn = lsmsg.msgs[lang].messageQueued;
+					wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+					$("#warnings").html(wrn);
+					$("#warnings").show();
+					
+					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+										//Note: Don't update the shoutID because we don't have it
+			
+					//Process messages again in 10 seconds
+					setTimeout(function() {
+						mg.processEachMsg();
+					}, 10000);
+			
+				} else {
+					//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+					mg.updateMsg(myMsgId, "", "lostid");
+				}
 				
-			} else {
-				//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-				mg.updateMsg(myMsgId, "", "lostid");
+			
+				
 			}
 		});
 		
 	} else {
 	
-		//TODO: Show warning for blank message sent?
+		//Show warning for blank message sent
+		$("#warnings").html(lsmsg.msgs[lang].blankMessage);
+		$("#warnings").show();
+		$("#shouted").val('');	//Clear off
+		
 	}
 	
 	
@@ -1106,6 +1159,7 @@ function refreshResults(results)
 	
 	if(results.res) {
 		if(results.res.length) {
+				$("#warnings").hide();		//All good - no warnings
 			
 			
 				var newLine = "";
@@ -1199,8 +1253,10 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	
-	 $.getJSON(serv + "/search-chat.php?callback=?", {
+	$.ajax({
+  		dataType: "json",
+  		url: serv + "/search-chat.php?callback=?",
+  		data: {
 					lat: $('#lat').val(),
 					lon: $('#lon').val(),
 					passcode: commentLayer,
@@ -1209,7 +1265,8 @@ function doSearch()
 					records: records,
 					whisper_site: whisperSite
 											
-		}, function(response){ 
+		},
+		success: function(response){ 
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
@@ -1227,7 +1284,13 @@ function doSearch()
 				refreshResults(results);
 				
 				
-	});
+		},
+		timeout: 3000, //3s timeout
+        error: function () {
+        	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
+			$("#warnings").show();
+        }
+    });
 }
 
 
