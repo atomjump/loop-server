@@ -1109,6 +1109,8 @@ function submitShoutAjax(whisper, commit, msgId)
 		//Show warning for blank message sent
 		$("#warnings").html(lsmsg.msgs[lang].blankMessage);
 		$("#warnings").show();
+		$("#shouted").value("");	//Clear off
+		
 	}
 	
 	
