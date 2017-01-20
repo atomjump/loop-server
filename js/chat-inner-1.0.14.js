@@ -380,14 +380,39 @@ var msg = function() {
 					var myShoutId = value.shoutId;
 					var myKey = key;
 					
+					var thisThis = mythis;
+					$.ajax({
+						dataType: "json",
+						url: ssshoutServer + "/de.php?callback=?",
+						data: {
+							mid: value.shoutId,
+							just_typing: 'on'
+						},
+						success: function(response){ 
+							var results = response;
+							refreshResults(results);
+						},
+						timeout: 3000, //3s timeout
+						error: function () {
+							$("#warnings").html("Warning: Waiting for a good connection.");
+							$("#warnings").show();
+							
+							//Process messages again in 10 seconds
+							setTimeout(function() {
+								mg.processEachMsg();
+							}, 10000);
+						}
+					});
 					
-					$.getJSON(ssshoutServer + "/de.php?callback=?", {
+					
+					
+					/*Old way: $.getJSON(ssshoutServer + "/de.php?callback=?", {
 						mid: value.shoutId,
 						just_typing: 'on'
 					}, function(response){ 
 						var results = response;
 						refreshResults(results);
-					});
+					});*/
 				}
 			} else {
 
@@ -1061,6 +1086,9 @@ function submitShoutAjax(whisper, commit, msgId)
 					//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
 					mg.updateMsg(myMsgId, "", "lostid");
 				}
+				
+				//TESTING: Go ahead and continue processing all messages outstanding
+				mg.processEachMsg();
 				
 			}
 		});
