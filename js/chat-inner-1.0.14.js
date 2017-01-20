@@ -11,7 +11,11 @@ var lsmsg = {
               passwordStored: 'Thanks, your password is now set.',
               registration: 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.',
               badResponse: 'Sorry, response is: ',
-              more: 'More'
+              more: 'More',
+              lostConnection: 'Warning: Waiting for a good connection.',
+              blankMessage: 'Warning: you tried to send a blank message.',
+              messageQueued: 'Warning: your message MESSAGE will be sent when a connection is re-established.'
+              
         },
         "es":{
               defaultYourName: 'Tu Nombre',
@@ -21,7 +25,10 @@ var lsmsg = {
               passwordStored: 'Gracias, su contraseña se establece ahora.',
               registration: 'Gracias por registrarse. Para confirmar su dirección de correo electrónico que\'ve enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.',
               badResponse: 'Lo siento, la respuesta es: ',
-              more: 'Mas'
+              more: 'Mas',
+              lostConnection: 'Advertencia: Esperando una buena conexión.',
+              blankMessage: 'Advertencia: ha intentado enviar un mensaje en blanco.',
+              messageQueued: 'Advertencia: su mensaje MESSAGE será enviado cuando se restablezca una conexión.'
         }       
     }
 }
@@ -1074,7 +1081,9 @@ function submitShoutAjax(whisper, commit, msgId)
 					//Failure to send a message - warn user here.
 			
 					//Warn the user
-					$("#warnings").html("Warning: your message '" + mg.localMsg[myMsgId].shouted + "' will be sent when a connection is re-established.");
+					var wrn = lsmsg.msgs[lang].messageQueued;
+					wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+					$("#warnings").html(wrn);
 					$("#warnings").show();
 					
 					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
@@ -1098,7 +1107,7 @@ function submitShoutAjax(whisper, commit, msgId)
 	} else {
 	
 		//Show warning for blank message sent
-		$("#warnings").html("Warning: you tried to send a blank message.");
+		$("#warnings").html(lsmsg.msgs[lang].blankMessage);
 		$("#warnings").show();
 	}
 	
@@ -1278,7 +1287,7 @@ function doSearch()
 		},
 		timeout: 3000, //3s timeout
         error: function () {
-        	$("#warnings").html("Warning: Waiting for a good connection.");
+        	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
     });
