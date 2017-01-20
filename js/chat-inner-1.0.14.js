@@ -987,7 +987,7 @@ function submitShoutAjax(whisper, commit, msgId)
 	}
 	
 	
-	if(mg.localMsg[msgId].shouted) {
+	if((mg.localMsg[msgId].shouted)&& (mg.localMsg[msgId].shouted!='') && (mg.localMsg[msgId].shouted!='\n')) {
 		
 		if(window.location.href) {
 			var str = encodeURIComponent(window.location.href);
