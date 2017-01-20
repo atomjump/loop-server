@@ -286,7 +286,7 @@ var msg = function() {
 
 			//Clear the shout input box
 			$('#shouted').val('');
-			$('#shouted').removeAttr('value');	//testing iphone
+			$('#shouted').removeAttr('value');	
 			if(isNativeAndroid) {
 				//If the keyboard is left on, the DOM isn't updated
 				hideKeyboard($('#shouted'));
@@ -411,15 +411,7 @@ var msg = function() {
 						}
 					});
 					
-					
-					
-					/*Old way: $.getJSON(ssshoutServer + "/de.php?callback=?", {
-						mid: value.shoutId,
-						just_typing: 'on'
-					}, function(response){ 
-						var results = response;
-						refreshResults(results);
-					});*/
+				
 				}
 			} else {
 
@@ -1109,7 +1101,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		//Show warning for blank message sent
 		$("#warnings").html(lsmsg.msgs[lang].blankMessage);
 		$("#warnings").show();
-		$("#shouted").value("");	//Clear off
+		$("#shouted").val('');	//Clear off
 		
 	}
 	
