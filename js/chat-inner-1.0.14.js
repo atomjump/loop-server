@@ -1077,7 +1077,7 @@ function submitShoutAjax(whisper, commit, msgId)
 					$("#warnings").html("Warning: Waiting for a good connection.");
 					$("#warnings").show();
 					
-					mg.updateMsg(myMsgId, myShoutId, "committed");	//Go back to committed rather than sending, so we will send again
+					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again
 			
 					//Process messages again in 10 seconds
 					setTimeout(function() {
