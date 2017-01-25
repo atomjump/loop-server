@@ -21,7 +21,6 @@ upload_max_filesize = 10M
 max_execution_time = 200
 service apache2 reload
 ```
-Ram's first Change from Local Machine.
 
 Imagemagick can be used (Ubuntu command):
 ```
@@ -39,7 +38,7 @@ Load balancers with haproxy,
 SSL server
 
 
-# Server Setup
+# Installation
 
 1. /server directory. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
 
@@ -67,7 +66,7 @@ chmod 777 /images/im
 ```
 
 
-# Optional Setup
+# Optional Installation
 
 Add two cron tasks to your server:
 
