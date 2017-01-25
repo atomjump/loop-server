@@ -25,5 +25,6 @@ $sh->deactivate_shout($_REQUEST['mid'], $just_typing);
 //For now, let anyone remove messages
 $ip = $ly->getRealIpAddr();
 
+echo "ok";
 
 ?>
