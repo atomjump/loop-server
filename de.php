@@ -28,6 +28,8 @@ $ip = $ly->getRealIpAddr();
 $json = "";
 
 //This is a jquery ajax json call, so we need a proper return
-echo $_GET['callback'] . "(" . json_encode($json) . ")";
+if(isset($_GET['callback'])) {
+	echo $_GET['callback'] . "(" . json_encode($json) . ")";
+}
 
 ?>
