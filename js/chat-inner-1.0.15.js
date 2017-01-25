@@ -1072,7 +1072,9 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 			},
 			timeout: 3000,
-			error: function(err) {
+			error: function(jqXHR, textStatus, errorThrown ) {
+				
+				alert("Mycommit:" + mycommit + " textStatus:" + textStatus + " errorThrown:" + errorThrown);
 			
 				//OK no response
 				if(mycommit == true) {
