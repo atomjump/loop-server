@@ -406,8 +406,9 @@ var msg = function() {
 							refreshResults(results);
 						},
 						timeout: 3000, //3s timeout
-						error: function () {
-							$("#warnings").html("Warning: Waiting for a good connection.");
+						error: function (jqXHR, textStatus, errorThrown) {
+									
+        					$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 							$("#warnings").show();
 							
 							//Process messages again in 10 seconds
@@ -1072,8 +1073,8 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 			},
 			timeout: 3000,
-			error: function(err) {
-			
+			error: function(jqXHR, textStatus, errorThrown ) {
+							
 				//OK no response
 				if(mycommit == true) {
 					//Failure to send a message - warn user here.
@@ -1286,7 +1287,8 @@ function doSearch()
 				
 		},
 		timeout: 3000, //3s timeout
-        error: function () {
+        error: function (jqXHR, textStatus, errorThrown) {
+							
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
