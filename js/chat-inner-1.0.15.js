@@ -406,8 +406,11 @@ var msg = function() {
 							refreshResults(results);
 						},
 						timeout: 3000, //3s timeout
-						error: function () {
-							$("#warnings").html("Warning: Waiting for a good connection.");
+						error: function (jqXHR, textStatus, errorThrown) {
+						
+							alert(" textStatus:" + textStatus + " errorThrown:" + errorThrown);
+			
+        					$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 							$("#warnings").show();
 							
 							//Process messages again in 10 seconds
@@ -1288,10 +1291,8 @@ function doSearch()
 				
 		},
 		timeout: 3000, //3s timeout
-        error: function (jqXHR, textStatus, errorThrown ) {
-				
-			alert(" textStatus:" + textStatus + " errorThrown:" + errorThrown);
-			
+        error: function (jqXHR, textStatus, errorThrown) {
+							
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
