@@ -407,9 +407,7 @@ var msg = function() {
 						},
 						timeout: 3000, //3s timeout
 						error: function (jqXHR, textStatus, errorThrown) {
-						
-							alert(" textStatus:" + textStatus + " errorThrown:" + errorThrown);
-			
+									
         					$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 							$("#warnings").show();
 							
