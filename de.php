@@ -25,6 +25,9 @@ $sh->deactivate_shout($_REQUEST['mid'], $just_typing);
 //For now, let anyone remove messages
 $ip = $ly->getRealIpAddr();
 
-echo "ok";
+$json = "";
+
+//This is a jquery ajax json call, so we need a proper return
+echo $_GET['callback'] . "(" . json_encode($json) . ")";
 
 ?>
