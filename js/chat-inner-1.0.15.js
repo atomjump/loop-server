@@ -1288,7 +1288,10 @@ function doSearch()
 				
 		},
 		timeout: 3000, //3s timeout
-        error: function () {
+        error: function (jqXHR, textStatus, errorThrown ) {
+				
+			alert(" textStatus:" + textStatus + " errorThrown:" + errorThrown);
+			
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
