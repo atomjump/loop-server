@@ -92,7 +92,7 @@
 					echo "Overriding with " . $cnt;
 					
 					$db_cnf = $db_cnf['scaleUp'][$cnt];
-					print_r($cb_cnf);
+					print_r($db_cnf );
 					return;
 				}
 
