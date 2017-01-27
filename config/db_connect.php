@@ -91,7 +91,7 @@
 		if((isset($db_cnf['scaleUp']))&&(isset($layer_name))) {	
 			//We are scaling up
 			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
-				if(preg_match($db_cnf['scaleUp'][$cnt]['labelRegExp'],$layer_name, $matches) == true) {
+				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
 					//Override with this database					
 					$db_cnf = $db_cnf['scaleUp'][$cnt];
 					return;
