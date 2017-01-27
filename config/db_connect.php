@@ -100,7 +100,7 @@
 	global $cnf;
 	$db_cnf = $cnf['db'];
 	
-	if(($cnf['db']['scaleUp'])&&(isset($_REQUEST['passcode'])) {	
+	if(($cnf['db']['scaleUp'])&&(isset($_REQUEST['passcode']))) {	
 		//We are scaling up
 		for($cnt = 0; $cnt< count($cnf['db']['scaleUp']); $cnt ++) {	
 			if(preg_match($cnf['db']['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['passcode'], $matches) == true) {
