@@ -90,7 +90,9 @@
 				if(preg_match($db_cnf['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['uniqueFeedbackId'], $matches) == true) {
 					//Override with this database
 					echo "Overriding with " . $cnt;
+					
 					$db_cnf = $db_cnf['scaleUp'][$cnt];
+					print_r($cb_cnf);
 					return;
 				}
 
