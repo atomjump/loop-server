@@ -75,7 +75,24 @@
      } 
   }
   
-   
+	function scale_up_horizontally_check($cnf)
+	{
+		global $db_cnf;
+		$db_cnf = $cnf['db'];
+
+		if(($db_cnf['scaleUp'])&&(isset($_REQUEST['passcode']))) {	
+			//We are scaling up
+			for($cnt = 0; $cnt< count($cnf['db']['scaleUp']); $cnt ++) {	
+				if(preg_match($cnf['db']['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['passcode'], $matches) == true) {
+					//Override with this database
+					$db_cnf = $cnf['db']['scaleUp'][$cnt];
+					return;
+				}
+
+			}
+		}
+		return;
+	} 
   
   //Set default language, unless otherwise set
   $lang = $msg['defaultLanguage'];
@@ -97,20 +114,7 @@
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
   
-	global $cnf;
-	$db_cnf = $cnf['db'];
-	
-	if(($cnf['db']['scaleUp'])&&(isset($_REQUEST['passcode']))) {	
-		//We are scaling up
-		for($cnt = 0; $cnt< count($cnf['db']['scaleUp']); $cnt ++) {	
-			if(preg_match($cnf['db']['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['passcode'], $matches) == true) {
-				//Override with this database
-				$db_cnf = $cnf['db']['scaleUp'][$cnt];
-			
-			}
 
-		}
-	}
  
  
  
@@ -139,7 +143,8 @@
 		
 		
 		$cnf = $config['staging'];
-
+		$db_cnf = $cnf['db'];
+		scale_up_horizontally_check($cnf);
 		
 		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
 		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
@@ -158,6 +163,10 @@
         $cnf = $config['production']; 
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
+		
+		$db_cnf = $cnf['db'];
+		scale_up_horizontally_check($cnf);
+
 		
 		//Live is now on amazon
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
