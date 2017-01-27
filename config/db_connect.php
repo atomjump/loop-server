@@ -82,12 +82,20 @@
 
 		echo "Checking scaleup. Layer name=" . $_REQUEST['uniqueFeedbackId'];
 
-		if((isset($db_cnf['scaleUp']))&&(isset($_REQUEST['uniqueFeedbackId']))) {	
+		if(isset($_REQUEST['passcode'])) {
+			$layer_name = $_REQUEST['passcode'];			
+		}
+		
+		if(isset($_REQUEST['uniqueFeedbackId'])) {
+			$layer_name = $_REQUEST['uniqueFeedbackId'];
+		}
+
+		if((isset($db_cnf['scaleUp']))&&(isset($layer_name))) {	
 			//We are scaling up
 			echo " Scaling up";
 			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
 				echo $cnt . " check label:" . $db_cnf['scaleUp'][$cnt]['labelRegExp'];
-				if(preg_match($db_cnf['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['uniqueFeedbackId'], $matches) == true) {
+				if(preg_match($db_cnf['scaleUp'][$cnt]['labelRegExp'],$layer_name, $matches) == true) {
 					//Override with this database
 					echo "Overriding with " . $cnt;
 					
