@@ -76,7 +76,39 @@
          "pass": "yourDBpassword",
          "port": "3306",
          "timezone": "EDT",
-         "deleteDeletes": true
+         "deleteDeletes": true,
+         "scaleUp": [
+         	{
+         		"labelRegExp": "/^ajps_2_/",
+         	    "name": "ssshout",
+				 "hosts": [
+					"yourdb2write.yourcompany.com",
+					"yourdb2read2.yourcompany.com",
+					"yourdb2read3.yourcompany.com",
+					"yourdb2read4.yourcompany.com",
+				 ],
+				 "user": "yourDBusername",
+				 "pass": "yourDBpassword",
+				 "port": "3306",
+				 "timezone": "EDT",
+				 "deleteDeletes": true
+         	},
+         	{
+         	    "labelRegExp": "/^ajps_3_/",
+         	    "name": "ssshout",
+				 "hosts": [
+					"yourdb3write.yourcompany.com",
+					"yourdb3read2.yourcompany.com",
+					"yourdb3read3.yourcompany.com",
+					"yourdb3read4.yourcompany.com",
+				 ],
+				 "user": "yourDBusername",
+				 "pass": "yourDBpassword",
+				 "port": "3306",
+				 "timezone": "EDT",
+				 "deleteDeletes": true
+         	}
+         ]
       },
       "webRoot": "http://127.0.0.1/loop-server",
       "webDomain": "127.0.0.1",

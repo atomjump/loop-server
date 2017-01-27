@@ -97,6 +97,23 @@
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
   
+	global $cnf;
+	$db_cnf = $cnf['db'];
+	
+	if(($cnf['db']['scaleUp'])&&(isset($_REQUEST['passcode'])) {	
+		//We are scaling up
+		for($cnt = 0; $cnt< count($cnf['db']['scaleUp']); $cnt ++) {	
+			if(preg_match($cnf['db']['scaleUp'][$cnt]['labelRegExp'],$_REQUEST['passcode'], $matches) == true) {
+				//Override with this database
+				$db_cnf = $cnf['db']['scaleUp'][$cnt];
+			
+			}
+
+		}
+	}
+ 
+ 
+ 
  
 
 	$db_name = $config['production']['db']['name'];			//Unless on the cloud below
@@ -107,7 +124,7 @@
 
 
 			
-			
+	//Defaults to the master production db		
 	$db_username = $config['production']['db']['user']; //Edit this e.g. "peter"
 	$db_password = $config['production']['db']['pass']; //Edit this e.g. "secretpassword"
 	$db_host =  $config['production']['db']['hosts'][0]; 
@@ -124,17 +141,17 @@
 		$cnf = $config['staging'];
 
 		
-		$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
-		$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
-		$db_host =  $cnf['db']['hosts'][0]; 
-		$db_name = $cnf['db']['name'];
+		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
+		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
+		$db_host =  $db_cnf['hosts'][0]; 
+		$db_name = $db_cnf['name'];
 	
 	
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		$db_inc = false;
 		$staging = true;
-		$db_timezone = $cnf['db']['timezone'];
+		$db_timezone = $db_cnf['timezone'];
 		
 	} else {
   
@@ -143,7 +160,7 @@
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
 		//Live is now on amazon
-		$db_total = count($cnf['db']['hosts']);			//Total number of databases
+		$db_total = count($db_cnf['hosts']);			//Total number of databases
 		$max_db_attempts = 2;	//Maximum incremental attempts 
 		if((isset($db_read_only))&&($db_read_only == true)) { 
 				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
@@ -155,10 +172,10 @@
 			$db_inc = false;
 			
 		}
-		$db_host = $cnf['db']['hosts'][$db_num];	
+		$db_host = $db_cnf['hosts'][$db_num];	
 		
 			
-		$db_timezone = $cnf['db']['timezone'];
+		$db_timezone = $db_cnf['timezone'];
 		
 		$staging = false;
 	}	
@@ -187,7 +204,7 @@
 				if($db_num >= $db_total) $db_num = 0;
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
-				$db_host = $cnf['db']['hosts'][$db_num];			
+				$db_host = $db_cnf['hosts'][$db_num];			
 				$db = dbconnect($db_host, $db_username, $db_password);
 			}
 			
@@ -285,6 +302,7 @@
 	    	global $db_password;
 	    	global $db_name;
 	    	global $db;
+	    	global $db_cnf;
     	
     	
     	
@@ -305,7 +323,7 @@
 
     
 	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
-	    	$db_master_host = $cnf['db']['hosts'][0];
+	    	$db_master_host = $db_cnf['hosts'][0];
 	    	if(($db_host != $db_master_host)||(!isset($db))) {
 	    		//Reconnect to the master db to carry out the write operation
 	    		dbclose();		//close off the current db
