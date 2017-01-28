@@ -259,6 +259,10 @@ To test the web domain, use the following small PHP script:
 
 **db** **hosts**: there can be any number of db hosts, but the first one is the only write host, while the others are read.
    We use Amazon MySQL RDS for multiple db hosts.
+   
+**db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
+
+**db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'.
 
 **ips**: any number of PHP machines with the server software on it.
 

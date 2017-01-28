@@ -75,7 +75,32 @@
      } 
   }
   
-   
+	function scale_up_horizontally_check($cnf)
+	{
+		global $db_cnf;
+		$db_cnf = $cnf['db'];
+
+		if(isset($_REQUEST['passcode'])) {
+			$layer_name = $_REQUEST['passcode'];			
+		}
+		
+		if(isset($_REQUEST['uniqueFeedbackId'])) {
+			$layer_name = $_REQUEST['uniqueFeedbackId'];
+		}
+
+		if((isset($db_cnf['scaleUp']))&&(isset($layer_name))) {	
+			//We are scaling up
+			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
+				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
+					//Override with this database					
+					$db_cnf = $db_cnf['scaleUp'][$cnt];
+					return;
+				}
+
+			}
+		}
+		return;
+	} 
   
   //Set default language, unless otherwise set
   $lang = $msg['defaultLanguage'];
@@ -97,6 +122,10 @@
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
   
+
+ 
+ 
+ 
  
 
 	$db_name = $config['production']['db']['name'];			//Unless on the cloud below
@@ -107,7 +136,7 @@
 
 
 			
-			
+	//Defaults to the master production db		
 	$db_username = $config['production']['db']['user']; //Edit this e.g. "peter"
 	$db_password = $config['production']['db']['pass']; //Edit this e.g. "secretpassword"
 	$db_host =  $config['production']['db']['hosts'][0]; 
@@ -122,19 +151,20 @@
 		
 		
 		$cnf = $config['staging'];
-
+		$db_cnf = $cnf['db'];
+		scale_up_horizontally_check($cnf);
 		
-		$db_username = $cnf['db']['user']; //Edit this e.g. "peter"
-		$db_password = $cnf['db']['pass']; //Edit this e.g. "secretpassword"
-		$db_host =  $cnf['db']['hosts'][0]; 
-		$db_name = $cnf['db']['name'];
+		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
+		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
+		$db_host =  $db_cnf['hosts'][0]; 
+		$db_name = $db_cnf['name'];
 	
 	
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		$db_inc = false;
 		$staging = true;
-		$db_timezone = $cnf['db']['timezone'];
+		$db_timezone = $db_cnf['timezone'];
 		
 	} else {
   
@@ -142,8 +172,12 @@
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
+		$db_cnf = $cnf['db'];
+		scale_up_horizontally_check($cnf);
+
+		
 		//Live is now on amazon
-		$db_total = count($cnf['db']['hosts']);			//Total number of databases
+		$db_total = count($db_cnf['hosts']);			//Total number of databases
 		$max_db_attempts = 2;	//Maximum incremental attempts 
 		if((isset($db_read_only))&&($db_read_only == true)) { 
 				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
@@ -155,10 +189,10 @@
 			$db_inc = false;
 			
 		}
-		$db_host = $cnf['db']['hosts'][$db_num];	
+		$db_host = $db_cnf['hosts'][$db_num];	
 		
 			
-		$db_timezone = $cnf['db']['timezone'];
+		$db_timezone = $db_cnf['timezone'];
 		
 		$staging = false;
 	}	
@@ -187,7 +221,7 @@
 				if($db_num >= $db_total) $db_num = 0;
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
-				$db_host = $cnf['db']['hosts'][$db_num];			
+				$db_host = $db_cnf['hosts'][$db_num];			
 				$db = dbconnect($db_host, $db_username, $db_password);
 			}
 			
@@ -285,6 +319,7 @@
 	    	global $db_password;
 	    	global $db_name;
 	    	global $db;
+	    	global $db_cnf;
     	
     	
     	
@@ -305,7 +340,7 @@
 
     
 	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
-	    	$db_master_host = $cnf['db']['hosts'][0];
+	    	$db_master_host = $db_cnf['hosts'][0];
 	    	if(($db_host != $db_master_host)||(!isset($db))) {
 	    		//Reconnect to the master db to carry out the write operation
 	    		dbclose();		//close off the current db
