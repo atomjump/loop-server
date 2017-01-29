@@ -91,7 +91,8 @@
 				 "pass": "yourDBpassword",
 				 "port": "3306",
 				 "timezone": "EDT",
-				 "deleteDeletes": true
+				 "deleteDeletes": true,
+				 "adminMachineUser": "92.27.10.17:1"
          	},
          	{
          	    "labelRegExp": "^ajps_3_",
@@ -106,7 +107,8 @@
 				 "pass": "yourDBpassword",
 				 "port": "3306",
 				 "timezone": "EDT",
-				 "deleteDeletes": true
+				 "deleteDeletes": true,
+				 "adminMachineUser": "92.27.10.17:1"
          	}
          ]
       },
