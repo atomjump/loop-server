@@ -264,6 +264,8 @@ To test the web domain, use the following small PHP script:
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'.
 
+**imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false. 
+
 **ips**: any number of PHP machines with the server software on it.
 
 **webRoot**: Web path including http/https of the server. Don't include trailing slash.
