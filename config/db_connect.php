@@ -497,6 +497,7 @@
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
 				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
+				    $server_url = str_replace("https", "http", $server_url);
 				    error_log("Server: " . $server_url);
 				    $servers[] = $server_url;
 				    
