@@ -26,6 +26,10 @@
       "loadbalancer": {
           "ips": [
           ]
+      }, 
+      "imagesShare" : {
+      	  "port" : "80",
+      	  "https" : false
       },    
       "adminEmail": "your.name@your.company.com",
       "webmasterEmail": "your.name@your.company.com",
@@ -126,7 +130,11 @@
       "loadbalancer": {
           "ips": [
           ]
-      },    
+      },  
+      "imagesShare" : {
+      	  "port" : "80",
+      	  "https" : false
+      },   
       "adminEmail": "your.name@your.company.com",
       "webmasterEmail": "your.name@your.company.com",
       "noReplyEmail": "your.name@your.company.com",
