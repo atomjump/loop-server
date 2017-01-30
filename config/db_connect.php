@@ -498,7 +498,11 @@
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
+				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['imagesShare']['port'], $root_server_url) . "/copy-image.php";
+				    if($cnf['imagesShare']['https'] == false) {
+				    	//Only do with http
+				    	$server_url = str_replace("https", "http", $server_url);
+				    }
 				    error_log("Server: " . $server_url);
 				    $servers[] = $server_url;
 				    
@@ -526,6 +530,12 @@
 		        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
 		        $response = curl_exec($curl);
+		        
+		        if(curl_error($curl))
+				{
+					error_log('error:' . curl_error($curl));
+				}
+		        
 		        error_log("Response:");
 		        error_log(print_r($response));
 		        curl_close ($curl);
