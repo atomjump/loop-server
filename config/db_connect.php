@@ -512,6 +512,7 @@
 			{
 	
      		 	//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
+		        error_log("Sending " . $raw_file);
 		        $handle = fopen($filename, "r");
 		        $data = fread($handle, filesize($filename));
 		        $POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
