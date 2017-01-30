@@ -468,6 +468,7 @@
 			//Share to Amazon S3
 			//Returns 'false' if image is not successfully put to Amazon, but otherwise 'true'
 			global $local_server_path;
+			global $root_server_url;
 			global $cnf;
 			
 			
@@ -485,16 +486,22 @@
 			}
 		
 		
+		
 			//Share across our own servers
 			
 			//Get the domain of the web url, and replace with ip:1080
 			$parse = parse_url($root_server_url);
 			$domain = $parse['host'];
+		
+			error_log("Domain: " . $domain);
 			
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $servers[] = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
+				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
+				    error_log("Server: " . $server_url);
+				    $servers[] = $server_url;
+				    
 				}
 				
 			} else {
@@ -507,6 +514,7 @@
 			{
 	
      		 	//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
+		        error_log("Sending " . $raw_file . " from the file:" . $filename);
 		        $handle = fopen($filename, "r");
 		        $data = fread($handle, filesize($filename));
 		        $POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
@@ -518,8 +526,10 @@
 		        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
 		        $response = curl_exec($curl);
+		        error_log("Response:");
+		        error_log(print_r($response));
 		        curl_close ($curl);
-
+				
 		        
 		     }
 		     
