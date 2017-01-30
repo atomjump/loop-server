@@ -490,9 +490,7 @@
 			//Get the domain of the web url, and replace with ip:1080
 			$parse = parse_url($root_server_url);
 			$domain = $parse['host'];
-		
-			error_log("Domain: " . $domain);
-			
+					
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
@@ -501,7 +499,6 @@
 				    	//Only do with http
 				    	$server_url = str_replace("https", "http", $server_url);
 				    }
-				    error_log("Server: " . $server_url);
 				    $servers[] = $server_url;
 				    
 				}
@@ -516,7 +513,6 @@
 			{
 	
      		 	//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
-		        error_log("Sending " . $raw_file . " from the file:" . $filename);
 		        $handle = fopen($filename, "r");
 		        $data = fread($handle, filesize($filename));
 		        $POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
@@ -527,15 +523,12 @@
 		        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
-		        $response = curl_exec($curl);
-		        
+		        $response = curl_exec($curl);		        
 		        if(curl_error($curl))
 				{
 					error_log('error:' . curl_error($curl));
 				}
 		        
-		        error_log("Response:");
-		        error_log(print_r($response));
 		        curl_close ($curl);
 				
 		        
