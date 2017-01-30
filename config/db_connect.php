@@ -466,6 +466,7 @@
 			//Share to Amazon S3
 			//Returns 'false' if image is not successfully put to Amazon, but otherwise 'true'
 			global $local_server_path;
+			global $root_server_url;
 			global $cnf;
 			
 			
