@@ -496,8 +496,11 @@
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":1080", $root_server_url) . "/copy-image.php";
-				    $server_url = str_replace("https", "http", $server_url);
+				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['imagesShare']['port'], $root_server_url) . "/copy-image.php";
+				    if($cnf['imagesShare']['https'] == false) {
+				    	//Only do with http
+				    	$server_url = str_replace("https", "http", $server_url);
+				    }
 				    error_log("Server: " . $server_url);
 				    $servers[] = $server_url;
 				    
