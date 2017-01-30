@@ -524,7 +524,7 @@
 		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
 		        $response = curl_exec($curl);
 		        curl_close ($curl);
-
+				error_log($response);
 		        
 		     }
 		     
