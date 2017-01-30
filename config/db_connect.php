@@ -524,8 +524,10 @@
 		        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
 		        $response = curl_exec($curl);
+		        error_log("Response:");
+		        error_log(print_r($response));
 		        curl_close ($curl);
-				error_log($response);
+				
 		        
 		     }
 		     
