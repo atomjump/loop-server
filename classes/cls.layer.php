@@ -830,7 +830,7 @@ class cls_login
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
 		
-		error_log("Email: " . $email . " pass:" . $password . " layervis:" . $layer_visible . " readonly:" . $readonly);
+		error_log("Email: " . $email . " pass:" . $password . " layervis:" . $layer_visible . " readonly:" . $readonly . " users:" . $users);
 		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
@@ -984,8 +984,14 @@ class cls_login
 					$this->get_group_user();
 				
 					//Update the group if necessary too 
+					error_log("Logged group user:" . $_SESSION['logged-group-user'] . " Layer group user:" . $_SESSION['layer-group-user']);
+					
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+						
+						
 						if($users) {
+							error_log("Updating subs with users:" . $users);
+						
 							$this->update_subscriptions($users);
 						}
 					}
