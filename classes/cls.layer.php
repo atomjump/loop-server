@@ -531,7 +531,6 @@ class cls_login
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
-		error_log("SQL " . $sql);
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 		while($row = db_fetch_array($result)) {
@@ -548,14 +547,12 @@ class cls_login
 
 				//Update the sms status - note possibly too many update queries here
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($correct_sms) . "', enm_active = 'active' WHERE int_user_id = " . $correct_user . " AND int_layer_id = " . $layer_id;
-				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 			} else {
 				
 				//Add into the db
 				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( " . clean_data($layer_id) . ", " . $correct_user . ", 'active', '" . clean_data($correct_sms) . "')";
-				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			}
 			
@@ -572,12 +569,10 @@ class cls_login
 				
 				//Always update the sms status with latest - note this could result in too many queries?
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($user_group[$user_in]) . "' WHERE int_user_id = " . $user_in . " AND int_layer_id = " . $layer_id;
-				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			} else {
 				//Remove from the db
 				$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = $layer_id AND int_user_id = " . $user_in;
-				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 			}
@@ -592,8 +587,6 @@ class cls_login
 	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
-		error_log("Authenticated layer:" . $_SESSION['authenticated-layer']);
-	
 		if(!$layer) {
 			if($_SESSION['authenticated-layer']) {
 				$layer = $_SESSION['authenticated-layer'];
@@ -606,9 +599,6 @@ class cls_login
 		// Or user entered emails: test@atomjump.com,hello@atomjump.com
 		
 		$sh = new cls_ssshout(); 
-		
-		error_log("Setting layer " . $layer . " to " . $whisper_site);
-		
 		
 		//Check the default site whispering
 		$whisper_to_site_group = explode(",",$whisper_site);
@@ -640,13 +630,10 @@ class cls_login
 			
 		}
 		
-		error_log("Whisper to site group 0:" . $whisper_to_site_group[0]);
 		
 		if($whisper_to_site_group[0]) {
 			//Yes, our default site whispering is set
 			//Check each of the users is in the db for this layer - don't do in the public sense. Note: because we only send through group details when sending
-			error_log("Group user ids 0:" . $group_user_ids[0] . " layer:" . $layer);
-			
 			$this->check_group_intact($group_user_ids, $layer);
 		
 		}
@@ -836,8 +823,6 @@ class cls_login
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
 		
-		error_log("Email: " . $email . " pass:" . $password . " layervis:" . $layer_visible . " readonly:" . $readonly . " users:" . $users . " authent layer:" . $_SESSION['authenticated-layer']);
-		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
 		//user_id has been added for the app, which doesn't have sessions as such.
@@ -888,21 +873,16 @@ class cls_login
 	    
 	    //Check if this is saving the passcode - we need to be a group owner to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
-	    	error_log("Setting forum pass to " . $full_request['setforumpassword']);
-	    
+    
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
-	    	
-				error_log("Checking owner " . $_SESSION['logged-user'] . " group id:" . $layer_info['int_group_id'] . "  Layer id:" . $layer_info['int_layer_id']);
-					
-			
+	    				
 				//Only the owners can do this
 				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
 				if($isowner == true) {	
 						//No password protection already - set it in this case
 						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
-						error_log("SQL: " . $sql);
 						dbquery($sql) or die("Unable to execute query $sql " . dberror());
 				}
 				
@@ -988,23 +968,15 @@ class cls_login
 						$reload = ",RELOAD";
 			   
 					}
-					
-					error_log("Auth layer:" . $_SESSION['authenticated-layer']);
-					
+										
 					//Get the group user if necessary
 					$this->get_group_user();
-					
-					error_log("Auth layer after group user:" . $_SESSION['authenticated-layer']);
 				
-					//Update the group if necessary too 
-					error_log("Logged group user:" . $_SESSION['logged-group-user'] . " Layer group user:" . $_SESSION['layer-group-user']);
-					
+					//Update the group if necessary too 					
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						
 						
 						if($users) {
-							error_log("Updating subs with users:" . $users);
-						
 							$this->update_subscriptions($users);
 						}
 					}
