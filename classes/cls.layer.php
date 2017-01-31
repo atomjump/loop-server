@@ -882,16 +882,21 @@ class cls_login
 	    
 	    //Check if this is saving the passcode - we need to be a group owner to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
+	    	error_log("Setting forum pass to " . $full_request['setforumpassword']);
+	    
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    	
+				error_log("Checking owner " . $_SESSION['logged-user'] . " group id:" . $layer_info['int_group_id'] . "  Layer id:" . $layer_info['int_layer_id']);
+					
 			
 				//Only the owners can do this
 				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
 				if($isowner == true) {	
 						//No password protection already - set it in this case
 						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+						error_log("SQL: " . $sql);
 						dbquery($sql) or die("Unable to execute query $sql " . dberror());
 				}
 				
