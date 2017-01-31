@@ -592,6 +592,8 @@ class cls_login
 	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
+		error_log("Authenticated layer:" . $_SESSION['authenticated-layer']);
+	
 		if(!$layer) {
 			if($_SESSION['authenticated-layer']) {
 				$layer = $_SESSION['authenticated-layer'];
@@ -834,7 +836,7 @@ class cls_login
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
 	{
 		
-		error_log("Email: " . $email . " pass:" . $password . " layervis:" . $layer_visible . " readonly:" . $readonly . " users:" . $users);
+		error_log("Email: " . $email . " pass:" . $password . " layervis:" . $layer_visible . " readonly:" . $readonly . " users:" . $users . " authent layer:" . $_SESSION['authenticated-layer']);
 		
 		//Returns: [string with status],[RELOAD option - must be RELOAD],[user id] 
 		//
@@ -987,10 +989,12 @@ class cls_login
 			   
 					}
 					
-					
+					error_log("Auth layer:" . $_SESSION['authenticated-layer']);
 					
 					//Get the group user if necessary
 					$this->get_group_user();
+					
+					error_log("Auth layer after group user:" . $_SESSION['authenticated-layer']);
 				
 					//Update the group if necessary too 
 					error_log("Logged group user:" . $_SESSION['logged-group-user'] . " Layer group user:" . $_SESSION['layer-group-user']);
