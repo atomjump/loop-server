@@ -638,9 +638,13 @@ class cls_login
 			
 		}
 		
+		error_log("Whisper to site group 0:" . $whisper_to_site_group[0]);
+		
 		if($whisper_to_site_group[0]) {
 			//Yes, our default site whispering is set
 			//Check each of the users is in the db for this layer - don't do in the public sense. Note: because we only send through group details when sending
+			error_log("Group user ids 0:" . $group_user_ids[0] . " layer:" . $layer);
+			
 			$this->check_group_intact($group_user_ids, $layer);
 		
 		}
