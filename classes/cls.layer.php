@@ -531,6 +531,7 @@ class cls_login
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
+		error_log("SQL " . $sql);
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 		while($row = db_fetch_array($result)) {
@@ -547,12 +548,14 @@ class cls_login
 
 				//Update the sms status - note possibly too many update queries here
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($correct_sms) . "', enm_active = 'active' WHERE int_user_id = " . $correct_user . " AND int_layer_id = " . $layer_id;
+				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
 			} else {
 				
 				//Add into the db
 				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( " . clean_data($layer_id) . ", " . $correct_user . ", 'active', '" . clean_data($correct_sms) . "')";
+				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			}
 			
@@ -569,10 +572,12 @@ class cls_login
 				
 				//Always update the sms status with latest - note this could result in too many queries?
 				$sql = "UPDATE tbl_layer_subscription SET enm_sms = '" .  clean_data($user_group[$user_in]) . "' WHERE int_user_id = " . $user_in . " AND int_layer_id = " . $layer_id;
+				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			} else {
 				//Remove from the db
 				$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = $layer_id AND int_user_id = " . $user_in;
+				error_log("SQL " . $sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 			}
@@ -599,6 +604,8 @@ class cls_login
 		// Or user entered emails: test@atomjump.com,hello@atomjump.com
 		
 		$sh = new cls_ssshout(); 
+		
+		error_log("Setting layer " . $layer . " to " . $whisper_site);
 		
 		
 		//Check the default site whispering
