@@ -758,7 +758,8 @@ class cls_login
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 						} else {
-						   
+						    //Otherwise ensure not logged 
+							$_SESSION['logged-group-user'] = '';
 
 						}
 					}
