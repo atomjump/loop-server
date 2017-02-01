@@ -104,7 +104,6 @@ CREATE TABLE `tbl_layer` (
   `passcode` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `int_group_id` int(10) unsigned DEFAULT NULL,
   `var_public_code` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `var_owner_string` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `date_owner_start` datetime DEFAULT NULL,
   PRIMARY KEY (`int_layer_id`),
   KEY `tbl_advert_FKIndex1` (`int_layer_id`),
@@ -263,3 +262,7 @@ CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
 CREATE INDEX ordered_ssshout ON tbl_ssshout (date_when_shouted);
 CREATE INDEX ordered_ssshout_full ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip);
 CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip, int_author_id, int_whisper_to_id);
+
+
+-- This is no longer used and only confuses issues
+-- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;

@@ -140,8 +140,7 @@ class cls_plugin_api {
                   `enm_access` enum('public','public-admin-write-only','private') CHARACTER SET latin1 DEFAULT NULL,
                   `passcode` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
                   `int_group_id` int(10) unsigned DEFAULT NULL,
-                  `var_public_code` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-                  `var_owner_string` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+                  `var_public_code` varchar(255) COLLATE utf8_bin DEFAULT NULL
                   `date_owner_start` datetime DEFAULT NULL,
 	    
 	    

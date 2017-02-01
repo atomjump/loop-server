@@ -587,8 +587,6 @@ class cls_login
 	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
-		error_log("Authenticated layer" . $_SESSION['authenticated-layer']);
-	
 		if(!$layer) {
 			if($_SESSION['authenticated-layer']) {
 				$layer = $_SESSION['authenticated-layer'];
@@ -630,10 +628,7 @@ class cls_login
 			}
 			
 			
-		}
-		
-		error_log("Group user ids:" . json_encode($group_user_ids) . " layer:" . $layer);
-		
+		}		
 		
 		if($whisper_to_site_group[0]) {
 			//Yes, our default site whispering is set
@@ -977,12 +972,8 @@ class cls_login
 					//Get the group user if necessary
 					$this->get_group_user();
 				
-					//Update the group if necessary too 					
-					error_log("logged-group-user: " . $_SESSION['logged-group-user'] . " layer-group-user:" . $_SESSION['layer-group-user'] . " users:" . $users);
-					
+					//Update the group if necessary too 							
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-						
-						
 						if($users) {
 							$this->update_subscriptions($users);
 						}
