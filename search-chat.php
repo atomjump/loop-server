@@ -60,7 +60,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 //Count the number of times we've searched in this session
 if(intval($_SESSION['view-count']) == 0) {
 	//Note: a db write operation
-	
+	make_writable_db();
 	$_SESSION['view-count'] = intval($_SESSION['view-count']) + 1;
 
 }

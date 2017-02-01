@@ -601,7 +601,6 @@ class cls_login
 		
 		$sh = new cls_ssshout(); 
 		
-		
 		//Check the default site whispering
 		$whisper_to_site_group = explode(",",$whisper_site);
 		$group_user_ids = array();
@@ -630,7 +629,7 @@ class cls_login
 			}
 			
 			
-		}
+		}		
 		
 		if($whisper_to_site_group[0]) {
 			//Yes, our default site whispering is set
@@ -755,7 +754,8 @@ class cls_login
 							$sql = "UPDATE tbl_layer SET int_group_id = " . $group_user_id . " WHERE int_layer_id = " . $layer_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 						} else {
-						   
+						    //Otherwise ensure not logged 
+							$_SESSION['logged-group-user'] = '';
 
 						}
 					}
@@ -874,11 +874,11 @@ class cls_login
 	    
 	    //Check if this is saving the passcode - we need to be a group owner to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
+    
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
-	    	
-			
+	    				
 				//Only the owners can do this
 				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
 				if($isowner == true) {	
@@ -969,13 +969,11 @@ class cls_login
 						$reload = ",RELOAD";
 			   
 					}
-					
-					
-					
+										
 					//Get the group user if necessary
 					$this->get_group_user();
 				
-					//Update the group if necessary too 
+					//Update the group if necessary too 							
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						if($users) {
 							$this->update_subscriptions($users);
