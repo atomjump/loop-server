@@ -977,6 +977,8 @@ class cls_login
 					$this->get_group_user();
 				
 					//Update the group if necessary too 					
+					error_log("logged-group-user: " . $_SESSION['logged-group-user'] . " layer-group-user:" . $_SESSION['layer-group-user'] . " users:" . $users);
+					
 					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 						
 						
