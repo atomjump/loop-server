@@ -443,41 +443,41 @@ var msg = function() {
 					
 						if(value.typing == "off") {
 
-								if((value.status != "complete")&&
-								   (value.status != "sending")) {  		
-								   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
+							if((value.status != "complete")&&
+							   (value.status != "sending")) {  		
+							   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
+						
+						
+								//Check if we have our id yet
+								if(value.shoutId) {
+									//Ready to send
 							
-							
-									//Check if we have our id yet
-									if(value.shoutId) {
-										//Ready to send
-								
+									$('#typing-now').val('off');
+									$('#message').val(value.shouted);
+									$('#msg-id').val(key);
+									$('#shout-id').val(value.shoutId);
+									submitShoutAjax(value.whisper, true, key);	//true for commit
+									mythis.localMsg[key].status = "sending";
+								} else {
+									if((value.status == 'lostid')||
+									   (value.status == 'committed')) {
+										//OK, we entered something, it timed-out on the server or some other error,
+										//so we can try to commit the whole message now as a new server message anyway
 										$('#typing-now').val('off');
 										$('#message').val(value.shouted);
 										$('#msg-id').val(key);
-										$('#shout-id').val(value.shoutId);
+										$('#shout-id').val('');		//a blank id
 										submitShoutAjax(value.whisper, true, key);	//true for commit
 										mythis.localMsg[key].status = "sending";
-									} else {
-										if((value.status == 'lostid')||
-										   (value.status == 'committed')) {
-											//OK, we entered something, it timed-out on the server or some other error,
-											//so we can try to commit the whole message now as a new server message anyway
-											$('#typing-now').val('off');
-											$('#message').val(value.shouted);
-											$('#msg-id').val(key);
-											$('#shout-id').val('');		//a blank id
-											submitShoutAjax(value.whisper, true, key);	//true for commit
-											mythis.localMsg[key].status = "sending";
-								
-										}
-									}
-
-								} else {
-									//Either 'complete' or 'sending'
 							
+									}
 								}
+
+							} else {
+								//Either 'complete' or 'sending'
+						
 							}
+							
 						} else {
 						
 							if(value.shoutId) {
