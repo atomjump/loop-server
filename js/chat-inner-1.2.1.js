@@ -1032,7 +1032,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			url: ssshoutServer + '/index.php', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp",
+			dataType: "json",		//WAS: jsonp
 			success: function(response) {
 	
 				ssshoutHasFocus = true;
