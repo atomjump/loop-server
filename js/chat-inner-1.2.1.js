@@ -1023,7 +1023,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		var data = $('#comment-input-frm').serialize();
 		var mycommit = commit;
 		var myMsgId = msgId;
-		var myShoutId = $('#shout-id');
+		var myShoutId = $('#shout-id').val();
 				
 		$.ajax({
 			url: ssshoutServer + '/index.php', 
@@ -1047,7 +1047,11 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Session results
 						mg.updateMsg(myMsgId, results.sid, "complete");	
 					} else {
-						mg.updateMsg(myMsgId, myShoutId, "complete");
+						if(myShoutId) {
+							mg.updateMsg(myMsgId, myShoutId, "complete");
+						} else {
+							mg.updateMsg(myMsgId, "", "complete");
+						}
 					}
 			
 					clearTimeout(myLoopTimeout);		//reset the main timeout

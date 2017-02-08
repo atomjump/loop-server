@@ -189,7 +189,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.0.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.1.js"></script> 
 			
 			
 	</head>
