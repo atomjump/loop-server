@@ -1029,10 +1029,10 @@ function submitShoutAjax(whisper, commit, msgId)
 		var myShoutId = $('#shout-id').val();
 				
 		$.ajax({
-			url: ssshoutServer + '/index.php', 
+			url: ssshoutServer + '/index.php?callback=?', 
 			data: data,
 			crossDomain: true,
-			dataType: "json",		//WAS: jsonp
+			dataType: "jsonp",		//WAS: jsonp
 			success: function(response) {
 	
 				ssshoutHasFocus = true;
@@ -1262,7 +1262,7 @@ function doSearch()
 	}
 	
 	$.ajax({
-  		dataType: "json",
+  		dataType: "jsonp",		//TESTING was json!!
   		url: serv + "/search-chat.php?callback=?",
   		data: {
 					lat: $('#lat').val(),
