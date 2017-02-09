@@ -1110,9 +1110,17 @@ function submitShoutAjax(whisper, commit, msgId)
 			}
 		};
 		
-		
+		var thisMyMsgId = myMsgId;
 		setTimeout(function() {
-			ajaxCall.error();
+			
+			var myMsgId = thisMyMsgId;
+			 
+			if((mg.localMsg[thisMyMsgId].status != "complete")&&
+			   (mg.localMsg[thisMyMsgId].status != "lostid")) {
+			
+				
+				ajaxCall.error();
+			}
 		}, 3000);		//After 3 seconds process a timeout
 				
 		$.ajax(ajaxCall);
