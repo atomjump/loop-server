@@ -1223,11 +1223,16 @@ function submitShoutAjax(whisper, commit, msgId)
 		}, 20000);		
 		
 		setTimeout(function() {
-			//Warn the user
-			var wrn = lsmsg.msgs[lang].messageQueued;
-			wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
-			$("#warnings").html(wrn);
-			$("#warnings").show();
+			if(mg.localMsg[thisMyMsgId]) {
+				//If the message still exists
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					//Warn the user
+					var wrn = lsmsg.msgs[lang].messageQueued;
+					wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+					$("#warnings").html(wrn);
+					$("#warnings").show();
+				}
+			}
 		}, 3000);  //After 3 seconds process a timeout warning
 				
 		$.ajax(ajaxCall);
