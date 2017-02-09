@@ -994,7 +994,12 @@ function upload() {
 
 function removeMessageDirect(messageId)
 {
-	$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
+	var thisMessageId = messageId;
+	var successDeletion = false;
+	//Warning infinite attempts?
+
+	
+	var ajaxCall = {			//Note: we cannot have a timeout on this one. Otherwise
 			//it could potentially error out if the data arrives later
 		dataType: "jsonp",
 		crossDomain: true,
@@ -1005,19 +1010,29 @@ function removeMessageDirect(messageId)
 		},
 		success: function(response2){ 
 			var results2 = response2;
+			successDeletion = true;
 			refreshResults(results2);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 
 			$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
-
-			//Process messages again in 10 seconds
-			setTimeout(function() {
-				mg.processEachMsg();
-			}, 10000);
+			console.log("Trying to delete again:" + thisMessageId);
+			removeMessageDirect(thisMessageId);
+			
 		}
 	});
+	
+	setTimeout(function() {
+			
+		//Warn the user
+		if(successDeletion == false) {
+			removeMessageDirect(thisMessageId);
+		}
+
+	}, 5000);  //After 5 seconds reprocess the deletion attempt
+	
+	$.ajax(ajaxCall);
 	
 	return;
 }
