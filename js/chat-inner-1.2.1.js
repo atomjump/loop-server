@@ -1143,6 +1143,11 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Just a push button
 												
 						
+						if((!oldShoutId)&&(newShoutId)) {
+							console.log("Setting new shout id from typing:" + newShoutId;
+							mg.updateMsg(myMsgId, newShoutId, "");	
+						}
+						
 						//This is excess if the message has already been completed or sent for real	
 						if((newShoutId)&&(oldShoutId)&&							
 							   (newShoutId != oldShoutId)) {
