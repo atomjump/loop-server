@@ -1147,7 +1147,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				//If the message still exists
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					//And it isn't complete or lost
-					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + aSuccess + " erroredOut=" + erroredOut);
+					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + mg.requests[requestId].aSuccess + " erroredOut=" + mg.requests[requestId].erroredOut);
 				
 					ajaxCall.error();
 				}
