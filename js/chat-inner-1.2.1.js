@@ -1095,6 +1095,7 @@ function submitShoutAjax(whisper, commit, msgId)
 								//So we finished after the full commit - we should remove the old entry
 							
 								//We have a new sid now, but the request has already been sent
+								var results = response;
 								if(results.sid) {
 													
 									//if status is already complete and is not the same as the current request
