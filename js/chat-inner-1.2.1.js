@@ -1036,8 +1036,8 @@ function submitShoutAjax(whisper, commit, msgId)
 			success: function(response) {
 				
 				
-				if((aSuccess == false)&&(erroredOut == false)) {
-					aSuccess = true;
+				if((mg.localMsg[myMsgId].aSuccess == false)&&(mg.localMsg[myMsgId].erroredOut == false)) {
+					mg.localMsg[myMsgId].aSuccess = true;
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
 			
@@ -1089,8 +1089,8 @@ function submitShoutAjax(whisper, commit, msgId)
 			},
 			error: function(jqXHR, textStatus, errorThrown ) {
 				
-				if((aSuccess == false)&&(erroredOut == false)) {
-					erroredOut = true;		//Only run this once
+				if((mg.localMsg[myMsgId].aSuccess == false)&&(mg.localMsg[myMsgId].erroredOut == false)) {
+					mg.localMsg[myMsgId].erroredOut = true;		//Only run this once
 				
 							
 					//OK no response
@@ -1138,7 +1138,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			 
 			if(mg.localMsg[thisMyMsgId]) {
 				//If the message still exists
-				if((aSuccess == false)&&(erroredOut == false)) {
+				if((mg.localMsg[thisMyMsgId].aSuccess == false)&&(mg.localMsg[thisMyMsgId].erroredOut == false)) {
 					//And it isn't complete or lost
 					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + aSuccess + " erroredOut=" + erroredOut);
 					
