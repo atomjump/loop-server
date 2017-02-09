@@ -1058,6 +1058,7 @@ function submitShoutAjax(whisper, commit, msgId)
 							mg.updateMsg(myMsgId, results.sid, "complete");	
 						} else {
 							if(myShoutId) {
+								console.log("myShoutId: " + myShoutId);
 								mg.updateMsg(myMsgId, myShoutId, "complete");
 							} else {
 								mg.updateMsg(myMsgId, "", "complete");
