@@ -1143,11 +1143,6 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Just a push button
 												
 						
-						if((newShoutId)&&(!oldShoutId)) {
-							//No shout id already
-							refreshResults(results);  //gets sshout id from in here
-						}
-						
 						//This is excess if the message has already been completed or sent for real	
 						if((newShoutId)&&(oldShoutId)&&							
 							   (newShoutId != oldShoutId)) {
@@ -1157,7 +1152,15 @@ function submitShoutAjax(whisper, commit, msgId)
 								//And it must be the current request
 								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 								removeMessageDirect(newShoutId);
+						} else {
+						
+							if(newShoutId) {
+								//No shout id already
+								refreshResults(results);  //gets sshout id from in here
+							}
 						}
+						
+						
 											
 					
 			
