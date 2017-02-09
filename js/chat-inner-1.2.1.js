@@ -990,7 +990,35 @@ function upload() {
 }
 
 
+function removeMessageDirect(messageId)
+{
+	$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
+			//it could potentially error out if the data arrives later
+		dataType: "jsonp",
+		crossDomain: true,
+		url: ssshoutServer + "/de.php?callback=?",
+		data: {
+			mid: messageId,
+			just_typing: 'on'
+		},
+		success: function(response2){ 
+			var results2 = response2;
+			refreshResults(results2);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
 
+			$("#warnings").html(lsmsg.msgs[lang].lostConnection);
+			$("#warnings").show();
+
+			//Process messages again in 10 seconds
+			setTimeout(function() {
+				mg.processEachMsg();
+			}, 10000);
+		}
+	});
+	
+	return;
+}
 
 
 
@@ -1071,11 +1099,19 @@ function submitShoutAjax(whisper, commit, msgId)
 				
 				
 						var results = response;
+						
+						if((mg.localMsg[myMsgId].shoutId)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
+							//There exists a current 'typing' message that needs to be deleted
+							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+							removeMessageDirect(mg.localMsg[myMsgId].shoutId);
+						}
+						
 						refreshResults(results);
 			
 						//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
 						console.log("myMsgId:" + myMsgId);
 						
+						//Overwrite the existing results
 						if(results.sid) {
 							//Session results
 							console.log("sid: " + results.sid);
@@ -1101,59 +1137,18 @@ function submitShoutAjax(whisper, commit, msgId)
 						//This is excess if the message has already been completed or sent for real
 						if((results.sid)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
 							//We already have a shout id. This message should be removed
-							//if(mg.localMsg[myMsgId].typing == 'off') {
+												
+							//if status is already complete and is not the same as the current request
+							if(requestId != mg.currentRequestId) {
+								//And it must be the current request
+								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								removeMessageDirect(results.sid);
+								
+							}
 						
-							/*var status = mg.localMsg[myMsgId].status;
-							if((status == "complete")||
-								(status == "sending")||
-								(status == "committed"))   //Maybe this too: ||
-								//(status == "gotid")||
-								//(status == "lostid")
-							 {*/
-								//So we finished after the full commit - we should remove the old entry
-							
-								//We have a new sid now, but the request has already been sent
-								
-								
-													
-									//if status is already complete and is not the same as the current request
-									if(requestId != mg.currentRequestId) {
-										//And it must be the current request
-										console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-										$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
-												//it could potentially error out if the data arrives later
-											dataType: "jsonp",
-											crossDomain: true,
-											url: ssshoutServer + "/de.php?callback=?",
-											data: {
-												mid: results.sid,
-												just_typing: 'on'
-											},
-											success: function(response2){ 
-												var results2 = response2;
-												refreshResults(results2);
-											},
-											error: function (jqXHR, textStatus, errorThrown) {
-									
-												$("#warnings").html(lsmsg.msgs[lang].lostConnection);
-												$("#warnings").show();
-							
-												//Process messages again in 10 seconds
-												setTimeout(function() {
-													mg.processEachMsg();
-												}, 10000);
-											}
-										});
-									}
-								
-							//} 
 						} else {
 							//No shout id already
-							
 							refreshResults(results);  //gets sshout id from in here
-				
-							
-							
 						}
 					
 			
