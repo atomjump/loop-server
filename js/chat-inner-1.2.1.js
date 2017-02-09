@@ -1135,9 +1135,11 @@ function submitShoutAjax(whisper, commit, msgId)
 							//Session results
 							mg.updateMsg(myMsgId, newShoutId, "complete");	
 						} else {								
-							mg.updateMsg(myMsgId, "", "complete");
+							mg.updateMsg(myMsgId, null, "complete");
 						}
-			
+						
+						console.log("Now set msg " + myMsgId + "  to:" + mg.localMsg[myMsgId].shoutId);
+						
 						clearTimeout(myLoopTimeout);		//reset the main timeout
 						doLoop();		//Then refresh the main list
 					} else {
