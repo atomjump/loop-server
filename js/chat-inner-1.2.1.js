@@ -1164,7 +1164,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						}
 						
 						if((!oldShoutId)&&(newShoutId)) {
-							console.log("Setting new shout id from typing:" + newShoutId;
+							console.log("Setting new shout id from typing:" + newShoutId);
 							mg.updateMsg(myMsgId, newShoutId, "");	
 						}
 						
