@@ -1086,21 +1086,23 @@ function submitShoutAjax(whisper, commit, msgId)
 						var results = response;
 						refreshResults(results);  //gets sshout id from in here
 				
+						if(mg.localMsg[myMsgId].status == "complete") {
 							
-						//if status is not already complete
-						if(requestId != mg.currentRequestId) {
-							//And it must be the current request
-							console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-							if(results.sid) {
-								mg.updateMsg(myMsgId, results.sid, "deactivate");
-							} else {
-								if(myShoutId) {
-									mg.updateMsg(myMsgId, myShoutId, "deactivate");	
+							//if status is already complete and is not the same as the current request
+							/*if(requestId != mg.currentRequestId) {
+								//And it must be the current request
+								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								if(results.sid) {
+									mg.updateMsg(myMsgId, results.sid, "deactivate");
 								} else {
-									mg.updateMsg(myMsgId, "", "deactivate");	
-								}						
-							}
-						} 
+									if(myShoutId) {
+										mg.updateMsg(myMsgId, myShoutId, "deactivate");	
+									} else {
+										mg.updateMsg(myMsgId, "", "deactivate");	
+									}						
+								}
+							} */
+						}
 					
 			
 					}
@@ -1132,18 +1134,16 @@ function submitShoutAjax(whisper, commit, msgId)
 							$("#warnings").html(wrn);
 							$("#warnings").show();
 							
-							if(mg.localMsg[myMsgId].shoutId) {
-								//Only if we knew what the server side id, should we commit again
 					
-								console.log("Switching back to committed status for:" + myMsgId);
-								mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
-													//Note: Don't update the shoutID because we don't have it
-			
-								//Process messages again in 10 seconds
-								setTimeout(function() {
-									mg.processEachMsg();
-								}, 10000);
-							}
+							console.log("Switching back to committed status for:" + myMsgId);
+							mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+												//Note: Don't update the shoutID because we don't have it
+		
+							//Process messages again in 10 seconds
+							setTimeout(function() {
+								mg.processEachMsg();
+							}, 10000);							
+							
 			
 						} else {
 							//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
@@ -1171,6 +1171,7 @@ function submitShoutAjax(whisper, commit, msgId)
 
 		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 		
+		//Check for erroring out after a long 20 sec timeout
 		setTimeout(function() {
 			
 			var myMsgId = thisMyMsgId;
@@ -1187,7 +1188,15 @@ function submitShoutAjax(whisper, commit, msgId)
 					}
 				}
 			}
-		}, 3000);		//After 3 seconds process a timeout
+		}, 20000);		
+		
+		setTimeout(function() {
+			//Warn the user
+			var wrn = lsmsg.msgs[lang].messageQueued;
+			wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+			$("#warnings").html(wrn);
+			$("#warnings").show();
+		}, 3000);  //After 3 seconds process a timeout warning
 				
 		$.ajax(ajaxCall);
 		
