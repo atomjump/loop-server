@@ -1032,7 +1032,11 @@ function submitShoutAjax(whisper, commit, msgId)
 		//Track requests
 		mg.currentRequestId ++;
 		var requestId = mg.currentRequestId;
-		mg.requests[requestId] = {};		//Create the object
+		mg.requests[requestId] = { 
+										aSuccess: false,
+										erroredOut: false
+		 						};		//Create the object
+		
 		
 		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
 									//which will trigger an error after the data arrives if past the timeout
@@ -1061,12 +1065,14 @@ function submitShoutAjax(whisper, commit, msgId)
 						
 						if(results.sid) {
 							//Session results
+							console.log("sid: " + results.sid);
 							mg.updateMsg(myMsgId, results.sid, "complete");	
 						} else {
 							if(myShoutId) {
 								console.log("myShoutId: " + myShoutId);
 								mg.updateMsg(myMsgId, myShoutId, "complete");
 							} else {
+								
 								mg.updateMsg(myMsgId, "", "complete");
 							}
 						}
