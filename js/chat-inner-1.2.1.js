@@ -1084,18 +1084,20 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Update screen and get the shout id only
 						//Just a push button
 						
+						var results = response;
 						
+						//This is excess if the message has already been completed or sent for real
+						if((results.sid)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
+							//We already have a shout id. This message should be removed
+							//if(mg.localMsg[myMsgId].typing == 'off') {
 						
-						//This is excess if the message has already been completed of sent for real
-						if(mg.localMsg[myMsgId].typing == 'off') {
-						
-							var status = mg.localMsg[myMsgId].status;
+							/*var status = mg.localMsg[myMsgId].status;
 							if((status == "complete")||
 								(status == "sending")||
-								(status == "committed")||
-								(status == "gotid")||
-								(status == "lostid"))
-							 {
+								(status == "committed"))   //Maybe this too: ||
+								//(status == "gotid")||
+								//(status == "lostid")
+							 {*/
 								//So we finished after the full commit - we should remove the old entry
 							
 								//We have a new sid now, but the request has already been sent
@@ -1115,9 +1117,9 @@ function submitShoutAjax(whisper, commit, msgId)
 												mid: results.sid,
 												just_typing: 'on'
 											},
-											success: function(response){ 
-												var results = response;
-												refreshResults(results);
+											success: function(response2){ 
+												var results2 = response2;
+												refreshResults(results2);
 											},
 											error: function (jqXHR, textStatus, errorThrown) {
 									
@@ -1132,10 +1134,11 @@ function submitShoutAjax(whisper, commit, msgId)
 										});
 									}
 								}
-							} 
+							//} 
 						} else {
-								var results = response;
-								refreshResults(results);  //gets sshout id from in here
+							//No shout id already
+							
+							refreshResults(results);  //gets sshout id from in here
 				
 							
 							
