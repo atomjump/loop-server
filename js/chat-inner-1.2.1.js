@@ -437,10 +437,10 @@ var msg = function() {
 				} else {
 					//Typing or waiting for completion
 					
-					if(value.status == "complete") {
-								//Complete - let's remove from our local array
-								mythis.finishMsg(key);
-					} else {
+					//if(value.status == "complete") {
+					//			//Complete - let's remove from our local array
+					//			mythis.finishMsg(key);
+					//} else {
 					
 						if(value.typing == "off") {
 
@@ -476,7 +476,9 @@ var msg = function() {
 
 							} else {
 								//Either 'complete' or 'sending'
-						
+								if(value.status == "complete") {
+									mythis.finishMsg(key);
+								}
 							}
 							
 						} else {
@@ -493,7 +495,7 @@ var msg = function() {
 									}
 							}
 						}
-					}
+					//}
 				}
 			}
 
