@@ -1115,8 +1115,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 					if(mycommit == true) {
 						//If we clicked a commit button
-						if((newShoutId)&&
-							(oldShoutId)&&
+						if((oldShoutId)&&
 							(newShoutId != oldShoutId)) {
 							//There exists an old 'typing' message that needs to be deleted
 							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
@@ -1159,10 +1158,6 @@ function submitShoutAjax(whisper, commit, msgId)
 								refreshResults(results);  //gets sshout id from in here
 							}
 						}
-						
-						
-											
-					
 			
 					}
 			
