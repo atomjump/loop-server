@@ -1084,19 +1084,16 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Update screen and get the shout id only
 						//Just a push button
 						var results = response;
-						refreshResults(results);
+						refreshResults(results);  //gets sshout id from in here
 				
-						if(!results.sid) {
-							if(mg.localMsg[myMsgId].status != "complete") {
-								//only if it is not already complete
-								if(requestId == mg.currentRequestId) {
-									//And it must be the current request
-									console.log("Lost in spacee.. msgid:" + myMsgId);
-									mg.updateMsg(myMsgId, "", "lostid");
-								} 
-							}
-					
+							
+						//if status is not already complete
+						if(requestId != mg.currentRequestId) {
+							//And it must be the current request
+							console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+							mg.updateMsg(myMsgId, "", "deactivate");
 						} 
+					
 			
 					}
 			
