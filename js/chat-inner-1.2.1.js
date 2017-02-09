@@ -240,7 +240,7 @@ var msg = function() {
 		"deactivate" :  message should be deactivated/hidden
 		"restarting" :  typing is restarting, so the 'typing' message needs to be shown again
 		"typing" :    user is currently typing
-		"sending" :   message has been taken onto the sending queue to the server
+		"sending" :   message has been taken off the sending queue to the server
 		"complete" :   message confirmation back from the server - has been sent to the server
 		"gotid"   :  have received a reply from the server - and the server message id has been set.
 		"lostid"   : have received a message from the server and didn't get an id, or we had an error from the server and so got no id either
@@ -1088,9 +1088,13 @@ function submitShoutAjax(whisper, commit, msgId)
 						
 						//This is excess if the message has already been completed of sent for real
 						if(mg.localMsg[myMsgId].typing == 'off') {
-							if((mg.localMsg[myMsgId].status == "complete")||
-								(mg.localMsg[myMsgId].status == "sending")||
-								(mg.localMsg[myMsgId].status == "committed"))
+						
+							var status = mg.localMsg[myMsgId].status;
+							if((status == "complete")||
+								(status == "sending")||
+								(status == "committed")||
+								(status == "gotid")||
+								(status == "lostid"))
 							 {
 								//So we finished after the full commit - we should remove the old entry
 							
