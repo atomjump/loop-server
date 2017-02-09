@@ -1100,7 +1100,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				
 						var results = response;
 						
-						if((mg.localMsg[myMsgId].shoutId)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
+						if((mg.localMsg[myMsgId].shoutId)&&(results.sid)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
 							//There exists a current 'typing' message that needs to be deleted
 							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 							removeMessageDirect(mg.localMsg[myMsgId].shoutId);
@@ -1135,7 +1135,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						var results = response;
 						
 						//This is excess if the message has already been completed or sent for real
-						if((results.sid)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
+						if((results.sid)&&(mg.localMsg[myMsgId].shoutId)&&(results.sid != mg.localMsg[myMsgId].shoutId)) {
 							//We already have a shout id. This message should be removed
 												
 							//if status is already complete and is not the same as the current request
