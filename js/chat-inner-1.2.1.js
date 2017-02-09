@@ -1126,6 +1126,7 @@ function submitShoutAjax(whisper, commit, msgId)
 											}
 										});
 									}
+								}
 							} else {
 								var results = response;
 								refreshResults(results);  //gets sshout id from in here
