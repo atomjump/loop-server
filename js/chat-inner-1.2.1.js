@@ -1037,7 +1037,8 @@ function submitShoutAjax(whisper, commit, msgId)
 				
 				
 				if(aSuccess == false) {
-					aSuccess = true;	
+					aSuccess = true;
+					console.log("Committed success!");	
 					ssshoutHasFocus = true;
 			
 					if(mycommit == true) {
@@ -1049,6 +1050,8 @@ function submitShoutAjax(whisper, commit, msgId)
 						refreshResults(results);
 			
 						//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+						console.log("myMsgId:" + myMsgId);
+						
 						if(results.sid) {
 							//Session results
 							mg.updateMsg(myMsgId, results.sid, "complete");	
@@ -1126,6 +1129,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 		var thisMyMsgId = myMsgId;
 		var thisMycommit = mycommit;
+
 		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 		setTimeout(function() {
 			
@@ -1136,7 +1140,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				//If the message still exists
 				if((aSuccess == false)&&(erroredOut == false)) {
 					//And it isn't complete or lost
-					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
+					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + aSuccess + " erroredOut=" + erroredOut);
 					
 					ajaxCall.error();
 				}
