@@ -1028,12 +1028,13 @@ function submitShoutAjax(whisper, commit, msgId)
 		var myMsgId = msgId;
 		var myShoutId = $('#shout-id').val();
 		
-		var ajaxCall = {
+		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
+									//which will trigger an error after the data arrives if past the timeout
 			url: ssshoutServer + '/index.php?callback=?', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp",		//WAS: jsonp,
-			jsonpCallback: function(response) {
+			dataType: "jsonp",		
+			success: function(response) {
 	
 				ssshoutHasFocus = true;
 			
