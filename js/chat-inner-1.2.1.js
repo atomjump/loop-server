@@ -1028,6 +1028,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		var mycommit = commit;
 		var myMsgId = msgId;
 		var myShoutId = $('#shout-id').val();
+		var erroredOut = false;
 		
 		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
 									//which will trigger an error after the data arrives if past the timeout
@@ -1082,28 +1083,34 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 			},
 			error: function(jqXHR, textStatus, errorThrown ) {
+				
+				if(erroredOut == false) {
+					erroredOut = true;		//Only run this once
+				
 							
-				//OK no response
-				if(mycommit == true) {
-					//Failure to send a message - warn user here.
+					//OK no response
+					if(mycommit == true) {
+						//Failure to send a message - warn user here.
 			
-					//Warn the user
-					var wrn = lsmsg.msgs[lang].messageQueued;
-					wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
-					$("#warnings").html(wrn);
-					$("#warnings").show();
+						//Warn the user
+						var wrn = lsmsg.msgs[lang].messageQueued;
+						wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+						$("#warnings").html(wrn);
+						$("#warnings").show();
 					
-					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
-										//Note: Don't update the shoutID because we don't have it
+						mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+											//Note: Don't update the shoutID because we don't have it
 			
-					//Process messages again in 10 seconds
-					setTimeout(function() {
-						mg.processEachMsg();
-					}, 10000);
+						//Process messages again in 10 seconds
+						setTimeout(function() {
+							mg.processEachMsg();
+						}, 10000);
 			
-				} else {
-					//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-					mg.updateMsg(myMsgId, "", "lostid");
+					} else {
+						//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+						mg.updateMsg(myMsgId, "", "lostid");
+					}
+				
 				}
 				
 			
