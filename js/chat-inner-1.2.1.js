@@ -1083,25 +1083,56 @@ function submitShoutAjax(whisper, commit, msgId)
 					} else {
 						//Update screen and get the shout id only
 						//Just a push button
-						var results = response;
-						refreshResults(results);  //gets sshout id from in here
-				
-						if(mg.localMsg[myMsgId].status == "complete") {
+						
+						
+						
+						//This is excess if the message has already been completed of sent for real
+						if(mg.localMsg[myMsgId].typing == 'off') {
+							if((mg.localMsg[myMsgId].status == "complete")||
+								(mg.localMsg[myMsgId].status == "sending")||
+								(mg.localMsg[myMsgId].status == "committed"))
+							 {
+								//So we finished after the full commit - we should remove the old entry
 							
-							//if status is already complete and is not the same as the current request
-							/*if(requestId != mg.currentRequestId) {
-								//And it must be the current request
-								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								//We have a new sid now, but the request has already been sent
 								if(results.sid) {
-									mg.updateMsg(myMsgId, results.sid, "deactivate");
-								} else {
-									if(myShoutId) {
-										mg.updateMsg(myMsgId, myShoutId, "deactivate");	
-									} else {
-										mg.updateMsg(myMsgId, "", "deactivate");	
-									}						
-								}
-							} */
+													
+									//if status is already complete and is not the same as the current request
+									if(requestId != mg.currentRequestId) {
+										//And it must be the current request
+										console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+										$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
+												//it could potentially error out if the data arrives later
+											dataType: "jsonp",
+											crossDomain: true,
+											url: ssshoutServer + "/de.php?callback=?",
+											data: {
+												mid: results.sid,
+												just_typing: 'on'
+											},
+											success: function(response){ 
+												var results = response;
+												refreshResults(results);
+											},
+											error: function (jqXHR, textStatus, errorThrown) {
+									
+												$("#warnings").html(lsmsg.msgs[lang].lostConnection);
+												$("#warnings").show();
+							
+												//Process messages again in 10 seconds
+												setTimeout(function() {
+													mg.processEachMsg();
+												}, 10000);
+											}
+										});
+									}
+							} else {
+								var results = response;
+								refreshResults(results);  //gets sshout id from in here
+				
+							
+							
+							}
 						}
 					
 			
