@@ -1280,6 +1280,8 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
+	var callResults = false;		//flag for returned or not
+	
 	var ajaxCall = {
   		dataType: "jsonp",
   		contentType: "application/json",
@@ -1295,6 +1297,7 @@ function doSearch()
 											
 		},
 		success: function(response){ 
+			 	callResults = true;		//flag this as having returned
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
@@ -1322,7 +1325,9 @@ function doSearch()
     
     
 	setTimeout(function() {	
-		ajaxCall.error();
+		if(callResults == false) {
+			ajaxCall.error();
+		}
 		
 	}, 3000);		//After 3 seconds process a timeout
 			
