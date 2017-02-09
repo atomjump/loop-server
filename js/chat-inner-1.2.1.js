@@ -1029,8 +1029,10 @@ function submitShoutAjax(whisper, commit, msgId)
 		var erroredOut = false;
 		var aSuccess = false;
 		
+		//Track requests
 		mg.currentRequestId ++;
 		var requestId = mg.currentRequestId;
+		mg.requests[requestId] = {};		//Create the object
 		
 		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
 									//which will trigger an error after the data arrives if past the timeout
