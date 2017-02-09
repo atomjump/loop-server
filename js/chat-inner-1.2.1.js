@@ -1100,10 +1100,17 @@ function submitShoutAjax(whisper, commit, msgId)
 					var newShoutId = null;
 					if((mg.localMsg[myMsgId])&&(mg.localMsg[myMsgId].shoutId)) {
 						oldShoutId = mg.localMsg[myMsgId].shoutId;						
+					} else {
+						if(myShoutId) {
+						    oldShoutId = myShoutId;
+						}
 					}
+					
 					if(results.sid) {
 						newShoutId = results.sid;
 					}
+					
+					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId);
 			
 			
 					if(mycommit == true) {
