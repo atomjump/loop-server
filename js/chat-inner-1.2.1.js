@@ -1110,12 +1110,13 @@ function submitShoutAjax(whisper, commit, msgId)
 						newShoutId = results.sid;
 					}
 					
-					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId);
+					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId +  "  commit=" + mycommit);
 			
 			
 					if(mycommit == true) {
 						//If we clicked a commit button
-						if((oldShoutId)&&
+						if((newShoutId)&&
+							(oldShoutId)&&
 							(newShoutId != oldShoutId)) {
 							//There exists an old 'typing' message that needs to be deleted
 							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
@@ -1149,15 +1150,20 @@ function submitShoutAjax(whisper, commit, msgId)
 							   //if status is already complete and is not the same as the current request
 							
 								//And it must be the current request
-								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								console.log("OK this typing one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 								removeMessageDirect(newShoutId);
 						} else {
-						
+							console.log("Refreshing results in 'typing' check:" + newShoutId);
 							if(newShoutId) {
 								//No shout id already
+								console.log("Refreshing results in 'typing' confirmed");
 								refreshResults(results);  //gets sshout id from in here
 							}
 						}
+						
+						
+											
+					
 			
 					}
 			
