@@ -1086,11 +1086,13 @@ function submitShoutAjax(whisper, commit, msgId)
 						refreshResults(results);
 				
 						if(!results.sid) {
-							if(requestId == mg.currentRequestId) {
-								//Only if there has been no concluding new commit should we register this timeout lost in space.
-								//which means we need to generate a new id
-								console.log("Lost in spacee.. msgid:" + myMsgId);
-								mg.updateMsg(myMsgId, "", "lostid");
+							if(mg.localMsg[myMsgId].status != "complete") {
+								//only if it is not already complete
+								if(requestId == mg.currentRequestId) {
+									//And it must be the current request
+									console.log("Lost in spacee.. msgid:" + myMsgId);
+									mg.updateMsg(myMsgId, "", "lostid");
+								}
 							}
 					
 						} 
@@ -1110,35 +1112,37 @@ function submitShoutAjax(whisper, commit, msgId)
 				console.log("Error for request:" + requestId);
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					
-				
+					if(mg.localMsg[myMsgId].status != "complete") {
+						//There was no other complete somewhere else
 							
-					//OK no response
-					if(mycommit == true) {
-						//Failure to send a message - warn user here.
-						mg.requests[requestId].erroredOut = true;		//Only run this once
+						//OK no response
+						if(mycommit == true) {
+							//Failure to send a message - warn user here.
+							mg.requests[requestId].erroredOut = true;		//Only run this once
 			
-						//Warn the user
-						var wrn = lsmsg.msgs[lang].messageQueued;
-						wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
-						$("#warnings").html(wrn);
-						$("#warnings").show();
+							//Warn the user
+							var wrn = lsmsg.msgs[lang].messageQueued;
+							wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+							$("#warnings").html(wrn);
+							$("#warnings").show();
 					
-						console.log("Switching back to committed status for:" + myMsgId);
-						mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
-											//Note: Don't update the shoutID because we don't have it
+							console.log("Switching back to committed status for:" + myMsgId);
+							mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+												//Note: Don't update the shoutID because we don't have it
 			
-						//Process messages again in 10 seconds
-						setTimeout(function() {
-							mg.processEachMsg();
-						}, 10000);
+							//Process messages again in 10 seconds
+							setTimeout(function() {
+								mg.processEachMsg();
+							}, 10000);
 			
-					} else {
-						//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-						if(requestId == mg.currentRequestId) {
-							//Only if there has been no concluding new commit should we register this timeout lost in space.
-							//which means we need to generate a new id
-							console.log("Lost in spacee.. msgid:" + myMsgId);
-							mg.updateMsg(myMsgId, "", "lostid");
+						} else {
+							//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+							if(requestId == mg.currentRequestId) {
+								//Only if there has been no concluding new commit should we register this timeout lost in space.
+								//which means we need to generate a new id
+								console.log("Lost in spacee.. msgid:" + myMsgId);
+								mg.updateMsg(myMsgId, "", "lostid");
+							}
 						}
 					}
 				
