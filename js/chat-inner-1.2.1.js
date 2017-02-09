@@ -1114,7 +1114,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 					} else {
 						//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-						mg.updateMsg(myMsgId, "", "lostid");
+						//TESTING OUTmg.updateMsg(myMsgId, "", "lostid");
 					}
 				
 				}
@@ -1131,6 +1131,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		var thisMycommit = mycommit;
 
 		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
+		
 		setTimeout(function() {
 			
 			var myMsgId = thisMyMsgId;
@@ -1141,7 +1142,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				if((mg.localMsg[thisMyMsgId].aSuccess == false)&&(mg.localMsg[thisMyMsgId].erroredOut == false)) {
 					//And it isn't complete or lost
 					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + aSuccess + " erroredOut=" + erroredOut);
-					
+				
 					ajaxCall.error();
 				}
 			}
