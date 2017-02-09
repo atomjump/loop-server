@@ -1092,7 +1092,7 @@ function submitShoutAjax(whisper, commit, msgId)
 									//And it must be the current request
 									console.log("Lost in spacee.. msgid:" + myMsgId);
 									mg.updateMsg(myMsgId, "", "lostid");
-								}
+								} 
 							}
 					
 						} 
@@ -1107,7 +1107,7 @@ function submitShoutAjax(whisper, commit, msgId)
 					
 		
 			},
-			error: function(jqXHR, textStatus, errorThrown ) {
+			error: function(jqXHR, textStatus, errorThrown) {
 				
 				console.log("Error for request:" + requestId);
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
@@ -1137,10 +1137,10 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 						} else {
 							//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-							if(requestId == mg.currentRequestId) {
+							if((requestId == mg.currentRequestId)) {
 								//Only if there has been no concluding new commit should we register this timeout lost in space.
 								//which means we need to generate a new id
-								console.log("Lost in spacee.. msgid:" + myMsgId);
+								console.log("Lost in spacee.. msgid:" + myMsgId + " request:" + requestId);
 								mg.updateMsg(myMsgId, "", "lostid");
 							}
 						}
@@ -1172,7 +1172,9 @@ function submitShoutAjax(whisper, commit, msgId)
 					//And it isn't complete or lost
 					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + mg.requests[requestId].aSuccess + " erroredOut=" + mg.requests[requestId].erroredOut);
 				
-					ajaxCall.error();
+					if(mycommit == true) {
+						ajaxCall.error();
+					}
 				}
 			}
 		}, 3000);		//After 3 seconds process a timeout
