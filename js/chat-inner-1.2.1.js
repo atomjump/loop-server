@@ -444,6 +444,7 @@ var msg = function() {
 						   (value.status != "sending")) {  		
 						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
 					
+							console.log("Status before sending:" + value.status);
 					
 							//Check if we have our id yet
 							if(value.shoutId) {
