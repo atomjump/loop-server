@@ -1120,9 +1120,11 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 		var thisMyMsgId = myMsgId;
 		var thisMycommit = mycommit;
+		alert("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 		setTimeout(function() {
 			
 			var myMsgId = thisMyMsgId;
+			var mycommit = thisMycommit;
 			 
 			if(mg.localMsg[thisMyMsgId]) {
 				//If the message still exists
@@ -1130,7 +1132,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				   (mg.localMsg[thisMyMsgId].status != "lostid")) {
 					//And it isn't complete or lost
 					alert("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
-					var mycommit = thisMycommit;
+					
 					ajaxCall.error();
 				}
 			}
