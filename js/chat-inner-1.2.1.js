@@ -1047,7 +1047,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			success: function(response) {
 				console.log("Success, checking request ID:" + requestId);
 				
-				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+				if(mg.requests[requestId].aSuccess == false) {
 					mg.requests[requestId].aSuccess = true;
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
@@ -1088,7 +1088,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						if(!results.sid) {
 							mg.updateMsg(myMsgId, "", "lostid");
 					
-						}
+						} 
 			
 					}
 			
