@@ -1131,15 +1131,19 @@ function submitShoutAjax(whisper, commit, msgId)
 							wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
 							$("#warnings").html(wrn);
 							$("#warnings").show();
+							
+							if(mg.localMsg[myMsgId].shoutId) {
+								//Only if we knew what the server side id, should we commit again
 					
-							console.log("Switching back to committed status for:" + myMsgId);
-							mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
-												//Note: Don't update the shoutID because we don't have it
+								console.log("Switching back to committed status for:" + myMsgId);
+								mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+													//Note: Don't update the shoutID because we don't have it
 			
-							//Process messages again in 10 seconds
-							setTimeout(function() {
-								mg.processEachMsg();
-							}, 10000);
+								//Process messages again in 10 seconds
+								setTimeout(function() {
+									mg.processEachMsg();
+								}, 10000);
+							}
 			
 						} else {
 							//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
