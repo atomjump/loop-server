@@ -229,6 +229,8 @@ function waitForCommitFinish()
 var msg = function() {
 	this.localMsgId = 1;
 	this.localMsg = {};	//Must be an object for iteration
+	this.requests = {};
+	this.currentRequestId = 1;
 	
 	/*
 	
@@ -1027,6 +1029,9 @@ function submitShoutAjax(whisper, commit, msgId)
 		var erroredOut = false;
 		var aSuccess = false;
 		
+		mg.currentRequestId ++;
+		var requestId = mg.currentRequestId;
+		
 		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
 									//which will trigger an error after the data arrives if past the timeout
 			url: ssshoutServer + '/index.php?callback=?', 
@@ -1036,8 +1041,8 @@ function submitShoutAjax(whisper, commit, msgId)
 			success: function(response) {
 				
 				
-				if((mg.localMsg[myMsgId].aSuccess == false)&&(mg.localMsg[myMsgId].erroredOut == false)) {
-					mg.localMsg[myMsgId].aSuccess = true;
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					mg.requests[requestId].aSuccess = true;
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
 			
@@ -1089,8 +1094,8 @@ function submitShoutAjax(whisper, commit, msgId)
 			},
 			error: function(jqXHR, textStatus, errorThrown ) {
 				
-				if((mg.localMsg[myMsgId].aSuccess == false)&&(mg.localMsg[myMsgId].erroredOut == false)) {
-					mg.localMsg[myMsgId].erroredOut = true;		//Only run this once
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					mg.requests[requestId].erroredOut = true;		//Only run this once
 				
 							
 					//OK no response
@@ -1114,7 +1119,8 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 					} else {
 						//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-						//TESTING OUTmg.updateMsg(myMsgId, "", "lostid");
+						console.log("Lost in spacee.. msgid:" + myMsgId);
+						mg.updateMsg(myMsgId, "", "lostid");
 					}
 				
 				}
@@ -1139,7 +1145,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			 
 			if(mg.localMsg[thisMyMsgId]) {
 				//If the message still exists
-				if((mg.localMsg[thisMyMsgId].aSuccess == false)&&(mg.localMsg[thisMyMsgId].erroredOut == false)) {
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					//And it isn't complete or lost
 					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + aSuccess + " erroredOut=" + erroredOut);
 				
