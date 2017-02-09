@@ -998,6 +998,7 @@ function removeMessageDirect(messageId)
 	var successDeletion = false;
 	//Warning infinite attempts?
 
+	console.log("Removing message sid:" + messageId);
 	
 	var ajaxCall = {			//Note: we cannot have a timeout on this one. Otherwise
 			//it could potentially error out if the data arrives later
@@ -1011,6 +1012,7 @@ function removeMessageDirect(messageId)
 		success: function(response2){ 
 			var results2 = response2;
 			successDeletion = true;
+			console.log("Deleted OK");
 			refreshResults(results2);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
