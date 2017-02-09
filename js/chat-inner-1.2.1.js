@@ -1123,6 +1123,9 @@ function submitShoutAjax(whisper, commit, msgId)
 			}
 		};
 		
+		//TEST IN REMOVE ME
+		console.log("Called:" + JSON.stringify(ajaxCall.data));
+		
 		var thisMyMsgId = myMsgId;
 		var thisMycommit = mycommit;
 		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
