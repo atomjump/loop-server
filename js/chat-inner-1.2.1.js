@@ -1048,7 +1048,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			success: function(response) {
 				console.log("Success, checking request ID:" + requestId);
 				
-				if(mg.requests[requestId].aSuccess == false) {
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					mg.requests[requestId].aSuccess = true;
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
@@ -1124,7 +1124,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						//OK no response
 						if(mycommit == true) {
 							//Failure to send a message - warn user here.
-							mg.requests[requestId].erroredOut = true;		//Only run this once
+							mg.requests[requestId].erroredOut = true;		//Only run this once for this request
 			
 							//Warn the user
 							var wrn = lsmsg.msgs[lang].messageQueued;
