@@ -1036,7 +1036,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			success: function(response) {
 				
 				
-				if(aSuccess == false) {
+				if((aSuccess == false)&&(erroredOut == false)) {
 					aSuccess = true;
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
@@ -1089,7 +1089,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			},
 			error: function(jqXHR, textStatus, errorThrown ) {
 				
-				if(erroredOut == false) {
+				if((aSuccess == false)&&(erroredOut == false)) {
 					erroredOut = true;		//Only run this once
 				
 							
