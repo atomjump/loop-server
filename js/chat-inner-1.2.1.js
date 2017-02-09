@@ -436,66 +436,60 @@ var msg = function() {
 					
 				} else {
 					//Typing or waiting for completion
-					
-					//if(value.status == "complete") {
-					//			//Complete - let's remove from our local array
-					//			mythis.finishMsg(key);
-					//} else {
-					
-						if(value.typing == "off") {
+					if(value.typing == "off") {
 
-							if((value.status != "complete")&&
-							   (value.status != "sending")) {  		
-							   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
+						if((value.status != "complete")&&
+						   (value.status != "sending")) {  		
+						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
+					
+					
+							//Check if we have our id yet
+							if(value.shoutId) {
+								//Ready to send
 						
-						
-								//Check if we have our id yet
-								if(value.shoutId) {
-									//Ready to send
-							
+								$('#typing-now').val('off');
+								$('#message').val(value.shouted);
+								$('#msg-id').val(key);
+								$('#shout-id').val(value.shoutId);
+								submitShoutAjax(value.whisper, true, key);	//true for commit
+								mythis.localMsg[key].status = "sending";
+							} else {
+								if((value.status == 'lostid')||
+								   (value.status == 'committed')) {
+									//OK, we entered something, it timed-out on the server or some other error,
+									//so we can try to commit the whole message now as a new server message anyway
 									$('#typing-now').val('off');
 									$('#message').val(value.shouted);
 									$('#msg-id').val(key);
-									$('#shout-id').val(value.shoutId);
+									$('#shout-id').val('');		//a blank id
 									submitShoutAjax(value.whisper, true, key);	//true for commit
 									mythis.localMsg[key].status = "sending";
-								} else {
-									if((value.status == 'lostid')||
-									   (value.status == 'committed')) {
-										//OK, we entered something, it timed-out on the server or some other error,
-										//so we can try to commit the whole message now as a new server message anyway
-										$('#typing-now').val('off');
-										$('#message').val(value.shouted);
-										$('#msg-id').val(key);
-										$('#shout-id').val('');		//a blank id
-										submitShoutAjax(value.whisper, true, key);	//true for commit
-										mythis.localMsg[key].status = "sending";
-							
-									}
-								}
-
-							} else {
-								//Either 'complete' or 'sending'
-								if(value.status == "complete") {
-									mythis.finishMsg(key);
+						
 								}
 							}
-							
+
 						} else {
-						
-							if(value.shoutId) {
-									//Ready to restart
-									if(value.status == "restarting") {
-										$('#typing-now').val('on');
-										$('#message').val(value.shouted);
-										$('#msg-id').val(key);
-										$('#shout-id').val(value.shoutId);
-										submitShoutAjax(value.whisper, false, key);	//false for commit
-										mythis.localMsg[key].status = "typing";
-									}
+							//Either 'complete' or 'sending'
+							if(value.status == "complete") {
+								mythis.finishMsg(key);
 							}
 						}
-					//}
+						
+					} else {
+					
+						if(value.shoutId) {
+								//Ready to restart
+								if(value.status == "restarting") {
+									$('#typing-now').val('on');
+									$('#message').val(value.shouted);
+									$('#msg-id').val(key);
+									$('#shout-id').val(value.shoutId);
+									submitShoutAjax(value.whisper, false, key);	//false for commit
+									mythis.localMsg[key].status = "typing";
+								}
+						}
+					}
+
 				}
 			}
 
@@ -1106,6 +1100,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						$("#warnings").html(wrn);
 						$("#warnings").show();
 					
+						console.log("Switching back to committed status for:" + myMsgId);
 						mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
 											//Note: Don't update the shoutID because we don't have it
 			
