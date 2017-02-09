@@ -1165,13 +1165,19 @@ function submitShoutAjax(whisper, commit, msgId)
 						//Update screen and get the shout id only
 						//Just a push button
 																		
+						if(!mg.localMsg[myMsgId]) {
+							//If it was already processed and then finished, we need to remove this new one
+							console.log("OK this was already processed and needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								
+							removeMessageDirect(newShoutId);
+						}
 						
 						//This is excess if the message has already been completed or sent for real	
 						if((newShoutId)&&(oldShoutId)&&							
 							   (newShoutId != oldShoutId)) {
 							   //We already have a shout id. This message should be removed
 							   //if status is already complete and is not the same as the current request
-							
+						
 								//And it must be the current request
 								console.log("OK this typing one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 								removeMessageDirect(newShoutId);
@@ -1183,7 +1189,7 @@ function submitShoutAjax(whisper, commit, msgId)
 								refreshResults(results);  //gets sshout id from in here
 							}
 						}
-						
+					
 						if((!oldShoutId)&&(newShoutId)) {
 							console.log("Setting new shout id from typing:" + newShoutId);
 							mg.updateMsg(myMsgId, newShoutId, "");	
