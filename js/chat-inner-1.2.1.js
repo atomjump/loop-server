@@ -1029,6 +1029,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		var myMsgId = msgId;
 		var myShoutId = $('#shout-id').val();
 		var erroredOut = false;
+		var aSuccess = false;
 		
 		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
 									//which will trigger an error after the data arrives if past the timeout
@@ -1037,46 +1038,50 @@ function submitShoutAjax(whisper, commit, msgId)
 			crossDomain: true,
 			dataType: "jsonp",		
 			success: function(response) {
-	
-				ssshoutHasFocus = true;
+				
+				
+				if(aSuccess == false) {
+					aSuccess = true;	
+					ssshoutHasFocus = true;
 			
-				if(mycommit == true) {
-					//If we clicked a commit button
+					if(mycommit == true) {
+						//If we clicked a commit button
 				
 				
 				
-					var results = response;
-					refreshResults(results);
+						var results = response;
+						refreshResults(results);
 			
-					//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-					if(results.sid) {
-						//Session results
-						mg.updateMsg(myMsgId, results.sid, "complete");	
-					} else {
-						if(myShoutId) {
-							mg.updateMsg(myMsgId, myShoutId, "complete");
+						//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
+						if(results.sid) {
+							//Session results
+							mg.updateMsg(myMsgId, results.sid, "complete");	
 						} else {
-							mg.updateMsg(myMsgId, "", "complete");
+							if(myShoutId) {
+								mg.updateMsg(myMsgId, myShoutId, "complete");
+							} else {
+								mg.updateMsg(myMsgId, "", "complete");
+							}
 						}
-					}
 			
-					clearTimeout(myLoopTimeout);		//reset the main timeout
-					doLoop();		//Then refresh the main list
-				} else {
-					//Update screen and get the shout id only
-					//Just a push button
-					var results = response;
-					refreshResults(results);
+						clearTimeout(myLoopTimeout);		//reset the main timeout
+						doLoop();		//Then refresh the main list
+					} else {
+						//Update screen and get the shout id only
+						//Just a push button
+						var results = response;
+						refreshResults(results);
 				
-					if(!results.sid) {
-						mg.updateMsg(myMsgId, "", "lostid");
+						if(!results.sid) {
+							mg.updateMsg(myMsgId, "", "lostid");
 					
+						}
+			
 					}
 			
+					//Go ahead and continue processing all messages outstanding
+					mg.processEachMsg();
 				}
-			
-				//Go ahead and continue processing all messages outstanding
-				mg.processEachMsg();
 	
 		
 					
@@ -1128,8 +1133,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			 
 			if(mg.localMsg[thisMyMsgId]) {
 				//If the message still exists
-				if((mg.localMsg[thisMyMsgId].status != "complete")&&
-				   (mg.localMsg[thisMyMsgId].status != "lostid")) {
+				if((aSuccess == false)&&(erroredOut == false)) {
 					//And it isn't complete or lost
 					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 					
