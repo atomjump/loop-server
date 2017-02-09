@@ -1303,7 +1303,7 @@ function refreshResults(results)
 	if(results.sid) {
 		//Session results
 	
-		mg.updateMsg(results.lid, results.sid, "gotid");
+		mg.updateMsg(results.lid, results.sid);		//Removed the gotid status - that was surplus
 	
 	}
 
