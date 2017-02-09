@@ -1021,7 +1021,7 @@ function removeMessageDirect(messageId)
 			removeMessageDirect(thisMessageId);
 			
 		}
-	});
+	};
 	
 	setTimeout(function() {
 			
