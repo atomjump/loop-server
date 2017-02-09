@@ -338,11 +338,9 @@ var msg = function() {
 				if(overwriteShout == false) {
 					//We only want to set if it doesn't exist
 					if(!this.localMsg[msgId].shoutId) {
-						console.log("updateMsg() Overwriting " + msgId + " with " +shoutId);
 						this.localMsg[msgId].shoutId = shoutId;
 					}
 				} else {
-					console.log("updateMsg() Overwriting " + msgId + " with " +shoutId);
 					this.localMsg[msgId].shoutId = shoutId;
 				}
 			}
@@ -457,8 +455,6 @@ var msg = function() {
 						if((value.status != "complete")&&
 						   (value.status != "sending")) {  		
 						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
-					
-							console.log("Status before sending:" + value.status);
 					
 							//Check if we have our id yet
 							if(value.shoutId) {
@@ -996,9 +992,8 @@ function removeMessageDirect(messageId)
 {
 	var thisMessageId = messageId;
 	var successDeletion = false;
-	//Warning infinite attempts?
+	//TODO: countdown to prevent infinite attempts?
 
-	console.log("Removing message sid:" + messageId);
 	
 	var ajaxCall = {			//Note: we cannot have a timeout on this one. Otherwise
 			//it could potentially error out if the data arrives later
@@ -1012,14 +1007,12 @@ function removeMessageDirect(messageId)
 		success: function(response2){ 
 			var results2 = response2;
 			successDeletion = true;
-			console.log("Deleted OK");
 			refreshResults(results2);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 
 			$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
-			console.log("Trying to delete again:" + thisMessageId);
 			removeMessageDirect(thisMessageId);
 			
 		}
@@ -1032,7 +1025,7 @@ function removeMessageDirect(messageId)
 			removeMessageDirect(thisMessageId);
 		}
 
-	}, 5000);  //After 5 seconds reprocess the deletion attempt
+	}, 10000);  //After 10 seconds reprocess the deletion attempt
 	
 	$.ajax(ajaxCall);
 	
@@ -1105,11 +1098,9 @@ function submitShoutAjax(whisper, commit, msgId)
 			crossDomain: true,
 			dataType: "jsonp",		
 			success: function(response) {
-				console.log("Success, checking request ID:" + requestId);
 				
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					mg.requests[requestId].aSuccess = true;
-					console.log("Committed success!");	
 					ssshoutHasFocus = true;
 			
 			
@@ -1122,7 +1113,6 @@ function submitShoutAjax(whisper, commit, msgId)
 					} else {
 						
 						if((myShoutId)&&(myShoutId != '')) {
-							console.log("Override old with myShoutId:" + myShoutId);
 						    oldShoutId = myShoutId;
 						}
 					}
@@ -1130,8 +1120,6 @@ function submitShoutAjax(whisper, commit, msgId)
 					if(results.sid) {
 						newShoutId = results.sid;
 					}
-					
-					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId +  "  commit=" + mycommit + "  myMsgId:" + myMsgId);
 			
 			
 					if(mycommit == true) {
@@ -1140,15 +1128,12 @@ function submitShoutAjax(whisper, commit, msgId)
 							(oldShoutId)&&
 							(newShoutId != oldShoutId)) {
 							//There exists an old 'typing' message that needs to be deleted
-							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 							removeMessageDirect(oldShoutId);
 						}
 						
 						refreshResults(results);
 			
-						//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-						console.log("myMsgId:" + myMsgId);
-						
+						//refresh results will fill in the returned id						
 						//Overwrite the existing results
 						if(newShoutId) {
 							//Session results
@@ -1156,9 +1141,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						} else {								
 							mg.updateMsg(myMsgId, null, "complete");
 						}
-						
-						console.log("Now set msg " + myMsgId + "  to:" + mg.localMsg[myMsgId].shoutId);
-						
+												
 						clearTimeout(myLoopTimeout);		//reset the main timeout
 						doLoop();		//Then refresh the main list
 					} else {
@@ -1167,8 +1150,6 @@ function submitShoutAjax(whisper, commit, msgId)
 																		
 						if(!mg.localMsg[myMsgId]) {
 							//If it was already processed and then finished, we need to remove this new one
-							console.log("OK this was already processed and needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-								
 							removeMessageDirect(newShoutId);
 						}
 						
@@ -1179,19 +1160,15 @@ function submitShoutAjax(whisper, commit, msgId)
 							   //if status is already complete and is not the same as the current request
 						
 								//And it must be the current request
-								console.log("OK this typing one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 								removeMessageDirect(newShoutId);
 						} else {
-							console.log("Refreshing results in 'typing' check:" + newShoutId);
 							if(newShoutId) {
 								//No shout id already
-								console.log("Refreshing results in 'typing' confirmed");
 								refreshResults(results);  //gets sshout id from in here
 							}
 						}
 					
 						if((!oldShoutId)&&(newShoutId)) {
-							console.log("Setting new shout id from typing:" + newShoutId);
 							mg.updateMsg(myMsgId, newShoutId, "");	
 						}
 						
@@ -1211,7 +1188,6 @@ function submitShoutAjax(whisper, commit, msgId)
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				
-				console.log("Error for request:" + requestId);
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					
 					if(mg.localMsg[myMsgId].status != "complete") {
@@ -1229,7 +1205,6 @@ function submitShoutAjax(whisper, commit, msgId)
 							$("#warnings").show();
 							
 					
-							console.log("Switching back to committed status for:" + myMsgId);
 							mg.updateMsg(myMsgId, null, "committed");	//Go back to committed rather than sending, so we will send again. 
 												//Note: Don't update the shoutID because we don't have it
 		
@@ -1244,7 +1219,6 @@ function submitShoutAjax(whisper, commit, msgId)
 							if((requestId == mg.currentRequestId)) {
 								//Only if there has been no concluding new commit should we register this timeout lost in space.
 								//which means we need to generate a new id
-								console.log("Lost in spacee.. msgid:" + myMsgId + " request:" + requestId);
 								mg.updateMsg(myMsgId, null, "lostid");
 							}
 						}
@@ -1257,13 +1231,10 @@ function submitShoutAjax(whisper, commit, msgId)
 			}
 		};
 		
-		//TEST IN REMOVE ME
-		console.log("Request " +requestId + ":"  + JSON.stringify(ajaxCall.data));
 		
 		var thisMyMsgId = myMsgId;
 		var thisMycommit = mycommit;
 
-		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 		
 		//Check for erroring out after a long 20 sec timeout
 		setTimeout(function() {
@@ -1274,9 +1245,7 @@ function submitShoutAjax(whisper, commit, msgId)
 			if(mg.localMsg[thisMyMsgId]) {
 				//If the message still exists
 				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
-					//And it isn't complete or lost
-					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId + "  success=" + mg.requests[requestId].aSuccess + " erroredOut=" + mg.requests[requestId].erroredOut);
-				
+					//And it isn't complete or lost				
 					if(mycommit == true) {
 						ajaxCall.error();
 					}
