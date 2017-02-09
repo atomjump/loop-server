@@ -396,6 +396,7 @@ var msg = function() {
 					var thisThis = mythis;
 					$.ajax({
 						dataType: "json",
+						crossDomain: true,
 						url: ssshoutServer + "/de.php?callback=?",
 						data: {
 							mid: value.shoutId,
@@ -405,7 +406,6 @@ var msg = function() {
 							var results = response;
 							refreshResults(results);
 						},
-						timeout: 3000, //3s timeout
 						error: function (jqXHR, textStatus, errorThrown) {
 									
         					$("#warnings").html(lsmsg.msgs[lang].lostConnection);
@@ -1027,13 +1027,13 @@ function submitShoutAjax(whisper, commit, msgId)
 		var mycommit = commit;
 		var myMsgId = msgId;
 		var myShoutId = $('#shout-id').val();
-				
-		$.ajax({
+		
+		var ajaxCall = {
 			url: ssshoutServer + '/index.php?callback=?', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp",		//WAS: jsonp
-			success: function(response) {
+			dataType: "jsonp",		//WAS: jsonp,
+			jsonpCallback: function(response) {
 	
 				ssshoutHasFocus = true;
 			
@@ -1079,7 +1079,6 @@ function submitShoutAjax(whisper, commit, msgId)
 					
 		
 			},
-			timeout: 3000,
 			error: function(jqXHR, textStatus, errorThrown ) {
 							
 				//OK no response
@@ -1108,7 +1107,14 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 				
 			}
-		});
+		};
+		
+		
+		setTimeout(function() {
+			ajaxCall.error();
+		}, 3000);		//After 3 seconds process a timeout
+				
+		$.ajax(ajaxCall);
 		
 	} else {
 	
@@ -1262,7 +1268,9 @@ function doSearch()
 	}
 	
 	$.ajax({
-  		dataType: "jsonp",		//TESTING was json!!
+  		dataType: "jsonp",				//Note: was json!! TESTING
+  		crossDomain: true,
+  		contentType: "application/json",
   		url: serv + "/search-chat.php?callback=?",
   		data: {
 					lat: $('#lat').val(),
@@ -1293,7 +1301,7 @@ function doSearch()
 				
 				
 		},
-		timeout: 3000, //3s timeout
+		timeout: 3000, //3s timeout. This timeout is OK, since we don't mind if the data arrives later
         error: function (jqXHR, textStatus, errorThrown) {
 							
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
