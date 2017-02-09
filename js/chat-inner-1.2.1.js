@@ -1110,7 +1110,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						newShoutId = results.sid;
 					}
 					
-					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId +  "  commit=" + mycommit);
+					console.log("oldShoutId=" + oldShoutId + "  newShoutId=" + newShoutId +  "  commit=" + mycommit + "  myMsgId:" + myMsgId);
 			
 			
 					if(mycommit == true) {
@@ -1141,9 +1141,7 @@ function submitShoutAjax(whisper, commit, msgId)
 					} else {
 						//Update screen and get the shout id only
 						//Just a push button
-												
-						
-						
+																		
 						
 						//This is excess if the message has already been completed or sent for real	
 						if((newShoutId)&&(oldShoutId)&&							
