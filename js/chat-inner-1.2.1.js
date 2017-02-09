@@ -1091,7 +1091,15 @@ function submitShoutAjax(whisper, commit, msgId)
 						if(requestId != mg.currentRequestId) {
 							//And it must be the current request
 							console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-							mg.updateMsg(myMsgId, "", "deactivate");
+							if(results.sid) {
+								mg.updateMsg(myMsgId, results.sid, "deactivate");
+							} else {
+								if(myShoutId) {
+									mg.updateMsg(myMsgId, myShoutId, "deactivate");	
+								} else {
+									mg.updateMsg(myMsgId, "", "deactivate");	
+								}						
+							}
 						} 
 					
 			
