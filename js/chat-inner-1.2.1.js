@@ -328,7 +328,7 @@ var msg = function() {
 
 	function updateMsg(msgId, shoutId, status, overwriteShout)
 	{
-		if(!overwriteShout) {
+		if((overwriteShout)&&(overwriteShout != false)) {
 			overwriteShout = true;
 		}
 		
@@ -338,9 +338,11 @@ var msg = function() {
 				if(overwriteShout == false) {
 					//We only want to set if it doesn't exist
 					if(!this.localMsg[msgId].shoutId) {
+						console.log("updateMsg() Overwriting " + msgId + " with " +shoutId);
 						this.localMsg[msgId].shoutId = shoutId;
 					}
 				} else {
+					console.log("updateMsg() Overwriting " + msgId + " with " +shoutId);
 					this.localMsg[msgId].shoutId = shoutId;
 				}
 			}
@@ -1205,7 +1207,7 @@ function submitShoutAjax(whisper, commit, msgId)
 							
 					
 							console.log("Switching back to committed status for:" + myMsgId);
-							mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
+							mg.updateMsg(myMsgId, null, "committed");	//Go back to committed rather than sending, so we will send again. 
 												//Note: Don't update the shoutID because we don't have it
 		
 							//Process messages again in 10 seconds
@@ -1220,7 +1222,7 @@ function submitShoutAjax(whisper, commit, msgId)
 								//Only if there has been no concluding new commit should we register this timeout lost in space.
 								//which means we need to generate a new id
 								console.log("Lost in spacee.. msgid:" + myMsgId + " request:" + requestId);
-								mg.updateMsg(myMsgId, "", "lostid");
+								mg.updateMsg(myMsgId, null, "lostid");
 							}
 						}
 					}
