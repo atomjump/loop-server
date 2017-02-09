@@ -326,11 +326,23 @@ var msg = function() {
 		delete this.localMsg[msgId];
 	}
 
-	function updateMsg(msgId, shoutId, status)
+	function updateMsg(msgId, shoutId, status, overwriteShout)
 	{
+		if(!overwriteShout) {
+			overwriteShout = true;
+		}
+		
+	
 		if(this.localMsg[msgId]) {
-			if(shoutId) {  
-				this.localMsg[msgId].shoutId = shoutId;
+			if(shoutId) { 
+				if(overwriteShout == false) {
+					//We only want to set if it doesn't exist
+					if(!this.localMsg[msgId].shoutId) {
+						this.localMsg[msgId].shoutId = shoutId;
+					}
+				} else {
+					this.localMsg[msgId].shoutId = shoutId;
+				}
 			}
 			if(status) {
 				this.localMsg[msgId].status = status;
@@ -1101,8 +1113,8 @@ function submitShoutAjax(whisper, commit, msgId)
 								//So we finished after the full commit - we should remove the old entry
 							
 								//We have a new sid now, but the request has already been sent
-								var results = response;
-								if(results.sid) {
+								
+								
 													
 									//if status is already complete and is not the same as the current request
 									if(requestId != mg.currentRequestId) {
@@ -1133,7 +1145,7 @@ function submitShoutAjax(whisper, commit, msgId)
 											}
 										});
 									}
-								}
+								
 							//} 
 						} else {
 							//No shout id already
@@ -1367,8 +1379,8 @@ function refreshResults(results)
 	
 	if(results.sid) {
 		//Session results
-	
-		mg.updateMsg(results.lid, results.sid);		//Removed the gotid status - that was surplus
+		
+		mg.updateMsg(results.lid, results.sid, null, false);		//Status is not changing, but 'false' means if it exists already, don't overwrite
 	
 	}
 
