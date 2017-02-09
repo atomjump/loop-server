@@ -1268,8 +1268,7 @@ function doSearch()
 	}
 	
 	$.ajax({
-  		dataType: "json",				
-  		crossDomain: true,
+  		dataType: "jsonp",
   		contentType: "application/json",
   		url: serv + "/search-chat.php?callback=?",
   		data: {
