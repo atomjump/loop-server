@@ -1120,7 +1120,7 @@ function submitShoutAjax(whisper, commit, msgId)
 		
 		var thisMyMsgId = myMsgId;
 		var thisMycommit = mycommit;
-		alert("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
+		console.log("Before Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 		setTimeout(function() {
 			
 			var myMsgId = thisMyMsgId;
@@ -1131,7 +1131,7 @@ function submitShoutAjax(whisper, commit, msgId)
 				if((mg.localMsg[thisMyMsgId].status != "complete")&&
 				   (mg.localMsg[thisMyMsgId].status != "lostid")) {
 					//And it isn't complete or lost
-					alert("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
+					console.log("Timeout: mycommit=" + thisMycommit + " myMsgId:" + myMsgId);
 					
 					ajaxCall.error();
 				}
