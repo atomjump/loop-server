@@ -1129,8 +1129,12 @@ function submitShoutAjax(whisper, commit, msgId)
 			
 					} else {
 						//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-						console.log("Lost in spacee.. msgid:" + myMsgId);
-						mg.updateMsg(myMsgId, "", "lostid");
+						if(requestId < mg.currentRequestId) {
+							//Only if there has been no concluding new commit should we register this timeout lost in space.
+							//which means we need to generate a new id
+							console.log("Lost in spacee.. msgid:" + myMsgId);
+							mg.updateMsg(myMsgId, "", "lostid");
+						}
 					}
 				
 				}
