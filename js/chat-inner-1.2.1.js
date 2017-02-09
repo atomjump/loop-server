@@ -1093,20 +1093,27 @@ function submitShoutAjax(whisper, commit, msgId)
 					console.log("Committed success!");	
 					ssshoutHasFocus = true;
 			
+			
+					var results = response;
+						
+					var oldShoutId = null;
+					var newShoutId = null;
+					if((mg.localMsg[myMsgId])&&(mg.localMsg[myMsgId].shoutId)) {
+						oldShoutId = mg.localMsg[myMsgId].shoutId;						
+					}
+					if(results.sid) {
+						newShoutId = results.sid;
+					}
+			
+			
 					if(mycommit == true) {
 						//If we clicked a commit button
-				
-				
-				
-						var results = response;
-						
-						if((mg.localMsg[myMsgId])&&
-							(mg.localMsg[myMsgId].shoutId)&&
-							(results.sid)&&
-							(results.sid != mg.localMsg[myMsgId].shoutId)) {
+						if((newShoutId)&&
+							(oldShoutId)&&
+							(newShoutId != oldShoutId)) {
 							//There exists a current 'typing' message that needs to be deleted
 							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-							removeMessageDirect(mg.localMsg[myMsgId].shoutId);
+							removeMessageDirect(oldShoutId);
 						}
 						
 						refreshResults(results);
@@ -1134,27 +1141,24 @@ function submitShoutAjax(whisper, commit, msgId)
 					} else {
 						//Update screen and get the shout id only
 						//Just a push button
-						
-						var results = response;
-						
-						//This is excess if the message has already been completed or sent for real
-						if((results.sid)&&(mg.localMsg[myMsgId])&&
-							(mg.localMsg[myMsgId].shoutId)&&							
-							(results.sid != mg.localMsg[myMsgId].shoutId)) {
-							//We already have a shout id. This message should be removed
 												
-							//if status is already complete and is not the same as the current request
-							if(requestId != mg.currentRequestId) {
-								//And it must be the current request
-								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
-								removeMessageDirect(results.sid);
-								
-							}
 						
-						} else {
+						if((newShoutId)&&(!oldShoutId)) {
 							//No shout id already
 							refreshResults(results);  //gets sshout id from in here
 						}
+						
+						//This is excess if the message has already been completed or sent for real	
+						if((newShoutId)&&(oldShoutId)&&							
+							   (newShoutId != oldShoutId)) {
+							   //We already have a shout id. This message should be removed
+							   //if status is already complete and is not the same as the current request
+							
+								//And it must be the current request
+								console.log("OK this one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
+								removeMessageDirect(newShoutId);
+						}
+											
 					
 			
 					}
