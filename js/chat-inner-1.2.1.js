@@ -229,6 +229,8 @@ function waitForCommitFinish()
 var msg = function() {
 	this.localMsgId = 1;
 	this.localMsg = {};	//Must be an object for iteration
+	this.requests = {};
+	this.currentRequestId = 1;
 	
 	/*
 	
@@ -238,7 +240,7 @@ var msg = function() {
 		"deactivate" :  message should be deactivated/hidden
 		"restarting" :  typing is restarting, so the 'typing' message needs to be shown again
 		"typing" :    user is currently typing
-		"sending" :   message has been taken onto the sending queue to the server
+		"sending" :   message has been taken off the sending queue to the server
 		"complete" :   message confirmation back from the server - has been sent to the server
 		"gotid"   :  have received a reply from the server - and the server message id has been set.
 		"lostid"   : have received a message from the server and didn't get an id, or we had an error from the server and so got no id either
@@ -324,11 +326,23 @@ var msg = function() {
 		delete this.localMsg[msgId];
 	}
 
-	function updateMsg(msgId, shoutId, status)
+	function updateMsg(msgId, shoutId, status, overwriteShout)
 	{
+		if((overwriteShout)&&(overwriteShout != false)) {
+			overwriteShout = true;
+		}
+		
+	
 		if(this.localMsg[msgId]) {
-			if(shoutId) {  
-				this.localMsg[msgId].shoutId = shoutId;
+			if(shoutId) { 
+				if(overwriteShout == false) {
+					//We only want to set if it doesn't exist
+					if(!this.localMsg[msgId].shoutId) {
+						this.localMsg[msgId].shoutId = shoutId;
+					}
+				} else {
+					this.localMsg[msgId].shoutId = shoutId;
+				}
 			}
 			if(status) {
 				this.localMsg[msgId].status = status;
@@ -394,8 +408,10 @@ var msg = function() {
 					var myKey = key;
 					
 					var thisThis = mythis;
-					$.ajax({
-						dataType: "json",
+					$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
+										//it could potentially error out if the data arrives later
+						dataType: "jsonp",
+						crossDomain: true,
 						url: ssshoutServer + "/de.php?callback=?",
 						data: {
 							mid: value.shoutId,
@@ -405,7 +421,6 @@ var msg = function() {
 							var results = response;
 							refreshResults(results);
 						},
-						timeout: 3000, //3s timeout
 						error: function (jqXHR, textStatus, errorThrown) {
 									
         					$("#warnings").html(lsmsg.msgs[lang].lostConnection);
@@ -437,17 +452,14 @@ var msg = function() {
 					//Typing or waiting for completion
 					if(value.typing == "off") {
 
-
-
 						if((value.status != "complete")&&
 						   (value.status != "sending")) {  		
 						   //  So either: "committed", "restarting",  "typing", "gotid", "lostid"
-							
-							
+					
 							//Check if we have our id yet
 							if(value.shoutId) {
 								//Ready to send
-								
+						
 								$('#typing-now').val('off');
 								$('#message').val(value.shouted);
 								$('#msg-id').val(key);
@@ -465,19 +477,19 @@ var msg = function() {
 									$('#shout-id').val('');		//a blank id
 									submitShoutAjax(value.whisper, true, key);	//true for commit
 									mythis.localMsg[key].status = "sending";
-								
+						
 								}
 							}
 
 						} else {
 							//Either 'complete' or 'sending'
 							if(value.status == "complete") {
-								//Complete - let's remove from our local array
 								mythis.finishMsg(key);
 							}
 						}
-					} else {
 						
+					} else {
+					
 						if(value.shoutId) {
 								//Ready to restart
 								if(value.status == "restarting") {
@@ -490,6 +502,7 @@ var msg = function() {
 								}
 						}
 					}
+
 				}
 			}
 
@@ -975,7 +988,49 @@ function upload() {
 }
 
 
+function removeMessageDirect(messageId)
+{
+	var thisMessageId = messageId;
+	var successDeletion = false;
+	//TODO: countdown to prevent infinite attempts?
 
+	
+	var ajaxCall = {			//Note: we cannot have a timeout on this one. Otherwise
+			//it could potentially error out if the data arrives later
+		dataType: "jsonp",
+		crossDomain: true,
+		url: ssshoutServer + "/de.php?callback=?",
+		data: {
+			mid: messageId,
+			just_typing: 'on'
+		},
+		success: function(response2){ 
+			var results2 = response2;
+			successDeletion = true;
+			refreshResults(results2);
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+			$("#warnings").html(lsmsg.msgs[lang].lostConnection);
+			$("#warnings").show();
+			removeMessageDirect(thisMessageId);
+			
+		}
+	};
+	
+	setTimeout(function() {
+			
+		//Warn the user
+		if(successDeletion == false) {
+			removeMessageDirect(thisMessageId);
+		}
+
+	}, 10000);  //After 10 seconds reprocess the deletion attempt
+	
+	$.ajax(ajaxCall);
+	
+	return;
+}
 
 
 
@@ -1023,85 +1078,197 @@ function submitShoutAjax(whisper, commit, msgId)
 		var data = $('#comment-input-frm').serialize();
 		var mycommit = commit;
 		var myMsgId = msgId;
-		var myShoutId = $('#shout-id');
-				
-		$.ajax({
-			url: ssshoutServer + '/index.php', 
+		var myShoutId = $('#shout-id').val();
+		var erroredOut = false;
+		var aSuccess = false;
+		
+		//Track requests
+		mg.currentRequestId ++;
+		var requestId = mg.currentRequestId;
+		mg.requests[requestId] = { 
+										aSuccess: false,
+										erroredOut: false
+		 						};		//Create the object
+		
+		
+		var ajaxCall = {			//Note: there must not be a timeout here because it is a cross-domain jsonp request,
+									//which will trigger an error after the data arrives if past the timeout
+			url: ssshoutServer + '/index.php?callback=?', 
 			data: data,
 			crossDomain: true,
-			dataType: "jsonp",
+			dataType: "jsonp",		
 			success: function(response) {
-	
-				ssshoutHasFocus = true;
+				
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					mg.requests[requestId].aSuccess = true;
+					ssshoutHasFocus = true;
 			
-				if(mycommit == true) {
-					//If we clicked a commit button
-				
-				
-				
+			
 					var results = response;
-					refreshResults(results);
-			
-					//refresh results will fill in the returned id, and set the message status to 'gotid', we need to set to 'complete' after this.
-					if(results.sid) {
-						//Session results
-						mg.updateMsg(myMsgId, results.sid, "complete");	
+						
+					var oldShoutId = null;
+					var newShoutId = null;
+					if((mg.localMsg[myMsgId])&&(mg.localMsg[myMsgId].shoutId)) {
+						oldShoutId = mg.localMsg[myMsgId].shoutId;						
 					} else {
-						mg.updateMsg(myMsgId, myShoutId, "complete");
+						
+						if((myShoutId)&&(myShoutId != '')) {
+						    oldShoutId = myShoutId;
+						}
 					}
-			
-					clearTimeout(myLoopTimeout);		//reset the main timeout
-					doLoop();		//Then refresh the main list
-				} else {
-					//Update screen and get the shout id only
-					//Just a push button
-					var results = response;
-					refreshResults(results);
-				
-					if(!results.sid) {
-						mg.updateMsg(myMsgId, "", "lostid");
 					
+					if(results.sid) {
+						newShoutId = results.sid;
 					}
 			
-				}
 			
-				//Go ahead and continue processing all messages outstanding
-				mg.processEachMsg();
+					if(mycommit == true) {
+						//If we clicked a commit button
+						if((newShoutId)&&
+							(oldShoutId)&&
+							(newShoutId != oldShoutId)) {
+							//There exists an old 'typing' message that needs to be deleted
+							removeMessageDirect(oldShoutId);
+						}
+						
+						refreshResults(results);
+			
+						//refresh results will fill in the returned id						
+						//Overwrite the existing results
+						if(newShoutId) {
+							//Session results
+							mg.updateMsg(myMsgId, newShoutId, "complete");	
+						} else {								
+							mg.updateMsg(myMsgId, null, "complete");
+						}
+												
+						clearTimeout(myLoopTimeout);		//reset the main timeout
+						doLoop();		//Then refresh the main list
+					} else {
+						//Update screen and get the shout id only
+						//Just a push button
+																		
+						if(!mg.localMsg[myMsgId]) {
+							//If it was already processed and then finished, we need to remove this new one
+							removeMessageDirect(newShoutId);
+						}
+						
+						//This is excess if the message has already been completed or sent for real	
+						if((newShoutId)&&(oldShoutId)&&							
+							   (newShoutId != oldShoutId)) {
+							   //We already have a shout id. This message should be removed
+							   //if status is already complete and is not the same as the current request
+						
+								//And it must be the current request
+								removeMessageDirect(newShoutId);
+						} else {
+							if(newShoutId) {
+								//No shout id already
+								refreshResults(results);  //gets sshout id from in here
+							}
+						}
+					
+						if((!oldShoutId)&&(newShoutId)) {
+							mg.updateMsg(myMsgId, newShoutId, "");	
+						}
+						
+						
+											
+					
+			
+					}
+			
+					//Go ahead and continue processing all messages outstanding
+					mg.processEachMsg();
+				}
 	
 		
 					
 		
 			},
-			timeout: 3000,
-			error: function(jqXHR, textStatus, errorThrown ) {
-							
-				//OK no response
-				if(mycommit == true) {
-					//Failure to send a message - warn user here.
-			
-					//Warn the user
-					var wrn = lsmsg.msgs[lang].messageQueued;
-					wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
-					$("#warnings").html(wrn);
-					$("#warnings").show();
+			error: function(jqXHR, textStatus, errorThrown) {
+				
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
 					
-					mg.updateMsg(myMsgId, "", "committed");	//Go back to committed rather than sending, so we will send again. 
-										//Note: Don't update the shoutID because we don't have it
+					if(mg.localMsg[myMsgId].status != "complete") {
+						//There was no other complete somewhere else
+							
+						//OK no response
+						if(mycommit == true) {
+							//Failure to send a message - warn user here.
+							mg.requests[requestId].erroredOut = true;		//Only run this once for this request
 			
-					//Process messages again in 10 seconds
-					setTimeout(function() {
-						mg.processEachMsg();
-					}, 10000);
+							//Warn the user
+							var wrn = lsmsg.msgs[lang].messageQueued;
+							wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+							$("#warnings").html(wrn);
+							$("#warnings").show();
+							
+					
+							mg.updateMsg(myMsgId, null, "committed");	//Go back to committed rather than sending, so we will send again. 
+												//Note: Don't update the shoutID because we don't have it
+		
+							//Process messages again in 10 seconds
+							setTimeout(function() {
+								mg.processEachMsg();
+							}, 10000);							
+							
 			
-				} else {
-					//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
-					mg.updateMsg(myMsgId, "", "lostid");
+						} else {
+							//Just typing - this is not critical - but we need to let the next commit know to try again with a lostid
+							if((requestId == mg.currentRequestId)) {
+								//Only if there has been no concluding new commit should we register this timeout lost in space.
+								//which means we need to generate a new id
+								mg.updateMsg(myMsgId, null, "lostid");
+							}
+						}
+					}
+				
 				}
 				
 			
 				
 			}
-		});
+		};
+		
+		
+		var thisMyMsgId = myMsgId;
+		var thisMycommit = mycommit;
+
+		
+		//Check for erroring out after a long 20 sec timeout
+		setTimeout(function() {
+			
+			var myMsgId = thisMyMsgId;
+			var mycommit = thisMycommit;
+			 
+			if(mg.localMsg[thisMyMsgId]) {
+				//If the message still exists
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					//And it isn't complete or lost				
+					if(mycommit == true) {
+						ajaxCall.error();
+					}
+				}
+			}
+		}, 20000);		
+		
+		setTimeout(function() {
+			if(mg.localMsg[thisMyMsgId]) {
+				//If the message still exists
+				if((mg.requests[requestId].aSuccess == false)&&(mg.requests[requestId].erroredOut == false)) {
+					//Warn the user
+					if(mycommit == true) {
+						var wrn = lsmsg.msgs[lang].messageQueued;
+						wrn = wrn.replace("MESSAGE", mg.localMsg[myMsgId].shouted);
+						$("#warnings").html(wrn);
+						$("#warnings").show();
+					}
+				}
+			}
+		}, 3000);  //After 3 seconds process a timeout warning
+				
+		$.ajax(ajaxCall);
 		
 	} else {
 	
@@ -1223,8 +1390,8 @@ function refreshResults(results)
 	
 	if(results.sid) {
 		//Session results
-	
-		mg.updateMsg(results.lid, results.sid, "gotid");
+		
+		mg.updateMsg(results.lid, results.sid, null, false);		//Status is not changing, but 'false' means if it exists already, don't overwrite
 	
 	}
 
@@ -1254,8 +1421,11 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	$.ajax({
-  		dataType: "json",
+	var callResults = false;		//flag for returned or not
+	
+	var ajaxCall = {
+  		dataType: "jsonp",
+  		contentType: "application/json",
   		url: serv + "/search-chat.php?callback=?",
   		data: {
 					lat: $('#lat').val(),
@@ -1268,6 +1438,7 @@ function doSearch()
 											
 		},
 		success: function(response){ 
+			 	callResults = true;		//flag this as having returned
 			 	if(portReset == true) {
 			 		port = "";			//reset the port if it had been set	
 			 	} else {
@@ -1286,13 +1457,24 @@ function doSearch()
 				
 				
 		},
-		timeout: 3000, //3s timeout
         error: function (jqXHR, textStatus, errorThrown) {
 							
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
-    });
+    }
+    
+    
+	setTimeout(function() {	
+		if(callResults == false) {
+			ajaxCall.error();
+		}
+		
+	}, 3000);		//After 3 seconds process a timeout
+			
+	$.ajax(ajaxCall);
+    
+
 }
 
 
