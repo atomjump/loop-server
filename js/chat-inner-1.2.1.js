@@ -1118,7 +1118,7 @@ function submitShoutAjax(whisper, commit, msgId)
 						if((newShoutId)&&
 							(oldShoutId)&&
 							(newShoutId != oldShoutId)) {
-							//There exists a current 'typing' message that needs to be deleted
+							//There exists an old 'typing' message that needs to be deleted
 							console.log("OK the old one needs to be deleted, it has been surpassed requestid: " +requestId + " msgid:" + myMsgId);
 							removeMessageDirect(oldShoutId);
 						}
@@ -1129,18 +1129,11 @@ function submitShoutAjax(whisper, commit, msgId)
 						console.log("myMsgId:" + myMsgId);
 						
 						//Overwrite the existing results
-						if(results.sid) {
+						if(newShoutId) {
 							//Session results
-							console.log("sid: " + results.sid);
-							mg.updateMsg(myMsgId, results.sid, "complete");	
-						} else {
-							if(myShoutId) {
-								console.log("myShoutId: " + myShoutId);
-								mg.updateMsg(myMsgId, myShoutId, "complete");
-							} else {
-								
-								mg.updateMsg(myMsgId, "", "complete");
-							}
+							mg.updateMsg(myMsgId, newShoutId, "complete");	
+						} else {								
+							mg.updateMsg(myMsgId, "", "complete");
 						}
 			
 						clearTimeout(myLoopTimeout);		//reset the main timeout
