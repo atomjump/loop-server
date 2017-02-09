@@ -394,8 +394,9 @@ var msg = function() {
 					var myKey = key;
 					
 					var thisThis = mythis;
-					$.ajax({
-						dataType: "json",
+					$.ajax({			//Note: we cannot have a timeout on this one. Otherwise
+										//it could potentially error out if the data arrives later
+						dataType: "jsonp",
 						crossDomain: true,
 						url: ssshoutServer + "/de.php?callback=?",
 						data: {
@@ -1279,7 +1280,7 @@ function doSearch()
 		var serv = assignPortToURL(ssshoutServer, port);
 	}
 	
-	$.ajax({
+	var ajaxCall = {
   		dataType: "jsonp",
   		contentType: "application/json",
   		url: serv + "/search-chat.php?callback=?",
@@ -1312,13 +1313,22 @@ function doSearch()
 				
 				
 		},
-		timeout: 3000, //3s timeout. This timeout is OK, since we don't mind if the data arrives later
         error: function (jqXHR, textStatus, errorThrown) {
 							
         	$("#warnings").html(lsmsg.msgs[lang].lostConnection);
 			$("#warnings").show();
         }
-    });
+    }
+    
+    
+	setTimeout(function() {	
+		ajaxCall.error();
+		
+	}, 3000);		//After 3 seconds process a timeout
+			
+	$.ajax(ajaxCall);
+    
+
 }
 
 
