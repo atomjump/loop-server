@@ -42,7 +42,7 @@ SSL server
 
 1. /server directory. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
 
-2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths.
+2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths. Copy /config/messagesORIGINAL.json to /config/messages.json. Replace these options with your own words or languages.
 
 3. Create a temporary image upload directory at
 /images/im
