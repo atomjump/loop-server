@@ -389,6 +389,7 @@
 	 	global $cnf;
 	 	global $local_server_path;
  
+ 		echo "Local server path:" . $local_server_path;
 		require_once($local_server_path . "/classes/PHPMailerAutoload.php");
 
 		$mail = new PHPMailer;
