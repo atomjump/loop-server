@@ -390,7 +390,9 @@
 	 	global $local_server_path;
  
  		echo "Local server path:" . $local_server_path . "\n";
-		require_once($local_server_path . "classes/PHPMailerAutoload.php");
+		//require_once($local_server_path . "classes/PHPMailerAutoload.php");
+		require_once($local_server_path . "classes/class.phpmailer.php");
+		require_once($local_server_path . "classes/class.smtp.php");
 
 		echo "Got that\n";
 		$mail = new PHPMailer;
