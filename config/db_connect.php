@@ -425,7 +425,7 @@
 			error_log('Message could not be sent.');
 			error_log('Mailer Error: ' . $mail->ErrorInfo);
 		} else {
-			//'Message has been sent';
+			error_log('Message has been sent');
 		}
 		
 		return;
