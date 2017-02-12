@@ -13,7 +13,9 @@
 	require_once(__DIR__ . "/components/upload.php");
 	
 	if($uploaded == true) {		
-		$url = $cnf['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
+		if($cnf['uploads']['use'] == "amazonAWS") {
+			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
+		} 
 	} else {
 		$url = null;
 	}

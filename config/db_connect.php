@@ -529,7 +529,7 @@
 			
 			if($cnf['uploads']['use'] == "amazonAWS") {
 			
-				require_once($local_server_path . "/vendor/amazon/S3.php");
+				require_once($local_server_path . "vendor/amazon/S3.php");
 	
 				//See: https://github.com/tpyo/amazon-s3-php-class
 				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
