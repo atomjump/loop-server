@@ -165,37 +165,70 @@
       "loadbalancer": {
           "ips": [
           ]
-      },  
-      "imagesShare" : {
-      	  "port" : "80",
-      	  "https" : false
-      },   
-      "adminEmail": "your.name@your.company.com",
-      "webmasterEmail": "your.name@your.company.com",
-      "noReplyEmail": "your.name@your.company.com",
+      },
+            "uploads" : {
+		  "use" : "none|same|generic|amazonAWS",
+		  "imagesShare" : {
+			  "port" : "80",
+			  "https" : false
+		  },
+		  "genericUploadURL": "https://youruploadurl.com/upload.php",
+		  "vendor": {
+		  	  "amazonAWS": {
+				"accessKey": "AKIAI4KWI7L4EP286J5Q",
+				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
+			  }
+		  }
+	  } 
       "adminMachineUser" : "92.27.10.17:1",
-      "mailgun": {
-         "key":"key-7f6f12be7e62360853e0eff491f89b9d",
-         "url":"https://api.mailgun.net/v2/yoursite.com/messages"
+      "email": {
+      	 "adminEmail": "your.name@your.company.com",
+      	 "webmasterEmail": "your.name@your.company.com",
+      	 "noReplyEmail": "your.name@your.company.com",      
+      	 "sending": {
+      	 	 "use" : "none|smtp|mailgun",
+      	 	 "smtp": "smtp.somecompany.com",
+      	 	 "user" : "youruser@company.com",
+      	 	 "pass": "yourpassword",
+      	 	 "encryption": "tls|ssl",
+      	 	 "port": "587",
+      	 	 "vendor": {
+      	 	 	 "mailgun": {
+					 "key":"key-7f6f12be7e62360853e0eff491f89b9d",
+					 "url":"https://api.mailgun.net/v2/yoursite.com/messages"
+      			}      	 	 
+      	 	 }
+      	 
+      	 }
       },
-      "amazonAWS": {
-        "accessKey": "AKIAI4KWI7L4EP286J5Q",
-        "secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
-        "imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"
-      },
-      "USDollarsPerSMS": 0.16,
-      "twilioSMS" : {
-         "accountSid" : "ACb19ff95e669b415f894dfc6021638a2d",
-         "authToken" : "caf125b5g526508a1cad4ff790fb4416",
-         "fromNum" : "+441435605048"
-      },
-      "pixabay": {
-         "key": "732578-c13e679fdc3e025ec7368a32a"
-      },
-      "piwik": {
-         "url" : "//yoursite.com/analytics/piwik/",
-         "image" : "//yoursite.com/analytics/piwik/piwik.php?idsite=1"
-      },
+      "sms": {      
+         "use" : "none|twilioSMS",
+      	 "USDollarsPerSMS": 0.16,
+		 "vendor": {
+			  "twilioSMS" : {
+				 "accountSid" : "ACb19ff95e669b415f894dfc6021638a2d",
+				 "authToken" : "caf125b5g526508a1cad4ff790fb4416",
+				 "fromNum" : "+441435605048"
+			  }
+		 }
+	  },
+	  "misc" : {
+	  	  "vendor": {
+			  "pixabay": {
+				 "key": "732578-c13e679fdc3e025ec7368a32a"
+			  }
+		  }
+	  },
+	  "analytics": {
+	  	  "use": "none|piwik",
+	  	  "vendor": {
+			  "piwik": {
+				 "url" : "//yoursite.com/analytics/piwik/",
+				 "image" : "//yoursite.com/analytics/piwik/piwik.php?idsite=1"
+			  }
+		  }
+	  },
       "social": {
          "twitter": {
              "consumerKey": "uSiU4bstZpYxSseFBuFMuvljJ",
