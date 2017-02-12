@@ -473,7 +473,7 @@
 			require_once($local_server_path . "/vendor/amazon/S3.php");
 	
 			//See: https://github.com/tpyo/amazon-s3-php-class
-			$s3 = new S3($cnf['amazonAWS']['accessKey'],$cnf['amazonAWS']['secretKey'] );		//Amazon AWS credentials
+			$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
 	
 	
 			if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
@@ -494,8 +494,8 @@
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['imagesShare']['port'], $root_server_url) . "/copy-image.php";
-				    if($cnf['imagesShare']['https'] == false) {
+				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['uploads']['imagesShare']['port'], $root_server_url) . "/copy-image.php";
+				    if($cnf['uploads']['imagesShare']['https'] == false) {
 				    	//Only do with http
 				    	$server_url = str_replace("https", "http", $server_url);
 				    }

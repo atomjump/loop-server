@@ -142,7 +142,7 @@ class cls_ssshout
 			
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
-						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['webmasterEmail']);
+						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['email']['webmasterEmail']);
 						
 						
 						$_SESSION['logged-user'] = db_insert_id();
@@ -150,7 +150,7 @@ class cls_ssshout
 					}
 					
 					//Let me know there is a new user
-					cc_mail($cnf['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['webmasterEmail']);
+					cc_mail($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
 				
 					return db_insert_id();
 			
@@ -451,7 +451,7 @@ class cls_ssshout
 		if(($just_typing == false)&&
 		   ($cnf['db']['deleteDeletes'] == false)) {
 			//Warn overall admin - TODO: just layer admin?
-			cc_mail($cnf['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['webmasterEmail']);
+			cc_mail($cnf['email']['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['email']['webmasterEmail']);
 			echo "Deactivated message.";		//TODO more descriptive comment here.	
 		}
 	
