@@ -384,6 +384,54 @@
 		
 	}
 	
+	function send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
+	{
+	 	global $cnf;
+ 
+		require_once($local_server_path . "/classes/PHPMailerAutoload.php");
+
+		$mail = new PHPMailer;
+
+		//$mail->SMTPDebug = 3;                               // Enable verbose debug output
+
+		$mail->isSMTP();                                      // Set mailer to use SMTP
+		$mail->Host = $cnf['email']['sending']['smtp'];  // Specify main and backup SMTP servers (with comma separator)
+		$mail->SMTPAuth = true;                               // Enable SMTP authentication
+		$mail->Username = $cnf['email']['sending']['user'];                 // SMTP username
+		$mail->Password = $cnf['email']['sending']['pass'];                           // SMTP password
+		if(isset($cnf['email']['sending']['encryption'])) {
+			$mail->SMTPSecure = $cnf['email']['sending']['encryption'];                            // Enable TLS encryption, `ssl` also accepted
+		}
+		
+		if(isset($cnf['email']['sending']['port'])) {
+			$mail->Port = $cnf['email']['sending']['port'];
+		} else {	
+			$mail->Port = 587;                                    // TCP port to connect to
+		}
+
+		$mail->setFrom($sender_email, 'Mailer');
+		$mail->addAddress($to_email);     // Add a recipient
+		if((isset($bcc_email))&&($bcc_email != '')) {
+			$mail->addBCC($bcc_email);
+		}
+
+		$mail->isHTML(true);                                  // Set email format to HTML
+
+		$mail->Subject = $subject;
+		$mail->Body    = nl2br($body_text);
+		$mail->AltBody = $body_text;
+
+		if(!$mail->send()) {
+			error_log('Message could not be sent.');
+			error_log('Mailer Error: ' . $mail->ErrorInfo);
+		} else {
+			//'Message has been sent';
+		}
+		
+		return;
+	
+	}
+	
 	
 	
 	function send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
@@ -393,8 +441,8 @@
  
 		$config = array();
 	 
-		$config['api_key'] = $cnf['mailgun']['key']; 
-		$config['api_url'] = $cnf['mailgun']['url'];
+		$config['api_key'] = $cnf['email']['sending']['vendor']['mailgun']['key']; 
+		$config['api_url'] = $cnf['email']['sending']['vendor']['mailgun']['url'];
 	 
 		$message = array();
 	 
@@ -429,7 +477,13 @@
 
 	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
-		return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+		if($cnf['email']['sending']['use'] == 'mailgun') {
+		
+			return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+		} else {
+			//A generic SMTP server
+			return send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+		}
 		
 	}
 	
@@ -470,69 +524,97 @@
 			global $cnf;
 			
 			
-			require_once($local_server_path . "/vendor/amazon/S3.php");
-	
-			//See: https://github.com/tpyo/amazon-s3-php-class
-			$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
-	
-	
-			if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
-				//Uploaded correctly
-			} else {
-				//Error uploading to Amazon
-				return false;
-			}
-		
-		
-		
-			//Share across our own servers
 			
-			//Get the domain of the web url, and replace with ip:1080
-			$parse = parse_url($root_server_url);
-			$domain = $parse['host'];
-					
-			if($specific_server == '') {  //Defaults to all
-				$servers = array();
-				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-				    $server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['uploads']['imagesShare']['port'], $root_server_url) . "/copy-image.php";
-				    if($cnf['uploads']['imagesShare']['https'] == false) {
-				    	//Only do with http
-				    	$server_url = str_replace("https", "http", $server_url);
-				    }
-				    $servers[] = $server_url;
-				    
+			if($cnf['uploads']['use'] == "amazonAWS") {
+			
+				require_once($local_server_path . "/vendor/amazon/S3.php");
+	
+				//See: https://github.com/tpyo/amazon-s3-php-class
+				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
+	
+	
+				if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
+					//Uploaded correctly
+				} else {
+					//Error uploading to Amazon
+					return false;
 				}
-				
-			} else {
-				//Only process this one server
-				$servers = array($specific_server);
-		
+			
 			}
-	
-			foreach($servers as $server)
-			{
-	
-     		 	//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
-		        $handle = fopen($filename, "r");
-		        $data = fread($handle, filesize($filename));
-		        $POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
-		        $curl = curl_init();
-		        curl_setopt($curl, CURLOPT_URL, $server);
-		        curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		        curl_setopt($curl, CURLOPT_POST, 1);
-		        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		        curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
-		        $response = curl_exec($curl);		        
-		        if(curl_error($curl))
+			
+			
+			if($cnf['uploads']['use'] == "generic") {
+				//Upload image to a generic remote service 
+				$handle = fopen($filename, "r");
+				$data = fread($handle, filesize($filename));
+				$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
+				$curl = curl_init();
+				curl_setopt($curl, CURLOPT_URL, $cnf['uploads']['genericUploadURL']);
+				curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+				curl_setopt($curl, CURLOPT_POST, 1);
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
+				$response = curl_exec($curl);		        
+				if(curl_error($curl))
 				{
 					error_log('error:' . curl_error($curl));
 				}
-		        
-		        curl_close ($curl);
+			
+				curl_close ($curl);
+			}
+		
+		
+			if($cnf['uploads']['use'] != "none") {
+				//Share across our own servers
+			
+				//Get the domain of the web url, and replace with ip:1080
+				$parse = parse_url($root_server_url);
+				$domain = $parse['host'];
+					
+				if($specific_server == '') {  //Defaults to all
+					$servers = array();
+					for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
+						$server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['uploads']['imagesShare']['port'], $root_server_url) . "/copy-image.php";
+						if($cnf['uploads']['imagesShare']['https'] == false) {
+							//Only do with http
+							$server_url = str_replace("https", "http", $server_url);
+						}
+						$servers[] = $server_url;
+					
+					}
 				
-		        
-		     }
+				} else {
+					//Only process this one server
+					$servers = array($specific_server);
+		
+				}
+	
+				foreach($servers as $server)
+				{
+	
+					//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
+					$handle = fopen($filename, "r");
+					$data = fread($handle, filesize($filename));
+					$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
+					$curl = curl_init();
+					curl_setopt($curl, CURLOPT_URL, $server);
+					curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+					curl_setopt($curl, CURLOPT_POST, 1);
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+					curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
+					$response = curl_exec($curl);		        
+					if(curl_error($curl))
+					{
+						error_log('error:' . curl_error($curl));
+					}
+				
+					curl_close ($curl);
+				
+				
+				 }
+			 }
 		     
 		     return true;
 		

@@ -52,7 +52,9 @@
       	 	 "use" : "none|smtp|mailgun",
       	 	 "smtp": "smtp.somecompany.com",
       	 	 "user" : "youruser",
-      	 	 "pass": "yourpassword"
+      	 	 "pass": "yourpassword",
+      	 	 "encryption": "tls|ssl",
+      	 	 "port": "587",
       	 	 "vendor": {
       	 	 	 "mailgun": {
 					 "key":"key-7f6f12be7e62360853e0eff491f89b9d",

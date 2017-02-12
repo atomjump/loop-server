@@ -1,10 +1,11 @@
+<?php if($cnf['analytics']['use'] == "piwik") { ?>
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-	var u="<?php global $cnf; echo $cnf['piwik']['url'] ?>";
+	var u="<?php global $cnf; echo $cnf['analytics']['vendor']['piwik']['url'] ?>";
 	_paq.push(['setTrackerUrl', u+'piwik.php']);
 	_paq.push(['setSiteId', 1]);
 	var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
@@ -13,3 +14,4 @@
 </script>
 <noscript><p><img src="<?php echo $cnf['analytics']['vendor']['piwik']['image'] ?>" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
+<?php } ?>
