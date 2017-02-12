@@ -1,5 +1,5 @@
 <?php
-	//Upload a photo to Amazon
+	//Upload a photo to Amazon or our own server
 		
 
 	include_once(__DIR__ ."/config/db_connect.php");
@@ -13,7 +13,12 @@
 	require_once(__DIR__ . "/components/upload.php");
 	
 	if($uploaded == true) {		
-		$url = $cnf['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
+		if($cnf['uploads']['use'] == "amazonAWS") {
+			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
+		} else {
+			global $root_server_url;
+			$url = $root_server_url . $image_path . $_REQUEST['title'] . ".jpg";
+		}
 	} else {
 		$url = null;
 	}

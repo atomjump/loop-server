@@ -42,7 +42,7 @@ SSL server
 
 1. /server directory. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
 
-2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths.
+2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths. Copy /config/messagesORIGINAL.json to /config/messages.json. Replace these options with your own words or languages.
 
 3. Create a temporary image upload directory at
 /images/im
@@ -164,8 +164,26 @@ If you wish to send SMS messages, we will keep track of messages sent, and charg
 
 # To have more than one messaging forum on a single page
 
-Add the following data tags, and enter your own names/ips:
+You can do this three different ways. The simplest is to set the link's href to '"#comment-open-' followed by the forum name:
+```<a href="#comment-open-my_different_forum_name">Open special forum</a>```
+
+Or, you can add the 'comment-open' class to a link with an 'id' referring to the forum name:
+```<a class="comment-open" id="my_different_forum_name" href="javascript:">Open special forum</a>```
+
+Or, for further control over the owner of the forum, you can add the following data tags, and enter your own names/ips:
 ```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" href="javascript:">Open special forum</a>```
+
+
+
+# To open a Shortmail enabled forum
+
+You can add the 'shortmail' data tag e.g.
+
+```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" data-shortmail="true" href="javascript:">Open special email forum</a>```
+
+Or, you can use an href "#shortmail-open-" class:
+```<a href="#email-open-my_shortmail_forum_name">Open shortmail forum</a>```
+
 
 
 # To add more than one user to receive messages
@@ -264,7 +282,6 @@ To test the web domain, use the following small PHP script:
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'.
 
-**imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
 **ips**: any number of PHP machines with the server software on it.
 
@@ -286,20 +303,13 @@ To test the web domain, use the following small PHP script:
 Advanced settings, and write this into the config. This is the default location for private messages if there is no other
 owner of a group.
 
-**mailgun**: optional. If you do not want emails being sent off, you can leave this off. You need a mailgun account otherwise
-which has about 10,000 free emails per month, but costs after that.
+**analytics** **use**: Can be 'none' or 'piwik'. None switches off analytics, while 'piwik' enables them.
 
-**amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images.
+**analytics** **piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
 
-**USDollarsPerSMS**: for reporting purposes only. This is what is shown to users if they choose to use the SMS notifications.
-Since there is a cost to you for each SMS, you will likely set this slightly higher than the actual cost of an SMS, to
-account for fluctuations in price.
+**social** **use**: Can be 'none' or 'all'. 'none' switches off all social media interaction, while 'all' enables all of them.
 
-**twilioSMS**: optional. Required for sending off SMSes.
-
-**piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
-
-**twitter**: optional. Retrieves tweets from twitter related to this subdomain, and allows for replying to the tweets (posts a 
+**social** **twitter**: optional. Retrieves tweets from twitter related to this subdomain, and allows for replying to the tweets (posts a 
 message via twitter).
 
 **readPort**:  optional. The port to put the plugin 'loop-server-fast' daemon on, see https://www.npmjs.com/package/loop-server-fast. Ver >= 0.5.22						
@@ -308,7 +318,32 @@ message via twitter).
 
 **httpsCert**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsKey', which is needed too. Ver >= 0.5.22
 
+**uploads** **use**:  This can be one of 'none', 'same', 'generic', 'amazonAWS'. 'none' means uploads are switched off. 'same' means the upload stays on the same server in the '/images/im/' folder. 'generic' means uploads.genericUploadURL should be set to a remote URL, which the image file will be uploaded to via a POST request. 'amazonAWS' refers to the use of an Amazon S3 AWS bucket for remote storage. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
+Note: You should make sure your server provides a caching response to image files, or Safari will continue to refresh the images every 5 seconds.
+
+**uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
+
+**uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
+
+
+**email** **adminEmail**: Administrator's email address.
+
+**email** **webmasterEmail**: The webmaster's email address.
+
+**email** **noReplyEmail**: An email address for when you do not want a reply.
+
+**email** **sending** **use**: This can be 'none', 'smtp' or 'mailgun'. 'none' means there are no emails sent as notifications. 'smtp' means a standard SMTP server is used, and you should enter the 'smtp' which is the host, 'user' which is the username, typically the email address, 'pass' which is the password, 'encryption' which can be 'tls', 'ssl' or left blank, and the 'port' which is the SMTP port number used. 'mailgun' means the Mailgun.com service is used and you will need a 'key' and 'url' from Mailgun.
+
+**email** **sending** **vendor** **mailgun**: optional. You need a mailgun account which has about 10,000 free emails per month, but costs after that. You will need a 'key' and 'url' from Mailgun.
+
+**sms** **use**: This can be 'none' or 'twilioSMS'. None switches off SMS.
+
+**sms** **twilioSMS**: optional. Required for sending off SMSes via Twilio.
+
+**sms** **USDollarsPerSMS**: for reporting purposes only. This is what is shown to users if they choose to use the SMS notifications.
+Since there is a cost to you for each SMS, you will likely set this slightly higher than the actual cost of an SMS, to
+account for fluctuations in price.
 
 
 ## Plugins

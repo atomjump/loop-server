@@ -3,7 +3,7 @@
 global $cfg;
 global $msg;
 global $lang;
-define("CUSTOMER_PRICE_PER_SMS_US_DOLLARS", $cnf['USDollarsPerSMS']);  //$0.16 or 10p. When we are charged 5p per message.
+define("CUSTOMER_PRICE_PER_SMS_US_DOLLARS", $cnf['sms']['USDollarsPerSMS']);  //$0.16 or 10p. When we are charged 5p per message.
 
 class cls_layer
 {
@@ -405,7 +405,7 @@ class cls_layer
 				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		
-		    if($row['var_email'] != $cnf['noReplyEmail']) {     //prevent endless mail loops
+		    if($row['var_email'] != $cnf['email']['noReplyEmail']) {     //prevent endless mail loops
 		    	$send_message = false;
 		    	
 		    	
@@ -423,7 +423,7 @@ class cls_layer
 		    	
 		    	
 		    	if($send_message == true) {
-			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['noReplyEmail']);
+			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['email']['noReplyEmail']);
 			    }
 		    
 			    
@@ -444,35 +444,38 @@ class cls_layer
 		//Wrapper
 		$phone_to = "+" . $phone_to;
 		
+		
+		if($cnf['sms']['use'] == "twilioSMS") {
+		
+			try {
+		
 			
 		
-		try {
-		
-			// this line loads the library 
-			require('vendor/twilio/Services/Twilio.php'); 
+				// this line loads the library 
+				require('vendor/twilio/Services/Twilio.php'); 
 			 
-			$account_sid = $cnf['twilioSMS']['accountSid']; 
-			$auth_token = $cnf['twilioSMS']['authToken'];
+				$account_sid = $cnf['sms']['vendor']['twilioSMS']['accountSid']; 
+				$auth_token = $cnf['sms']['vendor']['twilioSMS']['authToken'];
 		
 	
-			$client = new Services_Twilio($account_sid, $auth_token); 
+				$client = new Services_Twilio($account_sid, $auth_token); 
 			 
-			$client->account->messages->sendMessage(
-				$cnf['twilioSMS']['fromNum'],
-				$phone_to, 
-				$message 
-			);
+				$client->account->messages->sendMessage(
+					$cnf['sms']['vendor']['twilioSMS']['fromNum'],
+					$phone_to, 
+					$message 
+				);
 		
 		
-			//Reduce the user's balance by a certain amount (cost 5p from supplier)
-			$sql = "UPDATE tbl_user SET dec_balance = dec_balance - " . CUSTOMER_PRICE_PER_SMS_US_DOLLARS . " WHERE int_user_id = " . $user_from_id;
-			dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
+				//Reduce the user's balance by a certain amount (cost 5p from supplier)
+				$sql = "UPDATE tbl_user SET dec_balance = dec_balance - " . CUSTOMER_PRICE_PER_SMS_US_DOLLARS . " WHERE int_user_id = " . $user_from_id;
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
-		} catch (Exception $e) {
+			} catch (Exception $e) {
 				
-			error_log($e->getMessage());
+				error_log($e->getMessage());
+			}
 		}
-		
 		
 		return false;
 	}

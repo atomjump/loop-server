@@ -429,8 +429,12 @@
 						  				<input  id="password-opt" name="pd" type="password" class="form-control" autocomplete="false" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
 									</div>
 									<div  class="form-group">
+										<?php global $cnf; if($cnf['sms']['use'] != 'none') { ?>
 										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
 										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
+										 <?php } else { ?>
+										 <input  id="phone-opt" name="ph" type="hidden" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
+										 <?php } ?>
 									</div>
 									<?php $sh->call_plugins_settings(null); //User added plugins here ?>									
 									<div style="float: right;">
@@ -464,11 +468,13 @@
 				 </form>
 		</div>
 		<div id="comment-upload" class="comment-frm-scroller" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+				<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
-				
+				<?php } ?>
 				
 					
 				 <form id="upload-frm" class="form" role="form" action="" onsubmit="return upload();"  method="POST">
+				 		<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>	
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
 							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" >
@@ -477,11 +483,12 @@
 								<div id="uploading-msg" style="display: none; color: #900; margin-bottom: 10px;"></div>
 								
 											 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
-						  	<br/>
+						  	 <br/>
 							 <br/>
+							 
 							 <div><?php echo $msg['msgs'][$lang]['uploadLimits'] ?></div>
 							 <br/>
-								 
+					   <?php } ?>			 
 								 	<h4><?php echo $msg['msgs'][$lang]['downloadTitle'] ?></h4>
 								  <div><?php echo $msg['msgs'][$lang]['downloadDescription'] ?> 	</div>
 								  <br/>
