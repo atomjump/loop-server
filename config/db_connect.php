@@ -389,9 +389,10 @@
 	 	global $cnf;
 	 	global $local_server_path;
  
- 		echo "Local server path:" . $local_server_path;
-		require_once($local_server_path . "/classes/PHPMailerAutoload.php");
+ 		echo "Local server path:" . $local_server_path . "\n";
+		require_once($local_server_path . "classes/PHPMailerAutoload.php");
 
+		echo "Got that\n";
 		$mail = new PHPMailer;
 
 		//$mail->SMTPDebug = 3;                               // Enable verbose debug output
