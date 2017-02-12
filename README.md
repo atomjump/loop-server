@@ -264,7 +264,6 @@ To test the web domain, use the following small PHP script:
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'.
 
-**imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
 **ips**: any number of PHP machines with the server software on it.
 
@@ -291,11 +290,8 @@ which has about 10,000 free emails per month, but costs after that.
 
 **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images.
 
-**USDollarsPerSMS**: for reporting purposes only. This is what is shown to users if they choose to use the SMS notifications.
-Since there is a cost to you for each SMS, you will likely set this slightly higher than the actual cost of an SMS, to
-account for fluctuations in price.
 
-**twilioSMS**: optional. Required for sending off SMSes.
+
 
 **piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
 
@@ -308,7 +304,27 @@ message via twitter).
 
 **httpsCert**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsKey', which is needed too. Ver >= 0.5.22
 
+**uploads** **use**:  This can be one of 'none', 'same', 'generic', 'amazonAWS'. 'none' means uploads are switched off. 'same' means the upload stays on the same server in the '/images/im/' folder. 'generic' means uploads.genericUploadURL should be set to a remote URL, which the image file will be uploaded to via a POST request. 'amazonAWS' refers to the use of an Amazon S3 AWS bucket for remote storage. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
+Note: You should make sure your server provides a caching response to image files, or Safari will continue to refresh the images every 5 seconds.
+
+**uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
+
+**email** **adminEmail**: Administrator's email address.
+
+**email** **webmasterEmail**: The webmaster's email address.
+
+**email** **noReplyEmail**: An email address for when you do not want a reply.
+
+**email** **sending** **use**: This can be 'none', 'smtp' or 'mailgun'. 'none' means there are no emails sent as notifications. 'smtp' means a standard SMTP server is used, and you should enter the 'smtp' which is the host, 'user' which is the username, typically the email address, 'pass' which is the password, 'encryption' which can be 'tls', 'ssl' or left blank, and the 'port' which is the SMTP port number used. 'mailgun' means the Mailgun.com service is used and you will need a 'key' and 'url' from Mailgun.
+
+**sms** **use**: This can be 'none' or 'twilioSMS'. None switches off SMS.
+
+**sms** **twilioSMS**: optional. Required for sending off SMSes via Twilio.
+
+**sms** **USDollarsPerSMS**: for reporting purposes only. This is what is shown to users if they choose to use the SMS notifications.
+Since there is a cost to you for each SMS, you will likely set this slightly higher than the actual cost of an SMS, to
+account for fluctuations in price.
 
 
 ## Plugins

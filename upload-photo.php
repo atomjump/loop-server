@@ -1,5 +1,5 @@
 <?php
-	//Upload a photo to Amazon
+	//Upload a photo to Amazon or our own server
 		
 
 	include_once(__DIR__ ."/config/db_connect.php");

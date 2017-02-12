@@ -429,8 +429,12 @@
 						  				<input  id="password-opt" name="pd" type="password" class="form-control" autocomplete="false" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
 									</div>
 									<div  class="form-group">
+										<?php global $cnf; if($cnf['sms']['use'] != 'none') { ?>
 										<div><?php echo $msg['msgs'][$lang]['yourMobile'] ?> <a href="javascript:" onclick="$('#mobile-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourMobileReason'] ?>"><?php echo $msg['msgs'][$lang]['yourMobileLink'] ?></a>  <span id="mobile-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourMobileReason'] ?></span></div>
 										 <input  id="phone-opt" name="ph" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
+										 <?php } else { ?>
+										 <input  id="phone-opt" name="ph" type="hidden" placeholder="<?php echo $msg['msgs'][$lang]['enterMobile'] ?>" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
+										 <?php } ?>
 									</div>
 									<?php $sh->call_plugins_settings(null); //User added plugins here ?>									
 									<div style="float: right;">
