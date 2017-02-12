@@ -51,7 +51,7 @@
       	 "sending": {
       	 	 "use" : "none|smtp|mailgun",
       	 	 "smtp": "smtp.somecompany.com",
-      	 	 "user" : "youruser",
+      	 	 "user" : "youruser@company.com",
       	 	 "pass": "yourpassword",
       	 	 "encryption": "tls|ssl",
       	 	 "port": "587",
