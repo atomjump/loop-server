@@ -387,6 +387,7 @@
 	function send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 	 	global $cnf;
+	 	global $local_server_path;
  
 		require_once($local_server_path . "/classes/PHPMailerAutoload.php");
 
