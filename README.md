@@ -164,8 +164,26 @@ If you wish to send SMS messages, we will keep track of messages sent, and charg
 
 # To have more than one messaging forum on a single page
 
-Add the following data tags, and enter your own names/ips:
+You can do this three different ways. The simplest is to set the link's href to '"#comment-open-' followed by the forum name:
+```<a href="#comment-open-my_different_forum_name">Open special forum</a>```
+
+Or, you can add the 'comment-open' class to a link with an 'id' referring to the forum name:
+```<a class="comment-open" id="my_different_forum_name" href="javascript:">Open special forum</a>```
+
+Or, for further control over the owner of the forum, you can add the following data tags, and enter your own names/ips:
 ```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" href="javascript:">Open special forum</a>```
+
+
+
+# To open a Shortmail enabled forum
+
+You can add the 'shortmail' data tag e.g.
+
+```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" data-shortmail="true" href="javascript:">Open special email forum</a>```
+
+Or, you can use an href "#shortmail-open-" class:
+```<a href="#email-open-my_shortmail_forum_name">Open shortmail forum</a>```
+
 
 
 # To add more than one user to receive messages
