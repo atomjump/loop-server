@@ -285,17 +285,13 @@ To test the web domain, use the following small PHP script:
 Advanced settings, and write this into the config. This is the default location for private messages if there is no other
 owner of a group.
 
-**mailgun**: optional. If you do not want emails being sent off, you can leave this off. You need a mailgun account otherwise
-which has about 10,000 free emails per month, but costs after that.
+**analytics** **use**: Can be 'none' or 'piwik'. None switches off analytics, while 'piwik' enables them.
 
-**amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images.
+**analytics** **piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
 
+**social** **use**: Can be 'none' or 'all'. 'none' switches off all social media interaction, while 'all' enables all of them.
 
-
-
-**piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
-
-**twitter**: optional. Retrieves tweets from twitter related to this subdomain, and allows for replying to the tweets (posts a 
+**social** **twitter**: optional. Retrieves tweets from twitter related to this subdomain, and allows for replying to the tweets (posts a 
 message via twitter).
 
 **readPort**:  optional. The port to put the plugin 'loop-server-fast' daemon on, see https://www.npmjs.com/package/loop-server-fast. Ver >= 0.5.22						
@@ -310,6 +306,9 @@ Note: You should make sure your server provides a caching response to image file
 
 **uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
+**uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
+
+
 **email** **adminEmail**: Administrator's email address.
 
 **email** **webmasterEmail**: The webmaster's email address.
@@ -317,6 +316,8 @@ Note: You should make sure your server provides a caching response to image file
 **email** **noReplyEmail**: An email address for when you do not want a reply.
 
 **email** **sending** **use**: This can be 'none', 'smtp' or 'mailgun'. 'none' means there are no emails sent as notifications. 'smtp' means a standard SMTP server is used, and you should enter the 'smtp' which is the host, 'user' which is the username, typically the email address, 'pass' which is the password, 'encryption' which can be 'tls', 'ssl' or left blank, and the 'port' which is the SMTP port number used. 'mailgun' means the Mailgun.com service is used and you will need a 'key' and 'url' from Mailgun.
+
+**email** **sending** **vendor** **mailgun**: optional. You need a mailgun account which has about 10,000 free emails per month, but costs after that. You will need a 'key' and 'url' from Mailgun.
 
 **sms** **use**: This can be 'none' or 'twilioSMS'. None switches off SMS.
 
