@@ -389,12 +389,9 @@
 	 	global $cnf;
 	 	global $local_server_path;
  
- 		echo "Local server path:" . $local_server_path . "\n";
-		//require_once($local_server_path . "classes/PHPMailerAutoload.php");
 		require_once($local_server_path . "classes/PHPMailer/class.phpmailer.php");
 		require_once($local_server_path . "classes/PHPMailer/class.smtp.php");
 
-		echo "Got that\n";
 		$mail = new PHPMailer;
 
 		//$mail->SMTPDebug = 3;                               // Enable verbose debug output
@@ -414,7 +411,7 @@
 			$mail->Port = 587;                                    // TCP port to connect to
 		}
 
-		$mail->setFrom($sender_email, 'Mailer');
+		$mail->setFrom($sender_email, $cnf['email']['noReplyEmail']);
 		$mail->addAddress($to_email);     // Add a recipient
 		if((isset($bcc_email))&&($bcc_email != '')) {
 			$mail->addBCC($bcc_email);
@@ -430,7 +427,7 @@
 			error_log('Message could not be sent.');
 			error_log('Mailer Error: ' . $mail->ErrorInfo);
 		} else {
-			error_log('Message has been sent');
+			//error_log('Message has been sent');
 		}
 		
 		return;
