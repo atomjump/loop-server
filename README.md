@@ -335,6 +335,14 @@ Note: You should make sure your server provides a caching response to image file
 
 **email** **sending** **use**: This can be 'none', 'smtp' or 'mailgun'. 'none' means there are no emails sent as notifications. 'smtp' means a standard SMTP server is used, and you should enter the 'smtp' which is the host, 'user' which is the username, typically the email address, 'pass' which is the password, 'encryption' which can be 'tls', 'ssl' or left blank, and the 'port' which is the SMTP port number used. 'mailgun' means the Mailgun.com service is used and you will need a 'key' and 'url' from Mailgun.
 
+For example, atomjump.com uses http://smtp2go.com, who provide an excellent email sending service: 
+```
+   "smtp": "mail.smtp2go.com",
+   "user" : "...@atomjump.com",
+   "pass": "...",
+   "port": "2525"
+```
+
 **email** **sending** **vendor** **mailgun**: optional. You need a mailgun account which has about 10,000 free emails per month, but costs after that. You will need a 'key' and 'url' from Mailgun.
 
 **sms** **use**: This can be 'none' or 'twilioSMS'. None switches off SMS.

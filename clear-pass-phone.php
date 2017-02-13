@@ -4,8 +4,11 @@
    global $msg;
    global $lang;
  
- $unique_pass_reset = $cfg['db']['user'] . $cfg['mailgun']['key'];	//This should be unique per installation.	
-	
+   if(isset($cfg['email']['sending']['vendor']['mailgun']['key'])) {
+ 		$unique_pass_reset = $cfg['db']['user'] . $cfg['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
+   } else {
+        $unique_pass_reset = $cfg['db']['user'] . $cfg['db']['pass'];	//Should also be unique per installation - the number is not shown.
+   }	
  
  if($_REQUEST['action']) {
  

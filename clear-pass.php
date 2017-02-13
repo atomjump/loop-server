@@ -4,8 +4,12 @@
  global $msg;
  global $lang;
  
- $unique_pass_reset = $cfg['db']['user'] . $cfg['mailgun']['key'];	//This should be unique per installation.	
- 
+if(isset($cfg['email']['sending']['vendor']['mailgun']['key'])) {
+	$unique_pass_reset = $cfg['db']['user'] . $cfg['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
+} else {
+	$unique_pass_reset = $cfg['db']['user'] . $cfg['db']['pass'];	//Should also be unique per installation - the number is not shown.
+}
+    
  if($_REQUEST['action']) {
    
    //decrypt 
@@ -57,7 +61,7 @@
 	     //Send an email to the logged email
 	     $_SESSION['temp-email'] = $email;
 	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset); 
-	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['webmasterEmail']);
+	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
 	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
 	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
