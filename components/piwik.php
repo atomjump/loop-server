@@ -1,4 +1,5 @@
-<?php if($cnf['analytics']['use'] == "piwik") { ?>
+<?php global $cnf;
+	 if($cnf['analytics']['use'] == "piwik") { ?>
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -12,6 +13,6 @@
 	g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<noscript><p><img src="<?php echo $cnf['analytics']['vendor']['piwik']['image'] ?>" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="<?php global $cnf; echo $cnf['analytics']['vendor']['piwik']['image'] ?>" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 <?php } ?>
