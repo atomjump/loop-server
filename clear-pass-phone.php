@@ -1,13 +1,13 @@
 <?php 
 	require('config/db_connect.php');
-   global $cfg; 
+   global $cnf; 
    global $msg;
    global $lang;
  
-   if(isset($cfg['email']['sending']['vendor']['mailgun']['key'])) {
- 		$unique_pass_reset = $cfg['db']['user'] . $cfg['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
+   if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
+ 		$unique_pass_reset = $cnf['db']['user'] . $cnf['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
    } else {
-        $unique_pass_reset = $cfg['db']['user'] . $cfg['db']['pass'];	//Should also be unique per installation - the number is not shown.
+        $unique_pass_reset = $cnf['db']['user'] . $cnf['db']['pass'];	//Should also be unique per installation - the number is not shown.
    }	
  
  if($_REQUEST['action']) {

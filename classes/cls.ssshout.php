@@ -274,7 +274,7 @@ class cls_ssshout
 		
 		
 		 //Get the from user id's email if it exists
-		$from_email = $cnf['noReplyEmail'];
+		$from_email = $cnf['email']['noReplyEmail'];
 		$from_different = false;
 		if($from_user_id) {
 			$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $from_user_id; 
