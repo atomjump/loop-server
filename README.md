@@ -157,9 +157,9 @@ Note: jQuery ver 1.9.1 is used.  Other jQuery versions will likely work also.
 3. If you wish to, you can enter your mobile phone number under Settings to receive SMS messages when there are any messages
 (at a cost of 16c per message. Messages within 5 minutes of each other do not trigger an SMS).  If you want to 
 include an sms modify the myMachineUser string on your page to include the 3rd term 'sms'
-e.g. "123.456.123.32:1200:sms".  If you don't include an 'sms', you won't receive sms messages.
+e.g. "123.456.123.32:1200:sms".  If you don't include an 'sms', or the server does not include this option, you won't receive sms messages.
 
-If you wish to send SMS messages, we will keep track of messages sent, and charge independently based on usage, on a monthly basis.
+We do not currently support SMS messages via the atomjump.com/api server.
 
 
 # To have more than one messaging forum on a single page
@@ -197,7 +197,7 @@ Open the messaging forum in your browser.
 5. Clicking: 'Your password', then 'Advanced'
 6. Edit the 'This forum's private owners' and put in each email separated by a comma. 
 
-Note: you can also add individuals with their ip/user id. In this case 'sms' can be added individually to each user to optionally send an sms also.
+Note: you can also add individuals with their ip/user id. In this case 'sms' can be added individually to each user to optionally send an sms also, provided the server supports this (currently atomjump.com/api does not).
 
 e.g. "123.456.123.32:1200:sms,123.456.123.32:1201:sms"
 
@@ -253,8 +253,60 @@ This will be expressed as a single number eg. 5.324.
 Note: it can take up to 1 minute before any new message's sentiment will be calculated.
 
 
+# Wordpress Setup
+
+
+1. Install the 'Header and Footer' plugin.
+2. Install AtomJump using 'bower' as described above in your Wordpress folder. 
+3. Go into 'Settings->Header and Footer', and enter the two sections below (adjusting any paths required to fit your installation)
+4. Any link's address (i.e. the 'href') on the page can now start with '#comment-open-', followed by the forum name and it will open a popup.
+
+* Copy into the '<HEAD> SECTION INJECTION' section:
+
+```
+<!-- AtomJump Feedback Starts -->
+		   <!-- Bootstrap core CSS. Ver 3.3.1 sits in css/bootstrap.min.css -->
+			  <link rel="StyleSheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+			
+			<!-- AtomJump Feedback CSS -->
+			<link rel="StyleSheet" href="/bower_components/atomjump/css/comments-0.9.1.css?ver=1">
+			
+			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!--[if lt IE 9]>
+			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			<![endif]-->
+			
+			<script>
+				//Add your configuration here for AtomJump Messaging
+				var ajFeedback = {
+					"uniqueFeedbackId" : "test_feedback",		//This can be anything globally unique to your company/page	
+					"myMachineUser" : "92.27.10.17:8",			/* Obtain this value from 1. Settings
+																					2. Entering an email/Password
+																					3. Click save
+																					4. Settings
+																					5. Clicking: 'More', then 'Developer Tools'
+																					6. Copy the myMachineUser into here.
+							
+															*/
+						"server":  "https://atomjump.com/api"
+				}
+			</script>
+			<script type="text/javascript" src="/bower_components/atomjump/js/chat.js"></script>
+<!-- AtomJump Feedback Ends -->
+```
+
+* Copy into the 'BEFORE THE </BODY> CLOSING TAG (FOOTER)' section:
+
+```
+<!-- Any link on the page can start with '#comment-open-', followed by the forum name and it will open a popup -->
+<div id="comment-holder"></div><!-- holds the popup comments. Can be anywhere between the <body> tags -->
+```
+
 For more details see
 https://atomjump.com
+
+
 
 
 ## Server Options
@@ -349,6 +401,11 @@ For example, atomjump.com uses http://smtp2go.com, who provide an excellent emai
 **sms** **USDollarsPerSMS**: for reporting purposes only. This is what is shown to users if they choose to use the SMS notifications.
 Since there is a cost to you for each SMS, you will likely set this slightly higher than the actual cost of an SMS, to
 account for fluctuations in price.
+
+
+## Changing language packs
+
+Please see the /config/language-packs/README.md file for instructions on changing which languages are available to your users.
 
 
 ## Plugins
