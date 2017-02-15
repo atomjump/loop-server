@@ -3,9 +3,9 @@
 These different language packs are available. Each directory name includes a number of different languages 
 eg. "english-spanish-portuguese", and always consists of three files:
 
-messages.json
-chat-inner-messages.json
-chat-messages.json
+* messages.json
+* chat-inner-messages.json
+* chat-messages.json
 
 1. The main messages.json should be copied over an existing messages.json file at /config/messages.json
 
@@ -26,6 +26,9 @@ chat-messages.json
    ]
    var lang = lsmsg.defaultLanguage;     
    ```
+   On your front-end you should set the cookie named 'lang' to the 2 letter ISO language code
+    e.g. 'en' for English, 'es' for 'Spanish', if you wish to change the language around the border of 
+    the pop-up chat box.
    
    
 You would typically only include the languages you wish to. If you included every language, 
