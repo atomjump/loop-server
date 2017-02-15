@@ -4,7 +4,9 @@ These different language packs are available. Each directory name includes a num
 eg. "english-spanish-portuguese", and always consists of three files:
 
 * messages.json
+
 * chat-inner-messages.json
+
 * chat-messages.json
 
 1. The main messages.json should be copied over an existing messages.json file at /config/messages.json
