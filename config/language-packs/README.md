@@ -4,10 +4,13 @@ These different language packs are available. Each directory name includes a num
 eg. "english-spanish-portuguese", and always consists of three files:
 
 * messages.json
-
 * chat-inner-messages.json
-
 * chat-messages.json
+
+You would typically only include the languages you wish to. If you included every language, 
+the javascript files will be slightly larger, which could impact on page loading performance, slightly. 
+
+Then you should put these into your installation, as follows:
 
 1. The main messages.json should be copied over an existing messages.json file at /config/messages.json
 
@@ -33,8 +36,7 @@ eg. "english-spanish-portuguese", and always consists of three files:
     the pop-up chat box.
    
    
-You would typically only include the languages you wish to. If you included every language, 
-the javascript files will be slightly larger, which could impact on page loading performance, slightly. 
+
            
 
 
