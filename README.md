@@ -194,7 +194,7 @@ Open the messaging forum in your browser.
 2. Entering an email/Password
 3. Click save
 4. Settings
-5. Clicking: 'Your password', then 'Advanced'
+5. Clicking: 'More', then 'Advanced'
 6. Edit the 'This forum's private owners' and put in each email separated by a comma. 
 
 Note: you can also add individuals with their ip/user id. In this case 'sms' can be added individually to each user to optionally send an sms also, provided the server supports this (currently atomjump.com/api does not).
@@ -222,6 +222,10 @@ Note: your css file must be on an https server, if your server is using https.
 **Endpoint**
 http://yourserver.com/download.php
 
+or for atomjump.com's web-service:
+
+http://atomjump.com/api/download.php
+
 **Parameters**
 
 1. **email**
@@ -229,7 +233,7 @@ http://yourserver.com/download.php
 2. **pass**  
    Your AtomJump Loop password
 3. **uniqueFeedbackId**  
-   The particular forum to view.
+   The particular forum to view. Note: include 'ajps_' at the start of this string for x.atomjump.com forums.
 4. **from_id**  
    There is a limit of 2000 records per request. To download more, include the 'id' of the last record, from the previous download request, in this field.
 
