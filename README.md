@@ -107,7 +107,7 @@ You are most welcome to adjust the styling by making changes to the CSS file for
 
 
 
-# Client Installation Instructions
+## Client Installation
 
 With [bower](http://bower.io) from within the root of your project path:
 
@@ -120,7 +120,7 @@ Run atomjump/index.html in your browser.  You should see a 'Click me for comment
 
 
 
-## Client Setup Instructions
+## Client Setup
 
 Look carefully at the index.html example.
 
