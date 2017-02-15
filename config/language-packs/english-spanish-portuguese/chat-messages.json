@@ -1,0 +1,29 @@
+{
+    "defaultLanguage" : "en",
+    "msgs": {
+        "en":{
+              "privateMessage": "Private",
+              "settings": "Settings",
+              "uploadImagesTitle": "Upload images or video.",
+              "uploadImagesTitleSorry": "Sorry image uploads are only supported on IE10+, or any other browser.",
+              "sendTo": "Send to",
+              "emoticonsTitle": "Emoticons"
+        },
+        "es":{
+              "privateMessage": "Privado",
+              "settings": "Settings",
+              "uploadImagesTitle": "Sube imágenes o vídeo.",
+              "uploadImagesTitleSorry": "La subida de imágenes Lo siento, sólo se admiten en IE10+, o cualquier otro navegador.",
+              "sendTo": "Enviar a",
+              "emoticonsTitle": "Emoticonos"
+        },
+        "pt":{
+              "privateMessage": "Privado",
+              "settings": "Configurações",
+              "uploadImagesTitle": "Carregar imagens ou vídeo.",
+              "uploadImagesTitleSorry": "Os uploads de imagens desagradáveis ​​são suportados apenas no IE10 + ou em qualquer outro navegador.",
+              "sendTo": "Enviar para",
+              "emoticonsTitle": "Emoticons"
+        }     
+    }
+}
