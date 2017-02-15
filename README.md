@@ -262,10 +262,7 @@ https://atomjump.com
 
 
 Staging:
-To ensure you are set to staging, set the 'webDomain' param in the config.json to the raw local domain or hostname actually used.
-E.g. an ip address would be '192.168.40.10' or a domain would be 'subdomain.yourdomain.com'. If you change from an ip
-to a domain, ensure you switch over this param at the time of the switchover, because the server defaults to production.
-A staging server does not need haproxy to be configured.
+To ensure you are set to staging, set the 'usingStaging' param to 'true'.
 
 To test the web domain, use the following small PHP script:
 
