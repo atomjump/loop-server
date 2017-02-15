@@ -120,7 +120,7 @@ Run atomjump/index.html in your browser.  You should see a 'Click me for comment
 
 
 
-# Client Setup Instructions
+## Client Setup Instructions
 
 Look carefully at the index.html example.
 
@@ -162,7 +162,7 @@ e.g. "123.456.123.32:1200:sms".  If you don't include an 'sms', or the server do
 We do not currently support SMS messages via the atomjump.com/api server.
 
 
-# To have more than one messaging forum on a single page
+## To have more than one messaging forum on a single page
 
 You can do this three different ways. The simplest is to set the link's href to '"#comment-open-' followed by the forum name:
 ```<a href="#comment-open-my_different_forum_name">Open special forum</a>```
@@ -175,7 +175,7 @@ Or, for further control over the owner of the forum, you can add the following d
 
 
 
-# To open a Shortmail enabled forum
+## To open a Shortmail enabled forum
 
 You can add the 'shortmail' data tag e.g.
 
@@ -186,7 +186,7 @@ Or, you can use an href "#shortmail-open-" class:
 
 
 
-# To add more than one user to receive messages
+## To add more than one user to receive messages
 
 Open the messaging forum in your browser.
 
@@ -202,7 +202,7 @@ Note: you can also add individuals with their ip/user id. In this case 'sms' can
 e.g. "123.456.123.32:1200:sms,123.456.123.32:1201:sms"
 
 
-# To change the theme
+## To change the theme
 
 Add 
 
@@ -217,7 +217,7 @@ to the ajFeedback object.
 Note: your css file must be on an https server, if your server is using https.
 
 
-# To download a forum's messages programmatically
+## To download a forum's messages programmatically
 
 **Endpoint**
 http://yourserver.com/download.php
@@ -240,7 +240,7 @@ http://atomjump.com/api/download.php
 
 Which returns a JSON object. Included for reporting is a 'sentiment' field which measures how positive the comment is (< 0 negative, 0= neutral, > 0 positive).
 
-# Getting a live sentiment
+## Getting a live sentiment
 
 Include the following parameters along with 1,2, and 3 above.
 
@@ -257,7 +257,7 @@ This will be expressed as a single number eg. 5.324.
 Note: it can take up to 1 minute before any new message's sentiment will be calculated.
 
 
-# Wordpress Setup
+## Wordpress Setup
 
 
 1. Install the 'Header and Footer' plugin.
@@ -313,7 +313,7 @@ https://atomjump.com
 
 
 
-## Server Options
+# Server Options
 
 
 
@@ -407,12 +407,12 @@ Since there is a cost to you for each SMS, you will likely set this slightly hig
 account for fluctuations in price.
 
 
-## Changing language packs
+# Changing language packs
 
 Please see the /config/language-packs/README.md file for instructions on changing which languages are available to your users.
 
 
-## Plugins
+# Plugins
 
 Plugins can be installed in the /plugins directory.
 See https://atomjump.com/smart.php for a list of plugins available.
