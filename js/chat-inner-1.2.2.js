@@ -1414,11 +1414,18 @@ function doSearch()
 	
 	
 	if((readPort)&&(readPort != null)&&(readPort != "")&&(!port)) {
-		//Use an alternative port for reading - useful by the Loop-server-fast plugin
+		//Use an alternative port for reading - useful by the Loop-server-fast plugin. Note: readURL will overwrite this if set.
 		var serv = assignPortToURL(ssshoutServer, readPort);
 	} else {
 	
 		var serv = assignPortToURL(ssshoutServer, port);
+	}
+	
+	if((readURL)&&(readURL != null)&&(readURL != "")&&(!port)) {
+		//Use an alternative URL for reading - useful by the Loop-server-fast plugin
+		var serv = readURL;	
+	} else {
+		var serv = ssshoutServer;
 	}
 	
 	var callResults = false;		//flag for returned or not

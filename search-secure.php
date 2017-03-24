@@ -156,12 +156,22 @@
 			<script>
 				var initPort = "";
 				
-				<?php if(isset($cnf['readPort'])) { //Support a specific port for fast reading with the loop-server-fast plugin 
+				<?php if(isset($cnf['readPort'])) { //Support a specific port for fast reading with the loop-server-fast plugin. 'readURL' will be used instead if it is set, which gives more control.
 				?>
 					var readPort = "<?php echo $cnf['readPort'] ?>";
 				<?php } else { ?>
 					var readPort = null;
 				<?php } ?>
+				
+				
+				<?php if(isset($cnf['readURL'])) { //Support a specific URL for fast reading with the loop-server-fast plugin 
+				?>
+					var readURL = "<?php echo trim_trailing_slash($cnf['readURL']) ?>";
+				<?php } else { ?>
+					var readURL = null;
+				<?php } ?>
+				
+				
 				
 				var portReset = true;
 			
@@ -189,7 +199,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.1.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.2.js"></script> 
 			
 			
 	</head>
