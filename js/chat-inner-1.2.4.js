@@ -1424,8 +1424,6 @@ function doSearch()
 	if((readURL)&&(readURL != null)&&(readURL != "")&&(!port)) {
 		//Use an alternative URL for reading - useful by the Loop-server-fast plugin
 		var serv = readURL;	
-	} else {
-		var serv = ssshoutServer;
 	}
 	
 	var callResults = false;		//flag for returned or not

@@ -199,7 +199,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.3.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.2.4.js"></script> 
 			
 			
 	</head>
