@@ -1424,8 +1424,6 @@ function doSearch()
 	if((readURL)&&(readURL != null)&&(readURL != "")&&(!port)) {
 		//Use an alternative URL for reading - useful by the Loop-server-fast plugin
 		var serv = readURL;	
-	} else {
-		var serv = ssshoutServer;
 	}
 	
 	var callResults = false;		//flag for returned or not
@@ -1441,7 +1439,8 @@ function doSearch()
 					units: 'mi',
 					volume: 1.00,
 					records: records,
-					whisper_site: whisperSite
+					whisper_site: whisperSite,
+					sessionId: $('#ses').val()
 											
 		},
 		success: function(response){ 

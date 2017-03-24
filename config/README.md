@@ -51,7 +51,7 @@ message via twitter).
 
 **readPort**:  optional. The port to put the plugin 'loop-server-fast' daemon on, if it is different to 3277, see https://www.npmjs.com/package/loop-server-fast. Ver >= 0.5.22.
 
-**readURL**: optional. The full URL including ports that the plugin 'loop-server-fast' daemon is on, see https://www.npmjs.com/package/loop-server-fast, if this is different to the standard URL followed by 'readPort'. Note: if you use a non-standard port, some machines behind proxy servers, particularly corporates, or some public PCs may have the address filtered out. The best practice is to use the standard port 80 for http and 443 for https. Alternatively, if this port is not available, you can also either use a .htaccess redirect in the Apache settings, or a load balancer rewiring in the load balancer from a subdomain. Ver >= 1.5.5.
+**readURL**: optional. The full URL including ports that the plugin 'loop-server-fast' daemon is on, see https://www.npmjs.com/package/loop-server-fast, if this is different to the standard URL followed by 'readPort'. Note: if you use a non-standard port, some machines behind proxy servers, particularly corporates, or some public PCs may have the address filtered out. One approach here, at a slight loss of speed, is to use the standard port 80 for http and 443 for https, and ProxyPass in Apache. Ver >= 1.5.5.
 
 **httpsKey**:  optional. If you are serving from an https address, you will need this local file path, for the plugin 'loop-server-fast', see https://www.npmjs.com/package/loop-server-fast. See also 'httpsCert', which is needed too. Ver >= 0.5.22
 
