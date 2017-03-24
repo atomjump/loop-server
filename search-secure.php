@@ -369,7 +369,7 @@
 							<input type="hidden" id="short-code" name="short_code" value="">
 							<input type="hidden" id="public-to" name="public_to" value="">
 						    <input type="hidden" id="volume" name="volume" value="1.00">
-							<input type="hidden" id="ses" name="ses" value="<?php if(isset($_COOKIE['ses'])) { echo $_COOKIE['ses']; } else { echo ''; } ?>">
+							<input type="hidden" id="ses" name="ses" value="<?php if(isset($_COOKIE['ses'])) { echo $_COOKIE['ses']; } else { echo session_id(); } ?>">
 							<input type="hidden" name="cs" value="21633478">
 							<input type="hidden" id="typing-now" name="typing" value="off">
 							<input type="hidden" id="shout-id" name="shout_id" value="">
