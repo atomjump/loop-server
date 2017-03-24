@@ -1441,7 +1441,8 @@ function doSearch()
 					units: 'mi',
 					volume: 1.00,
 					records: records,
-					whisper_site: whisperSite
+					whisper_site: whisperSite,
+					sessionId: $('#ses').val()
 											
 		},
 		success: function(response){ 
