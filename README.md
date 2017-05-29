@@ -91,7 +91,9 @@ sudo crontab -e
 This will update the production database message sentiments once every minute (or remove the -production to go to staging).  
 
 
+# Windows installation
 
+Running on Windows has currently not been tested, but you can use a Ubuntu 14.04 virtual machine from https://bitnami.com/stack/lamp/virtual-machine
 
 
 # Messaging Client
