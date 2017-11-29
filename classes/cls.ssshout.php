@@ -410,9 +410,9 @@ class cls_ssshout
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
 
-						error_log("Email body is now 3:" . $email_body);
+						error_log("Email body is now 3:" . $email_body . " From email:" . $from_email);
 
-						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $from_email, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
 				}
 				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
