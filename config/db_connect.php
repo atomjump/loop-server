@@ -419,8 +419,9 @@
 			$mail->setFrom($cnf['email']['noReplyEmail'], $cnf['email']['noReplyEmail']);
 		}
 		$mail->addAddress($to_email);     // Add a recipient
-		if((isset($bcc_email))&&($bcc_email != '')) {
-			error_log("BCCing:" . $bcc_email);
+		
+		error_log("BCCing:" . $bcc_email);
+		if((isset($bcc_email))&&($bcc_email != '')) {			
 			$mail->addBCC($bcc_email);
 		}
 
