@@ -413,13 +413,14 @@
 			$mail->Port = 587;                                    // TCP port to connect to
 		}
 	
-		if($sender_email == "") {
-			$mail->setFrom($cnf['email']['noReplyEmail'], $cnf['email']['noReplyEmail']);
-		} else {
+		if((isset($sender_email))&&($sender_email != '')) {
 			$mail->setFrom($sender_email, $cnf['email']['noReplyEmail']);	//Note: some email senders will only send from a specific single email account e.g. the one set in noReplyEmail
+		} else {
+			$mail->setFrom($cnf['email']['noReplyEmail'], $cnf['email']['noReplyEmail']);
 		}
 		$mail->addAddress($to_email);     // Add a recipient
 		if((isset($bcc_email))&&($bcc_email != '')) {
+			error_log("BCCing:" . $bcc_email);
 			$mail->addBCC($bcc_email);
 		}
 
