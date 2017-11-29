@@ -311,7 +311,7 @@ class cls_ssshout
 		{
 			if($introducing == false) {
 				//A standard email once they are familiar with the concept
-				$email_body = $message;
+				$email_body = $orig_message;
 				
 				if($access == 'public') {
 					$url = cur_page_url();
@@ -341,16 +341,16 @@ class cls_ssshout
 										 "remove_url" => $remove_url);
 				
 				$data = array();
-				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
-				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($ret, $data) = $this->call_plugins_notify("init", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
-						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
 					}
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				
 				
 			} else {
@@ -364,7 +364,7 @@ class cls_ssshout
 				$params['c'] = $checksum;
 				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'] . "?" . http_build_query($params); 
 				
-				$email_body = $message;
+				$email_body = $orig_message;
 				error_log("Email body is now 0:" . $email_body . "  Message:" . $message . " Orig Message" . $orig_message);
 				
 				
@@ -401,8 +401,8 @@ class cls_ssshout
 										 "remove_url" => $remove_url);
 				
 				$data = array();
-				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
-				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($ret, $data) = $this->call_plugins_notify("init", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {	
 					
 					$ly = new cls_layer();
@@ -412,10 +412,10 @@ class cls_ssshout
 
 						error_log("Email body is now 3:" . $email_body);
 
-						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 
 			}
 		
@@ -431,7 +431,7 @@ class cls_ssshout
 						if($access == 'public') {		//a private message forum only sends emails, not text messages. TODO but must have a reply option..
 						
 						 //note: from user id is recipient - it is their account we are reducing
-							$cmd = "nohup nice -n 10 " . $cnf['phpPath'] . " " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
+							$cmd = "nohup nice -n 10 " . $cnf['phpPath'] . " " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($orig_message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
 					
 		
 							array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
