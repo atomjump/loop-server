@@ -1,7 +1,6 @@
 {
    "usingStaging": true,	
    "staging": {
-   	  "warning": "WARNING: this staging section is the ideal new layout for this config file. But it is not implemented yet. Please refer to the 'production' below.",
       "db": {
          "name": "ssshout",
          "hosts": [
