@@ -363,7 +363,7 @@ class cls_ssshout
 				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'] . "?" . http_build_query($params); 
 				
 				$email_body = $message;
-				
+				error_log("Email body is now 0:" . $email_body . "  Message:" . $message);
 				
 				
 				if($access == 'public') { 
