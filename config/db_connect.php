@@ -420,7 +420,7 @@
 		}
 		$mail->addAddress($to_email);     // Add a recipient
 		
-		error_log("BCCing:" . $bcc_email);
+		echo "BCCing:" . $bcc_email;
 		if((isset($bcc_email))&&($bcc_email != '')) {			
 			$mail->addBCC($bcc_email);
 		}
