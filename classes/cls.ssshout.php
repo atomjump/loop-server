@@ -817,13 +817,15 @@ class cls_ssshout
 				if($typing == false) {
 					//Parse the message for any email addresses
 					//First check if we include any email addresses - use this to whisper to them
-					$pattern="/email!(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/";
+					$pattern="/email:(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/";
 
 					preg_match_all($pattern, $message, $matches);
 					if(count($matches) > 0) {
 						foreach($matches as $new_email) {
 							if($new_email[0]) {
-								$new_user_id = $this->new_user($new_email[0], '', '', false);		//false is do not log in as this new user (so no welcome message sent)
+								//Chop off the 'email:'
+								$email_to = str_replace("email:", "", $new_email[0]);
+								$new_user_id = $this->new_user($email_to, '', '', false);		//false is do not log in as this new user (so no welcome message sent)
 								//NOTE: this currently only supports a single email address that is sent privately, multiple email addresses
 								//must be sent by the user publicly to be effective - TODO: possible soln is to replicate the message for each user 
 								$email_in_msg = true;
