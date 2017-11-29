@@ -364,6 +364,8 @@ class cls_ssshout
 				
 				$email_body = $message;
 				
+				
+				
 				if($access == 'public') { 
 					if($from_different == false) {
 						$observe_message = $msg['msgs'][$lang]['toReplySee'];
@@ -381,7 +383,12 @@ class cls_ssshout
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
+				error_log("Email body is now 1:" . $email_body);
+				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
+				
+				error_log("Email body is now 2:" . $email_body);
+				
 				$message .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				$message_details = array("observe_message" => $observe_message,
@@ -400,6 +407,8 @@ class cls_ssshout
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
+
+						error_log("Email body is now 3:" . $email_body);
 
 						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
