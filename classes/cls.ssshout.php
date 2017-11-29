@@ -254,6 +254,10 @@ class cls_ssshout
 	
 	}	 
 	
+	
+	
+	
+	
 	public function whisper_by_email($user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
 	{
 		global $root_server_url;
@@ -271,7 +275,9 @@ class cls_ssshout
 		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
+			error_log("Access:" . $access . "  Message:" . $message);
 		} else {
+			error_log("Could not find layer id:" . $layer_id);
 			//Don't send the mail - some error
 			return false;
 		}
