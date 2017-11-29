@@ -1059,7 +1059,7 @@ class cls_ssshout
 					
 							if($notification == true) {
 								//Just one recipient - only let them know
-								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id, $always_send_email);
+								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id, $always_send_email, $your_name);
 							}
 						
 						}
