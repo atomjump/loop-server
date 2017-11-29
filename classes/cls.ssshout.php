@@ -46,6 +46,7 @@ class cls_ssshout
 	
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
 	{
+		//If login_as is false, we don't send a welcome email out to the user (it is a system-only request).
 		global $root_server_url;
 		global $cnf;
 		global $msg;
@@ -88,7 +89,7 @@ class cls_ssshout
 			 
 			}
 		} else {
-		    //email exists
+		    //Incoming email exists, check if on the db
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . $email . "'";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
@@ -229,9 +230,9 @@ class cls_ssshout
 	
 	public function social_outing($message, $public_to, $short_code)
 	{
-                 global $msg;
-                 global $lang;
-		 $outgoing = "";
+         global $msg;
+         global $lang;
+		 $outgoing = $message;
 	
 		 switch($short_code)
 		 {
@@ -253,7 +254,11 @@ class cls_ssshout
 	
 	}	 
 	
-	public function whisper_by_email($user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
+	
+	
+	
+	
+	public function whisper_by_email($user_id, $orig_message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false, $your_name = "")
 	{
 		global $root_server_url;
 		global $local_server_path;
@@ -262,6 +267,16 @@ class cls_ssshout
 		global $staging;
 		global $msg;
 		global $lang;
+		
+		$message = $orig_message;	//Create a local version
+		if($your_name == "") {
+			if(isset($msg['msgs'][$lang]['standardEmailFromName'])) {
+				$your_name = $msg['msgs'][$lang]['standardEmailFromName'];
+			} else {
+				$your_name = "AtomJump User";
+			}
+		}
+		
 	
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
@@ -270,6 +285,10 @@ class cls_ssshout
 		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
+		} else {
+			error_log("Could not find layer id:" . $layer_id);
+			//Don't send the mail - some error
+			return false;
 		}
 		
 		
@@ -278,8 +297,8 @@ class cls_ssshout
 		$from_different = false;
 		if($from_user_id) {
 			$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $from_user_id; 
-			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-			if($row2 = db_fetch_array($result))
+			$result2 = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row2 = db_fetch_array($result2))
 			{
 				if((!is_null($row2['var_email']))&&($access=='private')) {
 					$from_email = $row2['var_email'];
@@ -299,7 +318,7 @@ class cls_ssshout
 		{
 			if($introducing == false) {
 				//A standard email once they are familiar with the concept
-				$email_body = $message;
+				$email_body = $orig_message;
 				
 				if($access == 'public') {
 					$url = cur_page_url();
@@ -329,20 +348,20 @@ class cls_ssshout
 										 "remove_url" => $remove_url);
 				
 				$data = array();
-				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
-				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($ret, $data) = $this->call_plugins_notify("init", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
-						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //"Private message on " . cur_page_url()
 					}
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				
 				
 			} else {
-				//This is to someone who has been mentioned in the body of the message
+				//This is to someone who has been mentioned in the body of the message (introducing == true)
 				$checksum = 233242 + $user_id * 19;
 				 
     			$components = parse_url(cur_page_url());
@@ -352,7 +371,8 @@ class cls_ssshout
 				$params['c'] = $checksum;
 				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'] . "?" . http_build_query($params); 
 				
-				$email_body = $message;
+				$email_body = $orig_message;
+				
 				
 				if($access == 'public') { 
 					if($from_different == false) {
@@ -371,7 +391,9 @@ class cls_ssshout
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
+				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
+								
 				$message .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				$message_details = array("observe_message" => $observe_message,
@@ -382,19 +404,18 @@ class cls_ssshout
 										 "remove_url" => $remove_url);
 				
 				$data = array();
-				list($ret, $data) = $this->call_plugins_notify("init", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
-				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($ret, $data) = $this->call_plugins_notify("init", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				list($with_app, $data) = $this->call_plugins_notify("addrecipient", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 				if($with_app == false) {	
 					
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
-
-						$result = cc_mail($row['var_email'], summary($message, 45), $email_body, $from_email, null, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
 				}
-				$this->call_plugins_notify("send", $message, $message_details, $message_id, $from_user_id, $user_id, $data);
+				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
 
 			}
 		
@@ -410,7 +431,7 @@ class cls_ssshout
 						if($access == 'public') {		//a private message forum only sends emails, not text messages. TODO but must have a reply option..
 						
 						 //note: from user id is recipient - it is their account we are reducing
-							$cmd = "nohup nice -n 10 " . $cnf['phpPath'] . " " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
+							$cmd = "nohup nice -n 10 " . $cnf['phpPath'] . " " . $local_server_path . "send-sms.php phone=" . rawurlencode($row['var_phone']) . " message=" . rawurlencode($orig_message . ' ' . cur_page_url()) . " user_from_id=" . $user_id . " staging=" . $staging;	  //To log this eg: . ' >/var/www/html/yourdir/tmp/newlog.txt';
 					
 		
 							array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
@@ -813,13 +834,15 @@ class cls_ssshout
 				if($typing == false) {
 					//Parse the message for any email addresses
 					//First check if we include any email addresses - use this to whisper to them
-					$pattern="/(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/";
+					$pattern="/email:(?:[a-z0-9!#$%&'*+=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/";
 
 					preg_match_all($pattern, $message, $matches);
 					if(count($matches) > 0) {
 						foreach($matches as $new_email) {
 							if($new_email[0]) {
-								$new_user_id = $this->new_user($new_email[0], '', '', false);		//false is do not log in as this new user
+								//Chop off the 'email:'
+								$email_to = str_replace("email:", "", $new_email[0]);
+								$new_user_id = $this->new_user($email_to, '', '', false);		//false is do not log in as this new user (so no welcome message sent)
 								//NOTE: this currently only supports a single email address that is sent privately, multiple email addresses
 								//must be sent by the user publicly to be effective - TODO: possible soln is to replicate the message for each user 
 								$email_in_msg = true;
@@ -1004,48 +1027,27 @@ class cls_ssshout
 					
 					
 					if($short_code) {
-					   //We are also posting to a social network
-									 $result = $this->social_post($public_to, $short_code, $new_user_id, $message, $message_id, $layer, true, $user_id, $your_name);	//true is because we are introducing
+					    //We are also posting to a social network
+						$result = $this->social_post($public_to, $short_code, $new_user_id, $message, $message_id, $layer, true, $user_id, $your_name);	//true is because we are introducing
 			
 					}
 					
 					if($email_in_msg == true) {
 						//We are sending off a whisper to an email address
-						
-						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id, $always_send_email);	//true is because we are introducing
-					} else {
+						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id, $always_send_email, $your_name);	//true is because we are introducing
+					} 
 				
 				
-						if($whisper_to_divided[1]) {
-							//The whisper user
-					
-							//Whisper off an email of this message to the recipient
-							//The number after the : is the user id
-							if($notify_group == true) {
-								//More than one user in the company - notify the whole group
-								
-								if($notification == true) {
-								
-									//Keep all relevant users updated by email or sms
-									$ly = new cls_layer();
-									$ly->always_send_email = $always_send_email;
-									$ly->layer_name = $this->layer_name;
-									$ly->notify_group($layer, $message, $message_id, $user_id);
-								}
+					if($whisper_to_divided[1]) {
+						//The whisper user
+				
+						//Whisper off an email of this message to the recipient
+						//The number after the : is the user id
+						if($notify_group == true) {
+							//More than one user in the company - notify the whole group
 							
-							} else {
-						
-								if($notification == true) {
-									//Just one recipient - only let them know
-									$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id, $always_send_email);
-								}
-							
-							}
-		
-						} else {
-				
 							if($notification == true) {
-				
+							
 								//Keep all relevant users updated by email or sms
 								$ly = new cls_layer();
 								$ly->always_send_email = $always_send_email;
@@ -1053,8 +1055,28 @@ class cls_ssshout
 								$ly->notify_group($layer, $message, $message_id, $user_id);
 							}
 						
+						} else {
+					
+							if($notification == true) {
+								//Just one recipient - only let them know
+								$this->whisper_by_email($whisper_to_divided[1], $message, $message_id, $layer, false, $user_id, $always_send_email, $your_name);
+							}
+						
 						}
+	
+					} else {
+			
+						if($notification == true) {
+			
+							//Keep all relevant users updated by email or sms
+							$ly = new cls_layer();
+							$ly->always_send_email = $always_send_email;
+							$ly->layer_name = $this->layer_name;
+							$ly->notify_group($layer, $message, $message_id, $user_id);
+						}
+					
 					}
+					
 				}
 				
 				if(($typing == false)&&($message_id != "")) {      
