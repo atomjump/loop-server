@@ -258,7 +258,7 @@ class cls_ssshout
 	
 	
 	
-	public function whisper_by_email($user_id, $message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
+	public function whisper_by_email($user_id, $orig_message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
 	{
 		global $root_server_url;
 		global $local_server_path;
@@ -267,6 +267,8 @@ class cls_ssshout
 		global $staging;
 		global $msg;
 		global $lang;
+		
+		$message = $orig_message;	//Create a local version
 	
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
@@ -275,7 +277,7 @@ class cls_ssshout
 		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
-			error_log("Access:" . $access . "  Message:" . $message);
+			error_log("Access:" . $access . "  Message:" . $message . " Orig Message" . $orig_message);
 		} else {
 			error_log("Could not find layer id:" . $layer_id);
 			//Don't send the mail - some error
@@ -288,8 +290,8 @@ class cls_ssshout
 		$from_different = false;
 		if($from_user_id) {
 			$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $from_user_id; 
-			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-			if($row2 = db_fetch_array($result))
+			$result2 = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row2 = db_fetch_array($result2))
 			{
 				if((!is_null($row2['var_email']))&&($access=='private')) {
 					$from_email = $row2['var_email'];
@@ -363,7 +365,7 @@ class cls_ssshout
 				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'] . "?" . http_build_query($params); 
 				
 				$email_body = $message;
-				error_log("Email body is now 0:" . $email_body . "  Message:" . $message);
+				error_log("Email body is now 0:" . $email_body . "  Message:" . $message . " Orig Message" . $orig_message);
 				
 				
 				if($access == 'public') { 
