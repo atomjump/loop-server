@@ -378,7 +378,7 @@
 			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 		}
 
-		//To test: https://atomjump.com/send-email.php?to=test@yourmail.com&subject=Test&body=test&sender_email=noreply@atomjump.com&sender_name=AtomJump
+		//To test: https://atomjump.com/api/send-email.php?to=test@yourmail.com&subject=Test&body=test&sender_email=noreply@atomjump.com&sender_name=AtomJump
 
 		return $result;
 		
@@ -410,8 +410,12 @@
 		} else {	
 			$mail->Port = 587;                                    // TCP port to connect to
 		}
-
-		$mail->setFrom($sender_email, $cnf['email']['noReplyEmail']);
+	
+		if($sender_email == "") {
+			$mail->setFrom($cnf['email']['noReplyEmail'], $cnf['email']['noReplyEmail']);
+		} else {
+			$mail->setFrom($sender_email, $sender_email);
+		}
 		$mail->addAddress($to_email);     // Add a recipient
 		if((isset($bcc_email))&&($bcc_email != '')) {
 			$mail->addBCC($bcc_email);
