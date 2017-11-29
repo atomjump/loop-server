@@ -412,7 +412,7 @@
 		}
 	
 		if((isset($sender_email))&&($sender_email != '')) {
-			$mail->setFrom($sender_email, $cnf['email']['noReplyEmail']);	//Note: some email senders will only send from a specific single email account e.g. the one set in noReplyEmail
+			$mail->setFrom($sender_email, $sender_name);	//Note: some email senders will only send from a specific single email account e.g. the one set in noReplyEmail
 		} else {
 			$mail->setFrom($cnf['email']['noReplyEmail'], $cnf['email']['noReplyEmail']);
 		}
