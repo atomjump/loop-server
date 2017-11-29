@@ -277,7 +277,6 @@ class cls_ssshout
 		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
-			error_log("Access:" . $access . "  Message:" . $message . " Orig Message" . $orig_message . " Always send email:" . $always_send_email);
 		} else {
 			error_log("Could not find layer id:" . $layer_id);
 			//Don't send the mail - some error
@@ -365,7 +364,6 @@ class cls_ssshout
 				$replaced = $components['scheme'] . "://" . $components['host'] . $components['path'] . "?" . http_build_query($params); 
 				
 				$email_body = $orig_message;
-				error_log("Email body is now 0:" . $email_body . "  Message:" . $message . " Orig Message" . $orig_message);
 				
 				
 				if($access == 'public') { 
@@ -387,9 +385,7 @@ class cls_ssshout
 				
 				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
-				
-				error_log("Always send email:" . $always_send_email);
-				
+								
 				$message .= $msg['msgs'][$lang]['fromShortMail'];
 				
 				$message_details = array("observe_message" => $observe_message,
@@ -408,9 +404,6 @@ class cls_ssshout
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
-
-						error_log("Email body is now 3:" . $email_body . " From email:" . $from_email);
-
 						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $from_email, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
 				}

@@ -374,9 +374,7 @@
 		
 		if($notify == true) {
 			$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] .  ' ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . rawurlencode($bcc_email) . ' > /dev/null 2>&1 &';	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
-			
-			error_log("cc_mailing:" . $cmd);
-			
+						
 			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 		}
 
@@ -420,7 +418,6 @@
 		}
 		$mail->addAddress($to_email);     // Add a recipient
 		
-		echo "BCCing:" . $bcc_email;
 		if((isset($bcc_email))&&($bcc_email != '')) {			
 			$mail->addBCC($bcc_email);
 		}
