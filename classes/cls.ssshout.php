@@ -277,7 +277,7 @@ class cls_ssshout
 		if($row = db_fetch_array($result))
 		{
 			$access = $row['enm_access'];
-			error_log("Access:" . $access . "  Message:" . $message . " Orig Message" . $orig_message);
+			error_log("Access:" . $access . "  Message:" . $message . " Orig Message" . $orig_message . " Always send email:" . $always_send_email);
 		} else {
 			error_log("Could not find layer id:" . $layer_id);
 			//Don't send the mail - some error
@@ -385,11 +385,10 @@ class cls_ssshout
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
-				error_log("Email body is now 1:" . $email_body);
 				
 				$email_body .= $msg['msgs'][$lang]['fromShortMail'];
 				
-				error_log("Email body is now 2:" . $email_body);
+				error_log("Always send email:" . $always_send_email);
 				
 				$message .= $msg['msgs'][$lang]['fromShortMail'];
 				
