@@ -258,7 +258,7 @@ class cls_ssshout
 	
 	
 	
-	public function whisper_by_email($user_id, $orig_message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false)
+	public function whisper_by_email($user_id, $orig_message, $message_id, $layer_id, $introducing = false, $from_user_id = null, $always_send_email = false, $your_name = "")
 	{
 		global $root_server_url;
 		global $local_server_path;
@@ -269,6 +269,14 @@ class cls_ssshout
 		global $lang;
 		
 		$message = $orig_message;	//Create a local version
+		if($your_name == "") {
+			if(isset($msg['msgs'][$lang]['standardEmailFromName'])) {
+				$your_name = $msg['msgs'][$lang]['standardEmailFromName'];
+			} else {
+				$your_name = "AtomJump User";
+			}
+		}
+		
 	
 		//Get access rights either public or private - this determines whether we are sending mail and inviting for a live chat (public), or just sending
 		//mail like an ordinary mail client (private)
@@ -346,7 +354,7 @@ class cls_ssshout
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
-						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, null, null, $from_email);  //"Private message on " . cur_page_url()
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //"Private message on " . cur_page_url()
 					}
 				}
 				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
@@ -404,7 +412,7 @@ class cls_ssshout
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
-						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, "AtomJump User", null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
 					}
 				}
 				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
@@ -1026,7 +1034,7 @@ class cls_ssshout
 					
 					if($email_in_msg == true) {
 						//We are sending off a whisper to an email address
-						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id, $always_send_email);	//true is because we are introducing
+						$this->whisper_by_email($new_user_id, $message, $message_id, $layer, true, $user_id, $always_send_email, $your_name);	//true is because we are introducing
 					} 
 				
 				
