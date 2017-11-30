@@ -133,7 +133,8 @@
             "setForumPassReason":"This forum's password, which ensure only private access for people who know the password.",
             "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
             "setForumPassEnter":"Enter a password",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+	    "standardEmailFromName": "AtomJump User"
         },
 		"es": {
 			"fullnameEnglish": "Español",
@@ -267,7 +268,8 @@
             "setForumPassReason":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassReasonExtended":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassEnter":"Ingrese una contraseña",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+            "standardEmailFromName": "Usuario de AtomJump"
 		},
 		"pt":{
             "fullnameEnglish": "Português",
@@ -400,7 +402,8 @@
             "setForumPassReason":"A senha deste fórum, que garante apenas o acesso privado para pessoas que conhecem a senha.",
             "setForumPassReasonExtended":"A senha deste fórum, que garante apenas acesso privado para pessoas que conhecem a senha",
             "setForumPassEnter":"Insira uma senha",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+	    "standardEmailFromName": "Usuário AtomJump"
         }
     }
 }
