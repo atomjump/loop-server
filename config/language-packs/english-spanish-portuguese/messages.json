@@ -79,7 +79,6 @@
             "goingFullscreen": "The SeeTalent streaming page is about to go full-screen.  Please confirm.",
             "goFullscreen": "Go Full-screen",
             "feedbackOn": "Feedback On..",
-            "downloadTitle": "Download Software",
             "enterPlaceBrand": "Enter a place or brand",
             "otherProducts": "Other Products",
             "copyright": "AtomJump.com",
@@ -133,13 +132,14 @@
             "setForumPassReason":"This forum's password, which ensure only private access for people who know the password.",
             "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
             "setForumPassEnter":"Enter a password",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+	    "standardEmailFromName": "AtomJump User"
         },
 		"es": {
 			"fullnameEnglish": "Español",
 			"observeMessage": "Ver",
 			"layerName": "emergente",
-			"removeComment": "Para eliminar este comentario clic aquí",
+			"removeComment": "Para eliminar este comentario, haga clic aquí",
 			"newMsg": "Mensaje nuevo foro de",
 			"thanksConfirmEmail": "Gracias por confirmar su dirección de correo electrónico Comentarios AtomJump.",
 			"invalidEmailCode": "Lo siento que no es un código válido.",
@@ -156,7 +156,6 @@
 			"tweetSeeReply": "ver una contestación",
 			"tweetFrom": "desde",
 			"tweetAlsoSentTo": "(también enviada a @PUBLIC_TO en Twitter)",
-			"removeComment": "Para eliminar este comentario haga clic aquí:",
 			"fromShortMail": "\n------\nSent de AtomJump Shortmail",
 			"toReplySee": "Para responder ver:",
 			"replyOrChat": "Responder a este correo electrónico o chat en vivo con esta persona:",
@@ -213,7 +212,6 @@
 			"goingFullscreen": "La página de streaming SeeTalent está a punto de ir a pantalla completa por favor confirmar.",
 			"goFullscreen": "Vaya a pantalla completa",
 			"feedbackOn": "Sus comentarios sobre el..",
-			"downloadTitle": "Descarga de Software",
 			"enterPlaceBrand": "Entrar en un lugar o marca",
 			"otherProducts": "Otros Productos",
 			"copyright": "AtomJump.com",
@@ -267,7 +265,8 @@
             "setForumPassReason":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassReasonExtended":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassEnter":"Ingrese una contraseña",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+            "standardEmailFromName": "Usuario de AtomJump"
 		},
 		"pt":{
             "fullnameEnglish": "Português",
@@ -346,7 +345,6 @@
             "goingFullscreen": "A página de streaming do SeeTalent está prestes a ser exibida em tela cheia. Por favor confirme.",
             "goFullscreen": "Ir para tela cheia",
             "feedbackOn": "Comentários sobre..",
-            "downloadTitle": "Baixar Software",
             "enterPlaceBrand": "Insira um local ou marca",
             "otherProducts": "Outros Produtos",
             "copyright": "AtomJump.com",
@@ -400,7 +398,8 @@
             "setForumPassReason":"A senha deste fórum, que garante apenas o acesso privado para pessoas que conhecem a senha.",
             "setForumPassReasonExtended":"A senha deste fórum, que garante apenas acesso privado para pessoas que conhecem a senha",
             "setForumPassEnter":"Insira uma senha",
-            "emojisTitle": "Emoji"
+            "emojisTitle": "Emoji",
+	    "standardEmailFromName": "Usuário AtomJump"
         }
     }
 }
