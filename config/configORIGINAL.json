@@ -42,7 +42,7 @@
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
-	  } 
+	  }, 
       "adminMachineUser" : "92.27.10.17:1",
       "email": {
       	 "adminEmail": "your.name@your.company.com",
@@ -181,7 +181,7 @@
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
-	  } 
+	  },
       "adminMachineUser" : "92.27.10.17:1",
       "email": {
       	 "adminEmail": "your.name@your.company.com",
