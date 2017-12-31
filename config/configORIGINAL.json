@@ -124,7 +124,7 @@
 					"yourdb2write.yourcompany.com",
 					"yourdb2read2.yourcompany.com",
 					"yourdb2read3.yourcompany.com",
-					"yourdb2read4.yourcompany.com",
+					"yourdb2read4.yourcompany.com"
 				 ],
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
@@ -140,7 +140,7 @@
 					"yourdb3write.yourcompany.com",
 					"yourdb3read2.yourcompany.com",
 					"yourdb3read3.yourcompany.com",
-					"yourdb3read4.yourcompany.com",
+					"yourdb3read4.yourcompany.com"
 				 ],
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
