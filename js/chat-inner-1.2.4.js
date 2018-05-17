@@ -29,7 +29,20 @@ var lsmsg = {
               lostConnection: 'Advertencia: Esperando una buena conexión.',
               blankMessage: 'Advertencia: ha intentado enviar un mensaje en blanco.',
               messageQueued: 'Advertencia: su mensaje \'MESSAGE\' será enviado cuando se restablezca una conexión.'
-        }       
+        },
+        "pt": {
+              "defaultYourName": "Seu Nome",
+              "defaultYourEmail": "Seu Email",
+              "loggedIn": "Iniciado. Aguarde..",
+              "passwordWrong": "Desculpe, sua senha não está correta.",
+              "passwordStored": "Obrigado, sua senha está agora definida.",
+              "registration": "Obrigado por se registrar. Para confirmar seu endereço de e-mail, enviamos um e-mail com um link, que você deve clicar dentro de um dia.",
+              "badResponse": "Desculpe, a resposta é: ",
+              "more": "Mais",
+              "lostConnection": "Aviso: Esperando uma boa conexão.",
+              "blankMessage": "Aviso: você tentou enviar uma mensagem em branco.",
+              "messageQueued": "Aviso: sua mensagem \'MESSAGE\' será enviada quando uma conexão for restabelecida."
+        }         
     }
 }
 var lang = lsmsg.defaultLanguage;       
