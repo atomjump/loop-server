@@ -143,12 +143,14 @@ class cls_ssshout
 					//Let the user confirm their email address
 			
 					$notify = true;		//Force notifications of this
-			
+					error_log("Notify : " . $notify);
+					
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
 						
 						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
 						error_log($body_message);
+						
 						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
 						
 						
