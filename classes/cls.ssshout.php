@@ -52,6 +52,7 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		global $db;
+		global $notify;
 		
 	 
 	 
@@ -141,9 +142,17 @@ class cls_ssshout
 			
 					//Let the user confirm their email address
 			
+					$notify = true;		//Force notifications of this
+			
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
-						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['email']['webmasterEmail']);
+						
+						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
+						error_log($body_message);
+						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
+						
+						
+						//($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 						
 						
 						$_SESSION['logged-user'] = db_insert_id();
