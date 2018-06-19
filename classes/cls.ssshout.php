@@ -151,7 +151,7 @@ class cls_ssshout
 						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
 						error_log($body_message);
 						
-						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
+						cc_mail_direct($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
 						
 						
 						//($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
@@ -162,7 +162,7 @@ class cls_ssshout
 					}
 					
 					//Let me know there is a new user
-					cc_mail($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
+					cc_mail_direct($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
 				
 					return db_insert_id();
 			
