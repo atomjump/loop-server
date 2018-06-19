@@ -1031,6 +1031,9 @@ class cls_login
 	
 	public function email_confirm($code)
 	{
+		global $msg;
+		global $lang;
+	
 		$sql = "SELECT * FROM tbl_user WHERE var_confirmcode = '" . clean_data($code) . "'";
 		
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
