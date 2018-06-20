@@ -4,32 +4,31 @@ var lsmsg = {
     "defaultLanguage" : "en",
     "msgs": {
         "en":{
-              defaultYourName: 'Your Name',
-              defaultYourEmail: 'Your Email',
-              loggedIn: 'Logged in. Please wait..',
-              passwordWrong: 'Sorry, your password is not correct.',
-              passwordStored: 'Thanks, your password is now set.',
-              registration: 'Thanks for registering.  To confirm your email address we\'ve sent an email with a link in it, which you should click within a day.',
-              badResponse: 'Sorry, response is: ',
-              more: 'More',
-              lostConnection: 'Warning: Waiting for a good connection.',
-              blankMessage: 'Warning: you tried to send a blank message.',
-              messageQueued: 'Warning: your message \'MESSAGE\' will be sent when a connection is re-established.'
-              
+              "defaultYourName": "Your Name",
+              "defaultYourEmail" : "Your Email",
+              "loggedIn": "Logged in. Please wait..",
+              "passwordWrong": "Sorry, your password is not correct.",
+              "passwordStored": "Thanks, your password is now set.",
+              "registration": "Thanks for registering.  To confirm your email address we've sent an email with a link in it, which you should click within a day.",
+              "badResponse": "Sorry, response is: ",
+              "more": "More",
+              "lostConnection": "Warning: Waiting for a good connection.",
+              "blankMessage": "Warning: you tried to send a blank message.",
+              "messageQueued": "Warning: your message 'MESSAGE' will be sent when a connection is re-established."           
         },
         "es":{
-              defaultYourName: 'Tu Nombre',
-              defaultYourEmail: 'Su e-mail',
-              loggedIn: 'Conectado Por favor, espere..',
-              passwordWrong: 'Lo siento, la contraseña no es correcta.',
-              passwordStored: 'Gracias, su contraseña se establece ahora.',
-              registration: 'Gracias por registrarse. Para confirmar su dirección de correo electrónico que\'ve enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.',
-              badResponse: 'Lo siento, la respuesta es: ',
-              more: 'Mas',
-              lostConnection: 'Advertencia: Esperando una buena conexión.',
-              blankMessage: 'Advertencia: ha intentado enviar un mensaje en blanco.',
-              messageQueued: 'Advertencia: su mensaje \'MESSAGE\' será enviado cuando se restablezca una conexión.'
-        },
+              "defaultYourName": "Tu Nombre",
+              "defaultYourEmail": "Su e-mail",
+              "loggedIn": "Conectado Por favor, espere..",
+              "passwordWrong": "Lo siento, la contraseña no es correcta.",
+              "passwordStored": "Gracias, su contraseña se establece ahora.",
+              "registration": "Gracias por registrarse. Para confirmar su dirección de correo electrónico que've enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.",
+              "badResponse": "Lo siento, la respuesta es: ",
+              "more": "Mas",
+              "lostConnection": "Advertencia: Esperando una buena conexión.",
+              "blankMessage": "Advertencia: ha intentado enviar un mensaje en blanco.",
+              "messageQueued": "Advertencia: su mensaje 'MESSAGE' será enviado cuando se restablezca una conexión."
+        }, 
         "pt": {
               "defaultYourName": "Seu Nome",
               "defaultYourEmail": "Seu Email",
@@ -41,8 +40,8 @@ var lsmsg = {
               "more": "Mais",
               "lostConnection": "Aviso: Esperando uma boa conexão.",
               "blankMessage": "Aviso: você tentou enviar uma mensagem em branco.",
-              "messageQueued": "Aviso: sua mensagem \'MESSAGE\' será enviada quando uma conexão for restabelecida."
-        }         
+              "messageQueued": "Aviso: sua mensagem 'MESSAGE' será enviada quando uma conexão for restabelecida."
+        }      
     }
 }
 var lang = lsmsg.defaultLanguage;       
