@@ -372,7 +372,7 @@
 		global $process_parallel;
 		global $cnf;
 				
-		if($notify == true) {
+		if($notify == true) {		//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
 			$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] .  ' ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . rawurlencode($bcc_email) . ' > /dev/null 2>&1 &';	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
 						
 			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
@@ -484,13 +484,20 @@
 
 	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
-		if($cnf['email']['sending']['use'] == 'mailgun') {
+		global $notify;			//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
 		
-			return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
-		} else {
-			//A generic SMTP server
-			return send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+		if($notify == true) {		
+	
+			if($cnf['email']['sending']['use'] == 'mailgun') {
+		
+				return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+			} else {
+				//A generic SMTP server
+				return send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+			}
 		}
+		
+		return false;
 		
 	}
 	

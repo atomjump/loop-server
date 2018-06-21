@@ -142,8 +142,6 @@ class cls_ssshout
 			
 					//Let the user confirm their email address
 			
-					$notify = true;		//Force notifications of this
-					
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
 						
