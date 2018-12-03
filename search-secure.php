@@ -249,67 +249,17 @@
 
 				}
 				
-				function showVid()
-				{
 				
 				
-					var iframe = document.getElementById("video-chat");
-					var roomName = "aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>";
-					if(iOS !== true) {
-						appearin.addRoomToIframe(iframe, roomName);
-					}
-					
-					$('#video-chat-container').slideToggle();
-					return false;
-			
-				}
 				
 				
-				$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(){
-       				 //Monitor exiting
-       				 e = document.getElementById("video-chat-container");
-       				 if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
-       				 	$('#video-chat-container').width(screen.width);
-						$('#video-chat-iframe-container').width("100%");
-						$('#video-chat-iframe-container').height(screen.height - 60);
-       				 } else {
-       				 
-       				 	$('#video-chat-container').width("<?php echo $width ?>px");
-						$('#video-chat-iframe-container').width("<?php echo $width; ?>px");
-					    $('#video-chat-iframe-container').height("<?php echo $maxheight ?>px");
-						
-						window.focus();
-					}
-						
-						//resize to fit the new screen size
-				});
 					
 				
 				
 				
-				function toggleVideoFullScreen()
-				{
-					e = document.getElementById("video-chat-container");
-					
-					if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen") || startedFullScreen == true) {
-												
-						startedFullScreen = false;
-						RunPrefixMethod(document, "CancelFullScreen");					
-						//exit fullscreen
-					
-						//Duplicate of chat.js functionality
-					}
-					else {
-						//start fullscreen						
-						startedFullScreen = true;
-						RunPrefixMethod(e, "RequestFullScreen");
-					}
-				}
 				
 				
 				
-				var appearin;
-				var iOS = false;
 				
 				
 				function switchPublic()
@@ -528,16 +478,17 @@
 		
 		
 		
+	
 		<script>
-    		var ie8 = false;
-		</script>
-
-		<!--[if IE 8]>
-			<script>
-				ie8 = true;
-			</script>
-		<![endif]-->
-		<script>
+		
+			function ieVersion() {
+			  var uaString = window.navigator.userAgent;
+			  uaString = uaString || navigator.userAgent;
+			  var match = /\b(MSIE |Trident.*?rv:|Edge\/)(\d+)/.exec(uaString);
+			  if (match) return parseInt(match[2])
+			}
+		
+		
 			function clearPass()
 			{
 				var ur = "clear-pass.php";
@@ -567,56 +518,20 @@
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
-				function vidiOS()
-				{
-					//Show the iphone download
-					$('#video-chat-iframe-container').html("<a href='https://itunes.apple.com/no/app/appear.in-free-group-video/id878583078?mt=8' target=\"_parent\"><img alt='Get it on the Apple Appstore' src=\"https://atomjump.com/images/applestore_135x40.svg\" width=\"135\" height=\"40\" style=\"margin:10px;\" border=\"0\"></a></br><div style=\"color: white; margin:10px; \">Then enter the forum <span style=\"white-space: nowrap;\">'aj-<?php echo $_REQUEST['uniqueFeedbackId'] ?>'</span> in the appear.in app.</div>");
-				}
 				
-				function vidDeactivateIE8()
-				{
-					$('#video-button').hide();
-				}
+				
 					
 			
-				function decideVideo()
-				{
-					//Appear.in
-					var AppearIn = window.AppearIn;
-					appearin = new AppearIn();		//Set global
-					
-					var isWebRtcCompatible = appearin.isWebRtcCompatible();
-					if(isWebRtcCompatible == true) {
-					
-					} else {
-						iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
-						if(iOS == false) {
-														
-							
-							vidDeactivate();
-						} else {
-							//we want iOS to still popup with the app version
-							vidiOS();
-						}
-						
-					}
 				
-				}
 			
 			
 				$(document).ready(function(){
-					if(ie8 == false) {
-						//For future development, any js video libraries:
-						/*jQuery.getScript( "//developer.appear.in/scripts/appearin-sdk.0.0.4.min.js", function() { 
-							decideVideo();
-						});*/
-					} else {
 					
-						vidDeactivateIE8();
+					
+					if(ieVersion() <= 11) {
+						//In other words all versions of IE, but not Edge, which is 12+
+						vidDeactivate();
 					}
-					
-					
-					
 					
 				});
 				
