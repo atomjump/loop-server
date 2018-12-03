@@ -606,9 +606,10 @@
 			
 				$(document).ready(function(){
 					if(ie8 == false) {
-						jQuery.getScript( "//developer.appear.in/scripts/appearin-sdk.0.0.4.min.js", function() { 
+						//For future development, any js video libraries:
+						/*jQuery.getScript( "//developer.appear.in/scripts/appearin-sdk.0.0.4.min.js", function() { 
 							decideVideo();
-						});
+						});*/
 					} else {
 					
 						vidDeactivateIE8();
