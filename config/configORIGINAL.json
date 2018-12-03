@@ -44,6 +44,9 @@
 		  }
 	  }, 
       "adminMachineUser" : "92.27.10.17:1",
+	"video" : {
+		"url": "https://meet.jit.si/AJ-changeme[FORUM]"
+	},
       "email": {
       	 "adminEmail": "your.name@your.company.com",
       	 "webmasterEmail": "your.name@your.company.com",
@@ -183,6 +186,9 @@
 		  }
 	  },
       "adminMachineUser" : "92.27.10.17:1",
+	"video" : {
+		"url": "https://meet.jit.si/[FORUM]"
+	},
       "email": {
       	 "adminEmail": "your.name@your.company.com",
       	 "webmasterEmail": "your.name@your.company.com",
