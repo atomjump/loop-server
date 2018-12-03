@@ -314,7 +314,7 @@
 	echo str_replace("[FORUM]", $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']);
 } else {
 	echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; 
-} ?>" onclick="return false;" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
+} ?>" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 								</div>
 							
 							<?php } else { //No access so far - need to log in with the forum password ?>
