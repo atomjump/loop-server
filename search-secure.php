@@ -388,7 +388,11 @@
 									<button type="submit" id="private-button"  class="btn btn-info" style="margin-bottom:3px; display: none;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
 									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
 									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
-									<a target="_blank" href="<?php if($cnf['video']['url']) {	echo str_replace("[FORUM]", $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']); } else { echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; }" onclick="if(iOS == true) { return false; } else { return true; }; ?>" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
+									<a target="_blank" href="<?php if($cnf['video']['url']) {	
+	echo str_replace("[FORUM]", $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']);
+} else {
+	echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; 
+} ?>" onclick="if(iOS == true) { return false; } else { return true; }; ?>" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a>
 								</div>
 							
 							<?php } else { //No access so far - need to log in with the forum password ?>
