@@ -219,7 +219,7 @@
 			<div id="video-chat-container" style="position: relative; width: <?php echo $width ?>px; margin-left: auto; margin-right: auto; display: none; margin-bottom: 10px; display: none; background-color: #444;">
 				<div id="video-chat-iframe-container" style="width:<?php echo $width; ?>px; height: <?php echo $maxheight ?>px;"><iframe id="video-chat" style="z-index: 1000;" width="100%" height="100%" frameborder="0"></iframe></div>
 				<div style="position: relative; float: right; padding: 5px;  z-index: 5000;"><a href="javascript:" title="<?php echo $msg['msgs'][$lang]['goFullscreen'] ?>" onclick="toggleVideoFullScreen(); return false;"><img src="images/largerscreen.svg"></a></div>
-				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: if($cnf['video']['url']) {	echo str_replace("[FORUM"], $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']); } else { echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; } ?></div> 
+				<div style="position: relative; margin-top: 6px; margin-bottom: 6px; float: right; margin-right: 10px; text-align: right; color: white; opacity: 0.7; background-color: black; padding: 5px;border-radius: 5px; z-index: 5000;">Link: <?php if($cnf['video']['url']) {	echo str_replace("[FORUM"], $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']); } else { echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; } ?></div> 
 				<div style="clear: both; height: 2px;"></div>
 			</div>
 			
