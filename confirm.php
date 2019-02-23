@@ -16,7 +16,7 @@ $ly = new cls_layer();
 if($_REQUEST['usercode']) {
 
 	//Get the layer id
-	$ly->get_layer_id($_REQUEST['passcode']);
+	$ly->get_layer_id($_REQUEST['passcode'], null);
 
 	//Read
 	$json = $lg->get_usercode();
@@ -26,7 +26,7 @@ if($_REQUEST['usercode']) {
 	$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);
 
 	//Confirm this layer
-	$ly->get_layer_id($_REQUEST['passcode']);
+	$ly->get_layer_id($_REQUEST['passcode'], null);
 }
 
 echo $_GET['callback'] . "(" . json_encode($json) . ")";

@@ -24,7 +24,7 @@ if(($_SESSION['logged-user'] != '')&&(isset($_SESSION['logged-user']))) {
 					$layer_visible = $_REQUEST['uniqueFeedbackId'];
 					
 					$ly = new cls_layer();
-					$layer_info = $ly->get_layer_id($layer_visible);
+					$layer_info = $ly->get_layer_id($layer_visible, null);
 					if($layer_info) {
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 					}
