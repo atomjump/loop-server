@@ -1506,6 +1506,14 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				$dest_tz = new DateTimeZone('UTC'); // TODO: Note this is a constant I think.
 				// a download, for now same query
 		  
+		  		if($cnf['delayFeeds']) {
+		  			//This feature allows for a certain number of seconds for a post to be posted before it can appear on any export or feed.
+		  			//It is important for allowing users to delete objectionable content.
+		  			$delay_seconds = $cnf['delayFeeds'];		
+		  			$delay_feed = true;
+		  		} else {
+		  			$delay_feed = false;
+		  		}
 		  
 		  
 				  switch($format) {
@@ -1513,7 +1521,12 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					  	if($last_id == 0) {
 							$last_id = PHP_INT_MAX;
 					  	}
-				 		$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  	if($delay_feed == false) {
+				 			$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+				 		} else {
+				 			$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+				 		
+				 		}
 					break;
 		
 					case "excel":
@@ -1521,7 +1534,13 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					  if($last_id == 0) {
 						$last_id = PHP_INT_MAX;
 					  }
-					  $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  
+					  if($delay_feed == false) {
+					  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  } else {
+					 	$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  
+					  }
 
 					break;
 		
@@ -1529,7 +1548,12 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					   //json
 		
 						//json so forwards
-					   $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+						if($delay_feed == false) {
+					   		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+					   	} else {
+					   		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+					   	
+					   	}
 
 					break;
 				  }

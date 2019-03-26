@@ -21,6 +21,7 @@
       "httpsKey" : null,
       "httpsCert": null,
       "serverTimezone": "America/Los_Angeles",
+      "delayFeeds" : 1200,
       "ips": [
           "127.0.0.1"
       ],
@@ -163,6 +164,7 @@
       "httpsKey" : null,
       "httpsCert": null,
       "serverTimezone": "America/Los_Angeles",
+      "delayFeeds" : 1200,
       "ips": [
           "127.0.0.1"
       ],
