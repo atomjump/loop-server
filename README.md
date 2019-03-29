@@ -344,6 +344,8 @@ To test the web domain, use the following small PHP script:
 
 **fileRoot**: Local file system server's file path. Don't include trailing slash.
 
+**serviceHome**: The homepage of the service as a URL. This is used particularly after resetting a password.
+
 **serverTimezone**: Change this to the location of the physical server eg. Pacific/Auckland
 
 **delayFeeds**: Delays any API or feed download access for this number of seconds. The default is 1200 seconds or 20 minutes.
