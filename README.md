@@ -8,7 +8,7 @@ interface at http://github.com/atomjump/loop
 
 # Requirements
 
-PHP, fully tested on PHP 5.3, 5.5, 7.0 (with curl, php-mbstring, zip, php-xml support added),  
+PHP, fully tested on PHP 5.3, 5.5, 7.0, 7.1 (with curl, php-mbstring, zip, php-xml support added),  
 MySQL 5+, 
 Apache2,  
 Linux server (though a Windows server may be partially functional)  
