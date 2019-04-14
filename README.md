@@ -782,6 +782,6 @@ Contributions are welcome, and they can take the shape of:
 
 # License
 
-This software is open source under the MIT license. Copyright is with AtomJump Ltd. (New Zealand).  You can use this software for any commercial purposes.
+This software is open source under the MIT license. Copyright is with the AtomJump Foundation (New Zealand), a non-profit society.  You can use this software for any commercial purposes.
 
 
