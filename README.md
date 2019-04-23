@@ -8,7 +8,7 @@ interface at http://github.com/atomjump/loop
 
 # Requirements
 
-PHP, fully tested on PHP 5.3, 5.5, 7.0 (with curl, php-mbstring, zip, php-xml support added),  
+PHP, fully tested on PHP 5.3, 5.5, 7.0, 7.1 (with curl, php-mbstring, zip, php-xml support added),  
 MySQL 5+, 
 Apache2,  
 Linux server (though a Windows server may be partially functional)  
@@ -775,13 +775,13 @@ However, to extend performance into larger scale environments, we have released 
 
 Contributions are welcome, and they can take the shape of:
 
-1. Core: Submit github pull requests. We will need to consider whether the feature should be in core, or externally as a plugin.  It is generally a good idea to get in touch with us via our homepage at https://atomjump.com to ensure we are not already working on a similar feature.
+1. Core: Submit github pull requests. We will need to consider whether the feature should be in core, or externally as a plugin.  It is generally a good idea to get in touch with us via our homepage at http://atomjump.org to ensure we are not already working on a similar feature.
 2. Plugins: Develop to the API above, and then publish on the https://atomjump.com/smart.php 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
 3. Translations: We are looking for any translations of the conf/messages.json file from English into your language. We have machine translated Spanish as a first step, but we need help in ensuring this is a good translation, and applying other languages.
 
 
 # License
 
-This software is open source under the MIT license. Copyright is with AtomJump Ltd. (New Zealand).  You can use this software for any commercial purposes.
+This software is open source under the MIT license. Copyright is with the AtomJump Foundation (New Zealand), a non-profit society.  You can use this software for any commercial purposes.
 
 
