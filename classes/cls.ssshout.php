@@ -1141,7 +1141,7 @@ class cls_ssshout
 		
 		
 		//Turn xxx@ into clickable atomjump links
-		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
+		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com ", $my_line);
 			
 			
 		//Check for a payment link					
