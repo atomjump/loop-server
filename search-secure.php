@@ -389,7 +389,8 @@
 										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 									</div>
 									<?php global $cnf;
-										 $admin_user_id = explode(":",$cnf['adminMachineUser']);
+										 error_log("In here");
+										 $admin_user_id = explode(":", $cnf['adminMachineUser']);
 										 error_log("Session ID:" . $_SESSION['logged_user'] . "   Admin user:" . $admin_user_id[1]);
 						
 										 if(($_SESSION['logged_user'])&&($_SESSION['logged_user'] == $admin_user_id[1])) {
