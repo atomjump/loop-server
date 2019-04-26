@@ -1073,7 +1073,7 @@ class cls_login
 			} else {
 				//No password has been entered, so this is a request to subscribe
 				//if($layer_info) {
-					$current_subs = $this->get_subscription_string();
+					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 					$this->add_to_subscriptions($current_subs);			//Do we need $layer_info['int_layer_id'] ??
 				//}
 			
