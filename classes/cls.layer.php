@@ -591,6 +591,8 @@ class cls_login
 	
 	public function add_to_subscriptions($current_subs, $layer = null)
 	{
+		error_log("Current subs:" . $current_subs);
+	
 		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
 		//and add the current user to the subscriptions list
 		$ly = new cls_layer(); 
@@ -603,6 +605,7 @@ class cls_login
 		$whisper_to_site_group = explode(",",$current_subs);
 		$group_user_ids = array();
 		$user_already_subscribed = false;
+		
 		
 		
 		//Search through existing users
@@ -627,9 +630,13 @@ class cls_login
 		if($user_already_subscribed == false) {
 			//Append to the string
 			$current_subs = $current_subs . "," . $new_user_machine;
+			
+			error_log("New subs:" . $current_subs);
 		
 			//And resave the subscriptions
-			$this->update_subscriptions($current_subs, $layer = null);
+			$this->update_subscriptions($current_subs);
+			
+			error_log("Subs updated");
 		}		
 		
 		return;
