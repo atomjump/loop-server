@@ -356,7 +356,7 @@
 								</div>
 								 <div class="form-group">
 		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
-						  					<input oninput="if(this.value) { $('#save-button').html('<?php if($msg['msgs'][$lang]['subscribeSettingsButton']) {
+						  					<input oninput="if(this.value.length > 1) { $('#save-button').html('<?php if($msg['msgs'][$lang]['subscribeSettingsButton']) {
 		 echo $msg['msgs'][$lang]['subscribeSettingsButton']; 
 		} else { 
 			echo $msg['msgs'][$lang]['saveSettingsButton'];
