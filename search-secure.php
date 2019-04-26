@@ -390,6 +390,7 @@
 									</div>
 									<?php global $cnf;
 										 $admin_user_id = explode(":",$cnf['adminMachineUser']);
+										 error_log("Session ID:" . $_SESSION['logged_user'] . "   Admin user:" . $admin_user_id[1]);
 						
 										 if(($_SESSION['logged_user'])&&($_SESSION['logged_user'] == $admin_user_id[1])) {
 										 	//Show a set forum password option ?>
