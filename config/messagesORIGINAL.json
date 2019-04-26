@@ -114,6 +114,8 @@
             "privateOwnersReasonExtended": "A list of the user's email addresses who see the private messages, separated by commas eg. hello@atomjump.com,info@atomjump.com. After entering you will see E.g. 92.27.10.17:62,92.27.10.17:7, which are the user's ids",
             "privateOwnersEnter": "Enter your user's emails",
             "saveSettingsButton": "Save Settings",
+            "subscribeSettingsButton": "Subscribe",
+            "loginSettingsButton": "Login",
             "tip": "Tip: Click a person's name to talk privately to them.",
             "getYourOwn": "Get your own <a target=\"_blank\" href=\"http:\/\/atomjump.com\">AtomJump Loop</a> widget.",
             "uploadTitle" : "Upload",
