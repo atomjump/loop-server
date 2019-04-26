@@ -589,6 +589,53 @@ class cls_login
 	
 	}
 	
+	public function add_to_subscriptions($current_subs, $layer = null)
+	{
+		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
+		//and add the current user to the subscriptions list
+		$ly = new cls_layer(); 
+		$ip = $ly->getFakeIpAddr();  //get new user's ip address
+		$new_user_machine = $ip . ":" . $_SESSION['logged-user'];
+		
+		$sh = new cls_ssshout(); 
+		
+		//Check the default site whispering
+		$whisper_to_site_group = explode(",",$current_subs);
+		$group_user_ids = array();
+		$user_already_subscribed = false;
+		
+		
+		//Search through existing users
+		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
+				$user_id = $sh->new_user($email, $ip, null, true);
+				$user_machine = $ip . ":" . $user_id;
+				
+			}
+			
+			$whisper_to_divided = explode(":",$user_machine);
+			if($new_user_machine == $user_id) {
+				$user_already_subscribed = true;
+			}
+		}	
+		
+		if($user_already_subscribed == false) {
+			//Append to the string
+			$current_subs = $current_subs . "," . $new_user_machine;
+		
+			//And resave the subscriptions
+			$this->update_subscriptions($current_subs, $layer = null);
+		}		
+		
+		return;
+	
+	}
+	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
 		if(!$layer) {
@@ -875,7 +922,7 @@ class cls_login
 	    
 	    }
 	    
-	    //Check if this is saving the passcode - we need to be a group owner to do this.
+	    //Check if this is saving the passcode - we need to be a TODO sysadmin user (old: group owner) to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
     
 	    	$ly = new cls_layer();
@@ -1016,6 +1063,13 @@ class cls_login
 			
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
+			} else {
+				//No password has been entered, so this is a request to subscribe
+				//if($layer_info) {
+					$current_subs = $this->get_subscription_string();
+					$this->add_to_subscriptions($current_subs);			//Do we need $layer_info['int_layer_id'] ??
+				//}
+			
 			}
 			
 			
