@@ -629,7 +629,11 @@ class cls_login
 		
 		if($user_already_subscribed == false) {
 			//Append to the string
-			$current_subs = $current_subs . "," . $new_user_machine;
+			if($current_subs != "") {
+				$current_subs = $current_subs . "," . $new_user_machine;
+			} else {
+				$current_subs = $new_user_machine;
+			}
 			
 			error_log("New subs:" . $current_subs);
 		
