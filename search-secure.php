@@ -391,9 +391,9 @@
 									<?php global $cnf;
 										 error_log("In here");
 										 $admin_user_id = explode(":", $cnf['adminMachineUser']);
-										 error_log("Session ID:" . $_SESSION['logged_user'] . "   Admin user:" . $admin_user_id[1]);
+										 error_log("Session ID:" . $_SESSION['logged-user'] . "   Admin user:" . $admin_user_id[1]);
 						
-										 if(($_SESSION['logged_user'])&&($_SESSION['logged_user'] == $admin_user_id[1])) {
+										 if(($_SESSION['logged_user'])&&($_SESSION['logged-user'] == $admin_user_id[1])) {
 										 	//Show a set forum password option ?>
 										<div id="set-forum-password-form" class="form-group" style="display:none;">
 											<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span></div>
