@@ -396,6 +396,10 @@
 											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
+									<?php } else { ?>
+									 	<input  id="set-forum-password" name="setforumpassword" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
+									 	<input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
+										
 									<?php } ?>
 									<div id="user-id-show" class="form-group" style="display:none;">
 										<div style="color: red;" id="user-id-show-set"></div>
