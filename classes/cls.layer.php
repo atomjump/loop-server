@@ -638,7 +638,7 @@ class cls_login
 			error_log("New subs:" . $current_subs);
 		
 			//And resave the subscriptions
-			$this->update_subscriptions($current_subs);
+			$this->update_subscriptions($current_subs, $layer);
 			
 			error_log("Subs updated");
 		}		
@@ -1080,7 +1080,7 @@ class cls_login
 				if($layer_info) {
 					//Yes the layer exists
 					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-					$this->add_to_subscriptions($current_subs);			
+					$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id');			
 				}
 			
 			}
