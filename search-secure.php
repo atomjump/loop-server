@@ -118,6 +118,28 @@
 	$_SESSION['view-count'] = 0;
 	
 	
+	//Check if we are subscribed.
+	//Standard setup
+	$subscribe_text = "subscribe";
+	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
+	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . \"" . $subscribe_text . "</a>";
+	
+	$ly = new cls_layer();
+	$layer_info = $ly->get_layer_id($layer_visible);
+	if($layer_info) {
+	    				
+		//Only the owners can do this
+		$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
+		if($isowner == true) {	
+			//Subscribed already. Show an unsubscribe link
+			$subscribe_text = "unsubscribe";
+			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
+			$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . \"" . $subscribe_text . "</a>";
+		} else {
+			//Not subscribed. Show a subscribe link.
+		}
+	}
+	
 	
 	//Ensure no caching
 	header("Cache-Control: no-store, no-cache, must-revalidate"); // HTTP/1.1
@@ -355,7 +377,7 @@
 							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo urldecode($_COOKIE['your_name']); } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
-		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>,  <span id="subscribe-button"><a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php if($msg['msgs'][$lang]['subscribe']) { echo $msg['msgs'][$lang]['subscribe']; } else { echo "subscribe"; } ?></a></span> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
+		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>,  <span id="subscribe-button"><?php echo $subscribe; ?></a></span> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
 						  					<input oninput="if(this.value.length > 0) { $('#save-button').html('<?php if($msg['msgs'][$lang]['subscribeSettingsButton']) {
 		 echo $msg['msgs'][$lang]['subscribeSettingsButton']; 
 		} else { 
