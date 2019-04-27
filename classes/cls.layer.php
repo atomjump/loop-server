@@ -632,9 +632,9 @@ class cls_login
 				//Append this user to the string
 				if(!$new_subs) {
 					//First on list
-					$new_subs += $user_machine;
+					$new_subs = $new_subs . $user_machine;
 				} else {
-					$new_subs += "," . $user_machine;
+					$new_subs = $new_subs . "," . $user_machine;
 				}
 			}
 		}	
@@ -1177,6 +1177,7 @@ class cls_login
 		if($layer_info) {
 			//Yes the layer exists
 			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+			
 			$this->remove_from_subscriptions($current_subs, $user_id);	
 			return "SUCCESS";		
 		} else {
