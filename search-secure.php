@@ -125,7 +125,7 @@
 	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
-	if($_SESSION['logged-user']) {
+	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
