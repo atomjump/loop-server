@@ -133,7 +133,7 @@
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"alert('confirm.php?uid=" . $_SESSION['logged-user'] . "?unsub=" . $_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		} else {
 			//Not subscribed. Show a subscribe link.
 		}
@@ -514,14 +514,25 @@
 				}
 				
 			
-			  $.get(ur, function(response) { 
-			  		 
-			       $('#clear-password').html(response);
-			       
-			  });
-			  
-			  return false;
-		 }
+				 $.get(ur, function(response) { 
+				  		 
+					   $('#clear-password').html(response);
+					   
+				 });
+				  
+				 return false;
+		 	 }
+		 
+		 	  function unSub(uid, uniqueFeedbackId)
+		 	  {
+		 	  	ur = "confirm.php?uid=" + uid +"&unsub=" + uniqueFeedbackId;
+		 	  	alert(ur);
+		 		$.get(ur, function(response) { 
+				  		 
+					   $('#email-explain').html(response);
+					   
+				 });
+		 	  }
 		
 				function vidDeactivate()
 				{
