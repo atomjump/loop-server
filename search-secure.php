@@ -136,6 +136,7 @@
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		} else {
 			//Not subscribed. Show a subscribe link.
+			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		}
 	}
 	
@@ -526,6 +527,18 @@
 		 	  function unSub(uid, uniqueFeedbackId)
 		 	  {
 		 	  	ur = "confirm.php?uid=" + uid + "&unsub=" + uniqueFeedbackId;
+		 	  	alert(ur);
+		 		$.get(ur, function(response) { 
+				  		 
+					   $('#email-explain').html(response);
+					   $('#email-explain').show();
+					   
+				 });
+		 	  }
+		 	  
+		 	   function sub(uid, uniqueFeedbackId)
+		 	  {
+		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId;
 		 	  	alert(ur);
 		 		$.get(ur, function(response) { 
 				  		 

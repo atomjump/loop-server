@@ -654,15 +654,18 @@ class cls_login
 	
 	}
 	
-	public function add_to_subscriptions($current_subs, $layer = null)
+	public function add_to_subscriptions($current_subs, $layer = null, $new_user_id = null)
 	{
 		error_log("Current subs:" . $current_subs);
 	
 		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
 		//and add the current user to the subscriptions list
+		if(!$new_user_id) {
+			$new_user_id = $_SESSION['logged-user'];
+		}
 		$ly = new cls_layer(); 
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
-		$new_user_machine = $ip . ":" . $_SESSION['logged-user'];
+		$new_user_machine = $ip . ":" . $new_user_id;
 		
 		$sh = new cls_ssshout(); 
 		
@@ -1175,6 +1178,22 @@ class cls_login
 			//Yes the layer exists
 			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 			$this->remove_from_subscriptions($current_subs, $user_id);	
+			return "SUCCESS";		
+		} else {
+			return "FAILURE";
+		}
+	}	
+	
+	public function subscribe($user_id = null, $layer_visible = null)
+	{
+		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
+		//can specify the current user
+		$ly = new cls_layer(); 
+		$layer_info = $ly->get_layer_id($layer_visible);
+		if($layer_info) {
+			//Yes the layer exists
+			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+			$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
 			return "SUCCESS";		
 		} else {
 			return "FAILURE";
