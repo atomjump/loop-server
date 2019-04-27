@@ -127,7 +127,7 @@
 	if($layer_info) {
 	    				
 		//Only the owners can do this
-		$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
+		$isowner = $ly->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
 		if($isowner == true) {	
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";
