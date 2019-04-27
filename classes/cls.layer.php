@@ -583,6 +583,13 @@ class cls_login
 		
 		}
 		
+		if(!$user_group) {
+			//No owners of the group
+			$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = " . $layer_id;
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		
+		}
+		
 			
 		return $str;
 		
@@ -768,9 +775,6 @@ class cls_login
 			//Check each of the users is in the db for this layer - don't do in the public sense. Note: because we only send through group details when sending
 			$this->check_group_intact($group_user_ids, $layer);
 		
-		} else {
-			//A blank subscriber base TODO: does this work?
-			$this->check_group_intact($group_user_ids, $layer);
 		}
 		
 		return;
