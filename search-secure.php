@@ -525,11 +525,12 @@
 		 
 		 	  function unSub(uid, uniqueFeedbackId)
 		 	  {
-		 	  	ur = "confirm.php?uid=" + uid +"&unsub=" + uniqueFeedbackId;
+		 	  	ur = "confirm.php?unsub=true&uid=" + uid + "&unsub=" + uniqueFeedbackId;
 		 	  	alert(ur);
 		 		$.get(ur, function(response) { 
 				  		 
 					   $('#email-explain').html(response);
+					   $('#email-explain').show();
 					   
 				 });
 		 	  }
