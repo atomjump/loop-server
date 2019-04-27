@@ -355,7 +355,7 @@
 							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo urldecode($_COOKIE['your_name']); } else { echo ''; } ?>" >
 								</div>
 								 <div class="form-group">
-		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
+		 									<div><?php echo $msg['msgs'][$lang]['yourEmail'] ?> <a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>, <span id="subscribe-button"><a href="javascript:" onclick="$('#email-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['yourEmailReason'] ?>"><?php echo $msg['msgs'][$lang]['subscribe'] ?></a></span> <span id="email-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['yourEmailReason'] ?></span></div>
 						  					<input oninput="if(this.value.length > 0) { $('#save-button').html('<?php if($msg['msgs'][$lang]['subscribeSettingsButton']) {
 		 echo $msg['msgs'][$lang]['subscribeSettingsButton']; 
 		} else { 
@@ -389,7 +389,6 @@
 										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 									</div>
 									<?php global $cnf;
-										 error_log("In here");
 										 $admin_user_id = explode(":", $cnf['adminMachineUser']);
 										 error_log("Session ID:" . $_SESSION['logged-user'] . "   Admin user:" . $admin_user_id[1]);
 						
