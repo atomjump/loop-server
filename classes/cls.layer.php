@@ -1153,6 +1153,8 @@ class cls_login
 						$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 						$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
 					}
+				} else {
+					return "FORUM_INCORRECT_PASS";
 				}
 			
 			}
