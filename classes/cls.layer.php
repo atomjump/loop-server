@@ -1006,6 +1006,9 @@ class cls_login
 				return "FORUM_INCORRECT_PASS";
 			}
 	    
+	    } else {
+	    	//Access layer granted
+	    	$_SESSION['access-layer-granted'] = 'true';
 	    }
 	    
 	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.

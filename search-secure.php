@@ -106,10 +106,13 @@
 	
 	//Get the layer info into the session vars
 	$layer_info = $ly->get_layer_id($_REQUEST['uniqueFeedbackId'], null);
-	if(($_SESSION['access-layer-granted'] == 'true') || ($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) { 	//Normal access has been granted
-		 $granted = true;
+	if(isset($layer_info['var_public_code'])) {
+		$granted = false;
+		if($_SESSION['access-layer-granted'] == $layer_info['int_layer_id']) { 	//Normal access has been granted  //OLD: ($_SESSION['access-layer-granted'] == 'true') || 
+		 	$granted = true;
+		}
     } else {
-    	 $granted = false;
+    	 $granted = true;
     }
 	//Get new user in here, and set user IP address in session
 	
