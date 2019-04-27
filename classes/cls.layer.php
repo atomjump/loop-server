@@ -1145,11 +1145,14 @@ class cls_login
 				$_SESSION['logged-user'] = $user_id;
 			} else {
 				//No password has been entered, so this is a request to subscribe
-				$layer_info = $ly->get_layer_id($layer_visible);
-				if($layer_info) {
-					//Yes the layer exists
-					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-					$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+				if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
+					//Make sure we have the forum right password, if it exists
+					$layer_info = $ly->get_layer_id($layer_visible);
+					if($layer_info) {
+						//Yes the layer exists
+						$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+						$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+					}
 				}
 			
 			}
