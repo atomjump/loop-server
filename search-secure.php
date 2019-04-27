@@ -122,7 +122,7 @@
 	//Standard setup
 	$subscribe_text = "subscribe";
 	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
-	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . \"" . $subscribe_text . "</a>";
+	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 	
 	$ly = new cls_layer();
 	$layer_info = $ly->get_layer_id($layer_visible);
@@ -134,7 +134,7 @@
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . \"" . $subscribe_text . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		} else {
 			//Not subscribed. Show a subscribe link.
 		}
