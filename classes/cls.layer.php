@@ -1169,6 +1169,7 @@ class cls_login
 	{
 		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
 		//can specify the current user
+		$ly = new cls_layer(); 
 		$layer_info = $ly->get_layer_id($layer_visible);
 		if($layer_info) {
 			//Yes the layer exists
