@@ -24,7 +24,7 @@ if($_REQUEST['usercode']) {
 } else {
 	if($_REQUEST['unsub']) {
 		//Unsubscribe - just needs an email address and a layer id
-		$json = $lg->unsubscribe($_REQUEST['uid'], $_REQUEST['passcode']);
+		$json = $lg->unsubscribe($_REQUEST['uid'], $_REQUEST['unsub']);
 	} else {
 		//Confirm email/password
 		$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);
