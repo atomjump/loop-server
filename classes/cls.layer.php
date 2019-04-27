@@ -583,7 +583,7 @@ class cls_login
 		
 		}
 		
-		if(!$user_group) {
+		if(!$user_group[0]) {
 			//No owners of the group
 			$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = " . $layer_id;
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
