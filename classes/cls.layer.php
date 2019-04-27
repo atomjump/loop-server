@@ -583,7 +583,6 @@ class cls_login
 		
 		}
 		
-		error_log("Owners? " . sizeof($user_group));
 		if(sizeof($user_group) == 0) {
 			//No owners of the group
 			$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = " . $layer_id;
@@ -598,9 +597,7 @@ class cls_login
 	}
 	
 	public function remove_from_subscriptions($current_subs, $remove_user_id = null)
-	{
-		error_log("Current subs:" . $current_subs);
-	
+	{	
 		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
 		//and remove the current user from the subscriptions list
 		if(!$remove_user_id) {
@@ -648,14 +645,9 @@ class cls_login
 		}	
 		
 		if($updated == true) {
-			
-			
-			error_log("New subs:" . $new_subs);
-		
+					
 			//And resave the subscriptions
 			$this->update_subscriptions($new_subs, $layer);
-			
-			error_log("Subs updated");
 		}		
 		
 		return $new_subs;
@@ -664,7 +656,6 @@ class cls_login
 	
 	public function add_to_subscriptions($current_subs, $layer = null, $new_user_id = null)
 	{
-		error_log("Current subs:" . $current_subs);
 	
 		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
 		//and add the current user to the subscriptions list
@@ -714,12 +705,8 @@ class cls_login
 				$current_subs = $new_user_machine;
 			}
 			
-			error_log("New subs:" . $current_subs);
-		
 			//And resave the subscriptions
 			$this->update_subscriptions($current_subs, $layer);
-			
-			error_log("Subs updated");
 		}		
 		
 		return $current_subs;
