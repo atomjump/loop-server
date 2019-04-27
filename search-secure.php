@@ -133,7 +133,7 @@
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"alert('Layer = " . $_REQUEST['uniqueFeedbackId'] . " UserID = " . $_SESSION['logged-user'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		} else {
 			//Not subscribed. Show a subscribe link.
 		}

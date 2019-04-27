@@ -589,6 +589,71 @@ class cls_login
 	
 	}
 	
+	public function remove_from_subscriptions($current_subs, $remove_user_id = null)
+	{
+		error_log("Current subs:" . $current_subs);
+	
+		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
+		//and remove the current user from the subscriptions list
+		if(!$remove_user_id) {
+			$remove_user_id = $_SESSION['logged-user'];
+		}
+		
+		$sh = new cls_ssshout(); 
+		
+		//Check the default site whispering
+		$whisper_to_site_group = explode(",",$current_subs);
+		$group_user_ids = array();
+		
+		$updated = false;
+		$new_subs = "";
+		
+		//Search through existing users
+		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
+				$user_id = $sh->new_user($email, $ip, null, true);
+				$user_machine = $ip . ":" . $user_id;
+				
+			} else {
+			
+				$whisper_to_divided = explode(":",$user_machine);
+				$user_id = $whisper_to_divided[1];
+			}
+			
+			if($remove_user_id == $user_id) {
+				//Don't append this user to the list
+				$updated = true;
+			} else {
+				//Append this user to the string
+				if(!$new_subs) {
+					//First on list
+					$new_subs += $user_machine;
+				} else {
+					$new_subs += "," . $user_machine;
+				}
+			}
+		}	
+		
+		if($updated == true) {
+			
+			
+			error_log("New subs:" . $new_subs);
+		
+			//And resave the subscriptions
+			$this->update_subscriptions($new_subs, $layer);
+			
+			error_log("Subs updated");
+		}		
+		
+		return;
+	
+	}
+	
 	public function add_to_subscriptions($current_subs, $layer = null)
 	{
 		error_log("Current subs:" . $current_subs);
@@ -619,9 +684,12 @@ class cls_login
 				$user_id = $sh->new_user($email, $ip, null, true);
 				$user_machine = $ip . ":" . $user_id;
 				
+			} else {
+			
+				$whisper_to_divided = explode(":",$user_machine);
+				$user_id = $whisper_to_divided[1];
 			}
 			
-			$whisper_to_divided = explode(":",$user_machine);
 			if($new_user_machine == $user_id) {
 				$user_already_subscribed = true;
 			}
@@ -1096,6 +1164,22 @@ class cls_login
 			return "NEW_USER" . $reload . "," .$user_id;
 		}
 	}
+	
+	public function unsubscribe($user_id = null, $layer_visible = null)
+	{
+		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
+		//can specify the current user
+		$layer_info = $ly->get_layer_id($layer_visible);
+		if($layer_info) {
+			//Yes the layer exists
+			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+			$this->remove_from_subscriptions($current_subs, $user_id);	
+			return "SUCCESS";		
+		} else {
+			return "FAILURE";
+		}
+	}	
+
 	
 	public function email_confirm($code)
 	{
