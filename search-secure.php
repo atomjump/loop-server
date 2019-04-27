@@ -125,6 +125,12 @@
 	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
+	if($_SESSION['logged-user']) {
+		//We are logged in, but not a forum owner
+		//Not subscribed. Show a subscribe link.
+		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+	}
+
 	if($layer_info) {
 	    				
 		//Only the owners can do this
@@ -134,11 +140,10 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-		} else {
-			//Not subscribed. Show a subscribe link.
-			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		}
 	}
+	
+
 	
 	
 	//Ensure no caching
