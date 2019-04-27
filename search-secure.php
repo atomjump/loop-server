@@ -123,9 +123,7 @@
 	$subscribe_text = "subscribe";
 	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-	
-	$ly = new cls_layer();
-	$layer_info = $ly->get_layer_id($layer_visible);
+
 	if($layer_info) {
 	    				
 		//Only the owners can do this
