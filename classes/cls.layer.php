@@ -959,6 +959,9 @@ class cls_login
 		//user_id has been added for the app, which doesn't have sessions as such.
 		//Note: if RELOAD doesn't exist, user_id may be in 2nd place
 	
+		$_SESSION['access-layer-granted'] = '';
+		$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+	
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
 	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
@@ -1002,7 +1005,7 @@ class cls_login
 	    
 	    }
 	    
-	    //Check if this is saving the passcode - we need to be a TODO sysadmin user (old: group owner) to do this.
+	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
     
 	    	$ly = new cls_layer();
