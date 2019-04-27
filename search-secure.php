@@ -123,7 +123,7 @@
 	//Standard setup
 	$subscribe_text = "subscribe";
 	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
-	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle();\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html(" . $msg['msgs'][$lang]['subscribeSettingsButton'] . ")\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
 	if($layer_info) {
 	    				
