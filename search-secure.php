@@ -376,7 +376,7 @@
 					<span id="comment-not-signed-in" <?php if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) { ?>style="display: none;"<?php } else { ?>style="display: block;"<?php } ?>><?php echo $msg['msgs'][$lang]['notSignedIn'] ?></span>
 				</div>
 					
-				 <form id="options-frm" class="form" role="form" action="" onsubmit="return set_options_cookie();"  method="POST">
+				 <form id="options-frm" class="form" role="form" action="" onsubmit="$('#subscribe-button').hide(); return set_options_cookie();"  method="POST">
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
