@@ -534,7 +534,7 @@
 		 	  {
 		 	  	ur = "confirm.php?uid=" + uid + "&unsub=" + uniqueFeedbackId;
 		 		$.get(ur, function(response) { 
-				  	 if(response === "(\"FAILURE\")") {
+				  	 if(response.includes("FAILURE") === true) {
 				  	 	$('#email-explain').html("<?php echo $msg['msgs'][$lang]['problemUnsubscribing'] ?>");
 					    $('#email-explain').show();
 				  	 } else { 
@@ -550,9 +550,9 @@
 		 	  
 		 	   function sub(uid, uniqueFeedbackId)
 		 	  {
-		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId;
+		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId + "&fp=" + $("#set-forum-password").val();
 		 		$.get(ur, function(response) { 
-				  	 if(response === "(\"FAILURE\")") {
+				  	 if(response.includes("FAILURE") === true) {
 				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
 					    $('#email-explain').show();
 				  	 } else { 

@@ -27,7 +27,7 @@ if($_REQUEST['usercode']) {
 		$json = $lg->unsubscribe($_REQUEST['uid'], $_REQUEST['unsub']);
 	} else {
 		if($_REQUEST['sub']) {
-			$json = $lg->subscribe($_REQUEST['uid'], $_REQUEST['sub']);
+			$json = $lg->subscribe($_REQUEST['uid'], $_REQUEST['sub'], $_REQUEST['fp']);
 		} else {
 			//Confirm email/password
 			$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);

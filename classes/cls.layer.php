@@ -1182,7 +1182,7 @@ class cls_login
 		}
 	}	
 	
-	public function subscribe($user_id = null, $layer_visible = null)
+	public function subscribe($user_id = null, $layer_visible = null, $forum_password)
 	{
 		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
 		//can specify the current user
@@ -1190,8 +1190,14 @@ class cls_login
 		$layer_info = $ly->get_layer_id($layer_visible);
 		if($layer_info) {
 			//Yes the layer exists
-			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-			return $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
+			if(md5(clean_data($forum_password)) == $layer_info['var_public_code']) {
+				//Correct password
+			
+				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+				return $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
+			} else {
+				return "FAILURE";
+			}
 		} else {
 			return "FAILURE";
 		}
