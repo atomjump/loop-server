@@ -534,7 +534,6 @@
 		 	  {
 		 	  	ur = "confirm.php?uid=" + uid + "&unsub=" + uniqueFeedbackId;
 		 		$.get(ur, function(response) { 
-		 			 alert(response);
 				  	 if(response === "(\"FAILURE\")") {
 				  	 	$('#email-explain').html("<?php echo $msg['msgs'][$lang]['problemUnsubscribing'] ?>");
 					    $('#email-explain').show();
@@ -553,7 +552,6 @@
 		 	  {
 		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId;
 		 		$.get(ur, function(response) { 
-				  	 alert(response);
 				  	 if(response === "(\"FAILURE\")") {
 				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
 					    $('#email-explain').show();
