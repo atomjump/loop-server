@@ -658,7 +658,7 @@ class cls_login
 			error_log("Subs updated");
 		}		
 		
-		return;
+		return $new_subs;
 	
 	}
 	
@@ -722,7 +722,7 @@ class cls_login
 			error_log("Subs updated");
 		}		
 		
-		return;
+		return $current_subs;
 	
 	}
 	
@@ -1189,8 +1189,7 @@ class cls_login
 			//Yes the layer exists
 			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 			
-			$this->remove_from_subscriptions($current_subs, $user_id);	
-			return "SUCCESS";		
+			return $this->remove_from_subscriptions($current_subs, $user_id);	
 		} else {
 			return "FAILURE";
 		}
@@ -1205,8 +1204,7 @@ class cls_login
 		if($layer_info) {
 			//Yes the layer exists
 			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-			$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
-			return "SUCCESS";		
+			return $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
 		} else {
 			return "FAILURE";
 		}

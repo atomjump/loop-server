@@ -534,9 +534,16 @@
 		 	  	ur = "confirm.php?uid=" + uid + "&unsub=" + uniqueFeedbackId;
 		 	  	alert(ur);
 		 		$.get(ur, function(response) { 
-				  		 
-					   $('#email-explain').html(response);
+		 			 alert(response);
+				  	 if(response === "(\"FAILURE\")") {
+				  	 	$('#email-explain').html("Sorry there was a problem unsubscribing. Please try again.");
+					    $('#email-explain').show();
+				  	 } else { 
+				  		
+					   $('#group-users').html(response);
+					   $('#email-explain').html("Successfully unsubscribed.");
 					   $('#email-explain').show();
+					 }
 					   
 				 });
 		 	  }
@@ -546,9 +553,16 @@
 		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId;
 		 	  	alert(ur);
 		 		$.get(ur, function(response) { 
-				  		 
-					   $('#email-explain').html(response);
+				  	 alert(response);
+				  	 if(response === "(\"FAILURE\")") {
+				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
+					    $('#email-explain').show();
+				  	 } else { 
+				  		
+					   $('#group-users').html(response);
+					   $('#email-explain').html("Successfully subscribed.");
 					   $('#email-explain').show();
+					 } 
 					   
 				 });
 		 	  }
