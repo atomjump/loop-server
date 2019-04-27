@@ -140,6 +140,7 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+
 		}
 	}
 	
@@ -542,6 +543,7 @@
 					   $('#group-users').html(response);
 					   $('#email-explain').html("Successfully unsubscribed.");
 					   $('#email-explain').show();
+					   $('#subscribe-button').hide();
 					 }
 					   
 				 });
@@ -560,6 +562,7 @@
 					   $('#group-users').html(response);
 					   $('#email-explain').html("Successfully subscribed.");
 					   $('#email-explain').show();
+					   $('#subscribe-button').hide();
 					 } 
 					   
 				 });
