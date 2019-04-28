@@ -54,8 +54,7 @@ $json = array();
 	}
 	
 	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { 
-									$('#subscribe-button').hide();
-					             	$.get( '" . $root_server_url . "/logout.php', function( data ) { logout(); } );
+					             	$.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } );
 					              });";
 	
 	if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
