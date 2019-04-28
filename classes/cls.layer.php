@@ -526,7 +526,7 @@ class cls_login
 		
 		$subscription_string = $this->get_subscription_string();
 		$subscriber_array = explode(",", $subscription_string);
-		if($subscriber_array) {
+		if($subscriber_array[0]) {
 			$subscriber_count = count($subscriber_array);
 		} else {
 			$subscriber_count = 0;
