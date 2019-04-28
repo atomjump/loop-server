@@ -971,13 +971,15 @@ class cls_login
 		
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
+	    $new_user = false;
 	    
+	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
 	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
 	    
 	    	
-			
+			//This is after a password has been entered for the forum
 			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
 				//We are a new user
 				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
@@ -986,6 +988,8 @@ class cls_login
 			
 				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
 				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+				
+				$new_user = true;
 			}	    
 	    
 	    
@@ -1000,6 +1004,16 @@ class cls_login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+						
+						if($new_user === true) {
+							//And subscribe if we were a new user
+							$layer_info = $ly->get_layer_id($layer_visible);
+							if($layer_info) {
+								//Yes the layer exists
+								$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+								$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+							}
+						}
 					
 						return "FORUM_LOGGED_IN,RELOAD";
 						  	
@@ -1177,18 +1191,15 @@ class cls_login
 				$_SESSION['logged-user'] = $user_id;
 			} else {
 				//No password has been entered, so this is a request to subscribe
-				/*if($layer_info['var_public_code']) {
-					if(!(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code'])) {
-						return "FORUM_INCORRECT_PASS";
+				
+				//Check we're authorised to this layer if it has a password
+				if($layer_info['var_public_code']) {
+					if($_SESSION['access-layer-granted']) {
+							if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+								//Go back and get a password off the user.
+								return "FORUM_INCORRECT_PASS,RELOAD";
+							}
 					}
-				}*/
-				
-				//error_log("Access layer granted:" . $_SESSION['access-layer-granted'] . " Layer id:" . $layer_info['int_layer_id']);
-				
-				if($_SESSION['access-layer-granted']) {
-						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
-							return "FORUM_INCORRECT_PASS,RELOAD";
-						}
 				}
 				
 				//Make sure we have the forum right password, if it exists
