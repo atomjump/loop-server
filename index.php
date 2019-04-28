@@ -88,16 +88,16 @@
 
 
 			} else {
-				//A new passcode
+				//A new passcode, i.e. a new layer
 				$layer_status = "new";
 				$layer_info = array();
 				$layer_info['enm_access'] = 'private';
 				$layer_info['myaccess'] = 'readwrite';
 				$layer = $ly->new_layer($_REQUEST['passcode'], 'public');
 
-				//Given this is a new layer - the first user is the correct user
-				$lg = new cls_login();
-				$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
+				//Old: Given this is a new layer - the first user is the correct user
+				//$lg = new cls_login();
+				//$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
 
 			}
 		}
@@ -147,9 +147,9 @@
 				$layer_info['myaccess'] = 'readwrite';
 				$layer = $ly->new_layer($_REQUEST['passcode'], 'public');
 
-				//Given this is a new layer - the first user is the correct user
-				$lg = new cls_login();
-				$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
+				//Old: Given this is a new layer - the first user is the correct user
+				//$lg = new cls_login();
+				//$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
 
 			}
 		} else {
