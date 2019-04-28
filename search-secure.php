@@ -434,9 +434,7 @@
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
 									<?php } else { ?>
-										<?php //Calculate the number of subscribers of the forum
-											
-										?>
+							
 										<div id="group-users-form" class="form-group" style="display:none;">
 											<div style="padding-top:10px;"><span style="color: red;" id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
 											<input  id="group-users" name="users" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">

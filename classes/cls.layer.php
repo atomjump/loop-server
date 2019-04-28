@@ -1232,8 +1232,16 @@ class cls_login
 		if($layer_info) {
 			//Yes the layer exists
 			if($layer_info['var_public_code']) {
-					if(!(md5(clean_data($forum_password)) == $layer_info['var_public_code'])) {
-						return  "FAILURE";
+					if($forum_password) {
+						if((md5(clean_data($forum_password)) != $layer_info['var_public_code']) {
+							return "FAILURE";
+						}
+					}
+					
+					if($_SESSION['access-layer-granted']) {
+						if($_SESSION['access-layer-granted'] != $layer_info['var_public_code']) {
+							return "FAILURE";
+						}
 					}
 			} 
 			
