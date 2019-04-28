@@ -737,6 +737,8 @@ function refreshLoginStatus()
 			dataType: "jsonp"
 		}).done(function(response) {
 			alert(JSON.stringify(response));
+			$("#subscribe-button").html(", " + response.subscribe);
+			$("#logged-status").html(response.loggedIn);
 		});
 
 }
