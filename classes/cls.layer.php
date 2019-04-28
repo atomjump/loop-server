@@ -1013,10 +1013,21 @@ class cls_login
 	    
 	    }
 	    
-	    //OLD: isset($layer_info['var_public_code'])
-	    	//Access layer granted
-	    //	$_SESSION['access-layer-granted'] = 'true';
-	    //}
+	    //Do a check on the layer access being granted.
+	    if(isset($layer_info['var_public_code'])) {
+	    	//Check this is a valid layer
+	    	$layer_info = $ly->get_layer_id($layer_visible);
+	    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
+	    		//All good to continue
+	    	} else {
+	    		//Sorry, the forum password hasn't been set
+				return "FORUM_INCORRECT_PASS";
+	    	}
+	    	
+	    } else {
+	    	//There is no forum password. Access layer granted by default
+	    	$_SESSION['access-layer-granted'] = 'true';
+	    }
 	    
 	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
