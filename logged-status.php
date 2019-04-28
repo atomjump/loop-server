@@ -62,10 +62,11 @@ $json = array();
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
-	if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
-		$loggedIn .= "style=\"display: none;\" >";
-	} else {
+	if($_SESSION['logged-user']) { 
+		//if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
 		$loggedIn .= "style=\"display: block;\" >";
+	} else {
+		$loggedIn .= "style=\"display: none;\" >";
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['notSignedIn'] . "</span>";
