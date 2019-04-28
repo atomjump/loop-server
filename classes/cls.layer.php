@@ -525,7 +525,7 @@ class cls_login
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
 		
 		$subscription_string = $this->get_subscription_string();
-		$subscriber_array = explode($subscription_string, ",");
+		$subscriber_array = explode(",", $subscription_string);
 		
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $subscription_string,
