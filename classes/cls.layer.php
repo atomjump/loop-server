@@ -963,10 +963,7 @@ class cls_login
 		//
 		//user_id has been added for the app, which doesn't have sessions as such.
 		//Note: if RELOAD doesn't exist, user_id may be in 2nd place
-	
-		$_SESSION['access-layer-granted'] = '';
-		$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-	
+		
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
 	    
