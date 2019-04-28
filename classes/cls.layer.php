@@ -1019,8 +1019,6 @@ class cls_login
 	    	$layer_info = $ly->get_layer_id($layer_visible);
 	    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
 	    		//All good to continue
-	    		$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  		
-				$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 	    	} else {
 	    		//Sorry, the forum password hasn't been set
 				return "FORUM_INCORRECT_PASS";
@@ -1028,7 +1026,9 @@ class cls_login
 	    	
 	    } else {
 	    	//There is no forum password. Access layer granted by default
-	    	$_SESSION['access-layer-granted'] = 'true';
+	    	$layer_info = $ly->get_layer_id($layer_visible);
+	    	$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
+	    	$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 	    }
 	    
 	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
