@@ -56,16 +56,16 @@ $json = array();
 	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { $.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } ); });\" ";
 	
 	if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
-		$loggedIn .= "style=\"display: none;\" >";
-	} else {
 		$loggedIn .= "style=\"display: block;\" >";
+	} else {
+		$loggedIn .= "style=\"display: none;\" >";
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
 	if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
-		$loggedIn .= "style=\"display: block;\" >";
-	} else {
 		$loggedIn .= "style=\"display: none;\" >";
+	} else {
+		$loggedIn .= "style=\"display: block;\" >";
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['notSignedIn'] . "</span>";
