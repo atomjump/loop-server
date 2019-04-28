@@ -972,7 +972,7 @@ class cls_login
 	    
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
-	    if(isset($layer_info['var_public_code'])||(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != ""))) {
+	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
 	    
 	    	
 			
@@ -1011,10 +1011,12 @@ class cls_login
 				return "FORUM_INCORRECT_PASS";
 			}
 	    
-	    } else {
-	    	//Access layer granted
-	    	$_SESSION['access-layer-granted'] = 'true';
 	    }
+	    
+	    //OLD: isset($layer_info['var_public_code'])
+	    	//Access layer granted
+	    //	$_SESSION['access-layer-granted'] = 'true';
+	    //}
 	    
 	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
 	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
