@@ -1023,7 +1023,7 @@ class cls_login
 	    		//All good to continue
 	    	} else {
 	    		//Sorry, the forum password hasn't been set
-				return "FORUM_INCORRECT_PASS";
+				return "FORUM_INCORRECT_PASS,RELOAD";
 	    	}
 	    	
 	    } else {
