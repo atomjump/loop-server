@@ -840,6 +840,8 @@ function set_options_cookie() {
 					toggle = false;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
+					
+					refreshLoginStatus();
 				break;
 				
 				case 'INCORRECT_PASS':		
