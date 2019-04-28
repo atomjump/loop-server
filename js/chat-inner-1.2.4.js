@@ -723,6 +723,24 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 
 
 
+function refreshLoginStatus()
+{
+
+	//Update the display after a login via an AJAX call
+
+	var data = $('#options-frm').serialize();
+
+	 $.ajax({
+			url: ssshoutServer + '/logged-status.php?callback=?', 
+			data: data,
+			crossDomain: true,
+			dataType: "jsonp"
+		}).done(function(response) {
+			alert(JSON.stringify(response));
+		});
+
+}
+
 
 function set_options_cookie() {
 
@@ -800,6 +818,7 @@ function set_options_cookie() {
 					$('#comment-logout-text').show();	//show the correct text 
 					$('#comment-not-signed-in').hide();
 					$('#comment-logout').show();	//show the logout button
+					refreshLoginStatus();
 					
 				break;
 				
@@ -843,6 +862,8 @@ function set_options_cookie() {
 					    $('#comment-logout-text').show();	//show the correct text 
 					    $('#comment-not-signed-in').hide();	
 					}
+					
+					refreshLoginStatus();
 				break;
 				
 				default:
