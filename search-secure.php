@@ -436,7 +436,7 @@
 											
 										?>
 										<div id="group-users-form" class="form-group" style="display:none;">
-											<div><span id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
+											<div style="padding-top:10px;"><span style="color: red;" id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
 											<input  id="group-users" name="users" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 										</div>
 									 	<input  id="set-forum-password" name="setforumpassword" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
