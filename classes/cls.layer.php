@@ -526,12 +526,14 @@ class cls_login
 		
 		$subscription_string = $this->get_subscription_string();
 		$subscriber_array = explode(",", $subscription_string);
-		error_log(print_r($subscriber_array));
+		error_log($subscriber_array[0]);
 		if($subscriber_array[0]) {
 			$subscriber_count = count($subscriber_array);
 		} else {
 			$subscriber_count = 0;
 		}
+		
+		error_log($subscriber_count);
 		
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $subscription_string,
