@@ -1233,6 +1233,7 @@ class cls_login
 			//Yes the layer exists
 			if($layer_info['var_public_code']) {
 					if(isset($forum_password)) {
+						error_log("Forum pass:" . $forum_password .  "  layer code:" .$layer_info['var_public_code']);
 						if(md5(clean_data($forum_password)) != $layer_info['var_public_code']) {
 							return "FAILURE";
 						}
