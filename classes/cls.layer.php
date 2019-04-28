@@ -1177,11 +1177,17 @@ class cls_login
 				$_SESSION['logged-user'] = $user_id;
 			} else {
 				//No password has been entered, so this is a request to subscribe
-				if($layer_info['var_public_code']) {
+				/*if($layer_info['var_public_code']) {
 					if(!(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code'])) {
 						return "FORUM_INCORRECT_PASS";
 					}
-				} 
+				}*/
+				
+				if($_SESSION['access-layer-granted']) {
+						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+							return "FORUM_INCORRECT_PASS";
+						}
+				}
 				
 				//Make sure we have the forum right password, if it exists
 				$layer_info = $ly->get_layer_id($layer_visible);
@@ -1233,13 +1239,11 @@ class cls_login
 			//Yes the layer exists
 			if($layer_info['var_public_code']) {
 					if(isset($forum_password) && $forum_password != "") {
-						error_log("Forum pass:" . $forum_password .  "  layer code:" .$layer_info['var_public_code']);
 						if(md5(clean_data($forum_password)) != $layer_info['var_public_code']) {
 							return "FAILURE";
 						}
 					}
 					
-					error_log("layer granted:" . $_SESSION['access-layer-granted'] .  "  layer code:" .$layer_info['int_layer_id']);
 					if($_SESSION['access-layer-granted']) {
 						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
 							return "FAILURE";
