@@ -1183,11 +1183,11 @@ class cls_login
 					}
 				}*/
 				
-				error_log("Access layer granted:" . $_SESSION['access-layer-granted'] . " Layer id:" . $layer_info['int_layer_id']);
+				//error_log("Access layer granted:" . $_SESSION['access-layer-granted'] . " Layer id:" . $layer_info['int_layer_id']);
 				
 				if($_SESSION['access-layer-granted']) {
 						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
-							return "FORUM_INCORRECT_PASS";
+							return "FORUM_INCORRECT_PASS,RELOAD";
 						}
 				}
 				
