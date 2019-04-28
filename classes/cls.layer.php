@@ -537,7 +537,7 @@ class cls_login
 		
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $subscription_string,
-					"layerUserCount" => count($subscriber_array));
+					"layerUserCount" => $subscriber_count);
 	}
 	
 	
