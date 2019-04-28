@@ -523,8 +523,13 @@ class cls_login
 		//Get a usercode for display
 		$ly = new cls_layer(); 
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
+		
+		$subscription_string = $this->get_subscription_string();
+		$subscriber_array = explode($subscription_string, ",");
+		
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
-					"layerUsers" => $this->get_subscription_string());
+					"layerUsers" => $subscription_string,
+					"layerUserCount" => count($subscriber_array));
 	}
 	
 	

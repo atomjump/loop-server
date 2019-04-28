@@ -604,6 +604,7 @@ $(document).ready(function() {
 							
 						
 							$("#group-users").val(response.layerUsers);
+							$("#group-user-count").val(response.layerUserCount);
 							$("#group-users-form").toggle();
 							$("#set-forum-password-form").toggle();
 						});

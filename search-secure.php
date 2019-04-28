@@ -124,13 +124,14 @@
 	//Check if we are subscribed.
 	$lg = new cls_login();
 	//Standard setup
-	$subscribe_text = "subscribe";
-	if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
+	$subscribe_text = "subscription";
+	if($msg['msgs'][$lang]['subscription']) $subscribe_text = $msg['msgs'][$lang]['subscription'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
 	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
+		$subscribe_text = "subscribe";
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 	}
 
@@ -415,22 +416,29 @@
 									<div style="float: right;">
 						  					<a id="comment-user-code" href="javascript:"><?php echo $msg['msgs'][$lang]['advancedLink'] ?></a>
 						  			</div>
-						  			<div id="group-users-form" class="form-group" style="display:none;">
-										<div><?php echo $msg['msgs'][$lang]['privateOwners'] ?> <a href="javascript:" onclick="$('#users-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['privateOwnersReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="users-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['privateOwnersReasonExtended'] ?></span></div>
-										 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
-									</div>
+						  			
 									<?php global $cnf;
 										 $admin_user_id = explode(":", $cnf['adminMachineUser']);
-										 error_log("Session ID:" . $_SESSION['logged-user'] . "   Admin user:" . $admin_user_id[1]);
 						
 										 if(($_SESSION['logged-user'])&&($_SESSION['logged-user'] == $admin_user_id[1])) {
-										 	//Show a set forum password option ?>
+										 	//Show a set forum password option, and group users form ?>
+										 <div id="group-users-form" class="form-group" style="display:none;">
+											<div><?php echo $msg['msgs'][$lang]['privateOwners'] ?> <a href="javascript:" onclick="$('#users-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['privateOwnersReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="users-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['privateOwnersReasonExtended'] ?></span></div>
+											 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
+										</div>
 										<div id="set-forum-password-form" class="form-group" style="display:none;">
 											<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span></div>
 											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
 									<?php } else { ?>
+										<?php //Calculate the number of subscribers of the forum
+											
+										?>
+										<div id="group-users-form" class="form-group" style="display:none;">
+											<div><span id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
+											<input  id="group-users" name="users" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
+										</div>
 									 	<input  id="set-forum-password" name="setforumpassword" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 									 	<input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										
