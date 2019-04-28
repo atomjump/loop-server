@@ -13,7 +13,7 @@ $lg = new cls_login();
 $ly = new cls_layer();
 
 
-$json = new array();
+$json = array();
 
 	
 	//Check if we are subscribed.
