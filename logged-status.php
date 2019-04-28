@@ -53,9 +53,7 @@ $json = array();
 		$loggedIn = "<div style=\"float: right;\" id=\"comment-logout\" style=\"display: none;\">";
 	}
 	
-	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { 
-					             	$.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } );
-					              });";
+	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { $.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } ); });";
 	
 	if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
 		$loggedIn .= "style=\"display: block;\"";
