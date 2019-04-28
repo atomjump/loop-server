@@ -1015,8 +1015,7 @@ class cls_login
 	    	//Check this is a valid layer
 	    	$layer_info = $ly->get_layer_id($layer_visible);
 	    	
-	    	error_log("Access layer granted: " . $_SESSION['access-layer-granted'] . "  Layer ID:" . $layer_info['int_layer_id']);
-	    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
+		    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
 	    		//All good to continue
 	    	} else {
 	    		//Sorry, the forum password hasn't been set
