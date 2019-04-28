@@ -1239,9 +1239,9 @@ class cls_login
 						}
 					}
 					
-					error_log("layer granted:" . $_SESSION['access-layer-granted'] .  "  layer code:" .$layer_info['var_public_code']);
+					error_log("layer granted:" . $_SESSION['access-layer-granted'] .  "  layer code:" .$layer_info['int_layer_id']);
 					if($_SESSION['access-layer-granted']) {
-						if($_SESSION['access-layer-granted'] != $layer_info['var_public_code']) {
+						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
 							return "FAILURE";
 						}
 					}
