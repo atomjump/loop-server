@@ -1017,6 +1017,8 @@ class cls_login
 	    if(isset($layer_info['var_public_code'])) {
 	    	//Check this is a valid layer
 	    	$layer_info = $ly->get_layer_id($layer_visible);
+	    	
+	    	error_log("Access layer granted: " . $_SESSION['access-layer-granted'] . "  Layer ID:" . $layer_info['int_layer_id']);
 	    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
 	    		//All good to continue
 	    	} else {
