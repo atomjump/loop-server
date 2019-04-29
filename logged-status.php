@@ -26,14 +26,14 @@ $json = array();
 	//Get layer info
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
 
-	if($_SESSION['logged-user']) {		//TODO logged-email??
+	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 	}
 
-	if($layer_info) {
+	if(($layer_info) && $_SESSION['logged-email']) {
 	    				
 		//Only the owners can do this
 		$isowner = $lg->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
