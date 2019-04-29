@@ -973,6 +973,7 @@ class cls_login
 	    $forum_accessed = false;
 	    $new_user = false;
 	    
+	    error_log("Confirm: " . json_encode($full_request));
 	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
@@ -989,7 +990,6 @@ class cls_login
 				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
 				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 				
-				$new_user = true;
 			}	    
 	    
 	    
@@ -1001,19 +1001,9 @@ class cls_login
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
 					
 						//And it is the correct password! Continue below with a login
-						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
-						
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-						if(($new_user === true)  && ($email != "")) {
-							//And subscribe if we were a new user
-							$layer_info = $ly->get_layer_id($layer_visible);
-							if($layer_info) {
-								//Yes the layer exists
-								$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-								$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
-							}
-						}
 					
 						return "FORUM_LOGGED_IN,RELOAD";
 						  	
@@ -1172,16 +1162,17 @@ class cls_login
 			}
 			
 		} else {
-			//Incorrect email - so, this is a new user
+			//Incorrect email - so, this is a new email, or a blank email 
 			$ly = new cls_layer(); 
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 			
 			$sh = new cls_ssshout();
 			
-			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
+			
+			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
 			$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-			
-			
+		
+		
 			//No password already, so presumably we need to store it
 			if($password) {
 				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
@@ -1189,44 +1180,43 @@ class cls_login
 			
 				//Set our session variable
 				$_SESSION['logged-user'] = $user_id;
-			} else {
-				//No password has been entered, so this is a request to subscribe
+			} 
+			
+			//No password has been entered, but we have entered an email, so this is a request to subscribe
+			if(($email != "")&&($password == "")) {
 				error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
-				if($email != "") {
-					//Check we're authorised to this layer if it has a password
-					$layer_info = $ly->get_layer_id($layer_visible);
-					
-					if($layer_info['var_public_code']) {
-						if($_SESSION['access-layer-granted']) {
-								if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
-									//Go back and get a password off the user.
-									return "FORUM_INCORRECT_PASS,RELOAD";
-								}
-						}
-					}
-					
-					//Make sure we have the forum right password, if it exists
-					
-					if($layer_info) {
-						//Yes the layer exists
-						$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-						$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+			
+				//Check we're authorised to this layer if it has a password
+				$layer_info = $ly->get_layer_id($layer_visible);
+				
+				if($layer_info['var_public_code']) {
+					if($_SESSION['access-layer-granted']) {
+							if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+								//Go back and get a password off the user.
+								return "FORUM_INCORRECT_PASS,RELOAD";
+							}
 					}
 				}
-					
-				 
-			
+				
+				//Make sure we have the forum right password, if it exists
+				
+				if($layer_info) {
+					//Yes the layer exists. Add ourselves to the subscription list.
+					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+					$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
+								
+				}
 			}
-			
-			
-			//Handle any plugin generated settings
+		
+			//Handle any plugin generated settings - TODO - should this before the above subscription?
 			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
-        		if(strcmp($returns, "RELOAD") == 0) {
-                		$reload = ",RELOAD";
-            		}
-			
-			
+    		if(strcmp($returns, "RELOAD") == 0) {
+            		$reload = ",RELOAD";
+        		}
+		
+		
 			return "NEW_USER" . $reload . "," .$user_id;
+	
 		}
 	}
 	
