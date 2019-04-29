@@ -1131,7 +1131,7 @@ class cls_login
 					
 					//Set our session variable
 					$_SESSION['logged-user'] = $user_id;
-					
+					$_SESSION['logged-email'] = clean_data($email);	  //This is here to confirm the email matches the logged in
 				
 					
 					//Handle any plugin generated settings
@@ -1218,6 +1218,8 @@ class cls_login
 				
 					//Set our session variable
 					$_SESSION['logged-user'] = $user_id;
+					$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+						
 				} 
 				
 				//Handle any plugin generated settings
