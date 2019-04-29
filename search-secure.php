@@ -135,7 +135,7 @@
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 	}
 
-	if($layer_info) {
+	if(($layer_info)&&($_SESSION['logged-email'] != "")) {
 	    				
 		//Only the owners can do this
 		$isowner = $lg->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
