@@ -29,7 +29,7 @@ var lsmsg = {
               "lostConnection": "Advertencia: Esperando una buena conexión.",
               "blankMessage": "Advertencia: ha intentado enviar un mensaje en blanco.",
               "messageQueued": "Advertencia: su mensaje 'MESSAGE' será enviado cuando se restablezca una conexión.",
-              "subscribed": "You have successfully subscribed."
+              "subscribed": "Te has suscripto satisfactoriamente."
         }, 
         "pt": {
               "defaultYourName": "Seu Nome",
@@ -43,7 +43,7 @@ var lsmsg = {
               "lostConnection": "Aviso: Esperando uma boa conexão.",
               "blankMessage": "Aviso: você tentou enviar uma mensagem em branco.",
               "messageQueued": "Aviso: sua mensagem 'MESSAGE' será enviada quando uma conexão for restabelecida.",
-              "subscribed": "You have successfully subscribed."
+              "subscribed": "Você se inscreveu com sucesso."
         }      
     }
 }
