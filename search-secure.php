@@ -601,10 +601,15 @@
 						vidDeactivate();
 					}
 					
-					refreshLoginStatus();	//Refresh the logged in status
+					
 					
 				});
 				
+				
+				$(window).on('load', function() {
+					//After fully loaded page
+				 	refreshLoginStatus();	//Refresh the logged in status
+				});
 			
 		</script>
 		

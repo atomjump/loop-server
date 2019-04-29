@@ -831,7 +831,7 @@ function set_options_cookie() {
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
 					$('#forumpasscheck').val("");
-					refreshLoginStatus();
+					
 					
 				break;
 				
