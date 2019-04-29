@@ -973,7 +973,7 @@ class cls_login
 	    $forum_accessed = false;
 	    $new_user = false;
 	    
-	    error_log("Confirm: " . json_encode($full_request));
+	    //error_log("Confirm: " . json_encode($full_request));
 	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
@@ -1076,7 +1076,7 @@ class cls_login
 			//Check we're authorised to this layer if it has a password
 			$layer_info = $ly->get_layer_id($layer_visible);
 			
-			error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible . "  Access layer granted:" .$_SESSION['access-layer-granted'] . "   Layer id:" . $layer_info['int_layer_id'] . "  Authenticated layer:" . $_SESSION['authenticated-layer']);
+			//error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible . "  Access layer granted:" .$_SESSION['access-layer-granted'] . "   Layer id:" . $layer_info['int_layer_id'] . "  Authenticated layer:" . $_SESSION['authenticated-layer']);
 			
 			if($layer_info['var_public_code']) {
 				if($_SESSION['access-layer-granted']) {

@@ -739,9 +739,7 @@ function refreshLoginStatus()
 			crossDomain: true,
 			dataType: "jsonp"
 		}).done(function(response) {
-			//alert(JSON.stringify(response));
 			$("#subscribe-button").html(", " + response.subscribe);
-			//alert(JSON.stringify(response.loggedIn));
 			$("#logged-status").html(response.loggedIn);
 		});
 
