@@ -1005,7 +1005,7 @@ class cls_login
 						
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-						if($new_user === true) {
+						if(($new_user === true)  && ($email != "")) {
 							//And subscribe if we were a new user
 							$layer_info = $ly->get_layer_id($layer_visible);
 							if($layer_info) {
