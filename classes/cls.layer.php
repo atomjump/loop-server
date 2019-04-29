@@ -1191,23 +1191,24 @@ class cls_login
 				$_SESSION['logged-user'] = $user_id;
 			} else {
 				//No password has been entered, so this is a request to subscribe
-				
-				//Check we're authorised to this layer if it has a password
-				if($layer_info['var_public_code']) {
-					if($_SESSION['access-layer-granted']) {
-							if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
-								//Go back and get a password off the user.
-								return "FORUM_INCORRECT_PASS,RELOAD";
-							}
+				if($email != "") {
+					//Check we're authorised to this layer if it has a password
+					if($layer_info['var_public_code']) {
+						if($_SESSION['access-layer-granted']) {
+								if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+									//Go back and get a password off the user.
+									return "FORUM_INCORRECT_PASS,RELOAD";
+								}
+						}
 					}
-				}
-				
-				//Make sure we have the forum right password, if it exists
-				$layer_info = $ly->get_layer_id($layer_visible);
-				if($layer_info) {
-					//Yes the layer exists
-					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-					$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+					
+					//Make sure we have the forum right password, if it exists
+					$layer_info = $ly->get_layer_id($layer_visible);
+					if($layer_info) {
+						//Yes the layer exists
+						$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+						$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);			
+					}
 				}
 					
 				 
