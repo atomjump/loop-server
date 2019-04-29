@@ -1024,7 +1024,7 @@ class cls_login
 	    	//Check this is a valid layer
 	    	$layer_info = $ly->get_layer_id($layer_visible);
 	    	
-		    	if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
+		    if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
 	    		//All good to continue
 	    	} else {
 	    		//Sorry, the forum password hasn't been set
@@ -1068,9 +1068,9 @@ class cls_login
 				
 			$sh = new cls_ssshout();
 				
-				
+			$saved_auth_layer = $_SESSION['authenticated-layer'];		//Save any authenticated sessions
 			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
-	    	
+	    	$_SESSION['authenticated-layer'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
 	    	
 				
 			//Check we're authorised to this layer if it has a password
