@@ -14,7 +14,8 @@ var lsmsg = {
               "more": "More",
               "lostConnection": "Warning: Waiting for a good connection.",
               "blankMessage": "Warning: you tried to send a blank message.",
-              "messageQueued": "Warning: your message 'MESSAGE' will be sent when a connection is re-established."           
+              "messageQueued": "Warning: your message 'MESSAGE' will be sent when a connection is re-established.",
+              "subscribed": "You have successfully subscribed."           
         },
         "es":{
               "defaultYourName": "Tu Nombre",
@@ -27,7 +28,8 @@ var lsmsg = {
               "more": "Mas",
               "lostConnection": "Advertencia: Esperando una buena conexión.",
               "blankMessage": "Advertencia: ha intentado enviar un mensaje en blanco.",
-              "messageQueued": "Advertencia: su mensaje 'MESSAGE' será enviado cuando se restablezca una conexión."
+              "messageQueued": "Advertencia: su mensaje 'MESSAGE' será enviado cuando se restablezca una conexión.",
+              "subscribed": "You have successfully subscribed."
         }, 
         "pt": {
               "defaultYourName": "Seu Nome",
@@ -40,7 +42,8 @@ var lsmsg = {
               "more": "Mais",
               "lostConnection": "Aviso: Esperando uma boa conexão.",
               "blankMessage": "Aviso: você tentou enviar uma mensagem em branco.",
-              "messageQueued": "Aviso: sua mensagem 'MESSAGE' será enviada quando uma conexão for restabelecida."
+              "messageQueued": "Aviso: sua mensagem 'MESSAGE' será enviada quando uma conexão for restabelecida.",
+              "subscribed": "You have successfully subscribed."
         }      
     }
 }
@@ -870,6 +873,12 @@ function set_options_cookie() {
 					}
 					
 					refreshLoginStatus();
+				break;
+				
+				case 'SUBSCRIBED':
+					msg = lsmsg.msgs[lang].subscribed;
+					refreshLoginStatus();
+				
 				break;
 				
 				default:

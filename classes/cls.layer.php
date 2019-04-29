@@ -1061,162 +1061,165 @@ class cls_login
 	    //Get the current layer - use to view 
 		
 
-	    
-	    
-	
-		//First check if the email exists
-		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-		if(($row = db_fetch_array($result))&&($email != ""))
-		{
-			//Email exists
-			
-			//Check if the password already exists
-			$user_id = $row['int_user_id'];
-			if($row['var_pass'] == NULL) {
-				//No password already, so presumably we need to store it
-				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+	    if(($email != "")&&($password == "")) {
+	    	//This is a subscription case: an email has been entered, but no password.
+	    	
+	    	error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
 				
-				//Update phone if necessary too
-				if($phone != "") {
-					//f($phone != "Your Phone") {
-						$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
-						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-				} else {
-						//A blank phone - we want to remove any old phone number
-						$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
-						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-					
-					//}
+			//Check we're authorised to this layer if it has a password
+			$layer_info = $ly->get_layer_id($layer_visible);
+			
+			if($layer_info['var_public_code']) {
+				if($_SESSION['access-layer-granted']) {
+						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+							//Go back and get a password off the user.
+							return "FORUM_INCORRECT_PASS,RELOAD";
+						}
 				}
-				
-				//Set our session variable
-				$_SESSION['logged-user'] = $user_id;
-				
+			}
 			
+			//Make sure we have the forum right password, if it exists
+			
+			if($layer_info) {
+				//Yes the layer exists. Add ourselves to the subscription list.
+				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+				$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
+							
+			}
+			
+			return "SUBSCRIBED";
+	    
+		} else {
+		
+			//A regular login attempt
+		
+			//First check if the email exists
+			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if(($row = db_fetch_array($result))&&($email != ""))
+			{
+				//Email exists
 				
-				//Handle any plugin generated settings
-	        	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                if(strcmp($returns, "RELOAD") == 0) {
-                	$reload = ",RELOAD";
-                }
-				
-				return "STORED_PASS" . $reload . "," .$user_id;
-				
-			} else {
-				//A password already - compare with existing password
-				if(md5($password) == $row['var_pass']) {
-				
-					//Yup, a match - lets sign us in
-				
-					
-				
-					$_SESSION['logged-user'] = $user_id;
-					$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+				//Check if the password already exists
+				$user_id = $row['int_user_id'];
+				if($row['var_pass'] == NULL) {
+					//No password already, so presumably we need to store it
+					$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					//Update phone if necessary too
 					if($phone != "") {
-						
+						//f($phone != "Your Phone") {
 							$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					} else {
 							//A blank phone - we want to remove any old phone number
 							$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+						
+						//}
+					}
+					
+					//Set our session variable
+					$_SESSION['logged-user'] = $user_id;
+					
+				
+					
+					//Handle any plugin generated settings
+			    	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+		            if(strcmp($returns, "RELOAD") == 0) {
+		            	$reload = ",RELOAD";
+		            }
+					
+					return "STORED_PASS" . $reload . "," .$user_id;
+					
+				} else {
+					//A password already - compare with existing password
+					if(md5($password) == $row['var_pass']) {
+					
+						//Yup, a match - lets sign us in
+					
+						
+					
+						$_SESSION['logged-user'] = $user_id;
+						$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+						
+						//Update phone if necessary too
+						if($phone != "") {
+							
+								$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
+								$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+						} else {
+								//A blank phone - we want to remove any old phone number
+								$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
+								$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
+							
+						}
+						
+					
+						//Handle any plugin generated settings
+						$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+						if(strcmp($returns, "RELOAD") == 0) {
+							$reload = ",RELOAD";
+				   
+						}
+											
+						//Get the group user if necessary
+						$this->get_group_user();
+					
+						//Update the group if necessary too 							
+						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+							if($users) {
+								$this->update_subscriptions($users);
+							}
+						}
+						
+						//Normal forum login
+						return "LOGGED_IN" . $reload . "," .$user_id;  
+						
+						
+					
+					} else {
+					
+						//Incorrect password
+						return "INCORRECT_PASS";
 						
 					}
-					
 				
-					//Handle any plugin generated settings
-					$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-					if(strcmp($returns, "RELOAD") == 0) {
-						$reload = ",RELOAD";
-			   
-					}
-										
-					//Get the group user if necessary
-					$this->get_group_user();
 				
-					//Update the group if necessary too 							
-					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-						if($users) {
-							$this->update_subscriptions($users);
-						}
-					}
-					
-					//Normal forum login
-					return "LOGGED_IN" . $reload . "," .$user_id;  
-				    
-					
-				
-				} else {
-				
-					//Incorrect password
-					return "INCORRECT_PASS";
-					
 				}
+				
+			} else {
+				//Incorrect email - so, this is a new email, or a blank email 
+				$ly = new cls_layer(); 
+				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+				
+				$sh = new cls_ssshout();
+				
+				
+				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
+				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 			
 			
+				//No password already, so presumably we need to store it
+				if($password) {
+					$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				
+					//Set our session variable
+					$_SESSION['logged-user'] = $user_id;
+				} 
+				
+				//Handle any plugin generated settings
+				$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
+				if(strcmp($returns, "RELOAD") == 0) {
+		        		$reload = ",RELOAD";
+		    		}
+			
+			
+				return "NEW_USER" . $reload . "," .$user_id;
 			}
-			
-		} else {
-			//Incorrect email - so, this is a new email, or a blank email 
-			$ly = new cls_layer(); 
-			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
-			
-			$sh = new cls_ssshout();
-			
-			
-			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
-			$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-		
-		
-			//No password already, so presumably we need to store it
-			if($password) {
-				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				dbquery($sql) or die("Unable to execute query $sql " . dberror());
-			
-				//Set our session variable
-				$_SESSION['logged-user'] = $user_id;
-			} 
-			
-			//No password has been entered, but we have entered an email, so this is a request to subscribe
-			if(($email != "")&&($password == "")) {
-				error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
-			
-				//Check we're authorised to this layer if it has a password
-				$layer_info = $ly->get_layer_id($layer_visible);
-				
-				if($layer_info['var_public_code']) {
-					if($_SESSION['access-layer-granted']) {
-							if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
-								//Go back and get a password off the user.
-								return "FORUM_INCORRECT_PASS,RELOAD";
-							}
-					}
-				}
-				
-				//Make sure we have the forum right password, if it exists
-				
-				if($layer_info) {
-					//Yes the layer exists. Add ourselves to the subscription list.
-					$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-					$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
-								
-				}
-			}
-		
-			//Handle any plugin generated settings - TODO - should this before the above subscription?
-			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
-    		if(strcmp($returns, "RELOAD") == 0) {
-            		$reload = ",RELOAD";
-        		}
-		
-		
-			return "NEW_USER" . $reload . "," .$user_id;
-	
 		}
 	}
 	
