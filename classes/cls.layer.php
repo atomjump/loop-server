@@ -1071,10 +1071,12 @@ class cls_login
 				
 			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
 	    	
-	    	error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
+	    	
 				
 			//Check we're authorised to this layer if it has a password
 			$layer_info = $ly->get_layer_id($layer_visible);
+			
+			error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible . "  Access layer granted:" .$_SESSION['access-layer-granted'] . "   Layer id:" . $layer_info['int_layer_id']);
 			
 			if($layer_info['var_public_code']) {
 				if($_SESSION['access-layer-granted']) {
