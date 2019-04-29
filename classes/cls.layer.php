@@ -1063,6 +1063,13 @@ class cls_login
 
 	    if(($email != "")&&($password == "")) {
 	    	//This is a subscription case: an email has been entered, but no password.
+	    	$ly = new cls_layer(); 
+			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+				
+			$sh = new cls_ssshout();
+				
+				
+			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
 	    	
 	    	error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
 				
