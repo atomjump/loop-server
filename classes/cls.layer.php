@@ -1191,8 +1191,11 @@ class cls_login
 				$_SESSION['logged-user'] = $user_id;
 			} else {
 				//No password has been entered, so this is a request to subscribe
+				error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible);
 				if($email != "") {
 					//Check we're authorised to this layer if it has a password
+					$layer_info = $ly->get_layer_id($layer_visible);
+					
 					if($layer_info['var_public_code']) {
 						if($_SESSION['access-layer-granted']) {
 								if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
@@ -1203,7 +1206,7 @@ class cls_login
 					}
 					
 					//Make sure we have the forum right password, if it exists
-					$layer_info = $ly->get_layer_id($layer_visible);
+					
 					if($layer_info) {
 						//Yes the layer exists
 						$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
