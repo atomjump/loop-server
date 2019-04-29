@@ -601,6 +601,8 @@
 						vidDeactivate();
 					}
 					
+					refreshLoginStatus();	//Refresh the logged in status
+					
 				});
 				
 			
