@@ -812,7 +812,7 @@ function set_options_cookie() {
 			$('#set-forum-password-form').hide();
 			$('#user-id-show').hide();
 			
-			alert(mytype[0]);		//TEMPORARY TESTING!
+			//alert(mytype[0]);		//TEMPORARY TESTING!
 		
 			switch(mytype[0])
 			{
@@ -835,6 +835,7 @@ function set_options_cookie() {
 					$('#forum-logged-in').show();
 					$('#forumpasscheck').val("");
 					
+					refreshLoginStatus();
 					
 				break;
 				
@@ -856,6 +857,8 @@ function set_options_cookie() {
 				case 'STORED_PASS':
 					msg = lsmsg.msgs[lang].passwordStored;	
 					toggle = true;	
+					
+					refreshLoginStatus();
 				break;
 				
 				case 'NEW_USER':
