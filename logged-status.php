@@ -62,6 +62,7 @@ $json = array();
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
+	error_log("Logged user now:" . $_SESSION['logged-user']);
 	if($_SESSION['logged-user']) { 
 		//if(urldecode($_COOKIE['email']) == $_SESSION['logged-email']) {
 		$loggedIn .= "style=\"display: none;\" >";
