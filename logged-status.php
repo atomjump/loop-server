@@ -23,7 +23,10 @@ $json = array();
 	if($msg['msgs'][$lang]['subscription']) $subscribe_text = $msg['msgs'][$lang]['subscription'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
-	if($_SESSION['logged-email']) {
+	//Get layer info
+	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
+
+	if($_SESSION['logged-user']) {		//TODO logged-email??
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
