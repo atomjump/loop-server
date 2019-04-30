@@ -20,7 +20,7 @@ class cls_layer
  	
  	
 
-	public function get_layer_id($passcode, $reading)
+	public function get_layer_id($passcode, $reading = null)
 	{
 
 		$this->layer_name = $passcode; //store
