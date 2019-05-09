@@ -161,7 +161,7 @@ class php_Session
 								NOW(),
 								'" . $array['session_data'] . "')";
  	          
- 	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+ 	     						$result = dbquery($sql); //  or die("Unable to execute query $sql " . dberror());
         
           } else {
         
@@ -176,7 +176,7 @@ class php_Session
 				session_data ='" . $array['session_data'] . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
 
-			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			 $result = dbquery($sql); //  or die("Unable to execute query $sql " . dberror());
         } // if   NOTE: experimental clean_data()
         
         return TRUE;
