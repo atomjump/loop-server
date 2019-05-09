@@ -51,6 +51,7 @@ class cls_plugin_api {
 	                            $insert_field_data_str)     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . db_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
 	{
 	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
+	    make_writable_db();
 	    $sql = "INSERT INTO " . $table . " " . $insert_field_names_str . " VALUES " . $insert_field_data_str;  
 	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
@@ -90,6 +91,7 @@ class cls_plugin_api {
 	                            $update_set)    //Update set e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields	                          
 	{
 	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
+	    make_writable_db();
 	    $sql = "UPDATE " . $table . " SET " . $update_set;  
 	    dbquery($sql) or die("Unable to execute query $sql " . dberror());
 	    return;
