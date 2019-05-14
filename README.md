@@ -771,6 +771,8 @@ Performance depends on a number of factors. In general, since the Loop Server ca
 
 However, to extend performance into larger scale environments, we have released the NodeJS 'loop-server-fast' plugin at https://www.npmjs.com/package/loop-server-fast.  This aims to scale to thousands, or tens of thousand, simultaneous users per server. You can start by installing the PHP version, and then install the NodeJS version as you expand (you can revert back to the PHP version, also, if you have any issues).
 
+There is also a performance limitation in some cluster installations of MySQL, which may have multi-read but only a single-write database, which can limit the number of simultaneous users posting messages. However, AtomJump Messaging can also work in multi-write database environments to help circumvent this limitation. 
+
 
 # Contributing
 
