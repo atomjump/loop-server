@@ -353,8 +353,8 @@
     				$max_db_attempts = 2;	//Maximum incremental attempts 
 					
 					if($db_total === 1) {
-						 $db_num = 0;
-						$db_inc = false	
+						$db_num = 0;
+						$db_inc = false;
 					} else {
 						$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
 						$db_inc = true;
