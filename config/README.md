@@ -12,8 +12,9 @@ To test the web domain, use the following small PHP script:
 ?>
 ```
 
-**db** **hosts**: there can be any number of db hosts, but the first one is the only write host, while the others are read.
-   We use Amazon MySQL RDS for multiple db hosts.
+**db** **hosts**: there can be any number of db hosts, but some services do not allow multiple write hosts, and in this case the first one is the only write host, while the others are read. You can configure this with the 'singleWriteDb' option.
+
+**db** **singleWriteDb**: 'true' for a single write database, and 'false' for multiple write databases. This option is only applicable if there is more than one database host. Ver >= 1.8.9
    
 **db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
 

@@ -116,6 +116,7 @@
          "hosts": [
             "127.0.0.1"
          ],
+         "singleWriteDb" : true,
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
@@ -131,6 +132,7 @@
 					"yourdb2read3.yourcompany.com",
 					"yourdb2read4.yourcompany.com"
 				 ],
+				 "singleWriteDb" : true, 
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
 				 "port": "3306",
@@ -142,11 +144,12 @@
          	    "labelRegExp": "^ajps_3_",
          	    "name": "ssshout",
 				 "hosts": [
-					"yourdb3write.yourcompany.com",
-					"yourdb3read2.yourcompany.com",
-					"yourdb3read3.yourcompany.com",
-					"yourdb3read4.yourcompany.com"
+					"yourdb3write1.yourcompany.com",
+					"yourdb3write2.yourcompany.com",
+					"yourdb3write3.yourcompany.com",
+					"yourdb3write4.yourcompany.com"
 				 ],
+				 "singleWriteDb" : false, 
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
 				 "port": "3306",

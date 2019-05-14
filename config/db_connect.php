@@ -179,12 +179,13 @@
 		//Live is now on amazon
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
 		$max_db_attempts = 2;	//Maximum incremental attempts 
-		if((isset($db_read_only))&&($db_read_only == true)) { 
+		if(((isset($db_read_only))&&($db_read_only == true))||  //This variable is set by caller scripts in forced read-only situations
+		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) { 		
 				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
 				$db_inc = true;
 			
 		} else {
-			//Only one write db which is aj0
+			//Only one write db which is db 0
 			$db_num = 0;
 			$db_inc = false;
 			
@@ -320,11 +321,13 @@
 	    	global $db_name;
 	    	global $db;
 	    	global $db_cnf;
+	    	global $db_total;
     	
     	
     	
     		//Ensure we don't need this functionality on a staging server - which is always writable, single node
-    		if($staging == true) { 	
+    		
+    		if(($staging == true)||) { 	
     			if($db) {
     				return;
     			} else {
@@ -336,10 +339,41 @@
 					return;
     			}
     		}
-    
+    		
+    	
+    		//A multi-write database also doesn't need reconnection
+    		if(isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false)) {
+    			if($db) {
+    				//Leave the current database
+    				return;
+    			
+    			} else {
+    				//We need to reconnect at this point - it is likely at the end of a session
+    				$max_db_attempts = 2;	//Maximum incremental attempts 
+						
+					$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
+					$db_inc = true;
+					
+					$db_host = $db_cnf['hosts'][$db_num];
+					
+					while((!$db) && ($cnt < $max_db_attempts)) {
+						$db_num ++;
+						if($db_num >= $db_total) $db_num = 0;
+						$cnt++;
+						//Loop through all the other databases and check if any of them are available - to a max number of attempts				
+						$db_host = $db_cnf['hosts'][$db_num];			
+						$db = dbconnect($db_host, $db_username, $db_password);
+					}
+					
+					dbselect($db_name);
+	  				db_set_charset('utf8');
+	  				db_misc();
+					return;
+			}
+			
 
     
-	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
+	    	//Double check we are connected to the master database - which is writable. Note this is single write database specific
 	    	$db_master_host = $db_cnf['hosts'][0];
 	    	if(($db_host != $db_master_host)||(!isset($db))) {
 	    		//Reconnect to the master db to carry out the write operation
