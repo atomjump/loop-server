@@ -6,6 +6,7 @@
          "hosts": [
             "127.0.0.1"
          ],
+         "singleWriteDb" : true,
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
