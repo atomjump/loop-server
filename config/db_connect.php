@@ -341,8 +341,8 @@
     	
     		//Ensure we don't need this functionality on a multi-write server - which is always writable, single node,
     		//or a single database server, or a forced read-only override section of code ($db_read_only)
-    		if(($db_total === 1)
-    		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false)) {
+    		if(($db_total === 1)||
+    		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) {
     			
     			if($db) {
     				//Leave the current database
