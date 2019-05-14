@@ -162,8 +162,22 @@
 	
 		$root_server_url = trim_trailing_slash($cnf['webRoot']);
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
-		$db_inc = false;
-		$staging = true;
+			
+		$db_total = count($db_cnf['hosts']);			//Total number of databases
+		$max_db_attempts = 2;	//Maximum incremental attempts 
+		if(((isset($db_read_only))&&($db_read_only == true))||  //This variable is set by caller scripts in forced read-only situations
+		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) { 		
+				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
+				$db_inc = true;
+			
+		} else {
+			//Only one write db which is db 0
+			$db_num = 0;
+			$db_inc = false;
+			
+		}
+		
+		
 		$db_timezone = $db_cnf['timezone'];
 		
 	} else {
@@ -176,7 +190,7 @@
 		scale_up_horizontally_check($cnf);
 
 		
-		//Live is now on amazon
+		//Live 
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
 		$max_db_attempts = 2;	//Maximum incremental attempts 
 		if(((isset($db_read_only))&&($db_read_only == true))||  //This variable is set by caller scripts in forced read-only situations
@@ -325,24 +339,11 @@
     	
     	
     	
-    		//Ensure we don't need this functionality on a staging server - which is always writable, single node
-    		
-    		if(($staging == true)||) { 	
-    			if($db) {
-    				return;
-    			} else {
-    				//We need to reconnect at this point anyway - it is likely at the end of a session
-					$db = dbconnect($db_host, $db_username, $db_password);
-					dbselect($db_name);
-	  				db_set_charset('utf8');
-	  				db_misc();
-					return;
-    			}
-    		}
-    		
-    	
-    		//A multi-write database also doesn't need reconnection
-    		if(isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false)) {
+    		//Ensure we don't need this functionality on a multi-write server - which is always writable, single node,
+    		//or a single database server, or a forced read-only override section of code ($db_read_only)
+    		if(($db_total === 1)
+    		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) {
+    			
     			if($db) {
     				//Leave the current database
     				return;
@@ -350,9 +351,14 @@
     			} else {
     				//We need to reconnect at this point - it is likely at the end of a session
     				$max_db_attempts = 2;	//Maximum incremental attempts 
-						
-					$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
-					$db_inc = true;
+					
+					if($db_total === 1) {
+						 $db_num = 0;
+						$db_inc = false	
+					} else {
+						$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
+						$db_inc = true;
+					}
 					
 					$db_host = $db_cnf['hosts'][$db_num];
 					
