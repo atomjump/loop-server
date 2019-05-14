@@ -375,6 +375,7 @@
 	  				db_set_charset('utf8');
 	  				db_misc();
 					return;
+				}
 			}
 			
 
