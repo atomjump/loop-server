@@ -231,9 +231,15 @@
 		$db_ssl = null;
 	} 
 	
+	if($db_cnf['port']) {
+		$db_port = $db_cnf['port'];
+	} else {
+		$db_port = null;
+	} 
+	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);	
+	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);	
 			
 	if(!$db) {
 		
@@ -245,7 +251,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $db_cnf['hosts'][$db_num];			
-				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
+				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -384,8 +390,14 @@
 						} else {
 							$db_ssl = null;
 						} 
+
+						if($db_cnf['port']) {
+							$db_port = $db_cnf['port'];
+						} else {
+							$db_port = null;
+						} 
 								
-						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
+						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
 					}
 					
 					dbselect($db_name);
@@ -410,8 +422,14 @@
 				} else {
 					$db_ssl = null;
 				} 
+				
+				if($db_cnf['port']) {
+					$db_port = $db_cnf['port'];
+				} else {
+					$db_port = null;
+				} 
 	    		
-	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
+	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
@@ -712,7 +730,7 @@
 		return $details;
 	}
 	
-	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null)
+	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null, $dbport = 3306)
 	{
 		//Using old style:
 		/*
@@ -736,9 +754,9 @@
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
 						
 			if($dbname) {
-				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname);
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport);
 			} else {
-				return mysqli_real_connect($con,"p:" . $host, $user, $pass);
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport);
 			}
 			
 		} else {
@@ -746,9 +764,9 @@
 			//Normal non-ssl
 		
 			if($dbname) {
-				return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
+				return mysqli_connect("p:" . $host, $user, $pass, $dbname, $dbport);		//p is for persistent connection
 			} else {
-				return mysqli_connect("p:" . $host, $user, $pass);
+				return mysqli_connect("p:" . $host, $user, $pass, null, $dbport);
 			}
 		}
 		
