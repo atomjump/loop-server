@@ -224,9 +224,16 @@
 	$process_parallel_url = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
 	                                            //if this is to be run (currently only works for http servers, not https)
 	
+	if($db_cnf['ssl']) {
+		$db_ssl = json_decode($db_cnf['ssl']);
+	} else {
+		$db_ssl = null;
+	} 
+	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password);			
+	$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);	
+			
 	if(!$db) {
 		
 		if($db_inc == true) {
@@ -237,7 +244,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $db_cnf['hosts'][$db_num];			
-				$db = dbconnect($db_host, $db_username, $db_password);
+				$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -360,6 +367,8 @@
 						$db_inc = true;
 					}
 					
+					
+					
 					$db_host = $db_cnf['hosts'][$db_num];
 					
 					while((!$db) && ($cnt < $max_db_attempts)) {
@@ -367,8 +376,15 @@
 						if($db_num >= $db_total) $db_num = 0;
 						$cnt++;
 						//Loop through all the other databases and check if any of them are available - to a max number of attempts				
-						$db_host = $db_cnf['hosts'][$db_num];			
-						$db = dbconnect($db_host, $db_username, $db_password);
+						$db_host = $db_cnf['hosts'][$db_num];	
+						
+						if($db_cnf['ssl']) {
+							$db_ssl = json_decode($db_cnf['ssl']);
+						} else {
+							$db_ssl = null;
+						} 
+								
+						$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
 					}
 					
 					dbselect($db_name);
@@ -387,7 +403,14 @@
 	    		dbclose();		//close off the current db
 	    		
 	    		$db_host = $db_master_host;
-	    		$db = dbconnect($db_host, $db_username, $db_password);
+	    		
+	    		if($db_cnf['ssl']) {
+					$db_ssl = json_decode($db_master_host['ssl']);
+				} else {
+					$db_ssl = null;
+				} 
+	    		
+	    		$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
@@ -688,16 +711,43 @@
 		return $details;
 	}
 	
-	function dbconnect($host, $user, $pass, $dbname = null)
+	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null)
 	{
 		//Using old style:
 		/*
 			mysql_connect($host, $user, $pass);
 		*/
-		if($dbname) {
-			return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
+		
+		/*
+			$mysqli->options(MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+			$mysqli->ssl_set(NULL, NULL, "/etc/ssl/certs/ca-bundle.crt", NULL, NULL);
+			
+			mysqli_ssl_set
+	
+		*/
+		
+		if(($ssldetails) && (isset($ssldetails['use'])) && ($ssldetails['use'] === true)) {
+			//SSL connection
+			$con = mysqli_init();
+			if (!$con) return false;
+
+			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
+			
+			if($dbname) {
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname);
+			} else {
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass);
+			}
+			
 		} else {
-			return mysqli_connect("p:" . $host, $user, $pass);
+		
+			//Normal non-ssl
+		
+			if($dbname) {
+				return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
+			} else {
+				return mysqli_connect("p:" . $host, $user, $pass);
+			}
 		}
 		
 	}

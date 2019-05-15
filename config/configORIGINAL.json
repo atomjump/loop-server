@@ -11,8 +11,15 @@
          "pass": "yourDBpassword",
          "port": "3306",
          "timezone": "EDT",
-         "deleteDeletes": true
-      },
+         "deleteDeletes": true,
+         "ssl" : {
+         	"use" : false,
+         	"key" : "",
+         	"cert" : "",
+         	"cacert": "",
+         	"capath": ""
+         }
+      },	
       "webRoot": "http://127.0.0.1/loop-server-staging",
       "webDomain": "127.0.0.1",
       "fileRoot": "/var/www/html/loop-server-staging",
