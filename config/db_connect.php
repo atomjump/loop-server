@@ -737,6 +737,8 @@
 
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
 			
+			error_log("finished ssl set");
+			
 			if($dbname) {
 				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname);
 			} else {
