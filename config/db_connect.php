@@ -732,7 +732,7 @@
 			$con = mysqli_init();
 			if (!$con) return false;
 		
-			mysqli_options ($db, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+			mysqli_options ($con, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
 						
 			if($dbname) {
