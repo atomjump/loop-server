@@ -224,8 +224,9 @@
 	$process_parallel_url = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
 	                                            //if this is to be run (currently only works for http servers, not https)
 	
+
 	if($db_cnf['ssl']) {
-		$db_ssl = json_decode($db_cnf['ssl'], true);
+		$db_ssl = $db_cnf['ssl'];
 	} else {
 		$db_ssl = null;
 	} 
@@ -379,7 +380,7 @@
 						$db_host = $db_cnf['hosts'][$db_num];	
 						
 						if($db_cnf['ssl']) {
-							$db_ssl = json_decode($db_cnf['ssl'], true);
+							$db_ssl = $db_cnf['ssl'];
 						} else {
 							$db_ssl = null;
 						} 
@@ -405,7 +406,7 @@
 	    		$db_host = $db_master_host;
 	    		
 	    		if($db_cnf['ssl']) {
-					$db_ssl = json_decode($db_master_host['ssl'], true);
+					$db_ssl = $db_master_host['ssl'];
 				} else {
 					$db_ssl = null;
 				} 
