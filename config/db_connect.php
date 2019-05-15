@@ -750,13 +750,13 @@
 			$con = mysqli_init();
 			if (!$con) return false;
 		
-			mysqli_options ($con, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+			//mysqli_options ($con, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
 						
 			if($dbname) {
-				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport);
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
 			} else {
-				return mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport);
+				return mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
 			}
 			
 		} else {
