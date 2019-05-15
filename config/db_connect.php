@@ -726,6 +726,7 @@
 	
 		*/
 		
+		error_log(json_encode($ssldetails));		//TESTING
 		if(($ssldetails) && (isset($ssldetails['use'])) && ($ssldetails['use'] === true)) {
 			//SSL connection
 			$con = mysqli_init();
