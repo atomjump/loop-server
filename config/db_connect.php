@@ -727,18 +727,13 @@
 	
 		*/
 		
-		error_log(json_encode($ssldetails));		//TESTING
 		if(($ssldetails) && (isset($ssldetails['use'])) && ($ssldetails['use'] === true)) {
 			//SSL connection
 			$con = mysqli_init();
 			if (!$con) return false;
-			
-			error_log("SSL ca path: " .  $ssldetails['capath']);
-
+		
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
-			
-			error_log("finished ssl set");
-			
+						
 			if($dbname) {
 				return mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname);
 			} else {
