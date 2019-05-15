@@ -732,6 +732,8 @@
 			//SSL connection
 			$con = mysqli_init();
 			if (!$con) return false;
+			
+			error_log("SSL ca path: " .  $ssldetails['capath']);
 
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'],NULL);
 			
