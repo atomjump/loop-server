@@ -264,5 +264,8 @@ CREATE INDEX ordered_ssshout_full ON tbl_ssshout (enm_active, int_layer_id, date
 CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip, int_author_id, int_whisper_to_id);
 
 
+
+ALTER TABLE tbl_layer_subscription ADD PRIMARY KEY(int_layer_id, int_user_id);
+
 -- This is no longer used and only confuses issues
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
