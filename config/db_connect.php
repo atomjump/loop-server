@@ -233,7 +233,7 @@
 	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);	
+	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);	
 			
 	if(!$db) {
 		
@@ -245,7 +245,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $db_cnf['hosts'][$db_num];			
-				$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
+				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -385,7 +385,7 @@
 							$db_ssl = null;
 						} 
 								
-						$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
+						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
 					}
 					
 					dbselect($db_name);
@@ -411,7 +411,7 @@
 					$db_ssl = null;
 				} 
 	    		
-	    		$db = dbconnect($db_host, $db_username, $db_password, $db_ssl);
+	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl);
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
