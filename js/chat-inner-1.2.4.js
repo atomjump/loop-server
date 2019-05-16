@@ -855,6 +855,7 @@ function set_options_cookie() {
 					msg = lsmsg.msgs[lang].passwordWrong;
 					$('#comment-password-vis').show();
 					toggle = false;
+					refreshLoginStatus();
 				break;
 				
 				case 'STORED_PASS':
@@ -892,12 +893,14 @@ function set_options_cookie() {
 					msg = lsmsg.msgs[lang].subscriptionDenied;
 					$('#comment-password-vis').show();
 					toggle = false;
+					refreshLoginStatus();
 				
 				break;
 				
 				
 				default:
 					msg = lsmsg.msgs[lang].badResponse + response;
+					refreshLoginStatus();
 					toggle = false;
 				break;
 			}
