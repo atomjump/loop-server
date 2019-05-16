@@ -1151,7 +1151,7 @@ class cls_login
 				
 				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
 				if($new_subs === false) {
-					return "FORUM_INCORRECT_PASS";		//TODO: we may want to improve this error message. But this user could not subscribe
+					return "INCORRECT_PASS";		//TODO: we may want to improve this error message. But this user could not subscribe
 														//to this layer.
 				}			
 			}
