@@ -94,6 +94,12 @@
 				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
 					//Override with this database					
 					$db_cnf = $db_cnf['scaleUp'][$cnt];
+					
+					//Check if we have our own unique plugins enabled for this installation
+					if($db_cnf['plugins']) {
+						global $cnf;
+						$cnf['plugins'] = $db_cnf['plugins'];
+					}
 					return;
 				}
 
