@@ -571,6 +571,7 @@ $(document).ready(function() {
 			var screenWidth = $(window).width();
 			var screenHeight = $(window).height();
 			
+			
 			//Recieve from parent
 			if (window.addEventListener) {
 			  window.addEventListener('message', function (e) {
@@ -584,8 +585,12 @@ $(document).ready(function() {
 			}	
 			
 			
+			
 			//File upload
 			$('input[type=file]').on('change', prepareUpload);
+			
+			
+			refreshLoginStatus();
 			
 			ssshoutHasFocus = true;
 			doLoop();
