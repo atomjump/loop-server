@@ -540,8 +540,7 @@ class cls_login
 	
 	public function check_group_intact($user_group, $layer_id)		
 	{
-		//Keeps the database in sync with what the webmaster has set in terms of users who listen into the group.  A future step might be to allow
-		//external users to subscribe also
+		//Keeps the database in sync with what the webmaster has set in terms of users who listen into the group. 
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
@@ -674,6 +673,9 @@ class cls_login
 		}
 		$ly = new cls_layer(); 
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
+		
+	
+		
 		$new_user_machine = $ip . ":" . $new_user_id;
 		
 		$sh = new cls_ssshout(); 
@@ -685,6 +687,30 @@ class cls_login
 		
 		
 		
+		//Check that this current user's email has the correct domain e.g. ...@thisdomain.com to be able to be added 
+		//Get details of layer for any domain limits on new users
+		if(!$layer) {
+			if($_SESSION['authenticated-layer']) {
+				$layer = $_SESSION['authenticated-layer'];
+			} else {
+				//No authenticated layer
+				return false;		//TODO: Should this be limited here?
+			}
+		}
+		if($layer) {
+			$layer_info = $ly->get_layer_id($layer);
+			if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
+				//There is a limit on who can subscribe to this forum
+				$email_components = explode("@", $_SESSION['logged-email']);
+				if($email_components[1] === $layer_info['var_subscribers_limit']) {
+					//This is allowable - it is of the correct domain
+				} else {
+					//Use cannot be added - return last state early
+					return false;
+				}	
+			}
+		}
+		
 		//Search through existing users
 		foreach($whisper_to_site_group as $user_machine) {
 			//Check if this is an email address
@@ -693,6 +719,7 @@ class cls_login
 				$email = trim($user_machine);
 				$ly = new cls_layer();
 				$ip = $ly->getFakeIpAddr();
+				
 				$user_id = $sh->new_user($email, $ip, null, true);
 				$user_machine = $ip . ":" . $user_id;
 				
@@ -834,6 +861,21 @@ class cls_login
 		}	
 	}
 	
+	public function is_admin($user_id)
+	{
+		global $cnf;
+		//Check this user is the admin user. Return true if so, and false if not
+		
+		$admin_machine_user = $cnf['adminMachineUser'];
+		$admin_parts = explode(":", $admin_machine_user);
+		
+		//Returns true if this user is the system admin
+		if(($user_id) && ($user_id === $admin_parts[1])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public function get_group_user($layer_id = null)
 	{
@@ -1039,28 +1081,32 @@ class cls_login
 	    }
 	    
 	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
-	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
+	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
     
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    				
-				//Only the owners can do this
-				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
-				if($isowner == true) {	
-						//No password protection already - set it in this case
-						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
-						dbquery($sql) or die("Unable to execute query $sql " . dberror());
-				}
-				
-
+				//No password protection already - set it in this case
+				$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
 			}
 		}
+		
+		//Check if this is saving a domain limitation
+	    if(isset($full_request['subscriberlimit'])&&($full_request['subscriberlimit'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+	    				
+				//Set a domain limitation on email addresses of subscribers
+				$sql = "UPDATE tbl_layer SET var_subscribers_limit = '" . md5(clean_data($full_request['subscriberlimit'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+			}	
 	    
+	   	}
 	    
 	    //Get the current layer - use to view 
-		
-
 	    if(($email != "")&&($password == "")) {
 	    	//This is a subscription case: an email has been entered, but no password.
 	    	$ly = new cls_layer(); 
@@ -1092,8 +1138,12 @@ class cls_login
 			if($layer_info) {
 				//Yes the layer exists. Add ourselves to the subscription list.
 				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-				$this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
-							
+				
+				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
+				if($new_subs === false) {
+					return "FORUM_INCORRECT_PASS";		//TODO: we may want to improve this error message. But this user could not subscribe
+														//to this layer.
+				}			
 			}
 			
 			return "SUBSCRIBED";
@@ -1252,7 +1302,7 @@ class cls_login
 	
 	public function subscribe($user_id = null, $layer_visible = null, $forum_password)
 	{
-		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
+		//Subscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
 		//can specify the current user
 		$ly = new cls_layer(); 
 		$layer_info = $ly->get_layer_id($layer_visible);
@@ -1274,8 +1324,13 @@ class cls_login
 			
 			
 			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
-			return $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
 			
+			$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
+			if($new_subs === false) {
+				return "FAILURE";
+			} else {
+				return $new_subs;
+			}
 		} else {
 			return "FAILURE";
 		}

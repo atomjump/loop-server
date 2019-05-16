@@ -266,7 +266,7 @@ CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_
 
 
 ALTER TABLE tbl_layer_subscription ADD `int_layer_sub_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
-
+ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
 
 
 -- This is no longer used and only confuses issues
