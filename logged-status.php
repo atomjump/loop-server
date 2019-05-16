@@ -67,6 +67,8 @@ $json = array();
 	//Now determine logged in state
 	$loggedIn = "";
 	
+	error_log("Logged email: " . $_SESSION['logged-email'] . "  Logged user:" . $_SESSION['logged-user']);	//TEMPIN
+	
 	if($_SESSION['logged-user']) { 
 		$loggedIn = "<div style=\"float: right;\" id=\"comment-logout\" style=\"display: block;\">";
 	} else {
