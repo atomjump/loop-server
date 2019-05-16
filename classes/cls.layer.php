@@ -697,8 +697,13 @@ class cls_login
 				return false;		//TODO: Should this be limited here?
 			}
 		}
+		error_log("Layer ID:" . $layer);
+	
 		if($layer) {
 			$layer_info = $ly->get_layer_id($layer);
+			
+			error_log("Layer ID:" . $layer . "   Subscribers limit:" . $layer_info['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
+			
 			if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
 				//There is a limit on who can subscribe to this forum
 				$email_components = explode("@", $_SESSION['logged-email']);
@@ -1122,7 +1127,6 @@ class cls_login
 			//Check we're authorised to this layer if it has a password
 			$layer_info = $ly->get_layer_id($layer_visible);
 			
-			//error_log("No pass entered. Request to sub. Email: " . $email . " Layer visible:" . $layer_visible . "  Access layer granted:" .$_SESSION['access-layer-granted'] . "   Layer id:" . $layer_info['int_layer_id'] . "  Authenticated layer:" . $_SESSION['authenticated-layer']);
 			
 			if($layer_info['var_public_code']) {
 				if($_SESSION['access-layer-granted']) {
@@ -1134,7 +1138,6 @@ class cls_login
 			}
 			
 			//Make sure we have the forum right password, if it exists
-			
 			if($layer_info) {
 				//Yes the layer exists. Add ourselves to the subscription list.
 				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
