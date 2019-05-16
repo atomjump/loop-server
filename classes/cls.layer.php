@@ -707,10 +707,10 @@ class cls_login
 				error_log($row);
 				error_log("Layer ID:" . $layer . "   Subscribers limit:" . $row['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
 			
-				if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
+				if((isset($row['var_subscribers_limit'])) && ($row['var_subscribers_limit'] != "")) {
 					//There is a limit on who can subscribe to this forum
 					$email_components = explode("@", $_SESSION['logged-email']);
-					if(($email_components[1]) && ($email_components[1] === $layer_info['var_subscribers_limit'])) {
+					if(($email_components[1]) && ($email_components[1] === $row['var_subscribers_limit'])) {
 						//This is allowable - it is of the correct domain
 					} else {
 						//Use cannot be added - return last state early
