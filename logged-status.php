@@ -28,9 +28,26 @@ $json = array();
 
 	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
-		//Not subscribed. Show a subscribe link.
-		$subscribe_text = "subscribe";
-		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+		//Not subscribed.
+		
+		//Don't show a subscribe link if there is a domain limit, and our email address does not match the right domain
+		$allow_subscription = false;
+		if(isset($layer_info['var_subscribers_limit']) && ($layer_info['var_subscribers_limit'] != "") {
+			$email_components = explode("@", $_SESSION['logged-email']);
+			if(($email_components[1]) && ($email_components[1] === $layer_info['var_subscribers_limit'])) {
+				//Allow this user to subscribe
+				$allow_subscription = true;
+			}
+		} else {
+			//Allow this user to subscribe
+			$allow_subscription = true;
+		}
+		
+		if($allow_subscription == true) {
+			// Show a subscribe link if we can subscribe
+			$subscribe_text = "subscribe";
+			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+		}
 	}
 
 	if(($layer_info) &&($_SESSION['logged-user'] != "")) {
