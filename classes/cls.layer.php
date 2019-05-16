@@ -700,20 +700,26 @@ class cls_login
 		error_log("Layer ID:" . $layer);
 	
 		if($layer) {
-			$layer_info = $ly->get_layer_id($layer);
+			$sql = "SELECT var_subscribers_limit FROM tbl_layer WHERE int_layer_id = " . $layer;
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
+			{
+				error_log($row);
+				error_log("Layer ID:" . $layer . "   Subscribers limit:" . $row['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
 			
-			error_log(json_encode($layer_info));
-			error_log("Layer ID:" . $layer . "   Subscribers limit:" . $layer_info['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
-			
-			if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
-				//There is a limit on who can subscribe to this forum
-				$email_components = explode("@", $_SESSION['logged-email']);
-				if(($email_components[1]) && ($email_components[1] === $layer_info['var_subscribers_limit'])) {
-					//This is allowable - it is of the correct domain
-				} else {
-					//Use cannot be added - return last state early
-					return false;
-				}	
+				if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
+					//There is a limit on who can subscribe to this forum
+					$email_components = explode("@", $_SESSION['logged-email']);
+					if(($email_components[1]) && ($email_components[1] === $layer_info['var_subscribers_limit'])) {
+						//This is allowable - it is of the correct domain
+					} else {
+						//Use cannot be added - return last state early
+						return false;
+					}	
+				}
+			} else {
+				//If we don't have a db connection we should also return
+				return false;
 			}
 		}
 		
