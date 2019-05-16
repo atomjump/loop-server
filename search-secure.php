@@ -430,7 +430,7 @@
 											 <input  id="group-users" name="users" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 											  <div style="padding-top:10px;"><span style="color: red;" id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
 										</div>
-										<div id="subscribers-limit-form" class="form-group" style="display:block;">
+										<div id="subscribers-limit-form" class="form-group" style="display:none;">
 											<div><?php echo $msg['msgs'][$lang]['limitSubscribers'] ?> <a href="javascript:" onclick="$('#subscribers-limit-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['limitSubscribersReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="subscribers-limit-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['limitSubscribersReasonExtended'] ?></span></div>
 											 <input  id="subscribers-limit" name="subscriberlimit" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['limitSubscribersEnter'] ?>" value="<?php echo $layer_info['var_subscribers_limit'] ?>">
 										</div>

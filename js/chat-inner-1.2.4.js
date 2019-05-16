@@ -609,6 +609,7 @@ $(document).ready(function() {
 							$("#group-users").val(response.layerUsers);
 							$("#group-user-count").html(response.layerUserCount);
 							$("#group-users-form").toggle();
+							$("#subscribers-limit-form").toggle();
 							$("#set-forum-password-form").toggle();
 						});
 				});
@@ -807,6 +808,7 @@ function set_options_cookie() {
 			
 			//Always hide the advanced section - we need to click to refresh the data 
 			$('#group-users-form').hide();
+			$('#subscribers-limit-form').hide();
 			$('#set-forum-password-form').hide();
 			$('#user-id-show').hide();
 			
@@ -1588,6 +1590,8 @@ function beforeLogout(cb) {
     $('#name-pass').val('');
     
     $('#group-users-form').hide();
+    $('#subscribers-limit-form').hide();
+    
 	$('#set-forum-password-form').hide();
 	$('#user-id-show').hide();
 
