@@ -32,7 +32,7 @@ $json = array();
 		
 		//Don't show a subscribe link if there is a domain limit, and our email address does not match the right domain
 		$allow_subscription = false;
-		if(isset($layer_info['var_subscribers_limit']) && ($layer_info['var_subscribers_limit'] != "") {
+		if(isset($layer_info['var_subscribers_limit']) && ($layer_info['var_subscribers_limit'] != "")) {
 			$email_components = explode("@", $_SESSION['logged-email']);
 			if(($email_components[1]) && ($email_components[1] === $layer_info['var_subscribers_limit'])) {
 				//Allow this user to subscribe
