@@ -48,7 +48,7 @@ CREATE TABLE `tbl_email` (
   `date_when_received` datetime DEFAULT NULL,
   `var_whisper` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`int_email_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,7 @@ CREATE TABLE `tbl_feed` (
   KEY `date_feed_item` (`date_when_shouted`,`var_unique_id`),
   KEY `layer` (`int_layer_id`,`int_uid_id`),
   KEY `mail` (`int_mail_id`,`int_uid_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +139,7 @@ CREATE TABLE `tbl_search_suggest` (
   `enm_fullscreen` enum('true','false') COLLATE utf8_bin DEFAULT 'false',
   PRIMARY KEY (`int_search_suggest_id`),
   KEY `search_suggest_search` (`var_search_suggest`)
-) ENGINE=MyISAM AUTO_INCREMENT=245082 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=245082 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +198,7 @@ CREATE TABLE `tbl_subdomain` (
   PRIMARY KEY (`int_subdomain_id`),
   KEY `subdomain_search` (`var_owner_string`),
   KEY `subdomain_true_search` (`var_subdomain`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -265,7 +265,9 @@ CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_
 
 
 
-ALTER TABLE tbl_layer_subscription ADD PRIMARY KEY(int_layer_id, int_user_id);
+ALTER TABLE tbl_layer_subscription ADD `int_layer_sub_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+
+
 
 -- This is no longer used and only confuses issues
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
