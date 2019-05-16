@@ -11,6 +11,7 @@ require("classes/cls.ssshout.php");
 
 $lg = new cls_login();
 $ly = new cls_layer();
+$sh = new cls_ssshout();
 
 
 $json = array();
@@ -74,23 +75,27 @@ $json = array();
 	if($_SESSION['logged-user']) { 
 		$loggedIn = "<div style=\"float: right;\" id=\"comment-logout\" style=\"display: block;\">";
 		
-		
+		if($_SESSION['logged-email'] == '') {
+			//At this stage we should check if this user already exists
+			$user = $sh->check_user_exists($_SESSION['logged-user']);
+			if($user['var_email']) {
+				$_SESSION['logged-email'] = $user['var_email'];
+			}
+		}
 	} else {
 		$loggedIn = "<div style=\"float: right;\" id=\"comment-logout\" style=\"display: none;\">";
 	}
 	
 	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { $.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } ); });\" ";
 	
-	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
-		($_SESSION['logged-user'])) {
+	if((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != "")) {
 		$loggedIn .= "style=\"display: block;\" >";
 	} else {
 		$loggedIn .= "style=\"display: none;\" >";
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
-	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
-		($_SESSION['logged-user'])) {
+	if((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != "")) {
 		$loggedIn .= "style=\"display: none;\" >";
 	} else {
 		$loggedIn .= "style=\"display: block;\" >";

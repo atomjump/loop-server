@@ -43,6 +43,22 @@ class cls_ssshout
 	
 	}
 
+	public function check_user_exists($user_id)
+	{
+		//Check exists, and if so, returns the user record, else return falsee
+		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			
+		if($row = db_fetch_array($result))
+		{
+			 //existing user
+			 return $row;
+		} else {
+			return false;
+		}
+	
+	}
+	
 	
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
 	{
