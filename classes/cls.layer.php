@@ -702,6 +702,7 @@ class cls_login
 		if($layer) {
 			$layer_info = $ly->get_layer_id($layer);
 			
+			error_log(json_encode($layer_info));
 			error_log("Layer ID:" . $layer . "   Subscribers limit:" . $layer_info['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
 			
 			if((isset($layer_info['var_subscribers_limit'])) && ($layer_info['var_subscribers_limit'] != "")) {
