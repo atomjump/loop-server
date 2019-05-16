@@ -15,7 +15,8 @@ var lsmsg = {
               "lostConnection": "Warning: Waiting for a good connection.",
               "blankMessage": "Warning: you tried to send a blank message.",
               "messageQueued": "Warning: your message 'MESSAGE' will be sent when a connection is re-established.",
-              "subscribed": "You have successfully subscribed."           
+              "subscribed": "You have successfully subscribed.",
+              "subscriptionDenied": "Sorry, you are not authorised to subscribe to this forum."           
         },
         "es":{
               "defaultYourName": "Tu Nombre",
@@ -29,7 +30,8 @@ var lsmsg = {
               "lostConnection": "Advertencia: Esperando una buena conexión.",
               "blankMessage": "Advertencia: ha intentado enviar un mensaje en blanco.",
               "messageQueued": "Advertencia: su mensaje 'MESSAGE' será enviado cuando se restablezca una conexión.",
-              "subscribed": "Te has suscripto satisfactoriamente."
+              "subscribed": "Te has suscripto satisfactoriamente.",
+              "subscriptionDenied": "Lo sentimos, no estás autorizado para suscribirte a este foro."
         }, 
         "pt": {
               "defaultYourName": "Seu Nome",
@@ -43,7 +45,8 @@ var lsmsg = {
               "lostConnection": "Aviso: Esperando uma boa conexão.",
               "blankMessage": "Aviso: você tentou enviar uma mensagem em branco.",
               "messageQueued": "Aviso: sua mensagem 'MESSAGE' será enviada quando uma conexão for restabelecida.",
-              "subscribed": "Você se inscreveu com sucesso."
+              "subscribed": "Você se inscreveu com sucesso.",
+              "subscriptionDenied": "Desculpe, você não está autorizado a assinar este fórum."
         }      
     }
 }
@@ -883,6 +886,15 @@ function set_options_cookie() {
 					refreshLoginStatus();
 				
 				break;
+				
+				
+				case 'SUBSCRIPTION_DENIED':
+					msg = lsmsg.msgs[lang].subscriptionDenied;
+					$('#comment-password-vis').show();
+					toggle = false;
+				
+				break;
+				
 				
 				default:
 					msg = lsmsg.msgs[lang].badResponse + response;
