@@ -1100,7 +1100,7 @@ class cls_login
 			if($layer_info) {
 	    				
 				//Set a domain limitation on email addresses of subscribers
-				$sql = "UPDATE tbl_layer SET var_subscribers_limit = '" . md5(clean_data($full_request['subscriberlimit'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				$sql = "UPDATE tbl_layer SET var_subscribers_limit = '" . clean_data($full_request['subscriberlimit']) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
 				dbquery($sql) or die("Unable to execute query $sql " . dberror());
 			}	
 	    
