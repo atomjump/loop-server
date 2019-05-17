@@ -697,15 +697,12 @@ class cls_login
 				return false;		//TODO: Should this be limited here?
 			}
 		}
-		error_log("Layer ID:" . $layer);
 	
 		if($layer) {
 			$sql = "SELECT var_subscribers_limit FROM tbl_layer WHERE int_layer_id = " . $layer;
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			if($row = db_fetch_array($result))
 			{
-				error_log($row);
-				error_log("Layer ID:" . $layer . "   Subscribers limit:" . $row['var_subscribers_limit'] . "  Logged email: " .  $_SESSION['logged-email']);
 			
 				if((isset($row['var_subscribers_limit'])) && ($row['var_subscribers_limit'] != "")) {
 					//There is a limit on who can subscribe to this forum
@@ -1031,7 +1028,6 @@ class cls_login
 	    $forum_accessed = false;
 	    $new_user = false;
 	    
-	    //error_log("Confirm: " . json_encode($full_request));
 	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
