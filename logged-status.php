@@ -16,7 +16,6 @@ $sh = new cls_ssshout();
 
 $json = array();
 
-	error_log("Logged email: " . $_SESSION['logged-email'] . "  Logged user:" . $_SESSION['logged-user']);	//TEMPIN
 
 
 	
@@ -49,8 +48,12 @@ $json = array();
 		
 		if($allow_subscription == true) {
 			// Show a subscribe link if we can subscribe
-			$subscribe_text = "subscribe";
+			$subscribe_text = "subscribe";	
+			if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+		} else {
+			$subscribe_text = "no subscription";  //TODO: $msg['msgs'][$lang]['noSubscription'];
+			$subscribe = $subscribe_text;
 		}
 	}
 
@@ -60,7 +63,7 @@ $json = array();
 		$isowner = $lg->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
 		if($isowner == true) {	
 			//Subscribed already. Show an unsubscribe link
-			$subscribe_text = "unsubscribe";
+			$subscribe_text = "unsubscribe";	
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 
