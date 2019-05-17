@@ -1121,6 +1121,11 @@ class cls_login
 	    //Get the current layer - use to view 
 	    if(($email != "")&&($password == "")) {
 	    	//This is a subscription case: an email has been entered, but no password.
+	    	
+	    	//Log out by default
+	    	$_SESSION['logged-user'] = '';
+	    	$_SESSION['logged-email'] = '';
+	    	
 	    	$ly = new cls_layer(); 
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 				
