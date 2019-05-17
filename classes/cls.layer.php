@@ -1109,8 +1109,8 @@ class cls_login
 			}
 		}
 		
-		//Check if this is saving a domain limitation
-	    if(isset($full_request['subscriberlimit'])&&($full_request['subscriberlimit'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
+		//Check if this is saving a domain limitation - update this always
+	    if(isset($full_request['subscriberlimit'])&&($this->is_admin($_SESSION['logged-user']) == true)) {
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
