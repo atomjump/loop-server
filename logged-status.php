@@ -52,7 +52,8 @@ $json = array();
 			if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		} else {
-			$subscribe_text = "no subscription";  //TODO: $msg['msgs'][$lang]['noSubscription'];
+			$subscribe_text = "cannot subscribe"; 
+			if($msg['msgs'][$lang]['cannotSubscribe']) $subscribe_text = $msg['msgs'][$lang]['cannotSubscribe'];
 			$subscribe = $subscribe_text;
 		}
 	}
