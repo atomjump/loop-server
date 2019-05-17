@@ -105,7 +105,8 @@ $json = array();
 	
 	//Not signed in display
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
-	if((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != "")) {
+	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
+		((urldecode($_COOKIE['email']) == $unlogged_email)&&($unlogged_email != ""))) {
 		$loggedIn .= "style=\"display: none;\" >";
 	} else {
 		$loggedIn .= "style=\"display: block;\" >";
