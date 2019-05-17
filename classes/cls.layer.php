@@ -663,7 +663,7 @@ class cls_login
 	
 	}
 	
-	public function add_to_subscriptions($current_subs, $layer = null, $new_user_id = null)
+	public function add_to_subscriptions($current_subs, $layer = null, $new_user_id = null, $new_email = null)
 	{
 	
 		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
@@ -709,7 +709,11 @@ class cls_login
 			
 				if((isset($row['var_subscribers_limit'])) && ($row['var_subscribers_limit'] != "")) {
 					//There is a limit on who can subscribe to this forum
-					$email_components = explode("@", $_SESSION['logged-email']);
+					if($new_email) {
+						$email_components = explode("@", $new_email);
+					} else {
+						$email_components = explode("@", $_SESSION['logged-email']);
+					}
 					if(($email_components[1]) && ($email_components[1] === $row['var_subscribers_limit'])) {
 						//This is allowable - it is of the correct domain
 					} else {
@@ -1149,7 +1153,7 @@ class cls_login
 				//Yes the layer exists. Add ourselves to the subscription list.
 				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 				
-				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id']);
+				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], null, $email);  
 				if($new_subs === false) {
 					return "SUBSCRIPTION_DENIED";
 				}			
