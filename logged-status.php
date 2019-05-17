@@ -16,7 +16,9 @@ $sh = new cls_ssshout();
 
 $json = array();
 
-
+	//WARNING: Before changing any of this code: 
+	//	  $_SESSION['logged-user']     is the account ID, that may not have the credentials passed yet	
+	//    $_SESSION['logged-email']    means a password protected account, which has it's credentials already passed
 
 	
 	//Check if we are subscribed.
@@ -83,21 +85,25 @@ $json = array();
 			//At this stage we should check if this user already exists
 			$user = $sh->check_user_exists($_SESSION['logged-user']);
 			if($user['var_email']) {
-				$_SESSION['logged-email'] = $user['var_email'];
+				//THIS IS WRONG: $_SESSION['logged-email'] = $user['var_email'];
+				$unlogged_email = $user['var_email'];
 			}
 		}
 	} else {
 		$loggedIn = "<div style=\"float: right;\" id=\"comment-logout\" style=\"display: none;\">";
 	}
 	
+	//Logout link display
 	$loggedIn .= "<a id=\"comment-logout-text\" href=\"javascript:\" onclick=\"beforeLogout(function() { $.get( '" . $root_server_url . "/logout.php', function( data ) { logout();  refreshLoginStatus(); } ); });\" ";
 	
-	if((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != "")) {
+	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
+		((urldecode($_COOKIE['email']) == $unlogged_email)&&($unlogged_email != ""))) {
 		$loggedIn .= "style=\"display: block;\" >";
 	} else {
 		$loggedIn .= "style=\"display: none;\" >";
 	}
 	
+	//Not signed in display
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
 	if((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != "")) {
 		$loggedIn .= "style=\"display: none;\" >";
