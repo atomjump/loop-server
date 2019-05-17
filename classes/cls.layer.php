@@ -1132,7 +1132,9 @@ class cls_login
 			$sh = new cls_ssshout();
 				
 			$saved_auth_layer = $_SESSION['access-layer-granted'];		//Save any authenticated sessions
-			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
+			$user_id = $sh->new_user($email, $ip, null, false);		//But don't actually login as this user (since we don't have a password)
+																	//otherwise you could simply login as another user by entering
+																	//no password but their email
 	    	$_SESSION['access-layer-granted'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
 	    	
 				

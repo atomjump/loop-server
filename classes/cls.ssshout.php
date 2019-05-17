@@ -63,6 +63,8 @@ class cls_ssshout
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
 	{
 		//If login_as is false, we don't send a welcome email out to the user (it is a system-only request).
+		//and we don't actually login (i.e. store it in the session variable)
+		//But by default we log in as that user.
 		global $root_server_url;
 		global $cnf;
 		global $msg;
