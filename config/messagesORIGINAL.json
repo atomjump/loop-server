@@ -25,7 +25,7 @@
             "fromShortMail": "\n------\nSent from AtomJump Shortmail",
             "toReplySee": "To reply see:",
             "replyOrChat": "Reply to this email, or chat live with this person:",
-            "deactivatedCheck": "AtomJump Message was deactivated. ID: MSG_ID. If this looks unlikely, you might want to log into the AtomJump Loop db to check it.",
+            "deactivatedCheck": "AtomJump Message was deactivated. ID: MSG_ID. If this looks unlikely, you might want to log into the AtomJump Messaging db to check it.",
             "typing": "<i>Typing...</i>",
             "social": {
                 "viaTwitter": "Via Twitter:",
@@ -68,7 +68,7 @@
             "passwordBeenResetApp": "Your password has been reset, please return to your app, and enter a new password.",
             "emailNotExist": "Sorry, that email does not exist.",
             "pass": {
-                "title": "AtomJump Loop password reset",
+                "title": "AtomJump Messaging password reset",
                 "pleaseClick": "Please click the following link to clear your password:\n\n",
                 "checkAndClick": "Check your email and click the link provided there.",
                 "pleaseEnterEmail": "Please enter your email above. Then click here."
@@ -130,7 +130,7 @@
             "subscribeSettingsButton": "Subscribe",
             "loginSettingsButton": "Login",
             "tip": "Tip: Click a person's name to talk privately to them.",
-            "getYourOwn": "Get your own <a target=\"_blank\" href=\"http:\/\/atomjump.com\">AtomJump Loop</a> widget.",
+            "getYourOwn": "Get your own <a target=\"_blank\" href=\"http:\/\/atomjump.org\">AtomJump Messaging</a> widget.",
             "uploadTitle" : "Upload",
             "selectImage" : "Select Image",
             "selectImagePrompt": "Select your image file",
@@ -174,7 +174,7 @@
 			"fromShortMail": "\n------\nSent de AtomJump Shortmail",
 			"toReplySee": "Para responder ver:",
 			"replyOrChat": "Responder a este correo electrónico o chat en vivo con esta persona:",
-			"deactivatedCheck": "AtomJump mensaje fue desactivado Identificación: MSG_ID Si esto parece poco probable, es posible que desee iniciar sesión en el db AtomJump Loop para comprobarlo.",
+			"deactivatedCheck": "AtomJump mensaje fue desactivado Identificación: MSG_ID Si esto parece poco probable, es posible que desee iniciar sesión en el db AtomJump Messaging para comprobarlo.",
 			"typing": "<i>Escribiendo...</i>",
 			"social": {
 				"viaTwitter": "A través de Twitter:",
@@ -267,7 +267,7 @@
             "limitSubscribersEnter": "Introduce un dominio web",
 			"saveSettingsButton": "Guardar Configuración",
 			"tip": "Sugerencia: Haga clic en el nombre de una persona para hablar en privado con ellos.",
-			"getYourOwn": "Consiga su propia widget de <a target=\"_blank\" href=\"http:\/\/atomjump.com\">AtomJump Loop</a>.",
+			"getYourOwn": "Consiga su propia widget de <a target=\"_blank\" href=\"http:\/\/atomjump.org\">AtomJump Messaging</a>.",
 			"uploadTitle": "Subir",
 			"selectImage": "Seleccionar Imagen",
 			"selectImagePrompt": "Seleccione el archivo de imagen",
