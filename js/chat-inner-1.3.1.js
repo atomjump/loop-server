@@ -820,7 +820,6 @@ function set_options_cookie() {
 			$('#set-forum-password-form').hide();
 			$('#user-id-show').hide();
 			
-			alert(mytype[0]);		//TEMPORARY TESTING!
 		
 			switch(mytype[0])
 			{
