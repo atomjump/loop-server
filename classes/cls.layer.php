@@ -1041,7 +1041,7 @@ class cls_login
 			
 				$sh = new cls_ssshout();
 			
-				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
+				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
 				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 				
 			}	    
