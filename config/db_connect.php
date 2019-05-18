@@ -243,9 +243,15 @@
 		$db_port = null;
 	} 
 	
+	if($db_cnf['protocol']) {
+		$db_port = $db_cnf['protocol'];
+	} else {
+		$db_port = null;
+	} 
+	
 
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);	
+	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port, $db_protocol);	
 			
 	if(!$db) {
 		
@@ -257,7 +263,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $db_cnf['hosts'][$db_num];			
-				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
+				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port, $db_protocol);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -402,8 +408,14 @@
 						} else {
 							$db_port = null;
 						} 
+						
+						if($db_cnf['protocol']) {
+							$db_port = $db_cnf['protocol'];
+						} else {
+							$db_port = null;
+						} 
 								
-						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
+						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port, $db_protocol);
 					}
 					
 					dbselect($db_name);
@@ -434,8 +446,14 @@
 				} else {
 					$db_port = null;
 				} 
+				
+				if($db_cnf['protocol']) {
+					$db_port = $db_cnf['protocol'];
+				} else {
+					$db_port = null;
+				} 
 	    		
-	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
+	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port, $db_protocol);
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
@@ -736,7 +754,7 @@
 		return $details;
 	}
 	
-	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null, $dbport = 3306)
+	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null, $dbport = 3306, $dbprotocol = null)
 	{
 		//Using old style:
 		/*
@@ -753,13 +771,13 @@
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], null);   
 						
 			if($dbname) {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, null)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, $dbprotocol, null)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 			        return $con;
 			    } else {
 			    	return false;
 			    }
 			} else {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, null)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, $dbprotocol, null)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 					return $con;
 				} else {
 					return false;
