@@ -749,17 +749,17 @@
 			$con = mysqli_init();
 			if (!$con) return false;
 		
-			//mysqli_options ($con, MYSQLI_OPT_SSL_VERIFY_SERVER_CERT, true);
+			
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], null);   
 						
 			if($dbname) {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, null)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 			        return $con;
 			    } else {
 			    	return false;
 			    }
 			} else {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT)) {
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, null)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 					return $con;
 				} else {
 					return false;
