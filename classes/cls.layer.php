@@ -767,7 +767,6 @@ class cls_login
 	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
-		error_log("Users: " . $whisper_site);
 		if(!$layer) {
 			if($_SESSION['authenticated-layer']) {
 				$layer = $_SESSION['authenticated-layer'];
