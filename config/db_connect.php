@@ -750,6 +750,10 @@
 			$con = mysqli_init();
 			if (!$con) return false;
 		
+			error_log($ssldetails['key'] . " " . $ssldetails['cert'] . " " .  $ssldetails['cacert'] . " " .  $ssldetails['capath'] . " " .  $ssldetails['protocol']);
+			
+			
+			error_log($host . " " . $user . " " . $pass . " " . $dbname . " " .  $dbport);
 			
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], $ssldetails['protocol']);   
 						
