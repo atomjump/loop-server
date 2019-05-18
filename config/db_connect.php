@@ -93,19 +93,19 @@
 			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
 				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
 					//Override with this database					
-					$db_cnf = $db_cnf['scaleUp'][$cnt];
+					$new_db_cnf = $db_cnf['scaleUp'][$cnt];
 					
 					//Check if we have our own unique plugins enabled for this installation
-					if($db_cnf['plugins']) {
+					if($new_db_cnf['plugins']) {
 						global $cnf;
-						$cnf['plugins'] = $db_cnf['plugins'];
+						$cnf['plugins'] = $new_db_cnf['plugins'];
 					}
-					return;
+					return $new_db_cnf;
 				}
 
 			}
 		}
-		return;
+		return $db_cnf;
 	} 
   
   //Set default language, unless otherwise set
@@ -193,7 +193,7 @@
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
 		$db_cnf = $cnf['db'];
-		scale_up_horizontally_check($cnf);
+		$db_cnf = scale_up_horizontally_check($cnf);
 
 		
 		//Live 
