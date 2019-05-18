@@ -1463,12 +1463,8 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				if($layer_info) {
 					$layer = $layer_info['int_layer_id'];
 				} else {
-					//Create a new layer - TODO: don't allow layers so easily
+					//Create a new layer
 					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 
-					
-					//Given this is a new layer - the first user is the correct user
-					$lg = new cls_login();
-					$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);	
 					
 				}
 			} else {
