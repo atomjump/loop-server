@@ -77,7 +77,6 @@
   
 	function scale_up_horizontally_check($cnf)
 	{
-		global $db_cnf;
 		$db_cnf = $cnf['db'];
 
 		if(isset($_REQUEST['passcode'])) {
@@ -158,7 +157,7 @@
 		
 		$cnf = $config['staging'];
 		$db_cnf = $cnf['db'];
-		scale_up_horizontally_check($cnf);
+		$db_cnf = scale_up_horizontally_check($cnf);
 		
 		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
 		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
