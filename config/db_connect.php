@@ -754,13 +754,13 @@
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], $ssldetails['protocol']);   
 						
 			if($dbname) {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, $dbprotocol, MYSQLI_CLIENT_SSL)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, MYSQLI_CLIENT_SSL)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 			        return $con;
 			    } else {
 			    	return false;
 			    }
 			} else {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, $dbprotocol, MYSQLI_CLIENT_SSL)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, MYSQLI_CLIENT_SSL)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
 					return $con;
 				} else {
 					return false;
