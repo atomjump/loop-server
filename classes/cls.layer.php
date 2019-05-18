@@ -1245,6 +1245,7 @@ class cls_login
 						//Update the group if necessary too 							
 						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 							if($users) {
+								error_log("Users: " . $users);
 								if($this->is_admin($_SESSION['logged-user']) == true) {
 									$this->update_subscriptions($users);
 								}
