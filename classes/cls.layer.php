@@ -825,6 +825,7 @@ class cls_login
 	
 	public function get_subscription_string($layer_id = null)
 	{
+		
 		if(!$layer_id) {
 			if($_SESSION['authenticated-layer']) {
 				$layer_id = $_SESSION['authenticated-layer'];
@@ -837,6 +838,7 @@ class cls_login
 		$output = "";
 		$cnt = 0;
 		
+		//TODO: the admin user on a new layer seems to be set here?
 		$sql = "SELECT *,  ls.int_user_id AS ls_user_id  FROM tbl_layer_subscription ls LEFT JOIN tbl_user u ON ls.int_user_id = u.int_user_id WHERE enm_active = 'active' AND int_layer_id = " . $layer_id;
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		while($row = db_fetch_array($result))
