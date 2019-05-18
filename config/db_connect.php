@@ -195,6 +195,10 @@
 		$db_cnf = $cnf['db'];
 		$db_cnf = scale_up_horizontally_check($cnf);
 
+		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
+		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
+		$db_host =  $db_cnf['hosts'][0]; 
+		$db_name = $db_cnf['name'];
 		
 		//Live 
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
