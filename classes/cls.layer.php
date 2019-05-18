@@ -767,6 +767,7 @@ class cls_login
 	
 	public function update_subscriptions($whisper_site, $layer = null)
 	{
+		error_log("Users: " . $whisper_site);
 		if(!$layer) {
 			if($_SESSION['authenticated-layer']) {
 				$layer = $_SESSION['authenticated-layer'];
@@ -1245,7 +1246,7 @@ class cls_login
 						//Update the group if necessary too 							
 						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
 							if($users) {
-								error_log("Users: " . $users);
+								
 								if($this->is_admin($_SESSION['logged-user']) == true) {
 									$this->update_subscriptions($users);
 								}
