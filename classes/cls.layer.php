@@ -346,9 +346,11 @@ class cls_layer
 
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
 			if($with_app == false) {
-
-				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
-					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
+				
+				if($row['int_user_id']) {
+					if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
+						$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
+					}
 				}
 			}
 					

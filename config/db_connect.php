@@ -426,7 +426,7 @@
 	    		dbclose();		//close off the current db
 	    		
 	    		$db_host = $db_master_host;
-	    		
+	    			    		
 	    		if($db_cnf['ssl']) {
 					$db_ssl = $db_master_host['ssl'];
 				} else {
