@@ -546,8 +546,8 @@ class cls_login
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
+		
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-
 		while($row = db_fetch_array($result)) {
 			$in_db[] = $row['int_user_id'];
 
@@ -568,6 +568,7 @@ class cls_login
 				
 				//Add into the db
 				$sql = "INSERT INTO tbl_layer_subscription (int_layer_id, int_user_id, enm_active, enm_sms) VALUES ( " . clean_data($layer_id) . ", " . $correct_user . ", 'active', '" . clean_data($correct_sms) . "')";
+				error_log($sql);
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			}
 			
@@ -840,6 +841,7 @@ class cls_login
 		
 		//TODO: the admin user on a new layer seems to be set here?
 		$sql = "SELECT *,  ls.int_user_id AS ls_user_id  FROM tbl_layer_subscription ls LEFT JOIN tbl_user u ON ls.int_user_id = u.int_user_id WHERE enm_active = 'active' AND int_layer_id = " . $layer_id;
+		error_log($sql);
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		while($row = db_fetch_array($result))
 		{
@@ -851,6 +853,8 @@ class cls_login
 			}
 			$cnt ++;
 		}
+		
+		error_log("New subscriber string:" . $output);
 		
 		return $output;
 	
