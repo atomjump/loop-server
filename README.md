@@ -310,7 +310,7 @@ Note: it can take up to 1 minute before any new message's sentiment will be calc
 				//Add your configuration here for AtomJump Messaging
 				var ajFeedback = {
 					"uniqueFeedbackId" : "test_feedback",		//This can be anything globally unique to your company/page	
-					"myMachineUser" : "92.27.10.17:8",			/* Obtain this value from
+					"myMachineUser" : "92.27.10.17:8",	/* Obtain this value from
 							1. Settings
 							2. Entering an email/Password
 							3. Click save
@@ -318,7 +318,7 @@ Note: it can take up to 1 minute before any new message's sentiment will be calc
 							5. Clicking: 'More', then 'Developer Tools'
 							6. Copy the myMachineUser into here.
 							*/
-						"server":  "https://atomjump.com/api"
+					"server":  "https://atomjump.com/api"
 				}
 			</script>
 			<script type="text/javascript" src="/bower_components/atomjump/js/chat.js"></script>
