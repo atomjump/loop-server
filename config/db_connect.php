@@ -752,22 +752,24 @@
 			//SSL connection
 			$con = mysqli_init();
 			if (!$con) return false;
-		
-			error_log($ssldetails['key'] . " " . $ssldetails['cert'] . " " .  $ssldetails['cacert'] . " " .  $ssldetails['capath'] . " " .  $ssldetails['protocol']);
-			
-			
-			error_log($host . " " . $user . " " . $pass . " " . $dbname . " " .  $dbport);
 			
 			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], $ssldetails['protocol']);   
 						
+			if(isset($ssldetails['verify']) && ($ssldetails['verify'] === false)) {
+				$connection_type = MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;   //  works for PHP >= 5.6
+			} else {
+				$connection_type = MYSQLI_CLIENT_SSL;			
+			}
+						
+						
 			if($dbname) {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, MYSQLI_CLIENT_SSL)) {   //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, $connection_type)) {  
 			        return $con;
 			    } else {
 			    	return false;
 			    }
 			} else {
-				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, MYSQLI_CLIENT_SSL)) {  //, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT   works for PHP >= 5.6
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, $connection_type)) { 
 					return $con;
 				} else {
 					return false;

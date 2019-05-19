@@ -17,7 +17,9 @@
          	"key" : "",
          	"cert" : "",
          	"cacert": "",
-         	"capath": ""
+         	"capath": "",
+         	"protocol": "",
+         	"verify": true
          }
       },	
       "webRoot": "http://127.0.0.1/loop-server-staging",
@@ -146,7 +148,18 @@
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
-				 "adminMachineUser": "92.27.10.17:1"
+				 "adminMachineUser": "92.27.10.17:1",
+				 "ssl" : {
+					"use" : false,
+					"key" : "",
+					"cert" : "",
+					"cacert": "",
+					"capath": "",
+					"protocol": "",
+					"verify": true
+				 },
+				 "plugins": [
+      			 ]
          	},
          	{
          	    "labelRegExp": "^ajps_3_",
@@ -163,7 +176,9 @@
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
-				 "adminMachineUser": "92.27.10.17:1"
+				 "adminMachineUser": "92.27.10.17:1",
+				 "plugins": [
+      			 ]
          	}
          ]
       },
