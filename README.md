@@ -126,13 +126,18 @@ Running on Windows has currently not been tested, but you can use a Ubuntu 14.04
 Is available from
 https://github.com/atomjump/loop#loop
 
-This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is good for feedback, but can also be used as a live discussion tool, or a CRM.  We actually run our entire operation off one page with several of these popups on it.
+This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is good for general messaging, either within a company or family, in either a private or public setting.  
 
-The client software is entirely Javascript and CSS, but it refers to an AtomJump Messaging server to store messages (this is optionally available as a separate project at http://github.com/atomjump/loop-server, or by default you can use the AtomJump.com server).  Supported client platforms: IE8 upwards, Edge, Chrome, Firefox, Safari, Android Native, Android Chrome, Android Firefox, iPad, iPhone, Opera. There may be other supported platforms we haven't tested on.
+The client software is entirely Javascript and CSS, but it refers to an AtomJump Messaging server to store messages. This is optionally available as a separate project at http://github.com/atomjump/loop-server, or by default you can use the AtomJump.com server.
+
+Private forums on the hosted atomjump.com platform are purchased for US$10 / year to cover our costs, but public forums are free.
+
+Supported client platforms: IE8 upwards, Edge, Chrome, Firefox, Safari, Android Native, Android Chrome, Android Firefox, iPad, iPhone, Opera. There may be other supported platforms we haven't tested on.
 
 See the demo at <a href="http://atomjump.org">AtomJump</a>
 
-You are most welcome to adjust the styling by making changes to the CSS file for your project.
+You can adjust the styling by making changes to the CSS file for your project.
+
 
 
 
