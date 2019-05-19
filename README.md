@@ -52,7 +52,7 @@ https://github.com/atomjump/loop-server/releases
 Or git clone 
 
 ```
-https://github.com/atomjump/loop-server.git
+git clone https://github.com/atomjump/loop-server.git
 ```
 
 Or using composer
