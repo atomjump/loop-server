@@ -2,7 +2,7 @@
 
 # AtomJump Messaging Server
 
-This acts as a server to the AtomJump Messaging open source web-service 
+This acts as a server to the AtomJump Messaging Web-service 
 at http://github.com/atomjump/loop
 
 
