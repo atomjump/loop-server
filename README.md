@@ -799,11 +799,12 @@ This should be called at the end of your script to complete all of the parallel_
 
 # Performance
 
-Performance depends on a number of factors. In general, since the Loop Server can be configured with a load balancer, multiple PHP servers and multiple database servers, the number of users supported can scale <i>almost</i> by adding more servers to the cluster. The basic PHP script on one server should handle (in the order of) one hundred simultaneous users, but this will vary considerably on the hardware used, the amount of usage and the type of usage by these users.
+Performance depends on a number of factors. In general, since the AtomJump Server can be configured with a load balancer, multiple PHP servers and multiple database servers, the number of users supported can scale <i>almost</i> by adding more servers to the cluster. The basic PHP script on one server should handle (in the order of) one hundred simultaneous users, but this will vary considerably on the hardware used, the amount of usage and the type of usage by these users.
 
 However, to extend performance into larger scale environments, we have released the NodeJS 'loop-server-fast' plugin at https://www.npmjs.com/package/loop-server-fast.  This aims to scale to thousands, or tens of thousand, simultaneous users per server. You can start by installing the PHP version, and then install the NodeJS version as you expand (you can revert back to the PHP version, also, if you have any issues).
 
-There is also a performance limitation in some cluster installations of MySQL, which may have multi-read but only a single-write database, which can limit the number of simultaneous users posting messages. However, AtomJump Messaging can also work in multi-write database environments to help circumvent this limitation. 
+AtomJump Messaging can work in a single write/ multiple read MySQL cluster, or a multi-write / multi-read cluster. The latter should be scalable to millions of simultaneous users.
+
 
 
 # Contributing
