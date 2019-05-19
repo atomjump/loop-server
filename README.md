@@ -34,9 +34,9 @@ sudo apt-get install ntp
 
 # Optional Components
 
-* Multi server MySQL (single-write or multi-write)  
+* Multi-server MySQL clusters (single-write or multi-write)  
 * Load balancers with haproxy  
-* SSL server
+* SSL messaging server
 * SSL database connection
 
 
