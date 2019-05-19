@@ -10,9 +10,6 @@ RewriteRule copy-image - [L,PT]
 
 RewriteRule ^download$ download.php [L,PT]
 
-RewriteCond %{HTTP_HOST} seetalent.com$
-RewriteRule (.*) https://atomjump.com/seetalent/%{QUERY_STRING} [L]
-
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} !atomjump.com$
 RewriteCond %{HTTP_HOST} !ajmp.co$     

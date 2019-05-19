@@ -8,21 +8,21 @@ interface at http://github.com/atomjump/loop
 
 # Requirements
 
-PHP, fully tested on PHP 5.3, 5.5, 7.0, 7.1 (with curl, php-mbstring, zip, php-xml support added),  
-MySQL 5+, 
-Apache2,  
-Linux server (though a Windows server may be partially functional)  
+* PHP. This software has been fully tested on PHP 5.3, 5.5, 7.0, 7.1 (with curl, php-mbstring, zip, php-xml support added) 
+* MySQL 5+ 
+* Apache 2  
+* Linux server (though a Windows server may be partially functional)  
 
-# Recommended 
+# Recommended pre-installation steps
 
-Modify upload size in php.ini (usually /etc/php5/apache2/php.ini)
+Modify the upload size in php.ini (found in e.g. /etc/php5/apache2/php.ini)
 ```
 upload_max_filesize = 10M
 max_execution_time = 200
 service apache2 reload
 ```
 
-Imagemagick can be used (Ubuntu command):
+Imagemagick can be used to handle image uploads (Ubuntu command):
 ```
 sudo apt-get install imagemagick
 ```
@@ -32,17 +32,40 @@ To keep timing in-sync (Ubuntu command):
 sudo apt-get install ntp
 ```
 
-# Optional
-Amazon MySQL RDS (any number of db servers),  
-Load balancers with haproxy,  
-SSL server
+# Optional Components
+
+* Multi server MySQL (single-write or multi-write)  
+* Load balancers with haproxy  
+* SSL server
+* SSL database connection
+
 
 
 # Installation
 
-1. /server directory. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
+On your Linux server, download and unzip the latest release of the loop-server from
 
-2. /config/configORIGINAL.json. Copy to config/config.json. Replace the options with your own accounts and paths. Copy /config/messagesORIGINAL.json to /config/messages.json. Replace these options with your own words or languages.
+```
+https://github.com/atomjump/loop-server/releases
+```
+
+Or git clone 
+
+```
+https://github.com/atomjump/loop-server.git
+```
+
+Or using composer
+```
+composer require atomjump/loop-server
+```
+
+
+We will refer to paths as being from the root of the loop-server folder.
+
+1. /server folder. You can refer to some example server configuration files. Replace atomjump with your own domain, and put any relevant files into your Apache 'sites available' setup. You may need to restart Apache.
+
+2. /config/configORIGINAL.json. Copy this file to /config/config.json. Replace the options with your own accounts and paths. Copy /config/messagesORIGINAL.json to /config/messages.json. Replace these options with your own words or languages.
 
 3. Create a temporary image upload directory at
 /images/im
@@ -51,7 +74,7 @@ SSL server
 chmod 777 /images/im
 ```
 
-4. Copy SET_AS_htaccess to .htaccess and replace atomjump.com with your domain
+4. Copy /SET_AS_htaccess to /.htaccess and replace atomjump.com with your domain in this file.
 
 5. Customer defined themes must be on a secure server if the server is on ssl.
 
