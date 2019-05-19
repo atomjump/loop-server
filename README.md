@@ -328,7 +328,7 @@ To test the web domain, use the following small PHP script:
 ?>
 ```
   
-**db** **hosts**: there can be any number of db hosts, but some services do not allow multiple write hosts, and in this case the first one is the only write host, while the others are read. You can configure this with the 'singleWriteDb' option.
+**db** **hosts**: there can be any number of db hosts, but some services do not allow multiple write hosts, and if this case the first one is the only write host, while the others are read. You can configure this with the 'singleWriteDb' option.
 
 **db** **singleWriteDb**: optional. 'true' for a single write database cluster, and 'false' for a multiple write database cluster. This option is only applicable if there is more than one database host. Ver >= 1.8.9
    
