@@ -1,9 +1,9 @@
 <img src="https://atomjump.com/images/logo80.png">
 
-# Open Messaging Server
+# AtomJump Messaging Server
 
-This acts as a server to the AtomJump Loop open source
-interface at http://github.com/atomjump/loop
+This acts as a server to the AtomJump Messaging open source web-service 
+at http://github.com/atomjump/loop
 
 
 # Requirements
