@@ -486,6 +486,7 @@ class cls_ssshout
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
+		error_log("Delete deletes: " . $db_cnf['deleteDeletes'] . "  Just typing=" . $just_typing);
 		if((isset($db_cnf['deleteDeletes']))
 			&& ($db_cnf['deleteDeletes'] == true)
 			&& ($just_typing == false)) {			//Don't use truple === because often just a nullvalue
@@ -502,7 +503,7 @@ class cls_ssshout
 		
 		
 		if(($just_typing == false)&&
-		   ($db_cnf['deleteDeletes'] === false)) {
+		   ($db_cnf['deleteDeletes'] == false)) {
 			//Warn overall admin 
 			$msg = str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']);
 			
