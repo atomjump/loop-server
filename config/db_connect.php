@@ -77,7 +77,7 @@
   
 	function scale_up_horizontally_check($cnf)
 	{
-		$db_cnf = $cnf['db'];
+		$this_db_cnf = $cnf['db'];
 
 		if(isset($_REQUEST['passcode'])) {
 			$layer_name = $_REQUEST['passcode'];			
@@ -87,12 +87,12 @@
 			$layer_name = $_REQUEST['uniqueFeedbackId'];
 		}
 
-		if((isset($db_cnf['scaleUp']))&&(isset($layer_name))) {	
+		if((isset($this_db_cnf['scaleUp']))&&(isset($layer_name))) {	
 			//We are scaling up
-			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
-				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
+			for($cnt = 0; $cnt< count($this_db_cnf['scaleUp']); $cnt ++) {	
+				if(preg_match("/" . $this_db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
 					//Override with this database					
-					$new_db_cnf = $db_cnf['scaleUp'][$cnt];
+					$new_db_cnf = $this_db_cnf['scaleUp'][$cnt];
 					
 					//Check if we have our own unique plugins enabled for this installation
 					if($new_db_cnf['plugins']) {
@@ -105,7 +105,7 @@
 
 			}
 		}
-		return $db_cnf;
+		return $this_db_cnf;
 	} 
   
   //Set default language, unless otherwise set
@@ -150,7 +150,7 @@
 	
 	$server_timezone = $config['production']['timezone'];
 	$db_timezone = $server_timezone;
-			
+	$db_cnf = array();		//Make a global		
   
 	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
 		//Staging
@@ -195,7 +195,7 @@
 		
 		$db_cnf = $cnf['db'];
 		$db_cnf = scale_up_horizontally_check($cnf);
-		error_log($db_cnf['deleteDeletes']);
+		error_log("After scaleup:" . $db_cnf['deleteDeletes']);
 
 
 
