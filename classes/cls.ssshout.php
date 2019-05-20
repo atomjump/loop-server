@@ -522,10 +522,12 @@ class cls_ssshout
 		} else {
 		
 			error_log("Unable to execute query $sql " . dberror());
-			if($msg['msgs'][$lang]['failureDeactivating']) {
-				echo $msg['msgs'][$lang]['failureDeactivating'];
-			} else {
-				echo "Sorry we could not deactivate the AtomJump Message. Please contact the system admin.";
+			if($just_typing == false) {
+				if($msg['msgs'][$lang]['failureDeactivating']) {
+					echo $msg['msgs'][$lang]['failureDeactivating'];
+				} else {
+					echo "Sorry we could not deactivate the AtomJump Message. Please contact the system admin.";
+				}
 			}
 			return;
 		}
