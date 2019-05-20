@@ -486,7 +486,7 @@ class cls_ssshout
 		//            == false, for when want full deactivation
 		if((isset($db_cnf['deleteDeletes']))
 			&& ($db_cnf['deleteDeletes'] == true)
-			&& ($just_typing === false)) {
+			&& ($just_typing == false)) {			//Don't use truple === because often just a nullvalue
 			
 			//This is a genuine call to delete the message, and we need to remove it from the database completely.
 			$sql = "DELETE FROM tbl_ssshout WHERE int_ssshout_id = " . clean_data($ssshout_id);
@@ -496,7 +496,7 @@ class cls_ssshout
 		}
 		dbquery($sql) or error_log("Unable to execute query $sql " . dberror());
 		
-		if(($just_typing === false)&&
+		if(($just_typing == false)&&
 		   ($db_cnf['deleteDeletes'] === false)) {
 			//Warn overall admin 
 			$msg = str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']);
