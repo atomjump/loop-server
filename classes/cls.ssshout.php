@@ -477,15 +477,16 @@ class cls_ssshout
 	
 	public function deactivate_shout($ssshout_id, $just_typing = false)
 	{
+		global $db_cnf;
 		global $cnf;
 		global $msg;
 		global $lang;
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
-		if((isset($cnf['db']['deleteDeletes']))
-			&& ($cnf['db']['deleteDeletes'] == true)
-			&& ($just_typing == false)) {
+		if((isset($db_cnf['deleteDeletes']))
+			&& ($db_cnf['deleteDeletes'] == true)
+			&& ($just_typing === false)) {
 			
 			//This is a genuine call to delete the message, and we need to remove it from the database completely.
 			$sql = "DELETE FROM tbl_ssshout WHERE int_ssshout_id = " . clean_data($ssshout_id);
@@ -493,13 +494,36 @@ class cls_ssshout
 			//A regular deactivate
 			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		}
-		dbquery($sql) or die("Unable to execute query $sql " . dberror());
+		dbquery($sql) or error_log("Unable to execute query $sql " . dberror());
 		
-		if(($just_typing == false)&&
-		   ($cnf['db']['deleteDeletes'] == false)) {
-			//Warn overall admin - TODO: just layer admin?
-			cc_mail($cnf['email']['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['email']['webmasterEmail']);
-			echo "Deactivated message.";		//TODO more descriptive comment here.	
+		if(($just_typing === false)&&
+		   ($db_cnf['deleteDeletes'] === false)) {
+			//Warn overall admin 
+			$msg = str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']);
+			
+			if($db_cnf['adminMachineUser']) {
+				//There is a unique user who we can notify
+				$user_components = explode(":", $db_cnf['adminMachineUser']);
+				
+				//Sending to layer admin
+				//Send message to target user ID: $user_components[1]
+				//Get the email address of the admin user
+				$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $user_components[1];
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				if(($row = db_fetch_array($result))&&($email != ""))
+				{
+					//User exists, and we have an email address - email that admin user
+					cc_mail($row['var_email'], $msg, $cnf['email']['webmasterEmail']);
+				} else {
+					//Mail the master owner
+					cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
+				}
+				
+			} else {
+				//Mail the master owner
+				cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
+			}
+			error_log("Deactivated message. " . $msg);		
 		}
 	
 	}
