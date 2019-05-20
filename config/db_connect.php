@@ -99,6 +99,7 @@
 						global $cnf;
 						$cnf['plugins'] = $new_db_cnf['plugins'];
 					}
+					error_log("In  function:" . $new_db_cnf['deleteDeletes']);
 					return $new_db_cnf;
 				}
 
