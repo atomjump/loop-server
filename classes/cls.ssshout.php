@@ -482,7 +482,9 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		
+		error_log($db_cnf['deleteDeletes']);
 		make_writable_db();
+		
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation

@@ -19,6 +19,8 @@ if(isset($_REQUEST['just_typing'])) {
 	$just_typing = false;
 }
 
+error_log($db_cnf['deleteDeletes']);
+
 $sh->deactivate_shout($_REQUEST['mid'], $just_typing);
 
 
