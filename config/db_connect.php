@@ -99,7 +99,6 @@
 						global $cnf;
 						$cnf['plugins'] = $new_db_cnf['plugins'];
 					}
-					error_log("In scaleup function:" . $new_db_cnf['deleteDeletes']);
 					return $new_db_cnf;
 				}
 
@@ -195,7 +194,6 @@
 		
 		$db_cnf = $cnf['db'];
 		$db_cnf = scale_up_horizontally_check($cnf);
-		error_log("After scaleup:" . $db_cnf['deleteDeletes']);
 
 
 
