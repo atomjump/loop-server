@@ -517,12 +517,10 @@ class cls_ssshout
 			//A regular deactivate
 			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		}
-		if(dbquery($sql)) {
-			//All good here		
-		} else {
-		
+		if(dbquery($sql) == false) {
 			error_log("Unable to execute query $sql " . dberror());
 			if($just_typing == false) {
+				//Warn visually - this is typically from a remote delete message link
 				if($msg['msgs'][$lang]['failureDeactivating']) {
 					echo $msg['msgs'][$lang]['failureDeactivating'];
 				} else {
@@ -533,8 +531,9 @@ class cls_ssshout
 		}
 		
 		
-		if(($just_typing == false)&&
-		   ($db_cnf['deleteDeletes'] == false)) {
+		if($just_typing == false) {   //&&($db_cnf['deleteDeletes'] == false)
+			//Warn the admin of this message deletion. If they are simply typing then don't notify anyone.
+			
 			//Warn overall admin 
 			$msg = str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']);
 			
@@ -560,6 +559,8 @@ class cls_ssshout
 				//Mail the master owner
 				cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
 			}
+			
+			//A message has been deactivated - show something to the user, and log it
 			error_log("Deactivated message. " . $msg);
 			
 			if($msg['msgs'][$lang]['successDeactivating']) {
@@ -567,7 +568,6 @@ class cls_ssshout
 			} else {
 				echo "You have deactivated the AtomJump Message successfully.";
 			}
-					
 		}
 		
 		
