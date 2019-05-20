@@ -26,6 +26,8 @@
             "toReplySee": "To reply see:",
             "replyOrChat": "Reply to this email, or chat live with this person:",
             "deactivatedCheck": "AtomJump Message was deactivated. ID: MSG_ID. If this looks unlikely, you might want to log into the AtomJump Messaging db to check it.",
+            "successDeactivating": "You have deactivated the AtomJump Message successfully.",
+            "failureDeactivating": "Sorry we could not deactivate the AtomJump Message. Please contact the system admin.",
             "typing": "<i>Typing...</i>",
             "social": {
                 "viaTwitter": "Via Twitter:",
@@ -175,6 +177,8 @@
 			"toReplySee": "Para responder ver:",
 			"replyOrChat": "Responder a este correo electrónico o chat en vivo con esta persona:",
 			"deactivatedCheck": "AtomJump mensaje fue desactivado Identificación: MSG_ID Si esto parece poco probable, es posible que desee iniciar sesión en el db AtomJump Messaging para comprobarlo.",
+            "successDeactivating": "Has desactivado el mensaje AtomJump con éxito.",
+            "failureDeactivating": "Lo sentimos, no pudimos desactivar el mensaje AtomJump. Por favor, póngase en contacto con el administrador del sistema.",
 			"typing": "<i>Escribiendo...</i>",
 			"social": {
 				"viaTwitter": "A través de Twitter:",

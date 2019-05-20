@@ -502,13 +502,11 @@ class cls_ssshout
 		global $msg;
 		global $lang;
 		
-		error_log($db_cnf['deleteDeletes']);
 		make_writable_db();
 		
 		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
-		error_log("Delete deletes: " . $db_cnf['deleteDeletes'] . "  Just typing=" . $just_typing);
 		if((isset($db_cnf['deleteDeletes']))
 			&& ($db_cnf['deleteDeletes'] == true)
 			&& ($just_typing == false)) {			//Don't use truple === because often just a nullvalue
@@ -519,9 +517,18 @@ class cls_ssshout
 			//A regular deactivate
 			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		}
-		error_log($sql);
-		dbquery($sql) or error_log("Unable to execute query $sql " . dberror());
-		error_log("Deactivated message.");		//TEMPORARY	
+		if(dbquery($sql)) {
+			//All good here		
+		} else {
+		
+			error_log("Unable to execute query $sql " . dberror());
+			if($msg['msgs'][$lang]['failureDeactivating']) {
+				echo $msg['msgs'][$lang]['failureDeactivating'];
+			} else {
+				echo "Sorry we could not deactivate the AtomJump Message. Please contact the system admin.";
+			}
+			return;
+		}
 		
 		
 		if(($just_typing == false)&&
@@ -551,7 +558,14 @@ class cls_ssshout
 				//Mail the master owner
 				cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
 			}
-			error_log("Deactivated message. " . $msg);		
+			error_log("Deactivated message. " . $msg);
+					
+		}
+		
+		if($msg['msgs'][$lang]['successDeactivating']) {
+			echo $msg['msgs'][$lang]['successDeactivating'];		//This is seen by the end user.
+		} else {
+			echo "You have deactivated the AtomJump Message successfully.";
 		}
 	
 	}
