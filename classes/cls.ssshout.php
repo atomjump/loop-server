@@ -494,7 +494,10 @@ class cls_ssshout
 			//A regular deactivate
 			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		}
+		error_log($sql);
 		dbquery($sql) or error_log("Unable to execute query $sql " . dberror());
+		error_log("Deactivated message.");		//TEMPORARY	
+		
 		
 		if(($just_typing == false)&&
 		   ($db_cnf['deleteDeletes'] === false)) {
@@ -510,7 +513,7 @@ class cls_ssshout
 				//Get the email address of the admin user
 				$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $user_components[1];
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-				if(($row = db_fetch_array($result))&&($email != ""))
+				if($row = db_fetch_array($result))
 				{
 					//User exists, and we have an email address - email that admin user
 					cc_mail($row['var_email'], $msg, $cnf['email']['webmasterEmail']);
