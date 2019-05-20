@@ -1372,7 +1372,8 @@ function hideSingleMsg(id)
 	//Hide the message and then refresh the results, and close the form 
 	closeSingleMsg();
 	$.getJSON(ssshoutServer + "/de.php?callback=?", {
-						mid: id
+						mid: id,
+						passcode: commentLayer 
 					}, function(response){ 
 						var results = response;
 						refreshResults(results);
