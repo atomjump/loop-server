@@ -335,7 +335,7 @@ class cls_layer
 										 "forum_message" => $msg['msgs'][$lang]['layerName'],
 										 "forum_name" => $layer_name,
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
-										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
+										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $layer_name);
 				
 				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 			}
@@ -403,7 +403,7 @@ class cls_layer
 			$url = cur_page_url();
 			$email_body = $message . "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
 			if($is_admin_user == true) {
-				$url = $root_server_url . "/de.php?mid=" . $message_id;
+				$url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $this->layer_name;
 				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		

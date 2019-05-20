@@ -354,10 +354,21 @@ class cls_ssshout
 					$layer_name = $this->layer_name;
 					$email_body .= 	"\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>\n" . $layer_message . ": " . $layer_name;
 ; 
-				
-					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$remove_url = $url;
-					$remove_message = $msg['msgs'][$lang]['removeComment'];
+				    if($this->layer_name) {
+						//Yes, we have the globally set layer name
+						$url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $layer_name;
+						$remove_url = $url;
+						$remove_message = $msg['msgs'][$lang]['removeComment'];
+					} else {
+						//We don't have the correct layer name - deleting without it could delete it from the wrong database, so
+						//leave out. We may be able to include it if we check there are no scaleUps, but I think that is
+						//a poor soln.
+						$url = "";
+						$remove_url = $url;
+						$remove_message = "";
+					}	
+					
+					
 					$email_body .= "\n\n" . $remove_message . " <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 					
 				} else {
@@ -413,7 +424,16 @@ class cls_ssshout
 					}
 					
 					$remove_message = $msg['msgs'][$lang]['removeComment'];
-					$remove_url = $root_server_url . "/de.php?mid=" . $message_id;
+					if($this->layer_name) {
+						//Yes, we have the globally set layer name
+						$remove_url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $this->layer_name;
+					} else {
+						//We don't have the correct layer name - deleting without it could delete it from the wrong database, so
+						//leave out. We may be able to include it if we check there are no scaleUps, but I think that is
+						//a poor soln.
+						$remove_message = "";
+						$remove_url = "";
+					}		
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				

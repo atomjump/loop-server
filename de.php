@@ -21,6 +21,8 @@ if(isset($_REQUEST['just_typing'])) {
 
 error_log($db_cnf['deleteDeletes']);
 
+//Must include a layer id also, because it could be from a completely different database in the case of scaleUp.
+
 $sh->deactivate_shout($_REQUEST['mid'], $just_typing);
 
 

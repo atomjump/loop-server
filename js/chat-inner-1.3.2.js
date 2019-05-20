@@ -433,6 +433,7 @@ var msg = function() {
 						url: ssshoutServer + "/de.php?callback=?",
 						data: {
 							mid: value.shoutId,
+							passcode: commentLayer,
 							just_typing: 'on'
 						},
 						success: function(response){ 
@@ -1073,6 +1074,7 @@ function removeMessageDirect(messageId)
 		url: ssshoutServer + "/de.php?callback=?",
 		data: {
 			mid: messageId,
+			passcode: commentLayer,
 			just_typing: 'on'
 		},
 		success: function(response2){ 
