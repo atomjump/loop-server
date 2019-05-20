@@ -559,14 +559,16 @@ class cls_ssshout
 				cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
 			}
 			error_log("Deactivated message. " . $msg);
+			
+			if($msg['msgs'][$lang]['successDeactivating']) {
+				echo $msg['msgs'][$lang]['successDeactivating'];		//This is seen by the end user.
+			} else {
+				echo "You have deactivated the AtomJump Message successfully.";
+			}
 					
 		}
 		
-		if($msg['msgs'][$lang]['successDeactivating']) {
-			echo $msg['msgs'][$lang]['successDeactivating'];		//This is seen by the end user.
-		} else {
-			echo "You have deactivated the AtomJump Message successfully.";
-		}
+		
 	
 	}
 	
