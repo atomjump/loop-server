@@ -859,7 +859,6 @@ function set_options_cookie() {
 					
 					//Also save the password that you entered for the next login
 					keepPassword = $('#password-opt').val();
-					alert(window.location.href);
 					var newLocation = window.location.href + "&pw=" + keepPassword;
 					
 					
