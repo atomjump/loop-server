@@ -119,7 +119,8 @@ $json = array();
 	}
 	
 	//Now check if we are signed in to an authenticated layer - we still want a sign out option here
-	error_log("Authent layer:" . $_SESSION['authenticated-layer'] . " " . $layer_info['int_layer_id']);
+	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
+	error_log("Authent layer:" . $_SESSION['authenticated-layer'] . " Layer id:" . $layer_info['int_layer_id']);
 	if(($layer_info) &&($_SESSION['logged-user'] != "")) {
 		if(isset($layer_info['var_public_code'])) {
 			if($_SESSION['authenticated-layer'] === $layer_info['int_layer_id']) {
