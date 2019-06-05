@@ -109,14 +109,9 @@
 	if(isset($layer_info['var_public_code'])) {
 		$granted = false;
 		
-		if($_SESSION['logged-user']) {			//Check - do we need to be a logged user here TESTING
-			if($_SESSION['access-layer-granted'] == $layer_info['int_layer_id']) { 	//Normal access has been granted  
-		 		$granted = true;
-			}
-			
+		if($_SESSION['access-layer-granted'] == $layer_info['int_layer_id']) { 	//Normal access has been granted  
+			$granted = true;
 		}
-		
-		
     } else {
     	 $granted = true;
     }
