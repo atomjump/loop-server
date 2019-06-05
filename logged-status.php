@@ -76,6 +76,7 @@ $json = array();
 	
 	//Now determine logged in state
 	$loggedIn = "";
+	$showingSignout = false;
 	
 	
 	if($_SESSION['logged-user']) { 
@@ -103,8 +104,10 @@ $json = array();
 	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
 		((urldecode($_COOKIE['email']) == $unlogged_email)&&($unlogged_email != ""))) {
 		$loggedInMsg = "style=\"display: block;\" >";
+		$showingSignout = true;
 	} else {
 		$loggedInMsg = "style=\"display: none;\" >";
+		$showingSignout = false;
 	}
 	
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
@@ -114,7 +117,8 @@ $json = array();
 			if($_SESSION['access-layer-granted'] === $layer_info['int_layer_id']) {
 				
 				//Show the sign out option
-				$loggedInMsg = "style=\"display: block;\" >";			
+				$loggedInMsg = "style=\"display: block;\" >";
+				$showingSignout = true;			
 			}
 		}
 	}
@@ -125,10 +129,7 @@ $json = array();
 	//'Not signed in' display
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
 	$loggedInMsg = "";
-	
-	
-	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
-		((urldecode($_COOKIE['email']) == $unlogged_email)&&($unlogged_email != ""))) {
+	if($showingSignout == true) {
 		//Switch off
 		
 		$loggedInMsg = "style=\"display: none;\" >";
