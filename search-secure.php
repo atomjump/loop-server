@@ -404,7 +404,7 @@
 		 echo $msg['msgs'][$lang]['loginSettingsButton']; 
 		} else { 
 			echo $msg['msgs'][$lang]['saveSettingsButton'];
-		} ?>'); } else { $('#save-button').html('<?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?>'); }" id="password-opt" name="pd" type="password" class="form-control" autocomplete="false" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="">
+		} ?>'); } else { $('#save-button').html('<?php echo $msg['msgs'][$lang]['saveSettingsButton'] ?>'); }" id="password-opt" name="pd" type="password" class="form-control" autocomplete="false" placeholder="<?php echo $msg['msgs'][$lang]['enterPassword'] ?>" value="<?php if(isset($_REQUEST['pd'])) { echo $_REQUEST['pd']; } ?>">
 									</div>
 									<div  class="form-group">
 										<?php global $cnf; if($cnf['sms']['use'] != 'none') { ?>
