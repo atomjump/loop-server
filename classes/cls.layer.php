@@ -1045,7 +1045,7 @@ class cls_login
 				$sh = new cls_ssshout();
 			
 				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
-				//TESTING OUT $_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+				
 				
 			}	    
 	    
@@ -1061,7 +1061,7 @@ class cls_login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-						if(($email != "")||(isset($_SESSION['logged_user']))) {
+						if(isset($_SESSION['logged_user'])) {
 							//Continue with current user and fully login
 						} else {
 							//Refresh the page and reload
@@ -1282,8 +1282,7 @@ class cls_login
 				
 				
 				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
-				//OLD: $_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-			
+						
 			
 				//No password already, so presumably we need to store it
 				if($password) {
