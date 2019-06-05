@@ -1070,12 +1070,12 @@ class cls_login
 						  	
 					} else {
 						//Sorry, this was the wrong password
-						return "FORUM_INCORRECT_PASS,RELOAD";		//TESTING RELOAD
+						return "FORUM_INCORRECT_PASS";		
 				
 					}
 			} else {
 				//Sorry, this was the wrong password
-				return "FORUM_INCORRECT_PASS,RELOAD";	//TESTING RELOAD
+				return "FORUM_INCORRECT_PASS";	
 			}
 	    
 	    }

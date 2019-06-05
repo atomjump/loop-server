@@ -841,6 +841,14 @@ function set_options_cookie() {
 				break;
 				
 				case "FORUM_LOGGED_IN":
+				
+				 	//Also save any password that you entered for the next login
+					keepPassword = $('#password-opt').val();
+					if(keepPassword) {
+						newLocation = window.location.href + "&pd=" + keepPassword;
+					}
+				
+				
 					toggle = false;
 					msg = lsmsg.msgs[lang].loggedIn;
 					$('#forum-logged-in').html(msg);
@@ -860,12 +868,9 @@ function set_options_cookie() {
 						newLocation = window.location.href + "&pd=" + keepPassword;
 					}
 				    
-				    
 					toggle = false;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
-					
-					
 					
 					
 					refreshLoginStatus();
