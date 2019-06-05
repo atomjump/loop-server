@@ -436,7 +436,7 @@
 										</div>
 										<div id="set-forum-password-form" class="form-group" style="display:none;">
 											<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span></div>
-											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="<?php echo $_REQUEST['setforumpassword'] ?>">
+											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
 									<?php } else { ?>
@@ -445,7 +445,7 @@
 											<div style="padding-top:10px;"><span style="color: red;" id="group-user-count"></span> <?php echo $msg['msgs'][$lang]['subscribers'] ?></div>
 											<input  id="group-users" name="users" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['privateOwnersEnter'] ?>" value="">
 										</div>
-									 	<input  id="set-forum-password" name="setforumpassword" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="<?php echo $_REQUEST['setforumpassword'] ?>">
+									 	<input  id="set-forum-password" name="setforumpassword" type="hidden" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 									 	<input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 									 	<input type="hidden" id="subscribers-limit" name="subscriberlimit"  class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['limitSubscribersEnter'] ?>" value="">
 										

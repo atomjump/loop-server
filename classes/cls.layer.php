@@ -1146,7 +1146,7 @@ class cls_login
 				if($_SESSION['access-layer-granted']) {
 						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
 							//Go back and get a password off the user.
-							return "FORUM_INCORRECT_PASS,RELOAD";
+							return "FORUM_INCORRECT_PASS,RELOAD";  //TODO: change message here to reflect no forum password yet.
 						}
 				}
 			}
@@ -1277,7 +1277,7 @@ class cls_login
 				
 				
 				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
-				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+				//OLD: $_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 			
 			
 				//No password already, so presumably we need to store it
