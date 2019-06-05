@@ -938,7 +938,7 @@ function set_options_cookie() {
 					$("#comment-options").toggle();
 					if(reloadOpt == true) {
 						window.location.assign(newLocation);
-			            //OLD: location.reload();
+			            refreshLoginStatus();
 			           
 			        }
 					
@@ -958,7 +958,7 @@ function set_options_cookie() {
 							
 							if(reloadOpt == true) {
 			                   	window.location.assign(newLocation);
-			            		//OLD: location.reload();
+			            		refreshLoginStatus();
 			                }
 							
 						}, (500*timeMult));
@@ -973,7 +973,7 @@ function set_options_cookie() {
 			        //carry out a reload of the page too
 			        if(mytype[1] === "RELOAD") {
 			            window.location.assign(newLocation);
-			            //OLD: location.reload();	
+			            refreshLoginStatus();	
 			        }
 			    }
 	
