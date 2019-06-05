@@ -1061,8 +1061,12 @@ class cls_login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-					
-						//OLD: return "FORUM_LOGGED_IN,RELOAD";
+						if(($email != "")||(isset($_SESSION['logged_user'])) {
+							//Continue with current user and fully login
+						} else {
+							//Refresh the page and reload
+							return "FORUM_LOGGED_IN,RELOAD";
+						} 
 						  	
 					} else {
 						//Sorry, this was the wrong password
