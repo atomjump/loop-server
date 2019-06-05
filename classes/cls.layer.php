@@ -1062,7 +1062,7 @@ class cls_login
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
 					
-						return "FORUM_LOGGED_IN,RELOAD";
+						//OLD: return "FORUM_LOGGED_IN,RELOAD";
 						  	
 					} else {
 						//Sorry, this was the wrong password
