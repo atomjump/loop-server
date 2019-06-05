@@ -103,13 +103,26 @@ $json = array();
 		$loggedIn .= "style=\"display: none;\" >";
 	}
 	
-	//Not signed in display
+	//'Not signed in' display
 	$loggedIn .= $msg['msgs'][$lang]['logoutLink'] . "</a> <span id=\"comment-not-signed-in\" ";
 	if(((urldecode($_COOKIE['email']) == $_SESSION['logged-email'])&&($_SESSION['logged-email'] != ""))||
 		((urldecode($_COOKIE['email']) == $unlogged_email)&&($unlogged_email != ""))) {
+		//Switch off
 		$loggedIn .= "style=\"display: none;\" >";
 	} else {
+		//Switch on
 		$loggedIn .= "style=\"display: block;\" >";
+	}
+	
+	
+	//Now check if we are signed in to an authenticated layer - we still want a sign out option here
+	if(($layer_info) &&($_SESSION['logged-user'] != "")) {
+		if(isset($layer_info['var_public_code'])) {
+			if($_SESSION['authenticated-layer'] == $layer_info['int_layer_id']) {
+				//Show the sign out option
+				$loggedIn .= "style=\"display: block;\" >";			
+			}
+		}
 	}
 	
 	$loggedIn .= $msg['msgs'][$lang]['notSignedIn'] . "</span>";
