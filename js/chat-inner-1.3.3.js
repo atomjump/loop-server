@@ -853,16 +853,19 @@ function set_options_cookie() {
 				
 				case 'FORUM_INCORRECT_PASS':
 				    msg = lsmsg.msgs[lang].forumPasswordWrong;
+				    
+				    //Also save the password that you entered for the next login
+					keepPassword = $('#password-opt').val();
+					if(keepPassword) {
+						newLocation = window.location.href + "&pd=" + keepPassword;
+					}
+				    
+				    
 					toggle = false;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
 					
-					//Also save the password that you entered for the next login
-					keepPassword = $('#password-opt').val();
-					if(keepPassword) {
-						var newLocation = window.location.href + "&pd=" + keepPassword;
-						msg = "";		//No message needed
-					}
+					
 					
 					
 					refreshLoginStatus();
