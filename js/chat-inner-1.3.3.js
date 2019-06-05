@@ -815,6 +815,7 @@ function set_options_cookie() {
 			var toggle = true;
 			var reload = false;
 			var timeMult= 1;
+			var newLocation = window.location.href;
 			
 			var mytype = response.split(','); 
 			
@@ -855,6 +856,12 @@ function set_options_cookie() {
 					toggle = false;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
+					
+					//Also save the password that you entered for the next login
+					keepPassword = $('#password-opt').val();
+					alert(window.location.href);
+					var newLocation = window.location.href + "&pw=" + keepPassword;
+					
 					
 					refreshLoginStatus();
 				break;
@@ -931,7 +938,9 @@ function set_options_cookie() {
 					$("#comment-popup-content").toggle(); 
 					$("#comment-options").toggle();
 					if(reloadOpt == true) {
-			            location.reload();
+						window.location.assign(newLocation);
+			            //OLD: location.reload();
+			           
 			        }
 					
 				} else {
@@ -949,7 +958,8 @@ function set_options_cookie() {
 							$("#comment-options").toggle();
 							
 							if(reloadOpt == true) {
-			                   location.reload();
+			                   	window.location.assign(newLocation);
+			            		//OLD: location.reload();
 			                }
 							
 						}, (500*timeMult));
@@ -963,7 +973,8 @@ function set_options_cookie() {
 	            if(mytype[1]) {
 			        //carry out a reload of the page too
 			        if(mytype[1] === "RELOAD") {
-			            location.reload();		
+			            window.location.assign(newLocation);
+			            //OLD: location.reload();	
 			        }
 			    }
 	
