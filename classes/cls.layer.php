@@ -1086,7 +1086,13 @@ class cls_login
 	    	$layer_info = $ly->get_layer_id($layer_visible);
 	    	
 		    if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
-	    		//All good to continue
+	    		//All good to continue...
+	    		
+	    		if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+					//...unless we are a new user, in which case we need them to fill in the form
+					return "FORUM_INCORRECT_PASS,RELOAD";
+				}
+	    		
 	    	} else {
 	    		//Sorry, the forum password hasn't been set
 				return "FORUM_INCORRECT_PASS,RELOAD";
