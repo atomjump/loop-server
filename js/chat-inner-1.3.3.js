@@ -8,6 +8,7 @@ var lsmsg = {
               "defaultYourEmail" : "Your Email",
               "loggedIn": "Logged in. Please wait..",
               "passwordWrong": "Sorry, your password is not correct.",
+              "forumPasswordWrong": "Sorry, your forum password is not correct.",
               "passwordStored": "Thanks, your password is now set.",
               "registration": "Thanks for registering.  To confirm your email address we've sent an email with a link in it, which you should click within a day.",
               "badResponse": "Sorry, response is: ",
@@ -23,6 +24,7 @@ var lsmsg = {
               "defaultYourEmail": "Su e-mail",
               "loggedIn": "Conectado Por favor, espere..",
               "passwordWrong": "Lo siento, la contraseña no es correcta.",
+              "forumPasswordWrong": "Lo sentimos, la contraseña de tu foro no es correcta.",
               "passwordStored": "Gracias, su contraseña se establece ahora.",
               "registration": "Gracias por registrarse. Para confirmar su dirección de correo electrónico que've enviado un correo electrónico con un enlace en ella, lo que debe hacer clic en un día.",
               "badResponse": "Lo siento, la respuesta es: ",
@@ -38,6 +40,7 @@ var lsmsg = {
               "defaultYourEmail": "Seu Email",
               "loggedIn": "Iniciado. Aguarde..",
               "passwordWrong": "Desculpe, sua senha não está correta.",
+              "forumPasswordWrong": "Desculpe, sua senha do fórum não está correta.",
               "passwordStored": "Obrigado, sua senha está agora definida.",
               "registration": "Obrigado por se registrar. Para confirmar seu endereço de e-mail, enviamos um e-mail com um link, que você deve clicar dentro de um dia.",
               "badResponse": "Desculpe, a resposta é: ",
@@ -848,7 +851,7 @@ function set_options_cookie() {
 				break;
 				
 				case 'FORUM_INCORRECT_PASS':
-				    msg = lsmsg.msgs[lang].passwordWrong;
+				    msg = lsmsg.msgs[lang].forumPasswordWrong;
 					toggle = false;
 					$('#forum-logged-in').html(msg);
 					$('#forum-logged-in').show();
