@@ -249,7 +249,8 @@ class cls_layer
 	
 	public function get_remote_ssl($request, $timeout = 2000)
 	{
-	
+		global $cnf;
+		
 		//Asyncronously call url
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $request);
@@ -260,7 +261,12 @@ class cls_layer
 	
 	
       // Turn on SSL certificate verfication
-      curl_setopt($curl, CURLOPT_CAPATH, "/etc/apache2/ssl/ca.pem");
+      if($cnf['caPath']) {
+      	$ca_path = $cnf['caPath'];
+      } else {
+      	$ca_path = "/etc/apache2/ssl/ca.pem";		//The default
+      }
+      curl_setopt($curl, CURLOPT_CAPATH, $ca_path);
       curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
 
