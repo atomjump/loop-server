@@ -1061,7 +1061,7 @@ class cls_login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-						if((isset($email))&&(isset($password))) {
+						if($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
 							$reload = ",RELOAD";
 						} else {
