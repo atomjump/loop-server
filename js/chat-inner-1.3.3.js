@@ -838,6 +838,13 @@ function set_options_cookie() {
 					$('#comment-logout').show();	//show the logout button
 					refreshLoginStatus();
 					
+					if(mytype[1]) {
+				    	if(mytype[1] === "RELOAD") {
+				    		//No need to toggle if we are reloading
+				        	toggle = false;
+				    	}
+			    	} 
+					
 				break;
 				
 				case "FORUM_LOGGED_IN":
