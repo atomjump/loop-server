@@ -1062,7 +1062,8 @@ class cls_login
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
 						if((isset($email))||($_SESSION['logged_user'])) {
-							//Continue with current user and fully login
+							//Continue with current user and fully login, but also refresh
+							$reload = ",RELOAD";
 						} else {
 							//Refresh the page and reload
 							return "FORUM_LOGGED_IN,RELOAD";
