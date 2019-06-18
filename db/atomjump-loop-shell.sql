@@ -73,23 +73,6 @@ CREATE TABLE `tbl_feed` (
 ) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `tbl_group`
---
-
-DROP TABLE IF EXISTS `tbl_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_group` (
-  `int_group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `int_user1_id` int(10) unsigned NOT NULL,
-  `int_user2_id` int(10) unsigned NOT NULL,
-  `int_more_in_group_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`int_group_id`),
-  KEY `tbl_group12_id` (`int_user1_id`,`int_user2_id`),
-  KEY `tbl_group21_id` (`int_user2_id`,`int_user1_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tbl_layer`
@@ -256,7 +239,6 @@ CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
 -- Modify for international UTF-8 everywhere - these commands should be applied to old systems
 -- ALTER TABLE php_session CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 -- ALTER TABLE tbl_user CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
--- ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- Modify for ordered messages based on date/time, not id.
 CREATE INDEX ordered_ssshout ON tbl_ssshout (date_when_shouted);
