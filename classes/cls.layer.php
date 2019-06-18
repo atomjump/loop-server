@@ -1072,6 +1072,11 @@ class cls_login
 							$reload = ",RELOAD";
 						} else {
 							//Refresh the page and reload
+							
+							//Confirm this new blank user
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+							
 							return "FORUM_LOGGED_IN,RELOAD";
 						} 
 						  	
