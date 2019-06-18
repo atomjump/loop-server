@@ -758,7 +758,7 @@
                 <div class="col-md-2">
                 </div>
                  <div class="col-md-8">
-                    <h3 align="center" style="color: #aaa;">Set 'server' to:
+                    <h3 align="center" style="color: #aaa;">Set your 'server' variable to:
                         <b><?php $actual_link = 'http://'.$_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
                             echo $actual_link; ?></b>
                         
