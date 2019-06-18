@@ -389,9 +389,15 @@
 		$query = $subdomain;
 	}
 
+	global $db_cnf;
+	if($db_cnf['serviceHome'] && $db_cnf['serviceHome'] != "") {
+		//Redirect to the homepage of the service. Particularly use by the reset password.
+		//This is a 'scaled up' redirect, as a first check.
+		header("Location: " . $db_cnf['serviceHome']);
+		exit(0);
+	}
 	
-
-
+	//Now check the master version
 	if($cnf['serviceHome'] && $cnf['serviceHome'] != "https://yourcompany.com") {
 		//Redirect to the homepage of the service. Particularly use by the reset password
 		header("Location: " . $cnf['serviceHome']);
