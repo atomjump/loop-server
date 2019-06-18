@@ -720,7 +720,7 @@
 		    <div id="logo-wrapper" class="looplogo">
 				<img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt="">
 				<br/>
-				<p align="center">Your AtomJump Messaging server is running! You should now configure a '<a href="https://github.com/atomjump/loop#loop">web service connector client</a>' to start messaging from this server.</p>
+				<p align="center">Your AtomJump Messaging server is running!<br/> You should now configure a '<a href="https://github.com/atomjump/loop#loop">web service connector client</a>' to start messaging from this server.</p>
 
 			</div>
 			</a>
