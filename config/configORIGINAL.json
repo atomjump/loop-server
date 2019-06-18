@@ -2,7 +2,7 @@
    "usingStaging": true,	
    "staging": {
       "db": {
-         "name": "ssshout",
+         "name": "atomjump",
          "hosts": [
             "127.0.0.1"
          ],
@@ -123,7 +123,7 @@
    }, 
    "production": {      
      "db": {
-         "name": "ssshout",
+         "name": "atomjump",
          "hosts": [
             "127.0.0.1"
          ],
@@ -136,7 +136,7 @@
          "scaleUp": [
          	{
          		"labelRegExp": "^ajps_2_",
-         	    "name": "ssshout",
+         	    "name": "atomjump",
 				 "hosts": [
 					"yourdb2write.yourcompany.com",
 					"yourdb2read2.yourcompany.com",
@@ -164,7 +164,7 @@
          	},
          	{
          	    "labelRegExp": "^ajps_3_",
-         	    "name": "ssshout",
+         	    "name": "atomjump",
 				 "hosts": [
 					"yourdb3write1.yourcompany.com",
 					"yourdb3write2.yourcompany.com",
