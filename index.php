@@ -734,7 +734,7 @@
 
 		<div>
 		    <div id="logo-wrapper" class="looplogo">
-				<a href="https://atomjump.com"><img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt=""></a>
+				<img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt="">
 				<br/>
 
 			</div>
