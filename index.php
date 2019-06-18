@@ -748,7 +748,7 @@
 
 
 		<div class="subs">
-  				<a href="https://github.com/atomjump/loop-server" title="Download Software"><img  border="0" src="https://atomjump.com/images/loopdownload.svg" width="80" height="80"></a>
+  				<a href="https://github.com/atomjump/loop-server/releases" title="Download Software"><img  border="0" src="https://atomjump.com/images/loopdownload.svg" width="80" height="80"></a>
 		</div>
 
 		
@@ -757,7 +757,7 @@
                 <div class="col-md-2">
                 </div>
                  <div class="col-md-8">
-                    <h3 align="center">Set 'server' to:
+                    <h3 align="center" style="color: #aaa;">Set 'server' to:
                         <b><?php $actual_link = 'http://'.$_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
                             echo $actual_link; ?></b>
                         
