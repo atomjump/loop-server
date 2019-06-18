@@ -429,15 +429,7 @@
 			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			  <style>
-			  .looplogo:hover {
-					position: relative;
-					background: url(images/logo640.png)  no-repeat;
-					height: 640px;
-					width: 640px;
-					margin-left: auto;
-					margin-right: auto;
-					padding-top: 0px;
-			 	}
+			  
 
 				.looplogo {
 					background: url(images/logo640.png)  no-repeat;
