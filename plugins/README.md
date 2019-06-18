@@ -45,7 +45,7 @@ Parameters
 Server: >= 0.5.0
 
 ```
-  $table                     //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+  $table                     //AtomJump Loop Server ('atomjump' by default) database table name eg. "tbl_email"
   $insert_field_names_str    //Insert string e.g. "(var_layers, var_title, var_body, date_when_received, var_whisper)"
   $insert_field_data_str     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . db_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
 ```
