@@ -736,6 +736,7 @@
 		    <div id="logo-wrapper" class="looplogo">
 				<img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt="">
 				<br/>
+				<p>Your messaging server is running.</p>
 
 			</div>
 			</a>
