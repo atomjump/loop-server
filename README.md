@@ -83,9 +83,9 @@ chmod 777 /images/im
  "server": "http://yourserver.com"
 ```
 
-7. In a MySQL prompt, run 'create database ssshout'. Then from the command line:
+7. In a MySQL prompt, run 'create database atomjump'. Then from the command line:
 ```   
- mysql -u youruser -p ssshout < db/atomjump-loop-shell.sql
+ mysql -u youruser -p atomjump < db/atomjump-loop-shell.sql
 ```
 
 
@@ -505,7 +505,7 @@ Parameters
 Server: >= 0.5.0
 
 ```
-  $table                     //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+  $table                     //AtomJump Loop Server ('atomjump' by default) database table name eg. "tbl_email"
   $insert_field_names_str    //Insert string e.g. "(var_layers, var_title, var_body, date_when_received, var_whisper)"
   $insert_field_data_str     //Insert values e.g. ('" . clean_data($feed['aj']) . "','". clean_data($subject) . "','" . db_real_escape_string($raw_text) .  "', NOW(), '" . $feed['whisper'] . "') " )    
 ```
