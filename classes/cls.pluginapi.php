@@ -87,7 +87,7 @@ class cls_plugin_api {
 	   A manual database update for plugins 
     	*/
 	
-	public function db_update($table,                       //AtomJump Loop Server (ssshout by default) database table name eg. "tbl_email"
+	public function db_update($table,                       //AtomJump Loop Server ('atomjump' by default) database table name eg. "tbl_email"
 	                            $update_set)    //Update set e.g. "var_title = 'test' WHERE var_title = 'test2'"  - can have multiple fields	                          
 	{
 	    //Returns true for successful, or breaks the server request if unsuccessful, with an error 
