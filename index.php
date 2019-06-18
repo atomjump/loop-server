@@ -412,7 +412,7 @@
   <head>
   	    <meta charset="utf-8">
 		 <meta name="viewport" content="width=device-width, user-scalable=no">
-		 <title>AtomJump Loop Server - provided by AtomJump</title>
+		 <title>AtomJump Messaging Server - provided by AtomJump</title>
 
 		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
 
