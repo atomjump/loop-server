@@ -729,7 +729,6 @@
 				<p align="center">Your AtomJump Messaging server is running!<br/> You should now configure a '<a href="https://github.com/atomjump/loop#loop">web service connector client</a>' to start messaging from this server.</p>
 
 			</div>
-			</a>
 		</div>
 
 
