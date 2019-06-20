@@ -399,9 +399,7 @@ RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
 Advanced settings, and write this into the config. This user is allowed to set forum passwords and limit the subscribers for a particular forum.
 
-**analytics** **use**: Can be 'none' or 'piwik'. None switches off analytics, while 'piwik' enables them.
-
-**analytics** **piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
+**analytics** **use**: Can be 'none'. Include a 'url' entry. The 'image' field is currently only needed for retrieving unique backgrounds for subdomains of atomjump.com.
 
 **social** **use**: Can be 'none' or 'all'. 'none' switches off all social media interaction, while 'all' enables all of them.
 
