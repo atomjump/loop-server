@@ -1,7 +1,7 @@
 ## Plugins
 
 Plugins can be installed in the /plugins directory.
-See https://atomjump.com/smart.php for a list of plugins available.
+See http://atomjump.org/wp/plugin-summary/ for a list of plugins available.
 
 
 ## Plugin API
