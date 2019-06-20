@@ -458,7 +458,7 @@ Please see the /config/language-packs/README.md file for instructions on changin
 # Plugins
 
 Plugins can be installed in the /plugins directory.
-See https://atomjump.com/smart.php for a list of plugins available.
+See http://atomjump.org/wp/plugin-summary/ for a list of plugins available.
 
 
 ## Plugin API
@@ -814,7 +814,7 @@ AtomJump Messaging can work in a single write/ multiple read MySQL cluster, or a
 Contributions are welcome, and they can take the shape of:
 
 1. Core: Submit github pull requests. We will need to consider whether the feature should be in core, or externally as a plugin.  It is generally a good idea to get in touch with us via our homepage at http://atomjump.org to ensure we are not already working on a similar feature.
-2. Plugins: Develop to the API above, and then publish on the https://atomjump.com/smart.php 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
+2. Plugins: Develop to the API above, and then publish on the http://atomjump.org/wp/plugin-summary/ 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
 3. Translations: We are looking for any translations of the conf/messages.json file from English into your language. We have machine translated Spanish as a first step, but we need help in ensuring this is a good translation, and applying other languages.
 
 
