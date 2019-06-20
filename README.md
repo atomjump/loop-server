@@ -420,7 +420,7 @@ Note: You should make sure your server provides a caching response to image file
 
 **uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
-**uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
+**uploads** **vendor** **amazonAWS**: optional. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
 
 **email** **adminEmail**: Administrator's email address.
