@@ -397,8 +397,7 @@ RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-
 **logoutPort**: Depreciated ver 0.6.3. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5, ver <= 0.6.2
 
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
-Advanced settings, and write this into the config. This is the default location for private messages if there is no other
-owner of a group.
+Advanced settings, and write this into the config. This user is allowed to set forum passwords and limit the subscribers for a particular forum.
 
 **analytics** **use**: Can be 'none' or 'piwik'. None switches off analytics, while 'piwik' enables them.
 
