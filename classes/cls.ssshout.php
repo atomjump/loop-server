@@ -550,15 +550,15 @@ class cls_ssshout
 				if($row = db_fetch_array($result))
 				{
 					//User exists, and we have an email address - email that admin user
-					cc_mail($row['var_email'], $msg, $cnf['email']['webmasterEmail']);
+					cc_mail($row['var_email'], $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
 				} else {
 					//Mail the master owner
-					cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
+					cc_mail($cnf['email']['adminEmail'],  $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
 				}
 				
 			} else {
 				//Mail the master owner
-				cc_mail($cnf['email']['adminEmail'], $msg, $cnf['email']['webmasterEmail']);
+				cc_mail($cnf['email']['adminEmail'], $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
 			}
 			
 			//A message has been deactivated - show something to the user, and log it
