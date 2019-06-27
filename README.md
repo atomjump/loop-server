@@ -397,12 +397,9 @@ RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-
 **logoutPort**: Depreciated ver 0.6.3. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5, ver <= 0.6.2
 
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface
-Advanced settings, and write this into the config. This is the default location for private messages if there is no other
-owner of a group.
+Advanced settings, and write this into the config. This user is allowed to set forum passwords and limit the subscribers for a particular forum.
 
-**analytics** **use**: Can be 'none' or 'piwik'. None switches off analytics, while 'piwik' enables them.
-
-**analytics** **piwik**:  optional. Only needed for retrieving unique backgrounds for subdomains of atomjump.
+**analytics** **use**: Can be 'none'. Include a 'url' entry. The 'image' field is currently only needed for retrieving unique backgrounds for subdomains of atomjump.com.
 
 **social** **use**: Can be 'none' or 'all'. 'none' switches off all social media interaction, while 'all' enables all of them.
 
@@ -423,7 +420,7 @@ Note: You should make sure your server provides a caching response to image file
 
 **uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
-**uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
+**uploads** **vendor** **amazonAWS**: optional. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
 
 **email** **adminEmail**: Administrator's email address.
@@ -461,7 +458,7 @@ Please see the /config/language-packs/README.md file for instructions on changin
 # Plugins
 
 Plugins can be installed in the /plugins directory.
-See https://atomjump.com/smart.php for a list of plugins available.
+See http://atomjump.org/wp/plugin-summary/ for a list of plugins available.
 
 
 ## Plugin API
@@ -817,7 +814,7 @@ AtomJump Messaging can work in a single write/ multiple read MySQL cluster, or a
 Contributions are welcome, and they can take the shape of:
 
 1. Core: Submit github pull requests. We will need to consider whether the feature should be in core, or externally as a plugin.  It is generally a good idea to get in touch with us via our homepage at http://atomjump.org to ensure we are not already working on a similar feature.
-2. Plugins: Develop to the API above, and then publish on the https://atomjump.com/smart.php 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
+2. Plugins: Develop to the API above, and then publish on the http://atomjump.org/wp/plugin-summary/ 'available plugins' link.  You are free to write or publish (or keep private) any number of plugins.
 3. Translations: We are looking for any translations of the conf/messages.json file from English into your language. We have machine translated Spanish as a first step, but we need help in ensuring this is a good translation, and applying other languages.
 
 
