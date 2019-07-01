@@ -43,7 +43,7 @@ sudo apt-get install ntp
 
 # Installation
 
-On your Linux server, download and unzip the latest release of the loop-server from
+On your Linux server, download and unzip the latest release of the loop-server from https://github.com/atomjump/loop-server/releases
 
 ```
 https://github.com/atomjump/loop-server/releases
