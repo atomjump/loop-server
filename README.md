@@ -55,7 +55,7 @@ Or git clone
 git clone https://github.com/atomjump/loop-server.git
 ```
 
-Or using composer https://getcomposer.org/
+Or using composer https://getcomposer.org/ see https://packagist.org/packages/atomjump/loop-server
 ```
 composer require atomjump/loop-server
 ```
