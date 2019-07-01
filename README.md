@@ -124,7 +124,9 @@ Running on Windows has currently not been tested, but you can use a Ubuntu 14.04
 **(sometimes called the 'loop' project)**
 
 Is available from
-https://github.com/atomjump/loop#loop
+https://github.com/atomjump/loop#loop 
+or you can add this to your site from
+http://atomjump.org/wp/add-atomjump-messaging-to-your-site/
 
 This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is good for general messaging, either within a company or family, in either a private or public setting.  
 
