@@ -194,6 +194,13 @@ Or, for further control over the owner of the forum, you can add the following d
 ```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" href="javascript:">Open special forum</a>```
 
 
+## To open custom URLs within notifications
+
+When the app or email setup sends notifications, it provides a clickable address for the user to go to in order to see the forum. If the usual current web address is behind a token or password, this link needs a lead-up page to allow for client-side logins. You can set this address with the 'data-notifyurl' token.
+
+```<a class="comment-open" data-notifyurl="https://myurl.behind/?token=password-protected-page"  href="javascript:">Open with specific notification URL</a>```
+
+
 
 ## To open a Shortmail enabled forum
 
