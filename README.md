@@ -43,7 +43,7 @@ sudo apt-get install ntp
 
 # Installation
 
-On your Linux server, download and unzip the latest release of the loop-server from
+On your Linux server, download and unzip the latest release of the loop-server from https://github.com/atomjump/loop-server/releases
 
 ```
 https://github.com/atomjump/loop-server/releases
@@ -55,7 +55,7 @@ Or git clone
 git clone https://github.com/atomjump/loop-server.git
 ```
 
-Or using composer https://getcomposer.org/
+Or using composer https://getcomposer.org/ see https://packagist.org/packages/atomjump/loop-server
 ```
 composer require atomjump/loop-server
 ```
@@ -124,7 +124,9 @@ Running on Windows has currently not been tested, but you can use a Ubuntu 14.04
 **(sometimes called the 'loop' project)**
 
 Is available from
-https://github.com/atomjump/loop#loop
+https://github.com/atomjump/loop#loop 
+or you can add this to your site from
+http://atomjump.org/wp/add-atomjump-messaging-to-your-site/
 
 This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is good for general messaging, either within a company or family, in either a private or public setting.  
 
