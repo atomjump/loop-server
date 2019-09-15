@@ -189,8 +189,8 @@ Note: jQuery ver 1.9.1 is used.  Other jQuery versions will likely work also.
 You can do this three different ways. The simplest is to set the link's href to '"#comment-open-' followed by the forum name:
 ```<a href="#comment-open-my_different_forum_name">Open special forum</a>```
 
-Or, you can add the 'comment-open' class to a link with an 'id' referring to the forum name:
-```<a class="comment-open" id="my_different_forum_name" href="javascript:">Open special forum</a>```
+Or, you can add the 'comment-open' class to a link with an 'id' referring to the forum name (you also need a 'data-useid' tag):
+```<a class="comment-open" id="my_different_forum_name" data-useid="true"  href="javascript:">Open special forum</a>```
 
 Or, for further control over the owner of the forum, you can add the following data tags, and enter your own names/ips:
 ```<a class="comment-open" data-uniquefeedbackid="my_different_forum_name" data-mymachineuser="10.12.13.14:2" href="javascript:">Open special forum</a>```
