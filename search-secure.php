@@ -309,7 +309,7 @@
 			
 			
 			
-			<div id="comment-chat-form" class="container" style="padding-left: 6px; padding-right: 6px;">
+			<div id="comment-chat-form" class="container" style="padding-left: 2px; padding-right: 2px;">
 				   <form id="comment-input-frm" class="form form-inline" role="form" action="" onsubmit="return mg.commitMsg(sendPublic);"  autocomplete="off" method="GET">
 							<input type="hidden" name="action" value="ssshout">
 							<input type="hidden" id="lat" name="lat" value="">
