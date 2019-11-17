@@ -341,7 +341,7 @@
 										<textarea id="shouted" name="shouted" class="form-control" maxlength="510" placeholder="<?php echo $msg['msgs'][$lang]['enterComment'] ?>" autocomplete="off"></textarea>
 								  </div>
 								</div>
-								<div class="form-group col-xs-12 col-sm-12 col-md-5 col-lg-6"><!-- Was lg-4 -->
+								<div class="form-group col-xs-12 col-sm-12 col-md-7 col-lg-4">
 									<button type="submit" id="private-button"  class="btn btn-info" style="margin-bottom:3px; display: none;"><?php echo $msg['msgs'][$lang]['sendPrivatelyButton'] ?></button>
 									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
 									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
