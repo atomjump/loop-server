@@ -832,3 +832,8 @@ Contributions are welcome, and they can take the shape of:
 This software is open source under the MIT license. Copyright is with the AtomJump Foundation (New Zealand), a non-profit society.  You can use this software for any commercial purposes.
 
 
+# Other credits
+
+Ear Icons designed by Roundicons https://www.flaticon.com/authors/roundicons from http://www.flaticon.com, and Freepik https://www.flaticon.com/authors/freepik from the same site.
+
+
