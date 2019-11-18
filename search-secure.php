@@ -612,7 +612,7 @@
 		 	  function subFront(uid, uniqueFeedbackId) {
 		 	  	
 		 	  	if($("#email-opt").val() == '') {
-		 	  		 $('#email-explain').html("Please enter your email (and optional password) to get message notifications.");
+		 	  		 $('#email-explain').html("Please enter your email to get message notifications.");
 		 	  		 $('#email-explain').show();
 		 	  		 $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 		 	  		 $("#comment-popup-content").hide(); 

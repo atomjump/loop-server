@@ -942,6 +942,16 @@ function set_options_cookie() {
 				case 'SUBSCRIBED':
 					msg = lsmsg.msgs[lang].subscribed;
 					refreshLoginStatus();
+					
+					
+					var runApp = false;
+					if($('#useapp').is(":checked")) {
+						runApp = true;
+					}
+			    	if(runApp) {
+						//Run the app / either install or open the app
+						deepLinkApp();
+					}
 				
 				break;
 				
