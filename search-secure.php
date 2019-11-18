@@ -132,8 +132,8 @@
 	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
 
 	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
-	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" .$_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
-	$subscribe_toggle = $subscribe_toggle_no_ear;
+	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+	$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);
 	
 
 	if($_SESSION['logged-email']) {
@@ -142,7 +142,7 @@
 		$subscribe_text = "subscribe";
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		
-		$subscribe_toggle = $subscribe_toggle_no_ear;
+		$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);
 	}
 
 	if(($layer_info)&&($_SESSION['logged-user'] != "")) {
@@ -154,7 +154,7 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = $subscribe_toggle_ear;
+			$subscribe_toggle = stripslashes($subscribe_toggle_ear);
 
 		}
 		
