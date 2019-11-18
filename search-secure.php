@@ -128,14 +128,14 @@
 	$subscribe_text = "subscription";
 	if($msg['msgs'][$lang]['subscription']) $subscribe_text = $msg['msgs'][$lang]['subscription'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-	$subscribe_toggle_pic = "<img  src=\"" . $root_server_url . "\"/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
+	$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "\"/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
 
 	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-		$subscribe_toggle_pic = "<img  src=\"" . $root_server_url . "\"/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
+		$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "\"/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
 	}
 
 	if(($layer_info)&&($_SESSION['logged-user'] != "")) {
@@ -147,7 +147,7 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle_pic = "<img  src=\"" . $root_server_url . "\"/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
+			$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "\"/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
 
 		}
 		
