@@ -850,8 +850,11 @@ function set_options_cookie() {
 				    	}
 			    	} 
 			    	
-			    	var useApp = getCookie("useapp");
-			    	if(useApp) {
+			    	var runApp = false;
+					if($('#useapp').is(":checked")) {
+						runApp = true;
+					}
+			    	if(runApp) {
 						//Run the app / either install or open the app
 						deepLinkApp();
 					}
@@ -924,8 +927,11 @@ function set_options_cookie() {
 					
 					refreshLoginStatus();
 					
-					var useApp = getCookie("useapp");
-			    	if(useApp) {
+					var runApp = false;
+					if($('#useapp').is(":checked")) {
+						runApp = true;
+					}
+			    	if(runApp) {
 						//Run the app / either install or open the app
 						deepLinkApp();
 					}
