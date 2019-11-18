@@ -755,6 +755,7 @@ function refreshLoginStatus()
 			$("#subscribe-button").html(", " + response.subscribe);
 			$("#logged-status").html(response.loggedIn);
 			$("#sub-toggle").html(response.subscribeToggle);
+			$('#email-explain').html("");		//Blank off messages
 		});
 
 }
@@ -934,6 +935,7 @@ function set_options_cookie() {
 			    	if(runApp) {
 						//Run the app / either install or open the app
 						deepLinkApp();
+						
 					}
 				break;
 				
