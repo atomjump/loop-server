@@ -607,6 +607,10 @@
 		 	  	if($("#email-opt").val() == '') {
 		 	  		$('#email-explain').html("Please enter your email (and password) to subscribe.");
 		 	  		 $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
+		 	  		 $("#comment-popup-content").hide(); 
+					 $("#comment-upload").hide();
+					 $("#comment-emojis").hide();
+		 	  	
 		 	  	} else {
 		 	  		sub(uid, uniqueFeedbackId);	
 		 	  		
