@@ -131,7 +131,7 @@
 	$subscribe_toggle_pic_no_ear = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
 	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
 
-	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
 	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
 	$subscribe_toggle = $subscribe_toggle_no_ear;
 	
