@@ -754,7 +754,7 @@ function refreshLoginStatus()
 		}).done(function(response) {
 			$("#subscribe-button").html(", " + response.subscribe);
 			$("#logged-status").html(response.loggedIn);
-			$("#sub-toggle").html(response.loggedIn);
+			$("#sub-toggle").html(response.subscribeToggle);
 		});
 
 }
