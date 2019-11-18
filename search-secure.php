@@ -568,6 +568,7 @@
 				  	 if(response.includes("FAILURE") === true) {
 				  	 	$('#email-explain').html("<?php echo $msg['msgs'][$lang]['problemUnsubscribing'] ?>");
 					    $('#email-explain').show();
+					    $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 				  	 } else { 
 				  		
 					   $('#group-users').html(response);
@@ -587,6 +588,7 @@
 				  	 if(response.includes("FAILURE") === true) {
 				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
 					    $('#email-explain').show();
+					    $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 				  	 } else { 
 				  		
 					   $('#group-users').html(response);
