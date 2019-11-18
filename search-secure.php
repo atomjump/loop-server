@@ -140,7 +140,7 @@
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
-		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+		$subscribe = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		
 		$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);
 	}
@@ -589,6 +589,7 @@
 				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
 					    $('#email-explain').show();
 					    $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
+		 	  
 				  	 } else { 
 				  		
 					   $('#group-users').html(response);
@@ -600,6 +601,18 @@
 					   
 				 });
 		 	  }
+		 	  
+		 	  
+		 	  function subFront(uid, uniqueFeedbackId) {
+		 	  	if($("#email-opt").val() == '') {
+		 	  		$('#email-explain').html("Please enter your email (and password) to subscribe.");
+		 	  	} else {
+		 	  		sub(uid, uniqueFeedbackId);	
+		 	  		
+		 	  	}
+		 	  
+		 	  }
+		 	  
 		
 				function vidDeactivate()
 				{
