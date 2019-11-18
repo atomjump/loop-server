@@ -27,6 +27,16 @@ $json = array();
 	$subscribe_text = "subscription";
 	if($msg['msgs'][$lang]['subscription']) $subscribe_text = $msg['msgs'][$lang]['subscription'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+	$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+
+
+	//The front-end direct listening or not
+	/*$subscribe_toggle_pic_no_ear = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
+	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
+	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+	$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);*/
+
 
 	//Get layer info
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
@@ -53,6 +63,8 @@ $json = array();
 			$subscribe_text = "subscribe";	
 			if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['passcode'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+			
 		} else {
 			$subscribe_text = "cannot subscribe"; 
 			if($msg['msgs'][$lang]['cannotSubscribe']) $subscribe_text = $msg['msgs'][$lang]['cannotSubscribe'];
@@ -69,6 +81,7 @@ $json = array();
 			$subscribe_text = "unsubscribe";	
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['passcode'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
 
 		}
 	}
@@ -156,6 +169,7 @@ $json = array();
 
 	$json['subscribe'] = $subscribe;
 	$json['loggedIn'] = $loggedIn;
+	$json['subscribeToggle'] = $loggedIn;
 
 	echo $_GET['callback'] . "(" . json_encode($json) . ")";
 
