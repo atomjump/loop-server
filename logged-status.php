@@ -169,7 +169,7 @@ $json = array();
 
 	$json['subscribe'] = $subscribe;
 	$json['loggedIn'] = $loggedIn;
-	$json['subscribeToggle'] = $loggedIn;
+	$json['subscribeToggle'] = $subscribe_toggle;
 
 	echo $_GET['callback'] . "(" . json_encode($json) . ")";
 
