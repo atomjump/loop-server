@@ -604,6 +604,7 @@
 		 	  
 		 	  
 		 	  function subFront(uid, uniqueFeedbackId) {
+		 	  	alert("Email = " + $("#email-opt").val());
 		 	  	if($("#email-opt").val() == '') {
 		 	  		$('#email-explain').html("Please enter your email (and password) to subscribe.");
 		 	  	} else {
