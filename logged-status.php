@@ -63,7 +63,7 @@ $json = array();
 			$subscribe_text = "subscribe";	
 			if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['passcode'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
 			
 		} else {
 			$subscribe_text = "cannot subscribe"; 
@@ -81,7 +81,7 @@ $json = array();
 			$subscribe_text = "unsubscribe";	
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['passcode'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
 
 		}
 	}
@@ -169,7 +169,7 @@ $json = array();
 
 	$json['subscribe'] = $subscribe;
 	$json['loggedIn'] = $loggedIn;
-	$json['subscribeToggle'] = stripslashes($subscribe_toggle);
+	$json['subscribeToggle'] = $subscribe_toggle;
 
 	echo $_GET['callback'] . "(" . json_encode($json) . ")";
 
