@@ -806,6 +806,14 @@ function set_options_cookie() {
     
     var data = $('#options-frm').serialize();
     
+    var useApp = getCookie("use_app");
+    
+    if(useApp) {
+    	//Run the app / either install or open the app
+    	deepLinkApp();
+    }
+    
+    
     $.ajax({
 			url: ssshoutServer + '/confirm.php?callback=?', 
 			data: data,
