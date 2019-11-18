@@ -154,7 +154,7 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = $subscribe_toggle_ear
+			$subscribe_toggle = $subscribe_toggle_ear;
 
 		}
 		
