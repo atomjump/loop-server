@@ -128,8 +128,12 @@
 	$subscribe_text = "subscription";
 	if($msg['msgs'][$lang]['subscription']) $subscribe_text = $msg['msgs'][$lang]['subscription'];
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-	$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
-	$subscribe_toggle = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic . "</a>";
+	$subscribe_toggle_pic_no_ear = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
+	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
+
+	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+	$subscribe_toggle = $subscribe_toggle_no_ear;
 	
 
 	if($_SESSION['logged-email']) {
@@ -137,8 +141,8 @@
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
 		$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-		$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
-		$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic . "</a>";
+		
+		$subscribe_toggle = $subscribe_toggle_no_ear;
 	}
 
 	if(($layer_info)&&($_SESSION['logged-user'] != "")) {
@@ -150,8 +154,7 @@
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
 			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle_pic = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
-			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic . "</a>";
+			$subscribe_toggle = $subscribe_toggle_ear
 
 		}
 		
@@ -356,7 +359,7 @@
 	echo str_replace("[FORUM]", $_REQUEST['uniqueFeedbackId'], $cnf['video']['url']);
 } else {
 	echo "https://meet.jit.si/aj-changeme-" . $_REQUEST['uniqueFeedbackId']; 
-} ?>" onclick="event.stopPropagation(); return true;" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a><?php echo $subscribe_toggle; ?>
+} ?>" onclick="event.stopPropagation(); return true;" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a><span id="sub-toggle"><?php echo $subscribe_toggle; ?></span>
 								</div>
 							
 							<?php } else { //No access so far - need to log in with the forum password ?>
@@ -571,6 +574,7 @@
 					   $('#email-explain').html("Successfully unsubscribed.");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
+					   $('#sub-toggle').html("<?php echo $subscribe_toggle_no_ear ?>");			//Show red no listening
 					 }
 					   
 				 });
@@ -589,6 +593,7 @@
 					   $('#email-explain').html("Successfully subscribed.");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
+					   $('#sub-toggle').html("<?php echo $subscribe_toggle_ear ?>");			//Show green listening
 					 } 
 					   
 				 });
