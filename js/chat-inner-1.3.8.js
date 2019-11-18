@@ -800,18 +800,14 @@ function set_options_cookie() {
     var forumPass = $('#forumpass').val();
     if(forumPass != "") {    	
     	$("#forumpasscheck").val(forumPass);		//Set the form
-    
     }
     
     
     var data = $('#options-frm').serialize();
     
-    var useApp = getCookie("useapp");
+   
     
-    if(useApp) {
-    	//Run the app / either install or open the app
-    	deepLinkApp();
-    }
+    
     
     
     $.ajax({
@@ -853,6 +849,12 @@ function set_options_cookie() {
 				        	toggle = false;
 				    	}
 			    	} 
+			    	
+			    	var useApp = getCookie("useapp");
+			    	if(useApp) {
+						//Run the app / either install or open the app
+						deepLinkApp();
+					}
 					
 				break;
 				
@@ -921,6 +923,12 @@ function set_options_cookie() {
 					}
 					
 					refreshLoginStatus();
+					
+					var useApp = getCookie("useapp");
+			    	if(useApp) {
+						//Run the app / either install or open the app
+						deepLinkApp();
+					}
 				break;
 				
 				case 'SUBSCRIBED':
