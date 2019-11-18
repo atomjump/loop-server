@@ -574,7 +574,7 @@
 					   $('#email-explain').html("Successfully unsubscribed.");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
-					   $('#sub-toggle').html("<?php echo $subscribe_toggle_no_ear ?>");			//Show red no listening
+					   $('#sub-toggle').html('<?php echo $subscribe_toggle_no_ear ?>');			//Show red no listening
 					 }
 					   
 				 });
@@ -593,7 +593,7 @@
 					   $('#email-explain').html("Successfully subscribed.");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
-					   $('#sub-toggle').html("<?php echo $subscribe_toggle_ear ?>");			//Show green listening
+					   $('#sub-toggle').html('<?php echo $subscribe_toggle_ear ?>');			//Show green listening
 					 } 
 					   
 				 });
