@@ -806,7 +806,7 @@ function set_options_cookie() {
     
     var data = $('#options-frm').serialize();
     
-    var useApp = getCookie("use_app");
+    var useApp = getCookie("useapp");
     
     if(useApp) {
     	//Run the app / either install or open the app
