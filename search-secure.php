@@ -604,9 +604,9 @@
 		 	  
 		 	  
 		 	  function subFront(uid, uniqueFeedbackId) {
-		 	  	alert("Email = " + $("#email-opt").val());
 		 	  	if($("#email-opt").val() == '') {
 		 	  		$('#email-explain').html("Please enter your email (and password) to subscribe.");
+		 	  		 $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 		 	  	} else {
 		 	  		sub(uid, uniqueFeedbackId);	
 		 	  		
