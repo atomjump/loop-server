@@ -575,7 +575,7 @@
 				  	 } else { 
 				  		
 					   $('#group-users').html(response);
-					   $('#email-explain').html("Successfully unsubscribed.");
+					   $('#email-explain').html("<?php echo $msg['msgs'][$lang]['successUnsubscribing'] ?>");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
 					   $('#sub-toggle').html('<?php echo $subscribe_toggle_no_ear ?>');			//Show red no listening
@@ -589,7 +589,7 @@
 		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId + "&fp=" + $("#set-forum-password").val();
 		 		$.get(ur, function(response) { 
 				  	 if(response.includes("FAILURE") === true) {
-				  	 	$('#email-explain').html("Sorry there was a problem subscribing. Please try again.");
+				  	 	$('#email-explain').html("<?php echo $msg['msgs'][$lang]['problemSubscribing'] ?>");
 					    $('#email-explain').show();
 					    $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 					    $("#comment-popup-content").hide(); 
@@ -599,7 +599,7 @@
 				  	 } else { 
 				  		
 					   $('#group-users').html(response);
-					   $('#email-explain').html("Successfully subscribed.");
+					   $('#email-explain').html("<?php echo $msg['msgs'][$lang]['successSubscribing'] ?>");
 					   $('#email-explain').show();
 					   $('#subscribe-button').hide();
 					   $('#sub-toggle').html('<?php echo $subscribe_toggle_ear ?>');			//Show green listening
@@ -612,7 +612,6 @@
 		 	  function subFront(uid, uniqueFeedbackId) {
 		 	  	
 		 	  	if($("#email-opt").val() == '') {
-		 	  		 $('#email-explain').html("Please enter your email to get message notifications.");
 		 	  		 $('#email-explain').show();
 		 	  		 $('#comment-options').show();		//Show options page if we've tapped on the subscribe ear on main page
 		 	  		 $("#comment-popup-content").hide(); 
