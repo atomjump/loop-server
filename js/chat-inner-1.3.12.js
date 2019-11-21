@@ -755,7 +755,7 @@ function refreshLoginStatus()
 			$("#subscribe-button").html(", " + response.subscribe);
 			$("#logged-status").html(response.loggedIn);
 			$("#sub-toggle").html(response.subscribeToggle);
-			$('#email-explain').html("");		//Blank off messages
+			$('#email-explain').hide();		//Blank off messages
 		});
 
 }
