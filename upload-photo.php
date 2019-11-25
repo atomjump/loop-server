@@ -22,6 +22,8 @@
 	}*/
 	
 	
+	include_once(__DIR__ ."/config/db_connect.php");
+	
 	function base64ToImage($base64_string, $output_file) {
 		$file = fopen($output_file, "wb");
 
