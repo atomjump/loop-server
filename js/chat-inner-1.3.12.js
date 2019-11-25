@@ -1075,7 +1075,7 @@ function upload() {
 			type: 'POST',
 			cache: false,
 			processData: false, // Don't process the files
-     	contentType: false // Set content type to false as jQuery will tell the server its a query string request
+     		contentType: false // Set content type to false as jQuery will tell the server its a query string request
 		}).done(function(response) {
 			
 			
