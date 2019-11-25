@@ -488,8 +488,8 @@
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				<?php } ?>
 				
-					<!-- onsubmit="return upload();" TESTING OUT. action testing in.-->
-				 <form id="upload-frm" class="form" role="form" action="upload-photo.php"  method="POST">
+					<!-- onsubmit="return upload();" TESTING OUT. action testing in. action="upload-photo.php"-->
+				 <form id="upload-frm" class="form" role="form"  onsubmit="return upload();" method="POST">
 				 		<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>	
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
@@ -543,8 +543,7 @@
 
 			function processfile(file) {
   
-  				alert("Processing file:" + file);			//TESTING
-				if( !( /image/i ).test( file.type ) )
+  				if( !( /image/i ).test( file.type ) )
 					{
 						alert( "File "+ file.name +" is not an image." );
 						return false;
@@ -571,7 +570,6 @@
 					newinput.type = 'hidden';
 					newinput.name = 'images[]';
 					newinput.value = resized; // put result from canvas into new hidden input
-					alert("into new input");
 					form.appendChild(newinput);
 				  }
 				};
