@@ -11,10 +11,10 @@
 	if(isset($_POST["submit"])) {
 		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 		if($check !== false) {
-			echo $_FILES["fileToUpload"]["tmp_name"] . " file is an image - " . $check["mime"] . ".";
+			echo $_FILES["fileToUpload"]["name"] . " file is an image - " . $check["mime"] . ".";
 			$uploadOk = 1;
 		} else {
-			echo $_FILES["fileToUpload"]["tmp_name"] . " file is not an image.";
+			echo $_FILES["fileToUpload"]["name"] . " file is not an image.";
 			$uploadOk = 0;
 		}
 	}
