@@ -1063,6 +1063,7 @@ function upload() {
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
     var data = new FormData();
+    alert(JSON.stringify(data));
     $.each(files, function(key, value)
     {
         data.append(key, value);
