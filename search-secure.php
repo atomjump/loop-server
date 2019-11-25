@@ -543,6 +543,7 @@
 
 			function processfile(file) {
   
+  				alert("Processing file:" + file);			//TESTING
 				if( !( /image/i ).test( file.type ) )
 					{
 						alert( "File "+ file.name +" is not an image." );
@@ -570,6 +571,7 @@
 					newinput.type = 'hidden';
 					newinput.name = 'images[]';
 					newinput.value = resized; // put result from canvas into new hidden input
+					alert("into new input");
 					form.appendChild(newinput);
 				  }
 				};
