@@ -20,15 +20,9 @@
 
 		return $output_file;
 	}
-	
-	//echo $_POST['images'][0];
-	if($_POST['images'][0]) {
-		$output_file = __DIR__ . $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000) . ".jpg";
-		base64ToImage($_POST['images'][0], $output_file);
-		//echo "Written output file " . $output_file;
-	}
+
 		
-/*
+
 	include_once(__DIR__ ."/config/db_connect.php");
 
 
@@ -36,9 +30,20 @@
 	$_REQUEST['title'] = "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);		//random image name for now - TODO better with ID
 	$image_path = "/images/im/";
 	$message = "";
-	$images_script = __DIR__ . "/send-images-upload.php";
+	/*$images_script = __DIR__ . "/send-images-upload.php";
 	require_once(__DIR__ . "/components/upload.php");
 	*/
+	
+		
+	//echo $_POST['images'][0];
+	if($_POST['images'][0]) {
+		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
+		base64ToImage($_POST['images'][0], $output_file);
+		//echo "Written output file " . $output_file;
+		$uploaded = true;
+	}
+	
+	
 	if($uploaded == true) {		
 		if($cnf['uploads']['use'] == "amazonAWS") {
 			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
