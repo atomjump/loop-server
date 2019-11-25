@@ -591,7 +591,7 @@ $(document).ready(function() {
 			
 			
 			//File upload
-			$('input[type=file]').on('change', prepareUpload);
+			//TESTING OUT $('input[type=file]').on('change', prepareUpload);
 			
 			
 			refreshLoginStatus();
