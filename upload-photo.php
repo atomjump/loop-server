@@ -4,7 +4,7 @@
 
 	//TESTING IMMEDIATE
 	$target_dir = "/images/im/";
-	print_r($POST);
+	print_r($_POST);
 	
 	/*$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
