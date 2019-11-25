@@ -4,7 +4,7 @@
 
 	//TESTING IMMEDIATE
 	$target_dir = "/images/im/";
-	print_r($_POST);
+	//print_r($_POST);
 	
 	/*$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
@@ -33,10 +33,11 @@
 		return $output_file;
 	}
 	
+	echo $_POST['images'][0];
 	if($_POST['images'][0]) {
-		$output_file = $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);
+		$output_file = __DIR__ . $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);
 		base64ToImage($_POST['images'][0], $output_file);
-	
+		echo "Written output file " . $output_file;
 	}
 	
 	
