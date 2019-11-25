@@ -33,6 +33,12 @@
 		return $output_file;
 	}
 	
+	if($_POST['images'][0]) {
+		$output_file = $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);
+		base64ToImage($_POST['images'][0], $output_file);
+	
+	}
+	
 	
 /*
 	include_once(__DIR__ ."/config/db_connect.php");
