@@ -488,8 +488,8 @@
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				<?php } ?>
 				
-					
-				 <form id="upload-frm" class="form" role="form" action="" onsubmit="return upload();"  method="POST">
+					<!-- onsubmit="return upload();" TESTING OUT. action testing in.-->
+				 <form id="upload-frm" class="form" role="form" action="upload-photo.php"  method="POST">
 				 		<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>	
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
