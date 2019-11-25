@@ -4,9 +4,9 @@
 
 	//TESTING IMMEDIATE
 	$target_dir = "/images/im/";
-	print_r($_FILES);
+	print_r($POST);
 	
-	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+	/*$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 	// Check if image file is a actual image or fake image
@@ -19,7 +19,21 @@
 			echo $_FILES["fileToUpload"]["name"] . " file is not an image.";
 			$uploadOk = 0;
 		}
+	}*/
+	
+	
+	function base64ToImage($base64_string, $output_file) {
+		$file = fopen($output_file, "wb");
+
+		$data = explode(',', $base64_string);
+
+		fwrite($file, base64_decode($data[1]));
+		fclose($file);
+
+		return $output_file;
 	}
+	
+	
 /*
 	include_once(__DIR__ ."/config/db_connect.php");
 
