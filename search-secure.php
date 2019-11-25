@@ -539,7 +539,7 @@
 
 			var preview = document.getElementById('preview');
 
-			var form = document.getElementById('form');
+			var form = document.getElementById('upload-frm');
 
 			function processfile(file) {
   
