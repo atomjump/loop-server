@@ -1,28 +1,14 @@
 <?php
 	//Upload a photo to Amazon or our own server
-		
-
-	//TESTING IMMEDIATE
-	$target_dir = "/images/im/";
-	//print_r($_POST);
-	
-	/*$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-	$uploadOk = 1;
-	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-	// Check if image file is a actual image or fake image
-	if(isset($_POST["submit"])) {
-		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		if($check !== false) {
-			echo $_FILES["fileToUpload"]["name"] . " file is an image - " . $check["mime"] . ".";
-			$uploadOk = 1;
-		} else {
-			echo $_FILES["fileToUpload"]["name"] . " file is not an image.";
-			$uploadOk = 0;
-		}
-	}*/
-	
 	
 	include_once(__DIR__ ."/config/db_connect.php");
+	
+
+	$target_dir = "/images/im/";
+	
+	
+	
+	
 	
 	function base64ToImage($base64_string, $output_file) {
 		$file = fopen($output_file, "wb");
@@ -35,14 +21,13 @@
 		return $output_file;
 	}
 	
-	echo $_POST['images'][0];
+	//echo $_POST['images'][0];
 	if($_POST['images'][0]) {
-		$output_file = __DIR__ . $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);
+		$output_file = __DIR__ . $target_dir . "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000) . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
-		echo "Written output file " . $output_file;
+		//echo "Written output file " . $output_file;
 	}
-	
-	
+		
 /*
 	include_once(__DIR__ ."/config/db_connect.php");
 
@@ -53,7 +38,7 @@
 	$message = "";
 	$images_script = __DIR__ . "/send-images-upload.php";
 	require_once(__DIR__ . "/components/upload.php");
-	
+	*/
 	if($uploaded == true) {		
 		if($cnf['uploads']['use'] == "amazonAWS") {
 			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
@@ -68,6 +53,6 @@
 	$json = array("url" => $url, "msg" => $message);
 	
 	echo json_encode($json);
-	*/
+
 ?>
 
