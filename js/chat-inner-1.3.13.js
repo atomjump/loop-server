@@ -1064,79 +1064,92 @@ function upload() {
     // Create a formdata object and add the files
     
   	
-    var data = new FormData();
+   
     var upload = $('#upload-frm').serializeArray();	
-    var myFormat = {
-    	"images[]": [ upload[0].value ]
-    }
     
+    var delay = 0;		//Initial delay is 0 seconds, but increase this to 2 seconds after the first upload
     
-     $.each(myFormat, function(key, value) {
-     	data.append(key, value);
-     });
+    //Handle each upload, with a 2 second delay between starting each one
+    for(var cnt = 0; cnt< upload.length; cnt++) {
     
+    	var imageData = upload[cnt].value;
     
-    $.ajax({
-			url: ssshoutServer + '/upload-photo.php', 
-			data: data,
-			dataType: "json",
-			type: 'POST',
-			cache: false,
-			processData: false, // Don't process the files
-     		contentType: false // Set content type to false as jQuery will tell the server its a query string request
-		}).done(function(response) {
+    	setTimeout(function(imageData) {
+    
+    		delay = 2000;		
+			var data = new FormData();
+			var myFormat = {
+				"images[]": [ imageData ]
+			}
+		
+			 $.each(myFormat, function(key, value) {
+				data.append(key, value);
+			 });
+	
+	
+			$.ajax({
+					url: ssshoutServer + '/upload-photo.php', 
+					data: data,
+					dataType: "json",
+					type: 'POST',
+					cache: false,
+					processData: false, // Don't process the files
+					contentType: false // Set content type to false as jQuery will tell the server its a query string request
+				}).done(function(response) {
 						
-			$('#uploading-wait').hide();
+					$('#uploading-wait').hide();
 			
 			
-			if(!response.url) {
-				$('#uploading-msg').html(response.msg);
-				$('#uploading-msg').show();
+					if(!response.url) {
+						$('#uploading-msg').html(response.msg);
+						$('#uploading-msg').show();
 			
 				
-			} else {
-				//Append the response url to the input box
-				//Register that we have started typing
+					} else {
+						//Append the response url to the input box
+						//Register that we have started typing
 				
 				
 				
-				$('#shouted').val( response.url );
-				mg.newMsg(true);  //start typing private message
-				registerNewKeypress();
-				mg.commitMsg();
-				//submitShoutAjax(whisper, true, msgId);
-				
-				/*
-				setTimeout( function() {
-        
-        
-					//Register that we have started typing
-					if(currentlyTyping == false) {
-						currentlyTyping = true;
+						$('#shouted').val( response.url );
 						mg.newMsg(true);  //start typing private message
 						registerNewKeypress();
+						mg.commitMsg();
+						//submitShoutAjax(whisper, true, msgId);
+				
+						/*
+						setTimeout( function() {
+		
+		
+							//Register that we have started typing
+							if(currentlyTyping == false) {
+								currentlyTyping = true;
+								mg.newMsg(true);  //start typing private message
+								registerNewKeypress();
 						
-					} else {
+							} else {
 					
-			      		mg.reactivateMsg(mg.localMsgId); //if it was deactivated
-	  						registerNewKeypress();
+								mg.reactivateMsg(mg.localMsgId); //if it was deactivated
+									registerNewKeypress();
 					
-						}
+								}
 				
-				}, 100); //end set timeout
-				*/
+						}, 100); //end set timeout
+						*/
 				
-				$('#uploading-msg').html("");
-				$('#uploading-msg').hide();
-				//$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
-				$("#comment-popup-content").show(); 
-				$("#comment-upload").hide(); 
-			}
+						$('#uploading-msg').html("");
+						$('#uploading-msg').hide();
+						//$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
+						$("#comment-popup-content").show(); 
+						$("#comment-upload").hide(); 
+					}
 
 			
 				
-		});
-    
+				});
+		}, delay); //end of set timeout
+	} //end of looping through photos
+	
     
 
 	return false;
