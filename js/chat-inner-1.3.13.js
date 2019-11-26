@@ -1071,7 +1071,7 @@ function upload() {
     var passInId = 0;
     
     //Handle each upload, with a 2 second delay between starting each one
-    var eachPhoto = setInterval(function {
+    var eachPhoto = setInterval(function() {
 		
 		
 
