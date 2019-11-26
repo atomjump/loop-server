@@ -1083,7 +1083,7 @@ function upload() {
      		contentType: false // Set content type to false as jQuery will tell the server its a query string request
 		}).done(function(response) {
 			
-		
+			alert(response.msg);
 			
 			$('#uploading-wait').hide();
 			
