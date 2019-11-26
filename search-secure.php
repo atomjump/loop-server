@@ -613,8 +613,11 @@
   
   			  //first get a thumbnail
   			  var canvas = document.createElement('canvas');
-			  canvas.width = 200;
-			  canvas.height = 150;
+  			  
+  			  var width = 200;
+			  var height = 150;
+			  canvas.width = width;
+			  canvas.height = height;
 			  var ctx = canvas.getContext("2d");
 			  ctx.drawImage(img, 0, 0, width, height);
 			  preview.appendChild(canvas); // do the actual resized preview
