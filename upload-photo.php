@@ -26,6 +26,9 @@
 	include_once(__DIR__ ."/config/db_connect.php");
 
 
+	print_r($_POST);
+	exit(0);		//TESTING IN
+
 
 	$_REQUEST['title'] = "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);		//random image name for now - TODO better with ID
 	$image_path = "/images/im/";
