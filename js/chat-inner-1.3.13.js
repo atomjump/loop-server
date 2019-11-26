@@ -1099,8 +1099,9 @@ function upload() {
 				//Register that we have started typing
 				
 				
-				mg.newMsg(true);  //start typing private message
+				
 				$('#shouted').val( response.url );
+				mg.newMsg(true);  //start typing private message
 				registerNewKeypress();
 				mg.commitMsg();
 				//submitShoutAjax(whisper, true, msgId);
