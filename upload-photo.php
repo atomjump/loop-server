@@ -45,7 +45,7 @@
 	} else {
 	
 		$images_script = __DIR__ . "/send-images-upload.php";
-		require_once(__DIR__ . "/components/upload-multiple.php");
+		require_once(__DIR__ . "/components/upload.php");
 	}
 
 	

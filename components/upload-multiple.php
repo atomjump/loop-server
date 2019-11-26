@@ -14,7 +14,7 @@
 	
 		// Check if image file is a actual image or fake image
 
-		$check = getimagesize($output_file);
+		$check = getimagesize($hi_target_file);
 		if($check !== false) {
 			$message .="File is an image - " . $check["mime"] . ".";
 			$uploadOk = 1;
@@ -49,8 +49,8 @@
 				$message .= "The file ". basename( $file["name"]). " has been uploaded.";
 				
 				//Resize the image
-				$src = imagecreatefromjpeg($target_file);        
-				list($width, $height) = getimagesize($target_file); 
+				$src = imagecreatefromjpeg($hi_target_file);        
+				list($width, $height) = getimagesize($hi_target_file); 
 
 				$ratio = $height / $width;
 				$resize = true;
