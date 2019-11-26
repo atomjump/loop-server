@@ -29,24 +29,29 @@
 	$_REQUEST['title'] = "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);		//random image name for now - TODO better with ID
 	$image_path = "/images/im/";
 	$message = "";
-	/*$images_script = __DIR__ . "/send-images-upload.php";
-	require_once(__DIR__ . "/components/upload.php");
-	*/
 	
 		
-	//echo $_POST['images'][0];  TODO: loop through
-	
-	$message = "Sorry there was an error in processing.";
-	//error_log("Passed in: " . json_encode($_POST));
-	
 	if($_POST['images'][0]) {
-		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
+		//This is a multiple file upload
+		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . "_HI.jpg";
 		base64ToImage($_POST['images'][0], $output_file);
-		//echo "Written output file " . $output_file;
 		$uploaded = true;
 		
-		$message .= substr($_POST['images'][0], 50);		//TEMP MESSAGE
+		$images_script = __DIR__ . "/send-images-upload.php";
+		require_once(__DIR__ . "/components/upload-multiple.php");
+
+		
+	} else {
+	
+		$images_script = __DIR__ . "/send-images-upload.php";
+		require_once(__DIR__ . "/components/upload-multiple.php");
 	}
+
+	
+	
+
+
+
 	
 	if($uploaded == true) {		
 		if($cnf['uploads']['use'] == "amazonAWS") {

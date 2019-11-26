@@ -1116,28 +1116,7 @@ function upload() {
 						mg.newMsg(true);  //start typing private message
 						//This works:registerNewKeypress();
 						mg.commitMsg();
-						//submitShoutAjax(whisper, true, msgId);
-				
-						/*
-						setTimeout( function() {
-		
-		
-							//Register that we have started typing
-							if(currentlyTyping == false) {
-								currentlyTyping = true;
-								mg.newMsg(true);  //start typing private message
-								registerNewKeypress();
-						
-							} else {
-					
-								mg.reactivateMsg(mg.localMsgId); //if it was deactivated
-									registerNewKeypress();
-					
-								}
-				
-						}, 100); //end set timeout
-						*/
-				
+			
 						$('#uploading-msg').html("");
 						$('#uploading-msg').hide();
 						//$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
