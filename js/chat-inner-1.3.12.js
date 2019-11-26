@@ -1075,7 +1075,7 @@ function upload() {
     
     //data = $("#upload-frm").serialize();
     
-    var data = $('#upload-frm :input').serialize();
+    var data = $('#upload-frm').serialize();		// :input
     
     //var data = document.getElementById('upload-frm');
     //alert(JSON.stringify(data));
@@ -1090,6 +1090,8 @@ function upload() {
      		contentType: false // Set content type to false as jQuery will tell the server its a query string request
 		}).done(function(response) {
 			
+			alert(response);
+			return;					//TESTING IN
 			
 			$('#uploading-wait').hide();
 			
