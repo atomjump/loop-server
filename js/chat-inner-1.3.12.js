@@ -1066,7 +1066,7 @@ function upload() {
   	
     var data = new FormData();
     var upload = $('#upload-frm').serializeArray();		// :input
-    $.each(upload, function(key, value)
+    $.each(upload[0], function(key, value)
     {
     	alert("Key: " + key + "  Value[0]: " + value[0]);
         data.append(key, value);
