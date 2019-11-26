@@ -1070,7 +1070,7 @@ function upload() {
     	"images[]": upload[0].value
     }
     
-     $.each(myFormat, function(key, value)
+     $.each(myFormat, function(key, value) {
      	data.append(key, value);
      });
     
