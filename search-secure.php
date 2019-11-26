@@ -621,7 +621,7 @@
 			  
 			  
   			  //Now do the full sized version
-			  var canvas = document.createElement('canvas');
+			  var canvasb = document.createElement('canvas');
 
 			  var width = img.width;
 			  var height = img.height;
@@ -642,17 +642,17 @@
 			  }
   
 			  // resize the canvas and draw the image data into it
-			  canvas.width = width;
-			  canvas.height = height;
-			  var ctx = canvas.getContext("2d");
-			  ctx.drawImage(img, 0, 0, width, height);
+			  canvasb.width = width;
+			  canvasb.height = height;
+			  var ctxb = canvasb.getContext("2d");
+			  ctxb.drawImage(img, 0, 0, width, height);
 			   
 			  //preview.appendChild(canvas); // do the actual resized preview
 			  
 			  
 			  
   
-			  return canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+			  return canvasb.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
 			}
 			</script>
