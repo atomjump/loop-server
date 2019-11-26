@@ -38,15 +38,24 @@
 	
 	$message = "Starts with: ";
 	
-	if($_POST['images'][0]) {
+	/* TEMPORARY OUT if($_POST['images'][0]) {
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
 		//echo "Written output file " . $output_file;
 		$uploaded = true;
 		
 		$message .= substr($_POST['images'][0], 50);		//TEMP MESSAGE
-	}
+	}*/
 	
+	//Trying the 2nd photo
+	if($_POST['images'][1]) {
+		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
+		base64ToImage($_POST['images'][1], $output_file);
+		//echo "Written output file " . $output_file;
+		$uploaded = true;
+		
+		$message .= substr($_POST['images'][1], 50);		//TEMP MESSAGE
+	}
 	
 	
 	
