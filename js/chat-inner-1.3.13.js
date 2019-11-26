@@ -1067,15 +1067,16 @@ function upload() {
    
     var upload = $('#upload-frm').serializeArray();	
     
-    var delay = 0;		//Initial delay is 0 seconds, but increase this to 2 seconds after the first upload
+    var delay = 10;		//Initial delay is 0 seconds, but increase this to 2 seconds after the first upload
     
     //Handle each upload, with a 2 second delay between starting each one
     for(var cnt = 0; cnt< upload.length; cnt++) {
     
-    	var imageData = upload[cnt].value;
+    	
     
     	setTimeout(function() {
-    
+    		var imageData = upload[cnt].value;
+    		
     		delay = 2000;		
 			var data = new FormData();
 			var myFormat = {
