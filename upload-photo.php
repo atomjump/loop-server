@@ -37,6 +37,7 @@
 		base64ToImage($_POST['images'][0], $output_file);
 		$uploaded = true;
 		
+		$resize = true;
 		$images_script = __DIR__ . "/send-images-upload.php";
 		require_once(__DIR__ . "/components/upload-multiple.php");
 
