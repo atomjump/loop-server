@@ -1062,23 +1062,14 @@ function upload() {
     
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
-    //var data = new FormData();
-    /*$.each(form.elements.images, function(key, value)
+    
+  
+    var data = new FormData();
+    var upload = $('#upload-frm').serializeArray();		// :input
+    $.each(upload, function(key, value)
     {
         data.append(key, value);
-    });*/
-    
-   /* for(var cnt = 0; cnt< form.elements.images.length; cnt++) {
-    	data.append("images", form.elements.images.value);
-    
-    }*/
-    
-    //data = $("#upload-frm").serialize();
-    
-    var data = $('#upload-frm').serializeArray();		// :input
-    
-    //var data = document.getElementById('upload-frm');
-    //alert(JSON.stringify(data));
+    });
     
     $.ajax({
 			url: ssshoutServer + '/upload-photo.php', 
