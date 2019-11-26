@@ -1069,7 +1069,7 @@ function upload() {
     $.each(upload[0].images, function(key, value)
     {
     	alert("In here");
-    	alert("Key: " + key.value + "  Value[0]: " + value.value);
+    	alert("Key: " + key.value + "  Value[0]: " + value.value.substring(0.10));
         data.append(key.value, value.value);
     });
     
