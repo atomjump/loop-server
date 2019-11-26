@@ -1068,8 +1068,9 @@ function upload() {
     var upload = $('#upload-frm').serializeArray();		// :input
     $.each(upload[0], function(key, value)
     {
-    	alert("In here");
-    	alert("Key: " + key.value + "  Value[0]: " + value.value.substring(0.10));
+    	alert("In here key:" + JSON.stringify(key));
+    	alert("In here value:" + JSON.stringify(value));
+    	
         data.append(key.value, value.value);
     });
     
