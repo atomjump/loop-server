@@ -1064,14 +1064,15 @@ function upload() {
     // Create a formdata object and add the files
     
   	
-    //var data = new FormData();
-    //var upload = $('#upload-frm').serializeArray();		// :input
-    /*$.each(upload, function(key, value)
+    var data = new FormData();
+    var upload = $('#upload-frm').serializeArray();		// :input
+    $.each(upload, function(key, value)
     {
+    	alert("Key: " + key + "  Value[0]: " + value[0]);
         data.append(key, value);
-    });*/
+    });
     
-    var data = $( "#upload-frm" ).serialize();		//new FormData($('#upload-frm'));
+    
     
     $.ajax({
 			url: ssshoutServer + '/upload-photo.php', 
