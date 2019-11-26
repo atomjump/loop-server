@@ -1087,9 +1087,6 @@ function upload() {
 			
 			$('#uploading-wait').hide();
 			
-			alert(JSON.stringify(response));
-			return;					//TESTING IN
-			
 			
 			if(!response.url) {
 				$('#uploading-msg').html(response.msg);

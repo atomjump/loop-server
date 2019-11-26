@@ -26,10 +26,6 @@
 	include_once(__DIR__ ."/config/db_connect.php");
 
 
-	print_r($_POST['images']);
-	exit(0);		//TESTING IN
-
-
 	$_REQUEST['title'] = "upl" . $_SESSION['logged-user'] . "-" . rand(1,100000000);		//random image name for now - TODO better with ID
 	$image_path = "/images/im/";
 	$message = "";
@@ -39,12 +35,19 @@
 	
 		
 	//echo $_POST['images'][0];  TODO: loop through
+	
+	$message = "Starts with: "
+	
 	if($_POST['images'][0]) {
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
 		//echo "Written output file " . $output_file;
 		$uploaded = true;
+		
+		$message .= substr($_POST['images'][0], 50);		//TEMP MESSAGE
 	}
+	
+	
 	
 	
 	if($uploaded == true) {		
