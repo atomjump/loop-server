@@ -28,7 +28,7 @@
 
 		
 		// Check file size
-		if ($filesize($output_file) > 10000000) {
+		if (filesize($output_file) > 10000000) {
 			$message .= "Sorry, your file is too large.";
 			$uploadOk = 0;
 		}
