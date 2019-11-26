@@ -1071,7 +1071,7 @@ function upload() {
         data.append(key, value);
     });*/
     
-    var form_data = new FormData($(this));
+    var data = new FormData($(this));
     
     $.ajax({
 			url: ssshoutServer + '/upload-photo.php', 
