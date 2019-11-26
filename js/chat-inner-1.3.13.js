@@ -1072,7 +1072,7 @@ function upload() {
     //Handle each upload, with a 2 second delay between starting each one
     for(var cnt = 0; cnt< upload.length; cnt++) {
     
-    	var passInId = upload[cnt].value;
+    	var passInId = cnt;
     
     	setTimeout(function() {
     		alert(passInId);		//TESTING
