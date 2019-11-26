@@ -1063,24 +1063,28 @@ function upload() {
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
     
-  	
+  	var upload = $('#upload-frm').serializeArray();	
    
-    var upload = $('#upload-frm').serializeArray();	
+    
     
     var delay = 10;		//Initial delay is 0 seconds, but increase this to 2 seconds after the first upload
     
     //Handle each upload, with a 2 second delay between starting each one
     for(var cnt = 0; cnt< upload.length; cnt++) {
     
-    	var passIn = upload[cnt].value;
+    	var passInId = upload[cnt].value;
     
-    	setTimeout(function(passIn) {
-    		alert(passIn);		//TESTING
+    	setTimeout(function() {
+    		alert(passInId);		//TESTING
+    		
+    		var upload = $('#upload-frm').serializeArray();	
+    		var imageData = upload[passInId].value;
+    		
     		
     		delay = 2000;		
 			var data = new FormData();
 			var myFormat = {
-				"images[]": [ passIn ]
+				"images[]": [ imageData ]
 			}
 		
 			 $.each(myFormat, function(key, value) {
