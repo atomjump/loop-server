@@ -36,7 +36,7 @@
 		
 	//echo $_POST['images'][0];  TODO: loop through
 	
-	$message = "Starts with: "
+	$message = "Starts with: ";
 	
 	if($_POST['images'][0]) {
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
