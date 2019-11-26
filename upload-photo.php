@@ -33,11 +33,11 @@
 		
 	if($_POST['images'][0]) {
 		//This is a multiple file upload
-		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . "_HI.jpg";
+		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
 		$uploaded = true;
 		
-		$resize = true;
+		$resize = false;
 		$images_script = __DIR__ . "/send-images-upload.php";
 		require_once(__DIR__ . "/components/upload-multiple.php");
 

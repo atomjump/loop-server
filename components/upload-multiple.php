@@ -1,7 +1,7 @@
 <?php
 	$uploaded = false;
 
-	//Comes in with '$output_file' as the _HI version of the name
+	//Comes in with '$output_file' as the full size version of the name
  
 		//Upload an image
 		global $local_server_path;
@@ -11,17 +11,15 @@
 		$target_file = $target_dir . $raw_file;
 		$hi_target_file = $target_dir . $hi_raw_file;
 		$uploadOk = 1;
+		
+		
 	
 		// Check if image file is a actual image or fake image
 
-		$check = getimagesize($hi_target_file);
+		$check = getimagesize($output_file);
 		if($check !== false) {
 			$message .="File is an image - " . $check["mime"] . ".";
 			$uploadOk = 1;
-			
-			
-			
-			
 		} else {
 			$message .= "File is not an image.";
 			$uploadOk = 0;
@@ -30,7 +28,7 @@
 
 		
 		// Check file size
-		if ($file["size"] > 10000000) {
+		if ($filesize($output_file) > 10000000) {
 			$message .= "Sorry, your file is too large.";
 			$uploadOk = 0;
 		}
@@ -46,19 +44,20 @@
 		} else {
 			
 			
-				$message .= "The file ". basename( $file["name"]). " has been uploaded.";
+				$message .= "The file ". basename( $output_file ). " has been uploaded.";
 				
-				//Resize the image
-				$src = imagecreatefromjpeg($hi_target_file);        
-				list($width, $height) = getimagesize($hi_target_file); 
-
-				$ratio = $height / $width;
-				$resize = true;
-					
-				$base_size = 800;
+				
 				
 				if($resize == true) {
 					//We already have a 'hi res version' i.e. 1280 width.
+					//Resize the image
+					$src = imagecreatefromjpeg($hi_target_file);        
+					list($width, $height) = getimagesize($hi_target_file); 
+
+					$ratio = $height / $width;
+					$resize = true;
+					
+					$base_size = 800;
 					
 					//Now we will create a faster 800 width version.
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
@@ -69,9 +68,6 @@
 					
 					
 				}
-
-			
-				
 				//Image resized
 				
 				
