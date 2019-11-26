@@ -1063,13 +1063,15 @@ function upload() {
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
     
-  
-    var data = new FormData();
-    var upload = $('#upload-frm').serializeArray();		// :input
-    $.each(upload, function(key, value)
+  	
+    //var data = new FormData();
+    //var upload = $('#upload-frm').serializeArray();		// :input
+    /*$.each(upload, function(key, value)
     {
         data.append(key, value);
-    });
+    });*/
+    
+    var form_data = new FormData($(this));
     
     $.ajax({
 			url: ssshoutServer + '/upload-photo.php', 
