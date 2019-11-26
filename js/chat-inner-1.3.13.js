@@ -1072,9 +1072,9 @@ function upload() {
     //Handle each upload, with a 2 second delay between starting each one
     for(var cnt = 0; cnt< upload.length; cnt++) {
     
-    	var imageData = upload[0].value;
+    	var imageData = upload[cnt].value;
     
-    	setTimeout(function(imageData) {
+    	setTimeout(function() {
     
     		delay = 2000;		
 			var data = new FormData();
