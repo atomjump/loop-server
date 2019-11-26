@@ -26,7 +26,7 @@
 	include_once(__DIR__ ."/config/db_connect.php");
 
 
-	print_r($_POST);
+	print_r($_POST['images']);
 	exit(0);		//TESTING IN
 
 
