@@ -1072,11 +1072,7 @@ function upload() {
     
     //Handle each upload, with a 2 second delay between starting each one
     var eachPhoto = setInterval(function() {
-		
-		
-
-    		alert(passInId);		//TESTING
-    		
+		    		
     		var upload = $('#upload-frm').serializeArray();	
     		var imageData = upload[passInId].value;
     		
