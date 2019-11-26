@@ -1065,12 +1065,9 @@ function upload() {
     
   	
     var data = new FormData();
-    var upload = $('#upload-frm').serializeArray();		// :input
-   /* Good for 1 image:  var myFormat = {
-    	"images[]": upload[0].value
-    } */
+    var upload = $('#upload-frm').serializeArray();	
     var myFormat = {
-    	"images[]": [ upload[0].value , upload[1].value ]
+    	"images[]": [ upload[0].value ]
     }
     
     
@@ -1100,6 +1097,14 @@ function upload() {
 			} else {
 				//Append the response url to the input box
 				//Register that we have started typing
+				
+				
+				mg.newMsg(true);  //start typing private message
+				$('#shouted').val( response.url );
+				mg.commitMsg();
+				//submitShoutAjax(whisper, true, msgId);
+				
+				/*
 				setTimeout( function() {
         
         
@@ -1111,17 +1116,17 @@ function upload() {
 						
 					} else {
 					
-			      mg.reactivateMsg(mg.localMsgId); //if it was deactivated
-	  				registerNewKeypress();
+			      		mg.reactivateMsg(mg.localMsgId); //if it was deactivated
+	  						registerNewKeypress();
 					
-					}
+						}
 				
 				}, 100); //end set timeout
-				
+				*/
 				
 				$('#uploading-msg').html("");
 				$('#uploading-msg').hide();
-				$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
+				//$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
 				$("#comment-popup-content").show(); 
 				$("#comment-upload").hide(); 
 			}
