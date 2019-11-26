@@ -488,13 +488,13 @@
 				<h4><?php echo $msg['msgs'][$lang]['uploadTitle'] ?></h4>
 				<?php } ?>
 				
-					<!-- onsubmit="return upload();" TESTING OUT. action testing in. action="upload-photo.php"-->
+					
 				 <form id="upload-frm" class="form" role="form"  onsubmit="return upload();" method="POST">
 				 		<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>	
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
 							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" multiple="multiple" data-maxwidth="1200" data-maxheight="720">
-							 			<div id="preview"></div>
+							 			<div id="preview" style="width: 30%;"></div>
 								</div>
 								<div id="uploading-wait" style="display: none; margin-bottom: 10px;"><?php echo $msg['msgs'][$lang]['uploadingWait'] ?> <img src="images/ajax-loader.gif"></div>
 								<div id="uploading-msg" style="display: none; color: #900; margin-bottom: 10px;"></div>
