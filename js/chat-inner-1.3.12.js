@@ -1069,8 +1069,8 @@ function upload() {
     });
     
     
-    var data = document.getElementById('upload-frm');
-    alert(data);
+    //var data = document.getElementById('upload-frm');
+    //alert(JSON.stringify(data));
     
     $.ajax({
 			url: ssshoutServer + '/upload-photo.php', 

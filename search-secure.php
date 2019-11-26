@@ -600,6 +600,9 @@
 				return false;
 				}
 			  readfiles(fileinput.files);
+			  
+			  //Set global var in chat-inner
+			  files = event.target.images;
 			}
 
 			// === RESIZE ====
