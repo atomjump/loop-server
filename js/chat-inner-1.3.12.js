@@ -1062,11 +1062,11 @@ function upload() {
     
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
-   /* var data = new FormData();
+    var data = new FormData();
     $.each(files, function(key, value)
     {
         data.append(key, value);
-    }); */
+    });
     
     
     var data = document.getElementById('upload-frm');
