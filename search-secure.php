@@ -566,10 +566,13 @@
 				  //preview.appendChild(image); // preview commented out, I am using the canvas instead
 				  image.onload = function() {
 					// have to wait till it's loaded
-					var resized = resizeMe(image, 70); // send it to canvas, 70% version
+					var resized = resizeMe(image, 0.7); // send it to canvas, 70% version
 					if(!resized) {
-						alert("Warning: A large file.");
-						var resized = resizeMe(image, 30); // send it to canvas, 30% version
+						alert("Warning: This is a large file, we will reduce the quality slightly.");
+						var resized = resizeMe(image, 0.3); // send it to canvas, 30% version
+						if(!resized) {
+							alert("Error: Sorry, we cannot select that file. Please try refreshing your page.");
+						}
 					}
 					var newinput = document.createElement("input");
 					newinput.type = 'hidden';
@@ -601,7 +604,7 @@
 			// this is where it starts. event triggered when user selects files
 			fileinput.onchange = function(){
 			  if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
-				alert('The File APIs are not fully supported in this browser.');
+				alert('Sorry, this browser does not support image uploads.');
 				return false;
 				}
 			  readfiles(fileinput.files);
@@ -612,54 +615,60 @@
 
 			// === RESIZE ====
 
-			function resizeMe(img) {
+			function resizeMe(img, quality) {
+  				
+  			   try {	
   
-  
-  			  //first get a thumbnail
-  			  var canvas = document.createElement('canvas');
-  			  
-  			  var width = 200;
-			  var height = 150;
-			  canvas.width = width;
-			  canvas.height = height;
-			  var ctx = canvas.getContext("2d");
-			  ctx.drawImage(img, 0, 0, width, height);
-			  preview.appendChild(canvas); // do the actual resized preview
+				  //first get a thumbnail
+				  var canvas = document.createElement('canvas');
+			  
+				  var width = 200;
+				  var height = 150;
+				  canvas.width = width;
+				  canvas.height = height;
+				  var ctx = canvas.getContext("2d");
+				  ctx.drawImage(img, 0, 0, width, height);
+				  preview.appendChild(canvas); // do the actual resized preview
 			  
 			  
-  			  //Now do the full sized version
-			  var canvasb = document.createElement('canvas');
+				  //Now do the full sized version
+				  var canvasb = document.createElement('canvas');
 
-			  var width = img.width;
-			  var height = img.height;
+				  var width = img.width;
+				  var height = img.height;
 
-			  // calculate the width and height, constraining the proportions
-			  if (width > height) {
-				if (width > max_width) {
-				  //height *= max_width / width;
-				  height = Math.round(height *= max_width / width);
-				  width = max_width;
-				}
-			  } else {
-				if (height > max_height) {
-				  //width *= max_height / height;
-				  width = Math.round(width *= max_height / height);
-				  height = max_height;
-				}
-			  }
+				  // calculate the width and height, constraining the proportions
+				  if (width > height) {
+					if (width > max_width) {
+					  //height *= max_width / width;
+					  height = Math.round(height *= max_width / width);
+					  width = max_width;
+					}
+				  } else {
+					if (height > max_height) {
+					  //width *= max_height / height;
+					  width = Math.round(width *= max_height / height);
+					  height = max_height;
+					}
+				  }
   
-			  // resize the canvas and draw the image data into it
-			  canvasb.width = width;
-			  canvasb.height = height;
-			  var ctxb = canvasb.getContext("2d");
-			  ctxb.drawImage(img, 0, 0, width, height);
+				  // resize the canvas and draw the image data into it
+				  canvasb.width = width;
+				  canvasb.height = height;
+				  var ctxb = canvasb.getContext("2d");
+				  ctxb.drawImage(img, 0, 0, width, height);
 			   
-			  //preview.appendChild(canvas); // do the actual resized preview
+				  //preview.appendChild(canvas); // do the actual resized preview
 			  
 			  
 			  
   
-			  return canvasb.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+				} catch(err) {
+				  
+				  return null;		//The caller will try a slightly lower quality image.
+				
+				}
 
 			}
 			</script>
