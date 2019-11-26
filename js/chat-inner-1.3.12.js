@@ -1075,7 +1075,7 @@ function upload() {
     
     //data = $("#upload-frm").serialize();
     
-    var data = $('#upload-frm').serialize();
+    var data = $('#upload-frm :input').serialize();
     
     //var data = document.getElementById('upload-frm');
     //alert(JSON.stringify(data));
