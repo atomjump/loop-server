@@ -1072,7 +1072,7 @@ function upload() {
     //Handle each upload, with a 2 second delay between starting each one
     for(var cnt = 0; cnt< upload.length; cnt++) {
     
-    	var imageData = upload[cnt].value;
+    	var imageData = upload[0].value;
     
     	setTimeout(function(imageData) {
     
