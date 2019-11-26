@@ -610,6 +610,17 @@
 
 			function resizeMe(img) {
   
+  
+  			  //first get a thumbnail
+  			  var canvas = document.createElement('canvas');
+			  canvas.width = 200;
+			  canvas.height = 150;
+			  var ctx = canvas.getContext("2d");
+			  ctx.drawImage(img, 0, 0, width, height);
+			  preview.appendChild(canvas); // do the actual resized preview
+			  
+			  
+  			  //Now do the full sized version
 			  var canvas = document.createElement('canvas');
 
 			  var width = img.width;
@@ -636,7 +647,10 @@
 			  var ctx = canvas.getContext("2d");
 			  ctx.drawImage(img, 0, 0, width, height);
 			   
-			  preview.appendChild(canvas); // do the actual resized preview
+			  //preview.appendChild(canvas); // do the actual resized preview
+			  
+			  
+			  
   
 			  return canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 
