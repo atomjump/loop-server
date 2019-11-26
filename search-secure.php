@@ -566,7 +566,11 @@
 				  //preview.appendChild(image); // preview commented out, I am using the canvas instead
 				  image.onload = function() {
 					// have to wait till it's loaded
-					var resized = resizeMe(image); // send it to canvas
+					var resized = resizeMe(image, 70); // send it to canvas, 70% version
+					if(!resized) {
+						alert("Warning: A large file.");
+						var resized = resizeMe(image, 30); // send it to canvas, 30% version
+					}
 					var newinput = document.createElement("input");
 					newinput.type = 'hidden';
 					newinput.name = 'images[]';		
