@@ -1068,13 +1068,13 @@ function upload() {
     
     
     var delay = 10;		//Initial delay is 0 seconds, but increase this to 2 seconds after the first upload
+    var passInId = 0;
     
     //Handle each upload, with a 2 second delay between starting each one
-    for(var cnt = 0; cnt< upload.length; cnt++) {
-    
-    	var passInId = cnt;
-    
-    	setTimeout(function() {
+    var eachPhoto = setInterval(function {
+		
+		
+
     		alert(passInId);		//TESTING
     		
     		var upload = $('#upload-frm').serializeArray();	
@@ -1152,9 +1152,12 @@ function upload() {
 			
 				
 				});
-		}, delay); //end of set timeout
-	} //end of looping through photos
-	
+
+			passInId ++;
+			if(passInId == upload.length) {
+				clearInterval(eachPhoto);
+			}
+	},delay);
     
 
 	return false;
