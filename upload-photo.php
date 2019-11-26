@@ -35,7 +35,7 @@
 	*/
 	
 		
-	//echo $_POST['images'][0];
+	//echo $_POST['images'][0];  TODO: loop through
 	if($_POST['images'][0]) {
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
