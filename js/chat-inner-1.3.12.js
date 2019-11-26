@@ -1062,7 +1062,7 @@ function upload() {
     
  	$('#uploading-wait').show();
     // Create a formdata object and add the files
-    var data = new FormData();
+    //var data = new FormData();
     /*$.each(form.elements.images, function(key, value)
     {
         data.append(key, value);
@@ -1073,8 +1073,9 @@ function upload() {
     
     }*/
     
-    data = $("#upload-frm").serialize();
+    //data = $("#upload-frm").serialize();
     
+    var data = $('#upload-frm').serialize();
     
     //var data = document.getElementById('upload-frm');
     //alert(JSON.stringify(data));
