@@ -1068,10 +1068,12 @@ function upload() {
         data.append(key, value);
     });*/
     
-    for(var cnt = 0; cnt< form.elements.images.length; cnt++) {
+   /* for(var cnt = 0; cnt< form.elements.images.length; cnt++) {
     	data.append("images", form.elements.images.value);
     
-    }
+    }*/
+    
+    data = $("#upload-frm").serialize();
     
     
     //var data = document.getElementById('upload-frm');
