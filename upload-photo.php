@@ -37,7 +37,7 @@
 	//echo $_POST['images'][0];  TODO: loop through
 	
 	$message = "Sorry there was an error in processing.";
-	error_log("Passed in: " . json_encode($_POST));
+	//error_log("Passed in: " . json_encode($_POST));
 	
 	if($_POST['images'][0]) {
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
