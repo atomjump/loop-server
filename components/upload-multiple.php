@@ -11,22 +11,23 @@
 		$target_file = $target_dir . $raw_file;
 		$hi_target_file = $target_dir . $hi_raw_file;
 		$uploadOk = 1;
-		$imageFileType = $file["type"];	// pathinfo($file["tmp_name"]["type"],PATHINFO_EXTENSION);		//This isn't the best beacuse it is browser reporting it but it hopefully removes non jpg
+	
 		// Check if image file is a actual image or fake image
-		if(isset($_POST["submit"])) {
-			$check = getimagesize($output_file);
-			if($check !== false) {
-				$message .="File is an image - " . $check["mime"] . ".";
-				$uploadOk = 1;
-				
-				
-				
-				
-			} else {
-				$message .= "File is not an image.";
-				$uploadOk = 0;
-			}
+
+		$check = getimagesize($output_file);
+		if($check !== false) {
+			$message .="File is an image - " . $check["mime"] . ".";
+			$uploadOk = 1;
+			
+			
+			
+			
+		} else {
+			$message .= "File is not an image.";
+			$uploadOk = 0;
 		}
+		
+
 		
 		// Check file size
 		if ($file["size"] > 10000000) {
@@ -34,7 +35,7 @@
 			$uploadOk = 0;
 		}
 		// Allow certain file formats
-		if((stristr($imageFileType, "jpg") == false) && (stristr($imageFileType, "jpeg") == false)) {
+		if((stristr($check['mime'], "jpg") == false) && (stristr($check['mime'], "jpeg") == false)) {
 			$message .= "Sorry, only JPG or JPEG files are allowed.";
 			$uploadOk = 0;
 		}
