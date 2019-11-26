@@ -494,12 +494,13 @@
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
 							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" multiple="multiple" data-maxwidth="1200" data-maxheight="720">
-							 			<div id="preview" style="width: 30%;"></div>
+							 			
 								</div>
 								<div id="uploading-wait" style="display: none; margin-bottom: 10px;"><?php echo $msg['msgs'][$lang]['uploadingWait'] ?> <img src="images/ajax-loader.gif"></div>
 								<div id="uploading-msg" style="display: none; color: #900; margin-bottom: 10px;"></div>
 								
 											 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
+											 <div id="preview"></div>
 						  	 <br/>
 							 <br/>
 							 
@@ -634,7 +635,7 @@
 			  canvas.height = height;
 			  var ctx = canvas.getContext("2d");
 			  ctx.drawImage(img, 0, 0, width, height);
-  
+			   
 			  preview.appendChild(canvas); // do the actual resized preview
   
 			  return canvas.toDataURL("image/jpeg",0.7); // get the data from canvas as 70% JPG (can be also PNG, etc.)
