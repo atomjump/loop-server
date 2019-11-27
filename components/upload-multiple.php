@@ -8,8 +8,8 @@
 		$target_dir = getcwd() . $image_path; //"/../images/property/";
 		$raw_file = $_REQUEST['title'] . ".jpg";
 		$hi_raw_file = $_REQUEST['title'] . "_HI.jpg";		//Hi res version
-		$target_file =  __DIR__ . $target_dir . $raw_file; 
-		$hi_target_file = __DIR__ . $target_dir . $hi_raw_file;
+		$target_file =  $target_dir . $raw_file; 
+		$hi_target_file = $target_dir . $hi_raw_file;
 		$uploadOk = 1;
 		
 		
