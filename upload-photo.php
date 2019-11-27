@@ -36,6 +36,7 @@
 		$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 		base64ToImage($_POST['images'][0], $output_file);
 		$uploaded = true;
+		$hi_res = false;
 		
 		$resize = false;
 		$images_script = __DIR__ . "/send-images-upload.php";
