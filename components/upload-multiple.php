@@ -46,29 +46,6 @@
 			
 				$message .= "The file ". basename( $output_file ). " has been uploaded.";
 				
-				
-				
-				/*if($resize == true) {
-					//We already have a 'hi res version' i.e. 800 width.
-					//Resize the image
-					$src = imagecreatefromjpeg($hi_target_file);        
-					list($width, $height) = getimagesize($hi_target_file); 
-
-					$ratio = $height / $width;
-					$resize = true;
-					
-					$base_size = 800;
-					
-					//Now we will create a faster 800 width version.
-					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
-					$filename = $target_file;
-
-					imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
-					imagejpeg($tmp, $filename, 75);		//75% quality - this saves a lot on download space
-					
-					
-				}*/
-				
 				$src = imagecreatefromjpeg($target_file);        
 				list($width, $height) = getimagesize($target_file); 
 
