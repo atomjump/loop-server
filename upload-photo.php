@@ -68,7 +68,7 @@
 			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
 		} else {
 			global $root_server_url;
-			$url = $root_server_url . $image_path . $_REQUEST['title'] . ".jpg";
+			$url = $root_server_url . $image_path . $_REQUEST['title'] . "_HI.jpg";
 		}
 	} else {
 		$url = null;
