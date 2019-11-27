@@ -42,6 +42,7 @@
 			$resize = true;
 		} else {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
+			$low_res = false;
 			$resize = false;
 		}
 		base64ToImage($_POST['images'][0], $output_file);
