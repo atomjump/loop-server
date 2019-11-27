@@ -98,6 +98,12 @@ Note: You should make sure your server provides a caching response to image file
 
 **uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
 
+**uploads** **hiRes** **width** (**height**): width in pixels of uploaded images, in their hi-res version. The low-res version is displayed to the whole group, and the hi-res version is only used when a user taps on that one photo.
+
+**uploads** **lowRes** **width** (**height**): width in pixels of uploaded images, in their low-res version. The low-res version is displayed to the whole group, and the hi-res version is only used when a user taps on that one photo.
+
+**uploads** **replaceHiResURLMatch**: set to a string in your uploaded images URL path that identifies that the photo is on your server, and not copied from a different server e.g. 'atomjump' would identify for "http://yourserver.com/atomjump/images/im/yourphoto.jpg". Images which include this string, will show the hi-res uploaded version when clicked e.g. "http://yourserver.com/atomjump/images/im/yourphoto_HI.jpg".
+
 **uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
 
