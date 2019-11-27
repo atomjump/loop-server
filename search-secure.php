@@ -546,7 +546,7 @@
   
   				if( !( /image/i ).test( file.type ) )
 					{
-						alert( "File "+ file.name +" is not an image." );
+						alert(file.name + "<?php echo $msg['msgs'][$lang]['photos']['notImage'] ?>" );
 						return false;
 					}
 
@@ -568,10 +568,10 @@
 					// have to wait till it's loaded
 					var resized = resizeMe(image, 0.7); // send it to canvas, 70% version
 					if(!resized) {
-						alert("Warning: This is a large file, we will reduce the quality slightly.");
+						alert("<?php echo $msg['msgs'][$lang]['photos']['largeWarning'] ?>");
 						var resized = resizeMe(image, 0.3); // send it to canvas, 30% version
 						if(!resized) {
-							alert("Error: Sorry, we cannot select that file. Please try refreshing your page.");
+							alert("<?php echo $msg['msgs'][$lang]['photos']['selectError'] ?>");
 						}
 					}
 					var newinput = document.createElement("input");
@@ -604,7 +604,7 @@
 			// this is where it starts. event triggered when user selects files
 			fileinput.onchange = function(){
 			  if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
-				alert('Sorry, this browser does not support image uploads.');
+				alert("<?php echo $msg['msgs'][$lang]['photos']['browserNoSupport'] ?>");
 				return false;
 				}
 			  readfiles(fileinput.files);

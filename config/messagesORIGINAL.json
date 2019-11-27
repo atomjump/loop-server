@@ -150,7 +150,13 @@
             "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
             "setForumPassEnter":"Enter a password",
             "emojisTitle": "Emoji",
-            "standardEmailFromName": "AtomJump User"
+            "standardEmailFromName": "AtomJump User",
+            "photos": {
+            	"largeWarning": "Warning: This is a large file, we will reduce the quality slightly.",
+            	"selectError": "Error: Sorry, we cannot select that file. Please try refreshing your page.",
+            	"browserNoSupport": "Sorry, this browser does not support image uploads.",
+            	"notImage": " file is not an image."
+            }
         },
 		"es": {
 			"fullnameEnglish": "Spanish",
@@ -300,7 +306,13 @@
 			"problemSubscribing": "Lo siento, hubo un problema al suscribirse. Inténtalo de nuevo.",
 			"successSubscribing": "Suscrito con éxito.",
 			"subscribeSettingsButton": "Suscribir",
-			"loginSettingsButton": "Iniciar sesión"
+			"loginSettingsButton": "Iniciar sesión",
+			"photos": {
+            	"largeWarning": "Advertencia: este es un archivo grande, reduciremos la calidad ligeramente.",
+            	"selectError": "Error: Lo sentimos, no podemos seleccionar ese archivo. Intenta actualizar tu página.",
+            	"browserNoSupport": "Lo sentimos, este navegador no admite la carga de imágenes.",
+            	"notImage": " el archivo no es una imagen."
+            }
 		}
     }
 }
