@@ -37,7 +37,7 @@
 	if($_POST['images'][0]) {
 		//This is a multiple file upload
 		if($cnf['uploads']['use'] == "amazonAWS") {
-			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . "_HI.jpg";
+			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 			$low_res = true;			//Want two versions of the file up there.
 		} else {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
@@ -64,7 +64,7 @@
 	
 	if($uploaded == true) {		
 		if($cnf['uploads']['use'] == "amazonAWS") {
-			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . "_HI.jpg";
+			$url = $cnf['uploads']['vendor']['amazonAWS']['imageURL'] . $_REQUEST['title'] . ".jpg";
 		} else {
 			global $root_server_url;
 			$url = $root_server_url . $image_path . $_REQUEST['title'] . ".jpg";
