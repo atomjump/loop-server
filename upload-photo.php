@@ -39,16 +39,16 @@
 		if($cnf['uploads']['use'] == "amazonAWS") {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
 			$low_res = true;			//Want two versions of the file up there.
+			$resize = true;
 		} else {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
-			
+			$resize = false;
 		}
 		base64ToImage($_POST['images'][0], $output_file);
 		$uploaded = true;
-		
 		$hi_res = true;
 		
-		$resize = false;
+		
 		$images_script = __DIR__ . "/send-images-upload.php";
 		require_once(__DIR__ . "/components/upload-multiple.php");
 
