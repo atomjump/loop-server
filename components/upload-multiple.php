@@ -8,8 +8,8 @@
 		$target_dir = getcwd() . $image_path; //"/../images/property/";
 		$raw_file = $_REQUEST['title'] . ".jpg";
 		$hi_raw_file = $_REQUEST['title'] . "_HI.jpg";		//Hi res version
-		$target_file = $target_dir . $raw_file;
-		$hi_target_file = $target_dir . $hi_raw_file;
+		$target_file =  __DIR__ . $target_dir . $raw_file; 
+		$hi_target_file = __DIR__ . $target_dir . $hi_raw_file;
 		$uploadOk = 1;
 		
 		
@@ -86,10 +86,13 @@
 					$script = $images_script;
 				
 				}
-				$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $output_file;
-				error_log("Running " . $cmd);
 				
-				$response = shell_exec($cmd);
+				if($low_res == true) {
+					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $output_file;
+					error_log("Running " . $cmd);
+				
+					$response = shell_exec($cmd);
+				}
 				
 				if($hi_res == true) {
 					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $hi_raw_file;
