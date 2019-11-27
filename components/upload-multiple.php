@@ -48,8 +48,8 @@
 				
 				
 				
-				if($resize == true) {
-					//We already have a 'hi res version' i.e. 1280 width.
+				/*if($resize == true) {
+					//We already have a 'hi res version' i.e. 800 width.
 					//Resize the image
 					$src = imagecreatefromjpeg($hi_target_file);        
 					list($width, $height) = getimagesize($hi_target_file); 
@@ -67,7 +67,36 @@
 					imagejpeg($tmp, $filename, 75);		//75% quality - this saves a lot on download space
 					
 					
+				}*/
+				
+				$src = imagecreatefromjpeg($target_file);        
+				list($width, $height) = getimagesize($target_file); 
+
+				$ratio = $height / $width;
+				$resize = true;
+					
+				$base_size = 800;
+				
+				
+				if($resize == true) {
+					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
+					$filename = $target_file;
+
+					imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
+					imagejpeg($tmp, $filename, 75);		//75% quality - this saves a lot on download space
+					
+					$hi_res = true;
+					//We want a hi res version too
+					$base_size = 1280;
+					
+					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
+					$filename = $hi_target_file;
+
+					imagecopyresampled($tmp, $src, 0, 0, 0, 0, $base_size, ($base_size*$ratio), $width, $height); 
+					imagejpeg($tmp, $filename, 95);		//95% quality - this produces a good quality image for slower secondary downloads	
+					
 				}
+				
 				//Image resized
 				
 				
@@ -88,7 +117,7 @@
 				}
 				
 				if($low_res == true) {
-					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $output_file;
+					$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $raw_file;
 					error_log("Running " . $cmd);
 				
 					$response = shell_exec($cmd);

@@ -38,12 +38,14 @@
 		//This is a multiple file upload
 		if($cnf['uploads']['use'] == "amazonAWS") {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . "_HI.jpg";
+			$low_res = true;			//Want two versions of the file up there.
 		} else {
 			$output_file = __DIR__ . $target_dir . $_REQUEST['title'] . ".jpg";
+			
 		}
 		base64ToImage($_POST['images'][0], $output_file);
 		$uploaded = true;
-		$low_res = false;
+		
 		$hi_res = true;
 		
 		$resize = false;
