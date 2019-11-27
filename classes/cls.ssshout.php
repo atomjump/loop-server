@@ -1218,6 +1218,7 @@ class cls_ssshout
         global $msg;
         global $lang;
         global $root_server_url;
+        global $cnf;
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
