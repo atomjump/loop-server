@@ -49,10 +49,9 @@
 	}
 
 	
+	global $cnf;
 	
-
-
-
+	error_log("uploaded status = " . $uploaded);
 	
 	if($uploaded == true) {		
 		if($cnf['uploads']['use'] == "amazonAWS") {

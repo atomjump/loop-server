@@ -86,7 +86,7 @@
 					$script = $images_script;
 				
 				}
-				$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $raw_file;
+				$cmd = $cnf['phpPath'] . ' ' . $script . ' ' . $output_file;
 				error_log("Running " . $cmd);
 				
 				$response = shell_exec($cmd);
