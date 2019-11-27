@@ -1287,8 +1287,12 @@ class cls_ssshout
 		
 
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
-		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
-
+		$url_matching = "ajmp";		//Works with Amazon based jpgs on atomjump.com which include ajmp.
+		if($cnf['uploads']['replaceHiResURLMatch']) $url_matching = $cnf['uploads']['replaceHiResURLMatch'];
+		$preg_search = "/href=\"(.*?)\.jpg\"\>(.*?" . $url_matching ."(.*?))\.jpg\</i";
+		$my_line = preg_replace($preg_search, 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
+		//Note: TODO In future I suggest investigating
+		//https://sourceforge.net/projects/simplehtmldom/
 
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 

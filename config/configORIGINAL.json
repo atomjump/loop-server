@@ -48,6 +48,15 @@
 			  "https" : false
 		  },
 		  "genericUploadURL": "https://youruploadurl.com/upload.php",
+		  "hiRes" : {
+		  	 "width": 1280,
+		  	 "height": 720
+		  },
+		  "lowRes": {
+		  	 "width": 800,
+		  	 "height": 450
+		  },
+		  "replaceHiResURLMatch": "ajmp",
 		  "vendor": {
 		  	  "amazonAWS": {
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
@@ -202,12 +211,21 @@
           "ips": [
           ]
       },
-            "uploads" : {
+      "uploads" : {
 		  "use" : "none|same|generic|amazonAWS",
 		  "imagesShare" : {
 			  "port" : "80",
 			  "https" : false
 		  },
+		  "hiRes" : {
+		  	 "width": 1280,
+		  	 "height": 720
+		  },
+		  "lowRes": {
+		  	 "width": 800,
+		  	 "height": 450
+		  },
+		  "replaceHiResURLMatch": "ajmp",
 		  "genericUploadURL": "https://youruploadurl.com/upload.php",
 		  "vendor": {
 		  	  "amazonAWS": {

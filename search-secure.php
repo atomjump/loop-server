@@ -493,7 +493,7 @@
 				 		<?php global $cnf; if($cnf['uploads']['use'] != 'none') { ?>	
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['selectImage'] ?></div>
-							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" multiple="multiple" data-maxwidth="1280" data-maxheight="720">
+							 			<input id="image" name="fileToUpload" type="file" accept=".jpg,.jpeg," class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['selectImagePrompt'] ?>" multiple="multiple" data-maxwidth="<?php global $cnf; if($cnf['uploads']['hiRes']['width']) { echo $cnf['uploads']['hiRes']['width']; } else { echo '1280'; } ?>" data-maxheight="<?php global $cnf; if($cnf['uploads']['hiRes']['height']) { echo $cnf['uploads']['hiRes']['height']; } else { echo '720'; } ?>">
 							 			
 								</div>
 								<div id="uploading-wait" style="display: none; margin-bottom: 10px;"><?php echo $msg['msgs'][$lang]['uploadingWait'] ?> <img src="images/ajax-loader.gif"></div>

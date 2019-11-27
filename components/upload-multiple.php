@@ -53,6 +53,7 @@
 				$resize = true;
 					
 				$base_size = 800;
+				if($cnf['uploads']['lowRes']['width']) $base_size = $cnf['uploads']['lowRes']['width'];
 				
 				
 				if($resize == true) {
@@ -65,6 +66,7 @@
 					$hi_res = true;
 					//We want a hi res version too
 					$base_size = 1280;
+					if($cnf['uploads']['hiRes']['width']) $base_size = $cnf['uploads']['hiRes']['width'];
 					
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
 					$filename = $hi_target_file;
