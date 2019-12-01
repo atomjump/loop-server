@@ -685,7 +685,7 @@
 							newCloser.onclick = function () {
 									window.close();
 							}
-							newCloser.innerHTML ='Test <img src="images/multiply.png" style="width:30px;">';
+							newCloser.innerHTML ='<span style="z-index:500; font-size: 150%;">Close</span>';
 							myWindow.document.body.appendChild(newCloser);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
