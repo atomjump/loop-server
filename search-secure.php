@@ -586,7 +586,7 @@
 					
 					$('#upload-button').show();		//Show the upload confirmation button
 				  }
-				};
+				}
 			}
 
 			function readfiles(files) {
@@ -610,8 +610,8 @@
 			// this is where it starts. event triggered when user selects files
 			fileinput.onchange = function(){
 			  if ( !( window.File && window.FileReader && window.FileList && window.Blob ) ) {
-				alert("<?php echo $msg['msgs'][$lang]['photos']['browserNoSupport'] ?>");
-				return false;
+					alert("<?php echo $msg['msgs'][$lang]['photos']['browserNoSupport'] ?>");
+					return false;
 				}
 			  readfiles(fileinput.files);
 			  
@@ -671,7 +671,7 @@
 				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 				} catch(err) {
 				  
-				  return null;		//The caller will try a slightly lower quality image.
+				  	return null;		//The caller will try a slightly lower quality image.
 				
 				}
 
