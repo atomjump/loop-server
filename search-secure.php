@@ -695,6 +695,9 @@
   							
   							//And get the new element back in the global var
   							previewFull = document.getElementById('preview-full');
+  							
+  							//Now, limit the clickable event for the 2nd click, because that won't work
+  							canvas.removeEventListener("click",fullscreen);
  							
  							
 					}
