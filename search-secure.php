@@ -517,6 +517,7 @@
 							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
+				 <iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -539,6 +540,8 @@
 			var max_height = fileinput.getAttribute('data-maxheight');
 
 			var preview = document.getElementById('preview');
+			
+			var preview-iframe = document.getElementById('preview-iframe');
 
 			var form = document.getElementById('upload-frm');
 
@@ -660,8 +663,7 @@
 				  var ctxb = canvasb.getContext("2d");
 				  ctxb.drawImage(img, 0, 0, width, height);
 			   
-				  //preview.appendChild(canvas); // do the actual resized preview
-			  
+			  	  preview-iframe.appendChild(canvasb);		//Get a full-sized preview in the popup frame.
 			  
 			  
   
