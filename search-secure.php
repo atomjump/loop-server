@@ -671,9 +671,15 @@
   
 					function fullscreen(){
 
- 							
+
+							var divObj = document.getElementById("preview-full");
+ 							var myWindow = window.open("", "", "width=347.7200,height=755.9100");
+							myWindow.document.body.appendChild(divObj);
  						
-						   var divObj = document.getElementById("preview-full");
+						   
+						
+						
+							/*
 						   //Use the specification method before using prefixed versions
 						  if (divObj.requestFullscreen) {
 							divObj.requestFullscreen();
@@ -688,7 +694,7 @@
 							divObj.webkitRequestFullscreen();       
 						  } else {
 							console.log("Fullscreen API is not supported");
-						  } 
+						  } */
 							 /*  
 							 	var el = document.getElementById('preview-full');
 							 
