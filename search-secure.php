@@ -518,7 +518,7 @@
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
-				 <div id="preview-full" style="width 200px; height: 150px;"></div>
+				 
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -530,6 +530,8 @@
 		<div id="comment-single-msg" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 				<h2>Single Message</h2>
 		</div>
+		
+		<div id="preview-full" style="width 100%; height: 700px; display: none; z-index: 5000;"></div>
 		
 		
 		
@@ -667,13 +669,15 @@
   
 					function fullscreen(){
 							   var el = document.getElementById('preview-full');
+ 							
+ 							$('#preview-full').show();
  
-							   if(el.webkitRequestFullScreen) {
+							 /*  if(el.webkitRequestFullScreen) {
 								   el.webkitRequestFullScreen();
 							   }
 							  else {
 								 el.mozRequestFullScreen();
-							  }            
+							  }  */          
 					}
  
 					canvas.addEventListener("click",fullscreen);
