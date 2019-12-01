@@ -603,7 +603,9 @@
 				  // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
 				  form.removeChild(existinginputs[0]);
 				  preview.removeChild(existingcanvases[0]);
-				  previewFull.removeChild(existingcanvases[0]);
+				   if(previewFull.contains(existingcanvases[0]) {
+				  		previewFull.removeChild(existingcanvases[0]);
+				    }
 				} 
 				
 				
