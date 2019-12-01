@@ -520,10 +520,7 @@
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
 				 
 				 <div id="preview-full-container">
-				 	<div id="preview-full" style="height: 100%;">
-				 			<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>
-				 	
-				 	</div>
+				 	<div id="preview-full" style="height: 100%;"></div>
 				 </div>
 		</div>
 		
@@ -683,6 +680,10 @@
 							
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
+							
+							var newCloser = document.createElement("div"); 
+							newCloser.innerText = '<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>';
+							myWindow.document.body.appendChild(newCloser);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
 						
