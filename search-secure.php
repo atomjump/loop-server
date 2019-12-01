@@ -673,7 +673,7 @@
 
 
 							var divObj = document.getElementById("preview-full");
- 							var myWindow = window.open("", "", "width=347.7200,height=755.9100");
+ 							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
  						
 						   
