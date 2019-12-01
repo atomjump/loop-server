@@ -499,7 +499,7 @@
 								<div id="uploading-wait" style="display: none; margin-bottom: 10px;"><?php echo $msg['msgs'][$lang]['uploadingWait'] ?> <img src="images/ajax-loader.gif"></div>
 								<div id="uploading-msg" style="display: none; color: #900; margin-bottom: 10px;"></div>
 											<div id="preview"></div>
-											 <button type="submit" class="btn btn-primary" style="margin-bottom:3px;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
+											 <button id="upload-button" type="submit" class="btn btn-primary" style="margin-bottom:3px; display: none;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
 											 
 						  	 <br/>
 							 <br/>
@@ -579,6 +579,8 @@
 					newinput.name = 'images[]';		
 					newinput.value = resized; // put result from canvas into new hidden input
 					form.appendChild(newinput);
+					
+					$('#upload-button').show();		//Show the upload confirmation button
 				  }
 				};
 			}
