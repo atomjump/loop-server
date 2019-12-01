@@ -683,7 +683,7 @@
 							myWindow.document.body.appendChild(divObj);
 							
 							myWindow.onclick = function () {
-									alert("Clicked");
+									
 									myWindow.close();
 							}
 							
