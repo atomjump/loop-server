@@ -598,13 +598,14 @@
 				// remove the existing canvases and hidden inputs if user re-selects new pics
 				var existinginputs = document.getElementsByName('images[]');
 				var existingcanvases = document.getElementsByTagName('canvas');
-				var existingpreviews = document.getElementsByTagName('canvasb');
 				while (existinginputs.length > 0) { // it's a live list so removing the first element each time
 				  // DOMNode.prototype.remove = function() {this.parentNode.removeChild(this);}
 				  form.removeChild(existinginputs[0]);
 				  preview.removeChild(existingcanvases[0]);
-				  previewFull.removeChild(existingpreviews[0]);
+				  
 				} 
+				
+				$('#preview-full').html("");		//Remove all full-size previews
 				
   
 				for (var i = 0; i < files.length; i++) {
