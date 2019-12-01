@@ -517,7 +517,8 @@
 							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
-				 <iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>
+				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
+				 <iframe id="preview-iframe" src="" frameBorder="1" scrolling="yes" width="200" height="150" onload="javascript:" allowfullscreen></iframe>
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
