@@ -674,7 +674,7 @@
   
 					function fullscreen(){
 							var divObj = document.getElementById("preview-full");
-							var clone = divObj.cloneNode();
+							var clone = divObj.cloneNode(true);
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(clone);
  						
