@@ -519,7 +519,7 @@
 				 </form>
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
 				 
-				 <div id="preview-full" style="position: relative; width 200px; height: 150px;">A Preview</div>
+				 <div id="preview-full" style="height: 100%;"></div>
 				 
 		</div>
 		
@@ -672,9 +672,23 @@
 					function fullscreen(){
 
  							
- 							
- 							$('#preview-full').show();
- 
+ 						  function makeFullScreen() {
+							 var divObj = document.getElementById("preview-full");
+						   //Use the specification method before using prefixed versions
+						  if (divObj.requestFullscreen) {
+							divObj.requestFullscreen();
+						  }
+						  else if (divObj.msRequestFullscreen) {
+							divObj.msRequestFullscreen();               
+						  }
+						  else if (divObj.mozRequestFullScreen) {
+							divObj.mozRequestFullScreen();      
+						  }
+						  else if (divObj.webkitRequestFullscreen) {
+							divObj.webkitRequestFullscreen();       
+						  } else {
+							console.log("Fullscreen API is not supported");
+						  } 
 							 /*  
 							 	var el = document.getElementById('preview-full');
 							 
