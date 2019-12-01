@@ -518,7 +518,7 @@
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
-				 <iframe id="preview-iframe" src="" frameBorder="1" scrolling="yes" width="200" height="150" onload="javascript:" allowfullscreen></iframe>
+				 <div id="preview-full" style="width 200px; height: 150px;"></div>
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -542,7 +542,7 @@
 
 			var preview = document.getElementById('preview');
 			
-			var previewIframe = document.getElementById('preview-iframe');
+			var previewFull = document.getElementById('preview-full');
 
 			var form = document.getElementById('upload-frm');
 
@@ -663,9 +663,7 @@
 				  canvasb.height = height;
 				  var ctxb = canvasb.getContext("2d");
 				  ctxb.drawImage(img, 0, 0, width, height);
-			   
-			  	  ctxb.drawImage(previewIframe,0,0, width, height);		//Draw in the previw iframe also
-			  
+			  	  privewFull.appendChild(canvasb);
   
 				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 				} catch(err) {
