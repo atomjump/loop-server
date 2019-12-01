@@ -519,6 +519,8 @@
 				 </form>
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
 				 
+				 <div id="preview-full" style="position: absolute; width 100%; height: 700px; display: none; z-index: 12000;">A Preview</div>
+				 
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -531,7 +533,7 @@
 				<h2>Single Message</h2>
 		</div>
 		
-		<div id="preview-full" style="position: absolute; width 100%; height: 700px; display: none; z-index: 12000;">A Preview</div>
+		
 		
 		
 		
@@ -670,6 +672,7 @@
 					function fullscreen(){
 
  							alert("About to preview");
+ 							
  							$('#preview-full').show();
  
 							 /*  
