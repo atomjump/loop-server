@@ -672,8 +672,8 @@
 					function fullscreen(){
 
  							
- 						  function makeFullScreen() {
-							 var divObj = document.getElementById("preview-full");
+ 						
+						   var divObj = document.getElementById("preview-full");
 						   //Use the specification method before using prefixed versions
 						  if (divObj.requestFullscreen) {
 							divObj.requestFullscreen();
