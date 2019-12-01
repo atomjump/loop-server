@@ -666,7 +666,7 @@
 			  	  previewFull.appendChild(canvasb);
   
 					function fullscreen(){
-							   var el = document.getElementById('previewFull');
+							   var el = document.getElementById('preview-full');
  
 							   if(el.webkitRequestFullScreen) {
 								   el.webkitRequestFullScreen();
