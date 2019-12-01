@@ -682,7 +682,7 @@
 							myWindow.document.body.appendChild(divObj);
 							
 							var newCloser = document.createElement("div"); 
-							newCloser.innerText = '<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>';
+							newCloser.innerHTML = '<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>';
 							myWindow.document.body.appendChild(newCloser);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
