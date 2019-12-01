@@ -521,7 +521,7 @@
 				 
 				 <div id="preview-full-container">
 				 	<div id="preview-full" style="height: 100%;">
-				 			<a href="javascript:" onclick="window.close();" class="btn btn-primary" role="button"><img src="images/multiply.png" style="width:30px;"></a>
+				 			<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>
 				 	
 				 	</div>
 				 </div>
