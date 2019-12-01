@@ -681,8 +681,10 @@
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
 							
-							var newCloser = document.createElement("a"); 
-							newCloser.onclick = 'window.close();';
+							var newCloser = document.createElement("div"); 
+							newCloser.onclick = function () {
+									window.close();
+							}
 							newCloser.innerHTML ='Test <img src="images/multiply.png" style="width:30px;">';
 							myWindow.document.body.appendChild(newCloser);
 							
