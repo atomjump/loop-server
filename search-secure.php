@@ -665,6 +665,20 @@
 				  ctxb.drawImage(img, 0, 0, width, height);
 			  	  previewFull.appendChild(canvasb);
   
+					function fullscreen(){
+							   var el = document.getElementById('canvasb');
+ 
+							   if(el.webkitRequestFullScreen) {
+								   el.webkitRequestFullScreen();
+							   }
+							  else {
+								 el.mozRequestFullScreen();
+							  }            
+					}
+ 
+					canvas.addEventListener("click",fullscreen);
+  
+  
 				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 				} catch(err) {
 				  
