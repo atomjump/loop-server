@@ -541,7 +541,7 @@
 
 			var preview = document.getElementById('preview');
 			
-			var preview-iframe = document.getElementById('preview-iframe');
+			var previewIframe = document.getElementById('preview-iframe');
 
 			var form = document.getElementById('upload-frm');
 
@@ -663,7 +663,7 @@
 				  var ctxb = canvasb.getContext("2d");
 				  ctxb.drawImage(img, 0, 0, width, height);
 			   
-			  	  preview-iframe.appendChild(canvasb);		//Get a full-sized preview in the popup frame.
+			  	  previewIframe.appendChild(canvasb);		//Get a full-sized preview in the popup frame.
 			  
 			  
   
