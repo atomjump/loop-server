@@ -531,7 +531,7 @@
 				<h2>Single Message</h2>
 		</div>
 		
-		<div id="preview-full" style="width 100%; height: 700px; display: none; z-index: 12000;"></div>
+		<div id="preview-full" style="position: absolute; width 100%; height: 700px; display: none; z-index: 12000;">A Preview</div>
 		
 		
 		
