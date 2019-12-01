@@ -677,7 +677,7 @@
 							var divObj = document.getElementById("preview-full");
 							
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
-							myWindow.document.body.appendChild(clone);
+							myWindow.document.body.appendChild(divObj);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
 							//document.createElement("preview-full");
