@@ -689,7 +689,7 @@
 
  							 // add the newly created element and its content into the DOM 
   							var currentDiv = document.getElementById("preview-full-container"); 
-  							document.body.appendChild(newDiv, currentDiv); 
+  							currentDiv.appendChild(newDiv); 
  							
  							
 					}
