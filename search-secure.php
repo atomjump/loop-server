@@ -604,7 +604,10 @@
 				  preview.removeChild(existingcanvases[0]);
 				} 
 				
-				$('#previewFull').html("");			//Clear out full previews
+				var existingpreviews = document.getElementsByTagName('preview-full');
+				while (existinginputs.length > 0) {			//Clear out full previews
+					preview.removeChild(existingpreviews[0]);
+				}
   
 				for (var i = 0; i < files.length; i++) {
 				  processfile(files[i]); // process each file at once
