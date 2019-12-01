@@ -603,6 +603,8 @@
 				  form.removeChild(existinginputs[0]);
 				  preview.removeChild(existingcanvases[0]);
 				} 
+				
+				$('#previewFull').html("");			//Clear out full previews
   
 				for (var i = 0; i < files.length; i++) {
 				  processfile(files[i]); // process each file at once
@@ -676,34 +678,7 @@
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
  						
-						   
-						
-						
-							/*
-						   //Use the specification method before using prefixed versions
-						  if (divObj.requestFullscreen) {
-							divObj.requestFullscreen();
-						  }
-						  else if (divObj.msRequestFullscreen) {
-							divObj.msRequestFullscreen();               
-						  }
-						  else if (divObj.mozRequestFullScreen) {
-							divObj.mozRequestFullScreen();      
-						  }
-						  else if (divObj.webkitRequestFullscreen) {
-							divObj.webkitRequestFullscreen();       
-						  } else {
-							console.log("Fullscreen API is not supported");
-						  } */
-							 /*  
-							 	var el = document.getElementById('preview-full');
-							 
-							 	if(el.webkitRequestFullScreen) {
-								   el.webkitRequestFullScreen();
-							   }
-							  else {
-								 el.mozRequestFullScreen();
-							  }  */          
+						 
 					}
  
 					canvas.addEventListener("click",fullscreen);
