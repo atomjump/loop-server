@@ -690,6 +690,9 @@
  							 // add the newly created element and its content into the DOM 
   							var currentDiv = document.getElementById("preview-full-container"); 
   							currentDiv.appendChild(newDiv); 
+  							
+  							//And get the new element back in the global var
+  							previewFull = document.getElementById('preview-full');
  							
  							
 					}
