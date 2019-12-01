@@ -605,7 +605,7 @@
 				  
 				} 
 				
-				$('#preview-full').html("");		//Remove all full-size previews
+				$('#preview-full').empty();		//Remove all full-size previews
 				
   
 				for (var i = 0; i < files.length; i++) {
@@ -674,13 +674,10 @@
 			  	  previewFull.appendChild(canvasb);
   
 					function fullscreen(){
-
-
 							var divObj = document.getElementById("preview-full");
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
  						
-						 
 					}
  
 					canvas.addEventListener("click",fullscreen);
