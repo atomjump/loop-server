@@ -677,16 +677,23 @@
   
 					function fullscreen(){
 							var divObj = document.getElementById("preview-full");
+							divObj.onclick = function () {
+									
+									window.close();
+							}
 							
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
 							
+							/*
 							var newCloser = document.createElement("div"); 
 							newCloser.onclick = function () {
+									
 									window.close();
 							}
 							newCloser.innerHTML ='<span style="z-index:500; font-size: 150%;">Close</span>';
 							myWindow.document.body.appendChild(newCloser);
+							*/
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
 						
