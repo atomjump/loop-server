@@ -668,11 +668,14 @@
 			  	  previewFull.appendChild(canvasb);
   
 					function fullscreen(){
-							   var el = document.getElementById('preview-full');
- 							
+
+ 							alert("About to preview");
  							$('#preview-full').show();
  
-							 /*  if(el.webkitRequestFullScreen) {
+							 /*  
+							 	var el = document.getElementById('preview-full');
+							 
+							 	if(el.webkitRequestFullScreen) {
 								   el.webkitRequestFullScreen();
 							   }
 							  else {
