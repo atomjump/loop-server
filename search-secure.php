@@ -520,7 +520,7 @@
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
 				 
 				 <div id="preview-full-container">
-				 	<div id="preview-full" style="height: 100%;"></div>
+				 	<div id="preview-full" style="height: 100%;"><div><a href="javascript:" onclick="window.close();" class="btn btn-primary" role="button">Close Preview</a></div></div>
 				 </div>
 		</div>
 		
