@@ -605,7 +605,7 @@
 				} 
 				
 				var existingpreviews = document.getElementsByTagName('preview-full');
-				while (existinginputs.length > 0) {			//Clear out full previews
+				while (existingpreviews.length > 0) {			//Clear out full previews
 					preview.removeChild(existingpreviews[0]);
 				}
   
