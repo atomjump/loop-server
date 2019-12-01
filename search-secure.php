@@ -677,13 +677,15 @@
   
 					function fullscreen(){
 							var divObj = document.getElementById("preview-full");
-							divObj.onclick = function () {
-									alert("Clicked");
-									window.close();
-							}
+							
 							
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
+							
+							myWindow.onclick = function () {
+									alert("Clicked");
+									myWindow.close();
+							}
 							
 							/*
 							var newCloser = document.createElement("div"); 
