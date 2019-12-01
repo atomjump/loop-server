@@ -678,7 +678,7 @@
 					function fullscreen(){
 							var divObj = document.getElementById("preview-full");
 							divObj.onclick = function () {
-									
+									alert("Clicked");
 									window.close();
 							}
 							
