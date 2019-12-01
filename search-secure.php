@@ -519,8 +519,9 @@
 				 </form>
 				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
 				 
-				 <div id="preview-full" style="height: 100%;"></div>
-				 
+				 <div id="preview-full-container">
+				 	<div id="preview-full" style="height: 100%;"></div>
+				 </div>
 		</div>
 		
 		<div id="comment-emojis" class="comment-frm-scroller" style="z-index: 11000; width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
@@ -674,10 +675,13 @@
   
 					function fullscreen(){
 							var divObj = document.getElementById("preview-full");
-							var clone = divObj.cloneNode(true);
+							
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(clone);
- 						
+							
+							//This gets rid of the 'preview-full' element, so we need to re-create it
+							//document.createElement("preview-full");
+ 							$('#preview-full-container').html("<div id=\"preview-full\" style=\"height: 100%;\"></div>");
 					}
  
 					canvas.addEventListener("click",fullscreen);
