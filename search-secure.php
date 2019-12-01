@@ -680,18 +680,16 @@
 							myWindow.document.body.appendChild(divObj);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
-							//document.createElement("preview-full");
- 							//$('#preview-full-container').html("<div id=\"preview-full\" style=\"height: 100%;\"></div>");
- 							
+						
  							var newDiv = document.createElement("div"); 
  							 // and give it some content 
-  							var newContent = document.createTextNode("Preview"); 
-  							// add the text node to the newly created div
-  							newDiv.appendChild(newContent);  
+  							
+  							newDiv.id = "preview-full";
+  							
 
  							 // add the newly created element and its content into the DOM 
   							var currentDiv = document.getElementById("preview-full-container"); 
-  							document.body.insertBefore(newDiv, currentDiv); 
+  							document.body.appendChild(newDiv, currentDiv); 
  							
  							
 					}
