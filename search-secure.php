@@ -664,8 +664,7 @@
 				  var ctxb = canvasb.getContext("2d");
 				  ctxb.drawImage(img, 0, 0, width, height);
 			   
-			  	  previewIframe.appendChild(canvasb);		//Get a full-sized preview in the popup frame.
-			  
+			  	  ctxb.drawImage(previewIframe,0,0, width, height);		//Draw in the previw iframe also
 			  
   
 				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
