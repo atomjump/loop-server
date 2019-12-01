@@ -681,8 +681,9 @@
  							var myWindow = window.open("", "", "width="+screen.availWidth+",height="+screen.availHeight);
 							myWindow.document.body.appendChild(divObj);
 							
-							var newCloser = document.createElement("div"); 
-							newCloser.innerHTML = '<a href="javascript:" onclick="window.close();"><img src="images/multiply.png" style="width:30px;"></a>';
+							var newCloser = document.createElement("a"); 
+							newCloser.onclick = 'window.close();';
+							newCloser.innerHTML ='Test <img src="images/multiply.png" style="width:30px;">';
 							myWindow.document.body.appendChild(newCloser);
 							
 							//This gets rid of the 'preview-full' element, so we need to re-create it
