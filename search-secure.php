@@ -663,7 +663,7 @@
 				  canvasb.height = height;
 				  var ctxb = canvasb.getContext("2d");
 				  ctxb.drawImage(img, 0, 0, width, height);
-			  	  privewFull.appendChild(canvasb);
+			  	  previewFull.appendChild(canvasb);
   
 				  return canvasb.toDataURL("image/jpeg",quality); // get the data from canvas as 70% JPG (can be also PNG, etc.)
 				} catch(err) {
