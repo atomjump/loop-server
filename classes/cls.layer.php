@@ -1139,7 +1139,7 @@ class cls_login
 	   	}
 	    
 	    //Get the current layer - use to view 
-	    if(($email != "")&&($password == "")) {
+	    if(($email != "")&&($password == "")&&(isset($full_request['email_modified']))&&($full_request['email_modified'] != "false")) {
 	    	//This is a subscription case: an email has been entered, but no password.
 	    	
 	    	

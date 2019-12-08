@@ -127,6 +127,7 @@ var showMore = 25;
 var shortCode = "";  //shortcode for social network eg. twt, fbk
 var publicTo = "";  //who on social network we are sending to eg. twitter handle
 var globResults = {};
+var modifiedEmail = false;		//Switched to true after a user has started modifying their email address with a keyboard.
 
 
 //Check for android browser
