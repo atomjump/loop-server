@@ -344,7 +344,7 @@
 							<input type="hidden" id="shout-id" name="shout_id" value="">
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
-					   		<input type="hidden" id="email-modified" name="email_modified" value="false">
+					   		
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
 							
@@ -400,6 +400,7 @@
 					
 				 <form id="options-frm" class="form" role="form" action="" onsubmit="return set_options_cookie();"  method="POST">
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
+				 				 <input type="hidden" id="email-modified" name="email_modified" value="false">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
 							 			<input id="your-name-opt" name="your-name-opt" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['enterYourName'] ?>" autocomplete="false" value="<?php if(isset($_COOKIE['your_name'])) { echo urldecode($_COOKIE['your_name']); } else { echo ''; } ?>" >
