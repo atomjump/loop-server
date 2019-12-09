@@ -130,7 +130,7 @@
             "limitSubscribersEnter": "Enter a web domain",
             "saveSettingsButton": "Save Settings",
             "subscribeSettingsButton": "Subscribe",
-            "loginSettingsButton": "Login / Save",
+            "loginSettingsButton": "Save / Login",
             "tip": "Tip: Click a person's name to talk privately to them.",
             "getYourOwn": "Get your own <a target=\"_blank\" href=\"http:\/\/atomjump.org\">AtomJump Messaging</a> widget.",
             "uploadTitle" : "Upload",
@@ -306,7 +306,7 @@
 			"problemSubscribing": "Lo siento, hubo un problema al suscribirse. Inténtalo de nuevo.",
 			"successSubscribing": "Suscrito con éxito.",
 			"subscribeSettingsButton": "Suscribir",
-			"loginSettingsButton": "Iniciar sesión / Guardar",
+			"loginSettingsButton": "Guardar / Iniciar sesión",
 			"photos": {
             	"largeWarning": "Advertencia: este es un archivo grande, reduciremos la calidad ligeramente.",
             	"selectError": "Error: Lo sentimos, no podemos seleccionar ese archivo. Intenta actualizar tu página.",
