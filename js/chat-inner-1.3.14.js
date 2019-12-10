@@ -1500,8 +1500,8 @@ function refreshResults(results)
 	 				}
 	 			
 	 				if(results.res[cnt].text) {
-	 					
-	 					var line = '<tr ' + priv + ' data-id=\"' + results.res[cnt].id + ',' + cnt + '\"><td style=\"word-wrap: break-word;\" width="65%">' + family(results.res[cnt].text) + '</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;">' + results.res[cnt].ago + '</div></td></tr>';
+	 					//Used to be: width="65%"
+	 					var line = '<tr ' + priv + ' data-id=\"' + results.res[cnt].id + ',' + cnt + '\"><td class=\"comment-msg-td\">' + family(results.res[cnt].text) + '</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
@@ -1510,7 +1510,7 @@ function refreshResults(results)
 				}
 				
 				if((results.res.length >= showMore)&&(records <= showMore)) {		//we need to show more if there are more	
-					var line = '<tr><td style=\"word-wrap: break-word;\" width="65%">&nbsp;</td><td style="max-width:36%; padding-right: 0px !important;"><div style=" min-width: 55px; overflow: hidden; white-space:nowrap;"><a href="javascript:" onclick=\"records=500;\">' +lsmsg.msgs[lang].more + '</a></div></td></tr>';
+					var line = '<tr><td class=\"comment-msg-td\">&nbsp;</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\"><a href="javascript:" onclick=\"records=500;\">' +lsmsg.msgs[lang].more + '</a></div></td></tr>';
 			 		newLine = newLine + line;
 			 	}
 			
