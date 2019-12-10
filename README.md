@@ -67,10 +67,10 @@ We will refer to paths as being from the root of the loop-server folder.
 
 2. /config/configORIGINAL.json. Copy this file to /config/config.json. Replace the options with your own accounts and paths. Copy /config/messagesORIGINAL.json to /config/messages.json. Replace these options with your own words or languages.
 
-3. Create a temporary image upload directory at
-/images/im
+3. Allow image uploads, and image caching by the browser
 
 ```
+a2enmod expires
 chmod 777 /images/im
 ```
 

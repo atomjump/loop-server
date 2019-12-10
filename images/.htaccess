@@ -1,0 +1,5 @@
+<filesMatch "\.(ico|gif|jpg|png)$">
+  ExpiresActive On
+  ExpiresDefault "access plus 11 month"
+  Header append Cache-Control "public"
+</filesMatch>
