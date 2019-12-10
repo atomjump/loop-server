@@ -68,7 +68,7 @@ if(intval($_SESSION['view-count']) == 0) {
 
 $se = new cls_search();
 
-header("Cache-Control: no-store, no-cache, must-revalidate, no-transform"); // HTTP/1.1		TESTING
+header("Cache-Control: no-transform"); // HTTP/1.1
 
 $se->process(NULL, NULL, $_REQUEST['records']);
 
