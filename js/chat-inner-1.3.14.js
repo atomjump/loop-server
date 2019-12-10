@@ -1501,7 +1501,7 @@ function refreshResults(results)
 	 			
 	 				if(results.res[cnt].text) {
 	 					//Used to be: width="65%"
-	 					var line = '<tr ' + priv + ' data-id=\"' + results.res[cnt].id + ',' + cnt + '\"><td class=\"comment-msg-td\">' + family(results.res[cnt].text) + '</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\">' + results.res[cnt].ago + '</div></td></tr>';
+	 					var line = '<tr ' + priv + ' data-id=\"' + results.res[cnt].id + ',' + cnt + '\"><td class=\"comment-msg-td\" width=\"65%\">' + family(results.res[cnt].text) + '</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\">' + results.res[cnt].ago + '</div></td></tr>';
 		 				newLine = newLine + line;
 		 				
 		 				
@@ -1510,7 +1510,7 @@ function refreshResults(results)
 				}
 				
 				if((results.res.length >= showMore)&&(records <= showMore)) {		//we need to show more if there are more	
-					var line = '<tr><td class=\"comment-msg-td\">&nbsp;</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\"><a href="javascript:" onclick=\"records=500;\">' +lsmsg.msgs[lang].more + '</a></div></td></tr>';
+					var line = '<tr><td class=\"comment-msg-td\" width=\"65%\">&nbsp;</td><td class=\"comment-ago-td\"><div class=\"comment-ago-text\"><a href="javascript:" onclick=\"records=500;\">' +lsmsg.msgs[lang].more + '</a></div></td></tr>';
 			 		newLine = newLine + line;
 			 	}
 			
