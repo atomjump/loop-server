@@ -140,22 +140,38 @@ class cls_layer
 	
 	public function new_layer($passcode, $status, $group_id = 'NULL', $public_passcode = NULL)
 	{
+		global $cnf;
+		
 		if($public_passcode == NULL) {
 			$public_passcode = "NULL";
 		} else {
 			$public_passcode = "'" . $public_passcode . "'";  //usually a text string except when null
+		}
+		
+		$title = $passcode;
+		//Loop through each replace expression of the forum name and remove from the title
+		if(isset($cnf['titleReplace'])) {
+		
+			for($cnt = 0; $cnt < $cnf['titleReplace']; $cnt++) {
+				$regex = $cnf['titleReplace'][$cnt]['regex'];
+				$replace_with = $cnf['titleReplace'][$cnt]['replaceWith'];
+				
+				$title = preg_replace($regex, $replace_with, $title);
+			}
 		}
 	
 		$sql = "INSERT INTO tbl_layer (
 			  enm_access,
 			  passcode,
 			  int_group_id,
-			  var_public_code)
+			  var_public_code,
+			  var_title)
 			  VALUES (
 			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
 			  	" . clean_data($group_id) . ",
-			  	" . clean_data($public_passcode) . ")";
+			  	" . clean_data($public_passcode) . ",
+			  	'" . clean_data($title) . "')";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();

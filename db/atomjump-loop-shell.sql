@@ -253,3 +253,5 @@ ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) COLLATE utf8_bin 
 
 -- This is no longer used and only confuses issues
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
+
+ALTER TABLE tbl_layer ADD `var_title` varchar(255) COLLATE utf8_bin DEFAULT NULL,
