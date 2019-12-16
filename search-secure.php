@@ -251,7 +251,7 @@
 			
 	</head>
 	<body class="comment-popup-body">
-		 <div id="layer-title"><?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?></div>
+		 <div id="layer-title"><?php echo "Title: "; if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?></div>
 		 <div id="comment-popup-content" class="comment-inner-style" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 			<div style="clear: both;"></div>
 			
