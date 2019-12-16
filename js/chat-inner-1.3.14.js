@@ -588,12 +588,7 @@ $(document).ready(function() {
 					receiveMessage(e.data);
 			  });
 			}	
-			
-			
-			
-			//File upload
-			//TESTING OUT $('input[type=file]').on('change', prepareUpload);
-			
+						
 			
 			refreshLoginStatus();
 			

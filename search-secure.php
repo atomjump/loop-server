@@ -251,7 +251,7 @@
 			
 	</head>
 	<body class="comment-popup-body">
-		 <div id="layer-title"><?php echo "Title: "; if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?></div>
+		 <div id="inner-comment-title" style="display: none;"></div>
 		 <div id="comment-popup-content" class="comment-inner-style" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
 			<div style="clear: both;"></div>
 			
@@ -844,6 +844,10 @@
 						//In other words all versions of IE, but not Edge, which is 12+
 						vidDeactivate();
 					}
+					
+					//Set the parent forum's title
+					var title = "<?php echo 'Title: '; if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>";
+					$('#inner-comment-title').html(title);
 					
 					
 					
