@@ -862,6 +862,7 @@
 						vidDeactivate();
 					}
 					
+					/* TESTING OUT
 					if(ajFeedback.domain) {
 						var targetOrigin = decodeURIComponent(ajFeedback.domain);
 						
@@ -877,6 +878,7 @@
 						setOriginDomain(targetOrigin);
 					}
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
+					*/
 					
 					
 					
