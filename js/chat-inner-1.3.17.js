@@ -1591,7 +1591,7 @@ function doSearch()
 	var ajaxCall = {
   		dataType: "json",
   		contentType: "application/json",
-  		url: serv + "/search-chat.php?callback=?",
+  		url: "/search-chat.php?callback=?",			//Taken out: serv + at the start
   		data: {
 					lat: $('#lat').val(),
 					lon: $('#lon').val(),
