@@ -832,7 +832,20 @@
 				
 				
 					
-			
+				function setOriginDomain(domain) {
+					//Scenarios:
+					//1. We are at https://subdomain.domain.com    Messaging is at https://domain.com
+					//2. We are at https://subdomain.domain.co.nz  Messaging is at https://domain.co.nz
+					//2. We are at https://domain.com              Messaging is at https://subdomain.domain.com
+						
+					//Now set the origin domain https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+					document.domain = domain;			//Get the domain from the 'server' for cross-domain security
+						
+		
+				}  
+		
+		
+
 				
 			
 			
@@ -844,7 +857,20 @@
 						vidDeactivate();
 					}
 					
-					var targetOrigin = ajFeedback.server;
+					if(ajFeedback.domain) {
+						var targetOrigin = decodeURIComponent(ajFeedback.domain);
+						
+						setOriginDomain(targetOrigin);
+
+						
+					} else {
+						var targetOrigin = "<?php if( isset($_SERVER['HTTPS'] ) ) {
+													echo 'https://' . $_SERVER['HTTP_HOST'];
+												  } else {
+												  	echo 'http://' . $_SERVER['HTTP_HOST'];
+												  } ?>";
+						setOriginDomain(targetOrigin);
+					}
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					
 					
