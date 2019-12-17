@@ -249,7 +249,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.3.16.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.3.17.js"></script> 
 			
 		
 			
@@ -837,7 +837,7 @@
 				
 				
 					
-				/*function setOriginDomain(domain) {
+				function setOriginDomain(domain) {
 					//Scenarios:
 					//1. We are at https://subdomain.domain.com    Messaging is at https://domain.com
 					//2. We are at https://subdomain.domain.co.nz  Messaging is at https://domain.co.nz
@@ -847,7 +847,7 @@
 					document.domain = domain;			//Get the domain from the 'server' for cross-domain security
 						
 		
-				}  */
+				}
 		
 		
 
@@ -865,7 +865,7 @@
 					if(ajFeedback.domain) {
 						var targetOrigin = decodeURIComponent(ajFeedback.domain);
 						
-						//setOriginDomain(targetOrigin);
+						setOriginDomain(targetOrigin);
 
 						
 					} else {
@@ -874,7 +874,7 @@
 												  } else {
 												  	echo 'http://' . $_SERVER['HTTP_HOST'];
 												  } ?>";
-						//setOriginDomain(targetOrigin);
+						setOriginDomain(targetOrigin);
 					}
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					

@@ -1586,7 +1586,6 @@ function doSearch()
 	var ajaxCall = {
   		dataType: "jsonp",
   		contentType: "application/json",
-  		crossOrigin: true,				
   		url: serv + "/search-chat.php?callback=?",
   		data: {
 					lat: $('#lat').val(),
