@@ -397,6 +397,8 @@ RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-
 
 **delayFeeds**: Delays any API or feed download access for this number of seconds. The default is 1200 seconds or 20 minutes.
 
+**titleReplace** **regex** **replaceWith**:  
+
 **deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
 
 **loadbalancer**: Required for a production setup - any number of machines. Can be blank in a staging setup.

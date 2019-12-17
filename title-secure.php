@@ -100,4 +100,4 @@
 	header("Pragma: no-cache"); // HTTP/1.0
 	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 	
-?><?php echo 'Title: '; if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>
+?><?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>
