@@ -224,11 +224,7 @@
 					"uniqueFeedbackId" : "<?php echo $_REQUEST['uniqueFeedbackId'] ?>",
 					"myMachineUser" : "<?php echo $_REQUEST['myMachineUser'] ?>",
 					"server" : "<?php echo trim_trailing_slash($_REQUEST['server']) ?>",
-					"domain" : "<?php if( isset($_SERVER['HTTPS'] ) ) {
-													echo 'https://' . $_SERVER['HTTP_HOST'];
-												  } else {
-												  	echo 'http://' . $_SERVER['HTTP_HOST'];
-												  } ?>"
+					"domain" : "<?php echo $_SERVER['HTTP_HOST']; ?>"
 				}
 				
 				
@@ -865,16 +861,9 @@
 					if(ajFeedback.domain) {
 						var targetOrigin = decodeURIComponent(ajFeedback.domain);
 						
-						setOriginDomain(targetOrigin);
-
-						
 					} else {
-						var targetOrigin = "<?php if( isset($_SERVER['HTTPS'] ) ) {
-													echo 'https://' . $_SERVER['HTTP_HOST'];
-												  } else {
-												  	echo 'http://' . $_SERVER['HTTP_HOST'];
-												  } ?>";
-						setOriginDomain(targetOrigin);
+						var targetOrigin = "<?php echo $_SERVER['HTTP_HOST']; ?>";
+						
 					}
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					
