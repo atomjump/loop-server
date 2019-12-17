@@ -1583,15 +1583,10 @@ function doSearch()
 	
 	var callResults = false;		//flag for returned or not
 	
-	/* TESTING OUT var ajaxCall = {
+	var ajaxCall = {
   		dataType: "jsonp",
   		contentType: "application/json",
-  		url: serv + "/search-chat.php?callback=?",
-  		*/
-	var ajaxCall = {
-  		dataType: "json",
-  		contentType: "application/json",
-  		url: "/search-chat.php?callback=?",			//Taken out: serv + at the start
+  		url: serv + "/search-chat.php?callback=?",			
   		data: {
 					lat: $('#lat').val(),
 					lon: $('#lon').val(),
