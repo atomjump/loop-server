@@ -397,7 +397,17 @@ RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-
 
 **delayFeeds**: Delays any API or feed download access for this number of seconds. The default is 1200 seconds or 20 minutes.
 
-**titleReplace** **regex** **replaceWith**:  
+**titleReplace** **regex** **replaceWith**:  To create an automatic visual title for a forum based off the forum's actual database name, you should add in any regular expression replacements. This should be an array of { regex, replaceWith } objects, which are processed sequentially on the forum's database name. For example, xyz.atomjump.com pages are given a forum database name ajps_Xyz . The regex to replace the "ajps_" part of this to create a title "Xyz" you should should use 
+{
+	"regex": "/ajps_(.+)/",
+	"replaceWith": "$1"
+}
+Where $1 is the entry in (.+). Note: you should include the /expression/ around your expressions, and can optionally include case insensitive modifiers, e.g. /expression/i.
+More information on the supported expressions is available at https://www.php.net/manual/en/function.preg-replace.php.
+You can switch automatic titles on or off with 'showAutomaticTitle' below.
+
+**showAutomaticTitle** can be 'true' or 'false' depending on whether you wish to auto-generate titles for the forum headers. You can also determine exactly
+
 
 **deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
 
