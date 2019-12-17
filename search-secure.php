@@ -830,24 +830,7 @@
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
-				
-				
 					
-				function setOriginDomain(domain) {
-					//Scenarios:
-					//1. We are at https://subdomain.domain.com    Messaging is at https://domain.com
-					//2. We are at https://subdomain.domain.co.nz  Messaging is at https://domain.co.nz
-					//2. We are at https://domain.com              Messaging is at https://subdomain.domain.com
-						
-					//Now set the origin domain https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
-					document.domain = domain;			//Get the domain from the 'server' for cross-domain security
-						
-		
-				}
-		
-		
-
-				
 			
 			
 				$(document).ready(function(){
