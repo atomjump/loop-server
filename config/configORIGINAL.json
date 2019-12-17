@@ -216,7 +216,7 @@
       "delayFeeds" : 1200,
       "titleReplace": [
       		{ 	
-      			"regex" : "ajps_(.*?)",
+      			"regex" : "yoursite_(.*?)",
       			"replaceWith" : "$1@"
       		},
       		{	
