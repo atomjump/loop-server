@@ -845,7 +845,7 @@
 					}
 					
 					var targetOrigin = ajFeedback.server;
-					parent.postMessage( {'title': 'TitleREMOVEME: <?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
+					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					
 					
 					
