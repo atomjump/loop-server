@@ -194,7 +194,7 @@
 			<![endif]-->
 			
 			<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
-			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script> 
+			<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script> 
 			<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
 			
 			
