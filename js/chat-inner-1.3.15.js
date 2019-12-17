@@ -211,6 +211,11 @@ function receiveMessage(msg)
 						$("#comment-upload").hide();
 					}
 				break;
+				
+				case 'title':
+					//Nothing to do here, but we have the title.
+					
+				break;
 			
 				default:
 					//Settings
