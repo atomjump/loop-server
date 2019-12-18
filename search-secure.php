@@ -458,7 +458,7 @@
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
 										<div id="set-forum-title-form" class="form-group" style="display:none;">
-											<div><?php echo $msg['msgs'][$lang]['setForumTitle'] ?> <?php echo $msg['msgs'][$lang]['optional'] ?></a></div>
+											<div><?php echo $msg['msgs'][$lang]['setForumTitle'] ?> <a href="javascript:" onclick="$('#forum-title-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumTitleReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-title-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumTitleReason']; ?></span></div>
 											 <input  id="set-forum-title" name="setforumtitle" type="text" class="form-control" value="<?php if(($layer_info['var_title']) && ($layer_info['var_title'] != "")) { echo $layer_info['var_title']; } ?>">
 										</div>
 									<?php } else { ?>
