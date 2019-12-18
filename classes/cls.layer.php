@@ -153,7 +153,7 @@ class cls_layer
 			//Loop through each replace expression of the forum name and remove from the title
 			if(isset($cnf['titleReplace'])) {
 		
-				for($cnt = 0; $cnt < $cnf['titleReplace']; $cnt++) {
+				for($cnt = 0; $cnt < count($cnf['titleReplace']); $cnt++) {
 					$regex = $cnf['titleReplace'][$cnt]['regex'];
 					$replace_with = $cnf['titleReplace'][$cnt]['replaceWith'];
 				
