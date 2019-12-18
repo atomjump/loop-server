@@ -1156,6 +1156,7 @@ class cls_login
 				//No password protection already - set it in this case
 				$sql = "UPDATE tbl_layer SET var_title = '" . clean_data($full_request['setforumtitle']) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
 				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				$reload = ",RELOAD";		//Reload the new forum title
 			}
 		}
 		
