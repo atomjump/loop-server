@@ -679,6 +679,18 @@ Plugin function writes HTML inside ordinary PHP tags e.g.
 Server: >= 0.5.9  
 
 
+**on_msg_buttons()**
+
+Output parameters
+($message)
+Plugin function should return
+($html)
+  
+When a particular message is clicked, a screen with more options (e.g. deleting the message) appears. This plugin function should return the HTML for the new custom button directly, including a javascript onclick="" event, and code to handle that event.
+
+Server: >= 2.2.8  
+
+
 **on_notify()**
 
 Output parameters
