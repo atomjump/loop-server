@@ -1466,7 +1466,7 @@ function hideSingleMsg(id)
 
 function displaySingleMsg(msgId, localId)
 {
-	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img style="margin:20px;" src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');"><img src="images/bin.png"></a>';
+	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img style="margin:20px;" src="images/multiply.png"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a href="javascript:" onclick="return hideSingleMsg(' + msgId + ');"><img src="images/bin.png"></a><span id="single-msg-buttons"></span><script>$.getJSON(ssshoutServer + "/single-msg-buttons.php?callback=?", { mid: ' + msgId + ', passcode: commentLayer },function(response){ var results = response; $("#single-msg-buttons").html(results); });</script>';
 	$('#comment-single-msg').html(content);
 
 	$("#comment-popup-content").hide();
