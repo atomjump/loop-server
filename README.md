@@ -686,7 +686,7 @@ Output parameters
 Plugin function should return
 ($html)
   
-When a particular message is clicked, a screen with more options (e.g. deleting the message) appears. This plugin function should return the HTML for the new custom button directly, including a javascript onclick="" event, and code to handle that event.
+When a particular message is clicked, a screen with more options (e.g. deleting the message) appears. This plugin function should return the HTML for the new custom button directly, including a javascript onclick="" event, and code, such as a server 'get' request to handle that event.
 
 Server: >= 2.2.8  
 
