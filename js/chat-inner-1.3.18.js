@@ -1543,6 +1543,13 @@ function refreshResults(results)
   
 	}
 	
+	if(results.title) {
+		//There is a new title for the forum. Update the parent frame.
+		var targetOrigin = getParentUrl();		//This is in search-secure
+		parent.postMessage( {'title': results.title }, targetOrigin );
+	
+	}
+	
 	if(results.sid) {
 		//Session results
 		

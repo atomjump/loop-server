@@ -1529,6 +1529,9 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			$ly = new cls_layer();
 			$bg = new clsBasicGeosearch();
 			$more = false;
+			
+			$json = array();			//The return array
+			
 
 			//Sequential search process. WARNING: depends on request being active
 			//E.g. date_default_timezone_set("Europe/Berlin");
@@ -1541,6 +1544,12 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				} else {
 					//Create a new layer
 					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 
+					
+					//Check to see the title, and return it to the client.
+					$layer_info = $ly->get_layer_id($layer, null);
+					if(isset($layer_info['var_title'])) {
+						$json['title'] = $layer_info['var_title'];					
+					}
 					
 				}
 			} else {
@@ -1677,7 +1686,6 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 			//TODO: expand on whispering a bit so that only select those which a viewable from us in the top 50 results
 
-			$json = array();
 		
 
 		   if($format == "avg") {
