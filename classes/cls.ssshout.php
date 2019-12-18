@@ -1876,6 +1876,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			//Echo the jsonp
 			if($download == true){
       	       $json['more'] = $more;     //relevant to download
+      	             	       
 			   switch($format) {
 			     case 'csv':
 			  
