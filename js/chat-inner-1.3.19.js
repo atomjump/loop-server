@@ -833,7 +833,7 @@ function set_options_cookie() {
 			$('#set-forum-password-form').hide();
 			$('#set-forum-title-form').hide();
 			$('#user-id-show').hide();
-			
+					
 		
 			switch(mytype[0])
 			{
