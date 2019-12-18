@@ -18,7 +18,7 @@ $sh = new cls_ssshout();
 if($_REQUEST['passcode']) {
 
 
-	$html = $sh->call_plugins_msg_buttons($_REQUEST['mid'], $just_typing);
+	$html = $sh->call_plugins_msg_buttons($_REQUEST['mid'], null);
 }
 
 //For now, let anyone remove messages
