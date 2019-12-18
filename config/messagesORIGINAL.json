@@ -296,6 +296,8 @@
             "setForumPassReason":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassReasonExtended":"La contraseña de este foro, que aseguran único acceso privado para las personas que conocen la contraseña",
             "setForumPassEnter":"Ingrese una contraseña",
+            "setForumTitle": "Establecer título del foro",
+            "setForumTitleReason":"El título de este foro, que aparece en la parte superior del cuadro emergente.",
             "emojisTitle": "Emoji",
             "standardEmailFromName": "Usuario de AtomJump",
             "subscription": "suscripción",
