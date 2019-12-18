@@ -13,24 +13,18 @@ $ly = new cls_layer();
 $sh = new cls_ssshout();
 
 
-if(isset($_REQUEST['just_typing'])) {
-	$just_typing = true;
-} else {
-	$just_typing = false;
-}
-
 //Must include a layer id in $_REQUEST['passcode'] also, because it could be from a completely different database in the case of scaleUp.
 
 if($_REQUEST['passcode']) {
 
 
-	//$sh->call_plugins_msg_buttons($_REQUEST['mid'], $just_typing);
+	$html = $sh->call_plugins_msg_buttons($_REQUEST['mid'], $just_typing);
 }
 
 //For now, let anyone remove messages
 $ip = $ly->getRealIpAddr();
 
-$json = "test";
+$json = $html;
 
 //This is a jquery ajax json call, so we need a proper return
 if(isset($_GET['callback'])) {

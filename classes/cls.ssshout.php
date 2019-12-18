@@ -847,6 +847,44 @@ class cls_ssshout
 	}
 	
 
+	public function call_plugins_msg_buttons($message, $allowed_plugins) {
+	    global $cnf;
+	    global $local_server_path;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    
+	    $return_html = "";
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_msg_buttons") == true) {
+	            //OK call the on_settings function of the plugin
+	            $return_html .= $pg->on_msg_buttons($message);
+	        
+	        } else {
+	            //No on_msg_buttons() in plugin - do nothing
+
+	        }
+	    }
+	    return $return_html;
+	}	
+	
+	
+
 	
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
