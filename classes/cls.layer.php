@@ -145,7 +145,7 @@ class cls_layer
 		if($public_passcode == NULL) {
 			$public_passcode = "NULL";
 		} else {
-			$public_passcode = "'" . $public_passcode . "'";  //usually a text string except when null
+			$public_passcode = "'" . $public_passcode . "'";  //usually a text string except when null. Note: TODO: check may need a clean_data() around the $public_passcode above?
 		}
 		
 		if(isset($cnf['showAutomaticTitle'])&&($cnf['showAutomaticTitle'] == true)) {
@@ -160,7 +160,7 @@ class cls_layer
 					$title = preg_replace($regex, $replace_with, $title);
 				}
 			}
-			$title = "'" . $title . "'";	//Encapsulate for SQL
+			$title = "'" . clean_data($title) . "'";	//Encapsulate for SQL
 		} else {
 			$title = "NULL";		//a blank database entry		
 		}
@@ -176,7 +176,7 @@ class cls_layer
 			  	'" . md5($passcode) . "',
 			  	" . clean_data($group_id) . ",
 			  	" . clean_data($public_passcode) . ",
-			  	" . clean_data($title) . ")";
+			  	" . $title . ")";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
