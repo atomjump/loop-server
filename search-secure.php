@@ -830,6 +830,17 @@
 					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
+				function getParentUrl() {
+					var isInIframe = (parent !== window),
+						parentUrl = null;
+
+					if (isInIframe) {
+						parentUrl = document.referrer;
+					}
+
+					return parentUrl;
+				}
+				
 					
 			
 			
@@ -841,13 +852,15 @@
 						vidDeactivate();
 					}
 					
-					if(ajFeedback.domain) {
+					/*if(ajFeedback.domain) {
 						var targetOrigin = decodeURIComponent(ajFeedback.domain);
 						
 					} else {
 						var targetOrigin = "<?php echo $_SERVER['HTTP_HOST']; ?>";
 						
-					}
+					}*/
+					
+					var targetOrigin = getParentUrl();
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					
 					
