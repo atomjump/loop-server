@@ -851,15 +851,7 @@
 						//In other words all versions of IE, but not Edge, which is 12+
 						vidDeactivate();
 					}
-					
-					/*if(ajFeedback.domain) {
-						var targetOrigin = decodeURIComponent(ajFeedback.domain);
-						
-					} else {
-						var targetOrigin = "<?php echo $_SERVER['HTTP_HOST']; ?>";
-						
-					}*/
-					
+										
 					var targetOrigin = getParentUrl();
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
 					
