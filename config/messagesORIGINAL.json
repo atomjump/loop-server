@@ -149,6 +149,8 @@
             "setForumPassReason":"This forum's password, which ensure only private access for people who know the password.",
             "setForumPassReasonExtended":"This forum's password, which ensure only private access for people who know the password",
             "setForumPassEnter":"Enter a password",
+            "setForumTitle": "Set forum title",
+            "setForumTitleReason":"This forum's title, which appears at the top of the popup box.",
             "emojisTitle": "Emoji",
             "standardEmailFromName": "AtomJump User",
             "photos": {

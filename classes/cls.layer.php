@@ -1146,6 +1146,21 @@ class cls_login
 			}
 		}
 		
+		//Check if this is saving the title - we need to be a sysadmin user to do this.
+	    if(isset($full_request['setforumtitle'])&&($full_request['setforumtitle'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
+    
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+	    				
+				//No password protection already - set it in this case
+				$sql = "UPDATE tbl_layer SET var_title = '" . md5(clean_data($full_request['setforumtitle'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+			}
+		}
+		
+		
+		
 		//Check if this is saving a domain limitation - update this always
 	    if(isset($full_request['subscriberlimit'])&&($this->is_admin($_SESSION['logged-user']) == true)) {
 	    	$ly = new cls_layer();

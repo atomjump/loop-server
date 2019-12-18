@@ -457,6 +457,10 @@
 											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
+										<div id="set-forum-title-form" class="form-group" style="display:none;">
+											<div><?php echo $msg['msgs'][$lang]['setForumTitle'] ?> <?php echo $msg['msgs'][$lang]['optional'] ?></a></div>
+											 <input  id="set-forum-title" name="setforumtitle" type="text" class="form-control" value="<?php if(($layer_info['var_title']) && ($layer_info['var_title'] != "")) { echo $layer_info['var_title']; } ?>">
+										</div>
 									<?php } else { ?>
 							
 										<div id="group-users-form" class="form-group" style="display:none;">
@@ -520,8 +524,7 @@
 							 <div><?php echo $msg['msgs'][$lang]['getYourOwn'] ?></div>
 							 <?php $sh->call_plugins_upload(null); //User added plugins here ?>
 				 </form>
-				 <!--<iframe id="preview-iframe" src="" frameBorder="0" scrolling="no" width="200" height="150" onload="javascript:" allowfullscreen>In iframe</iframe>-->
-				 
+						 
 				 <div id="preview-full-container">
 				 	<div id="preview-full" style="height: 100%;"></div>
 				 </div>
