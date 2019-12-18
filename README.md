@@ -406,8 +406,7 @@ Where $1 is the entry in (.+). Note: you should include the /expression/ around 
 More information on the supported expressions is available at https://www.php.net/manual/en/function.preg-replace.php.
 You can switch automatic titles on or off with 'showAutomaticTitle' below.
 
-**showAutomaticTitle** can be 'true' or 'false' depending on whether you wish to auto-generate titles for the forum headers. You can also determine exactly
-
+**showAutomaticTitle** can be 'true' or 'false' depending on whether you wish to auto-generate titles for the forum headers. You can also modify the title using the 'titleReplace' options above.
 
 **deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
 
