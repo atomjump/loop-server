@@ -682,7 +682,7 @@ Server: >= 0.5.9
 **on_msg_buttons()**
 
 Output parameters
-($message)
+($message_id)
 Plugin function should return
 ($html)
   
