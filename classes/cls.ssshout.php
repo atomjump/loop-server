@@ -1583,11 +1583,15 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					//Create a new layer
 					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 
 					
+					error_log("Created new layer: " . $_REQUEST['passcode']);	//TESTING
+					
 					//Check to see the title, and return it to the client.
 					$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
 					if(isset($layer_info['var_title'])) {
 						$json['title'] = $layer_info['var_title'];					
 					}
+					
+					error_log("Title: " . $json['title']);	//TESTING
 					
 				}
 			} else {
