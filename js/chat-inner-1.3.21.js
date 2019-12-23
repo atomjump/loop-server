@@ -1482,7 +1482,7 @@ function hideSingleMsg(id)
 
 function displaySingleMsg(msgId, localId)
 {
-	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img width="16" style="margin:20px;" src="images/close.svg"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a class="comment-msg-button" href="javascript:" onclick="return hideSingleMsg(' + msgId + ');"><img width="32" src="images/bin.svg"></a><span id="single-msg-buttons"></span><script>$.getJSON(ssshoutServer + "/single-msg-buttons.php?callback=?", { mid: ' + msgId + ', passcode: commentLayer },function(response){ var results = response; $("#single-msg-buttons").html(results); });</script>';
+	var content = '<div style="position: relative; float:right;"><a href="javascript:" onclick="return closeSingleMsg();"><img width="16" style="margin:20px;" src="images/close.svg"></a></div><br/>' + globResults.res[localId].text + '<br/><br/><a class="comment-msg-button" href="javascript:" onclick="return hideSingleMsg(' + msgId + ');"><img width="48" src="images/bin.svg"></a><span id="single-msg-buttons"></span><script>$.getJSON(ssshoutServer + "/single-msg-buttons.php?callback=?", { mid: ' + msgId + ', passcode: commentLayer },function(response){ var results = response; $("#single-msg-buttons").html(results); });</script>';
 	$('#comment-single-msg').html(content);
 
 	$("#comment-popup-content").hide();
