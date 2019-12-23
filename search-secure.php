@@ -509,7 +509,6 @@
 											 <button id="upload-button" type="submit" class="btn btn-primary" style="margin-bottom:3px; display: none;" name="submit"><?php echo $msg['msgs'][$lang]['uploadButton'] ?></button>
 											 
 						  	 <br/>
-							 <br/>
 							 
 							 <div><?php echo $msg['msgs'][$lang]['uploadLimits'] ?></div>
 							 <br/>
