@@ -174,11 +174,15 @@ function receiveMessage(msg)
 				$("#comment-upload").hide();
 				$("#comment-emojis").hide();
 				$("#comment-options").show();
+				var targetOrigin = getParentUrl();		//This is in search-secure
+				parent.postMessage( {'highlight': "options" }, targetOrigin );
 			} else {
 				$("#comment-popup-content").show();
 				$("#comment-upload").hide();
 				$("#comment-emojis").hide();
 				$("#comment-options").hide();
+				var targetOrigin = getParentUrl();		//This is in search-secure
+				parent.postMessage( {'highlight': "none" }, targetOrigin );
 			}
 		} else {
 			switch(msg) {
@@ -189,11 +193,15 @@ function receiveMessage(msg)
 						$("#comment-upload").show();
 						$("#comment-options").hide();
 						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "upload" }, targetOrigin );
 					} else {
 						$("#comment-popup-content").show();
 						$("#comment-upload").hide();
 						$("#comment-options").hide();
 						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
 					}
 				break;
 				
@@ -204,11 +212,15 @@ function receiveMessage(msg)
 						$("#comment-emojis").show();
 						$("#comment-options").hide();
 						$("#comment-upload").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "emojis" }, targetOrigin );
 					} else {
 						$("#comment-popup-content").show();
 						$("#comment-emojis").hide();
 						$("#comment-options").hide();
 						$("#comment-upload").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
 					}
 				break;
 				
@@ -224,11 +236,15 @@ function receiveMessage(msg)
 						$("#comment-upload").hide();
 						$("#comment-options").show();
 						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "options" }, targetOrigin );
 					} else {
 						$("#comment-popup-content").show();
 						$("#comment-upload").hide();
 						$("#comment-options").hide();
 						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
 					}
 				break;
 			}
