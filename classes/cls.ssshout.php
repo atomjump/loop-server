@@ -1575,33 +1575,23 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			//E.g. date_default_timezone_set("Europe/Berlin");
 			date_default_timezone_set($server_timezone);
 
-			error_log("Processing:" . $_REQUEST['passcode'] . "  reading:" . $_REQUEST['reading']);		//TESTING
 
 			if(($_REQUEST['passcode'] != '')||($_REQUEST['reading'] != '')) { 
 				$layer_info = $ly->get_layer_id($_REQUEST['passcode'], $_REQUEST['reading']);
 				
-				
-				if($layer_info) {
-				
-					error_log("Layerinfo exists. ID: " .  $layer_info['int_layer_id']);	//TESTING
+				if($layer_info) {			
 					$layer = $layer_info['int_layer_id'];
 				} else {
 					//Create a new layer
 					
-					error_log("Creating a new layer: " .  $_REQUEST['passcode']);	//TESTING
 					
-					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 
-					
-					error_log("Created new layer: " . $_REQUEST['passcode']);	//TESTING
-					
+					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 				
 					//Check to see the title, and return it to the client.
 					$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
 					if(isset($layer_info['var_title'])) {
 						$json['title'] = $layer_info['var_title'];					
 					}
-					
-					error_log("Title: " . $json['title']);	//TESTING
-					
+										
 				}
 			} else {
 

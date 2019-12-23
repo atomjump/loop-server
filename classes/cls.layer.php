@@ -152,7 +152,6 @@ class cls_layer
 			$title = $passcode;
 			//Loop through each replace expression of the forum name and remove from the title
 			
-			error_log("Title before replace: " . $title);	//TESTING
 			if(isset($cnf['titleReplace'])) {
 		
 				for($cnt = 0; $cnt < count($cnf['titleReplace']); $cnt++) {
@@ -162,16 +161,12 @@ class cls_layer
 					$title = preg_replace($regex, $replace_with, $title);
 				}
 			}
-			
-			error_log("Title after replace: " . $title);	//TESTING
-			
+						
 			$title = "'" . clean_data($title) . "'";	//Encapsulate for SQL
 		} else {
 			$title = "NULL";		//a blank database entry		
 		}
-		
-		error_log("Title after cleaning: " . $title);	//TESTING
-	
+			
 		$sql = "INSERT INTO tbl_layer (
 			  enm_access,
 			  passcode,
