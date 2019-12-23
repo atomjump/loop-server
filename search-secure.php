@@ -381,7 +381,7 @@
 			<div id="warnings" class="alert alert-warning" role="alert" style="display: none;"></div>
 			<div id="comment-prev-messages">
 			</div>
-			<div style="display: none; color: #800000;" id="forum-logged-in">
+			<div class="comment-forum-logged-in" style="display: none;" id="forum-logged-in">
 			</div>
 
 		</div>
