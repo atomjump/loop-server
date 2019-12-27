@@ -1024,10 +1024,7 @@ function set_options_cookie() {
 					$("#comment-messages").html(msg);
 					$("#comment-messages").show();
 					
-					//Send message to the parent frame to hide highlight
-					var targetOrigin = getParentUrl();		//This is in search-secure
-					parent.postMessage( {'highlight': "none" }, targetOrigin );
-	
+				
 					
 					
 					//Pause in here for 3 seconds before switching back to message view
@@ -1036,6 +1033,11 @@ function set_options_cookie() {
 							$("#comment-messages").hide();
 							$("#comment-popup-content").toggle(); 
 							$("#comment-options").toggle();
+							
+							//Send message to the parent frame to hide highlight
+							var targetOrigin = getParentUrl();		//This is in search-secure
+							parent.postMessage( {'highlight': "none" }, targetOrigin );
+	
 							
 							if(reloadOpt == true) {
 			                   	window.location.assign(newLocation);
@@ -1051,13 +1053,16 @@ function set_options_cookie() {
 				$("#comment-messages").show();
 				
 				
-				//Send message to the parent frame to hide highlight
-				var targetOrigin = getParentUrl();		//This is in search-secure
-				parent.postMessage( {'highlight': "none" }, targetOrigin );
+				
 	
 	            if(mytype[1]) {
 			        //carry out a reload of the page too
 			        if(mytype[1] === "RELOAD") {
+			        
+			        	//Send message to the parent frame to hide highlight
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
+			        
 			            window.location.assign(newLocation);
 			            refreshLoginStatus();	
 			        }
