@@ -1008,6 +1008,12 @@ function set_options_cookie() {
 					//Switch back immediately
 					$("#comment-popup-content").toggle(); 
 					$("#comment-options").toggle();
+					
+					//Send message to the parent frame to hide highlight
+					var targetOrigin = getParentUrl();		//This is in search-secure
+					parent.postMessage( {'highlight': "none" }, targetOrigin );
+	
+					
 					if(reloadOpt == true) {
 						window.location.assign(newLocation);
 			            refreshLoginStatus();
@@ -1018,7 +1024,10 @@ function set_options_cookie() {
 					$("#comment-messages").html(msg);
 					$("#comment-messages").show();
 					
-					
+					//Send message to the parent frame to hide highlight
+					var targetOrigin = getParentUrl();		//This is in search-secure
+					parent.postMessage( {'highlight': "none" }, targetOrigin );
+	
 					
 					
 					//Pause in here for 3 seconds before switching back to message view
@@ -1037,9 +1046,14 @@ function set_options_cookie() {
 				
 				}
 			} else {
-				//Don't toggle but is there is a message show it
+				//Don't toggle but if there is a message show it
 				$("#comment-messages").html(msg);
 				$("#comment-messages").show();
+				
+				
+				//Send message to the parent frame to hide highlight
+				var targetOrigin = getParentUrl();		//This is in search-secure
+				parent.postMessage( {'highlight': "none" }, targetOrigin );
 	
 	            if(mytype[1]) {
 			        //carry out a reload of the page too
@@ -1128,19 +1142,17 @@ function upload() {
 					} else {
 						//Append the response url to the input box
 						//Register that we have started typing
-				
-				
-				
 						$('#shouted').val( response.url );
 						mg.newMsg(true);  //start typing private message
-						//This works:registerNewKeypress();
 						mg.commitMsg();
 			
 						$('#uploading-msg').html("");
 						$('#uploading-msg').hide();
-						//$('#shouted').val( $('#shouted').val() + ' ' + response.url + ' ');
 						$("#comment-popup-content").show(); 
 						$("#comment-upload").hide(); 
+						//Send message to the parent frame to hide highlight
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
 					}
 
 			
