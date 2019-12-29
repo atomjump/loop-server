@@ -898,6 +898,16 @@ Server: >= 0.9.0
 This should be called at the end of your script to complete all of the parallel_system_call() commands, if your script is a standalone script (i.e. not called via a hook).  It will hard exit the script after completion, and close down the sessions.
 
 
+## Examples
+
+All of the AtomJump-built plugins serve as good example code. But here are some particular cases:
+
+**Adding your own buttons**
+
+For customising the buttons that are visible when you tap on a single message, and for including a specific type of export of a forum, see this shell project, which can be modified to suit your own.
+
+https://github.com/atomjump/medimage_export/tree/shell
+
 
 
 # Performance
