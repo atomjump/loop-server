@@ -865,12 +865,6 @@ The logged-in user's artificial ip address.
 		
 **$_SESSION['temp-user-name']**
 This username is used potentially before another name is set e.g. 'Anon 55'
-
-**$_SESSION['logged-group-user']**
-This means we are logged in to view messages from this group user, if this is the same as the 'layer-group-user' value then it will be for this layer. Blank if not authorised. 
-
-**$_SESSION['layer-group-user']**
-The group user for this layer. A group user is a single 'user' entry, in database terms, that links to a group of other users.
 		
 **$_SESSION['access-layer-granted']**
 Either 'false' or a layer id, if we have been granted access to this layer (e.g. a password protected forum).
