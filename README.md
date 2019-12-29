@@ -853,9 +853,8 @@ Make the variable available to your function with:
 global $db_cnf;
 ``` 
  
-**$_REQUEST['uniqueFeedbackId'] $_REQUEST['passcode']** 
-Either of these can be the current layer's name as a string. You should check for both.
-
+**$_REQUEST['uniqueFeedbackId'] / $_REQUEST['passcode']** 
+Either of these can be the current forum's name as a string. You should check for both.
 
 **$_SESSION['logged-email']**
 Set on sign in. This is the email of the signed in user.
@@ -867,10 +866,10 @@ The logged-in user's artificial ip address.
 This username is used potentially before another name is set e.g. 'Anon 55'
 		
 **$_SESSION['access-layer-granted']**
-Either 'false' or a layer id, if we have been granted access to this layer (e.g. a password protected forum).
+Either 'false' or, 'true'/the layer ID, if the current user has been granted access to this forum (i.e. with a password protected forum).
 		
 **$_SESSION['authenticated-layer']**
-The current user has been granted access to this layer ID.
+The current user has the authority to read and write to this layer ID (applies to any forum, not just password protected forums).
 
 
 
