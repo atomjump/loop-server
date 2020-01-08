@@ -288,12 +288,13 @@ Note: it can take up to 1 minute before any new message's sentiment will be calc
 			  <link rel="StyleSheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 			
 			<!-- AtomJump Feedback CSS -->
-			<link rel="StyleSheet" href="/bower_components/atomjump/css/comments-0.9.1.css?ver=1">
+			<link rel="StyleSheet" href="/bower_components/atomjump/css/comments.css?ver=1">
 			
 			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!--[if lt IE 9]>
 			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			  <script src="http://atomjump.org/js/chat-1.0.7.js"></script>
 			<![endif]-->
 			
 			<script>
