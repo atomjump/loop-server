@@ -274,54 +274,10 @@ Note: it can take up to 1 minute before any new message's sentiment will be calc
 ## Wordpress Setup
 
 
-1. Install the 'Header and Footer' plugin.
-   https://wordpress.org/plugins/insert-headers-and-footers/
-2. Install AtomJump using 'bower' as described above in your Wordpress folder. 
-3. Go into 'Settings->Header and Footer', and enter the two sections below (adjusting any paths required to fit your installation)
-4. Any link's address (i.e. the 'href') on the page can now start with '#comment-open-', followed by the forum name and it will open a popup.
+1. Install the ‘Header and Footer’ plugin. https://wordpress.org/plugins/insert-headers-and-footers/
+2. Go into ‘Settings->Header and Footer’, and enter the two sections from http://atomjump.org/wp/add-atomjump-messaging-to-your-site/. The main block should be entered into the ‘SECTION INJECTION’ section, and the ‘comment holder’ div should be entered into the ‘BEFORE THE CLOSING TAG (FOOTER)’ section.
+3. Any link’s address (i.e. the ‘href’) on the page can now start with ‘#comment-open-‘, followed by the forum name and it will open a popup.
 
-* Copy into the '<HEAD> SECTION INJECTION' section:
-
-```
-<!-- AtomJump Feedback Starts -->
-		   <!-- Bootstrap core CSS. Ver 3.3.1 sits in css/bootstrap.min.css -->
-			  <link rel="StyleSheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-			
-			<!-- AtomJump Feedback CSS -->
-			<link rel="StyleSheet" href="/bower_components/atomjump/css/comments.css?ver=1">
-			
-			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-			<!--[if lt IE 9]>
-			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-			  <script src="http://atomjump.org/js/chat-1.0.7.js"></script>
-			<![endif]-->
-			
-			<script>
-				//Add your configuration here for AtomJump Messaging
-				var ajFeedback = {
-					"uniqueFeedbackId" : "test_feedback",		//This can be anything globally unique to your company/page	
-					"myMachineUser" : "92.27.10.17:8",	/* Obtain this value from
-							1. Settings
-							2. Entering an email, click 'more', and then a password
-							3. Click 'Login'
-							4. Settings
-							5. Clicking: 'Advanced'
-							6. Copy the myMachineUser value into here.
-							*/
-					"server":  "https://atomjump.com/api"
-				}
-			</script>
-			<script type="text/javascript" src="/bower_components/atomjump/js/chat.js"></script>
-<!-- AtomJump Feedback Ends -->
-```
-
-* Copy into the 'BEFORE THE </BODY> CLOSING TAG (FOOTER)' section:
-
-```
-<!-- Any link on the page can start with '#comment-open-', followed by the forum name and it will open a popup -->
-<div id="comment-holder"></div><!-- holds the popup comments. Can be anywhere between the <body> tags -->
-```
 
 For more details see
 http://atomjump.org
