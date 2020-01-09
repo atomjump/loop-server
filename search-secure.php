@@ -831,7 +831,7 @@
 				{
 					$('#video-button').attr("src", "<?php echo $root_server_url ?>/images/no-video.svg");
 					$('#video-button').attr("title","<?php echo $msg['msgs'][$lang]['videoSupportedPlatforms'] ?>");
-					$('#video-button').parent().attr("onclick", "$('#video-info').toggle(); return false;");
+					$('#video-button').parent().attr("onclick", "return false;");
 				}
 				
 				function getParentUrl() {
