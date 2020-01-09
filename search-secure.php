@@ -736,6 +736,8 @@
 			  var match = /\b(MSIE |Trident.*?rv:|Edge\/)(\d+)/.exec(uaString);
 			  if (match) return parseInt(match[2])
 			}
+			
+			var isiPad = navigator.userAgent.match(/iPad/i) != null;
 		
 		
 			function clearPass()
@@ -829,7 +831,7 @@
 				{
 					$('#video-button').attr("src", "<?php echo $root_server_url ?>/images/no-video.svg");
 					$('#video-button').attr("title","<?php echo $msg['msgs'][$lang]['videoSupportedPlatforms'] ?>");
-					$('#video-button').parent().attr("onclick", "return false;");
+					$('#video-button').parent().attr("onclick", "$('#video-info').toggle(); return false;");
 				}
 				
 				function getParentUrl() {
@@ -853,6 +855,8 @@
 						//In other words all versions of IE, but not Edge, which is 12+
 						vidDeactivate();
 					}
+					
+					
 										
 					var targetOrigin = getParentUrl();
 					parent.postMessage( {'title': '<?php if(isset($layer_info['var_title'])) { echo $layer_info['var_title']; } ?>'}, targetOrigin );
