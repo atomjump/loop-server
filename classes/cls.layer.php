@@ -553,7 +553,6 @@ class cls_layer
 	{
 		//Returns true or false
 		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
-		error_log("Layers granted:" . $_SESSION['access-layers-granted']);		//TESTING
 		if(!is_array($layers_granted_array)) return false;
 		return in_array($check_layer, $layers_granted_array);
 	}

@@ -123,12 +123,12 @@ class cls_plugin_api {
 	    
 	        Output:
 	        
-	        [ forum_id, access_type, forum_group_user_id ]
+	        [ forum_id, access_type, forum_group_user_id, requires_password ]
 	    
 	        Where 'forum_id' e.g. 34
 	              'access_type' eg. "readwrite", "read"
 	              'forum_owner_user_id' is the user id to send a message to, to become visible to all the private forum owners.
-	    
+	    		  'requires_password', is true if the forum is password protected, or false if not.
 	    
 	        Internally:
 	            [
@@ -157,6 +157,11 @@ class cls_plugin_api {
 	        $output['forum_id'] = $returns['int_layer_id'];
 	        $output['access_type'] = $returns['myaccess'];
 	        $output['forum_owner_user_id'] = $returns['layer-group-user'];
+	        if(isset($returns['var_public_code'])) {
+	        	$output['requires_password'] = true;
+	        } else {
+	        	$output['requires_password'] = false;
+	        }
 	        return $output;
 	        
 	    } else {
@@ -186,6 +191,21 @@ class cls_plugin_api {
 	    return $_SESSION['logged-user'];
 	}
 	
+	
+	/*
+	    Check if a layer has been granted access by the current user (i.e. the password has been entered by the current user)
+	    Note: this will not check if that layer requires a check. If it is a public layer, it does not need this check.
+	    See the function get_forum_id() return value
+	    Returns: true or false
+	*/
+	public function is_forum_granted($check_forum_id) 
+	{
+		
+		//Returns true or false
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) return false;
+		return in_array($check_forum_id, $layers_granted_array);
+	}
 	
 	
 	/*

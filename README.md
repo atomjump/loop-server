@@ -546,11 +546,12 @@ Server: >= 0.5.0
 
 ```
 Output is an array:
-[ forum_id, access_type, forum_group_user_id ]
+[ forum_id, access_type, forum_group_user_id, requires_password ]
 
 Where 'forum_id' e.g. 34
 	  'access_type' eg. "readwrite", "read"
 	  'forum_owner_user_id' is the user id to send a message to, to become visible to all the private forum owners.
+	  'requires_password' is 'true' if the forum is password protected, or 'false' if not. (Server >= 2.3.4)
 ```
 
 
@@ -768,6 +769,17 @@ Server: >= 0.5.0
 Hides a message from view, where $message_id is an integer. $warn_admin can be true/false to warn the owner of the forum of the message being hidden.
 
 
+**is_forum_granted()**
+Required Parameters
+($check_forum_id)  
+
+Check if a layer (numerical ID) has been granted access (i.e. the password has been specifically entered by the current user). If there is no need for access to be granted (i.e. on a public forum - see get_forum_id() and 'requires_password' return param) you should ignore any 'false' values.
+
+Output parameters
+true or false
+
+
+
 ## Global Variables
 
 **$root_server_url**
@@ -821,9 +833,6 @@ The logged-in user's artificial ip address.
 		
 **$_SESSION['temp-user-name']**
 This username is used potentially before another name is set e.g. 'Anon 55'
-		
-**$_SESSION['access-layer-granted']**
-Either 'false' or, 'true'/the layer ID, if the current user has been granted access to this forum (i.e. with a password protected forum).
 		
 **$_SESSION['authenticated-layer']**
 The current user has the authority to read and write to this layer ID (applies to any forum, not just password protected forums).
