@@ -109,7 +109,7 @@
 	if(isset($layer_info['var_public_code'])) {
 		$granted = false;
 		
-		if($_SESSION['access-layer-granted'] == $layer_info['int_layer_id']) { 	//Normal access has been granted  
+		if(($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) { 	//Normal access has been granted  
 			$granted = true;
 		}
     } else {

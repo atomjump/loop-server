@@ -38,6 +38,7 @@ class cls_ssshout
 		$_SESSION['logged-group-user'] = '';	//This means we are logged in to view messages from this group user, if the same as the layer-group-user then it will be for this layer. Blank if not authorised. 
 		$_SESSION['layer-group-user'] = '';		//The group user for this layer.
 		$_SESSION['access-layer-granted'] = 'false';   //Either 'false' or a layer id if we have access to this layer (multiple user access with a password).
+		$_SESSION['access-layers-granted'] = '';		//A blank value to begin with. Becomes an array of granted access layers
 		$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 	
 		$_SESSION['view-count'] = 0;			//0 or 1 for the number of times this layer has been viewed. 	
@@ -1707,9 +1708,11 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			if(isset($_SESSION['access-layer-granted'])&&($_SESSION['access-layer-granted'] != 'true')) {
 			
 				if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
-					//No view on this layer
-					$results_array = array();
-					$ignore_query = true;
+					if(!$ly->is_layer_granted($layer)) {
+						//No view on this layer
+						$results_array = array();
+						$ignore_query = true;
+					}
 				}
 			
 			} 

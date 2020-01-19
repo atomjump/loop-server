@@ -19,6 +19,7 @@
 	$_SESSION['logged-group-user'] = '';
 	$_SESSION['layer-group-user'] = '';
 	$_SESSION['access-layer-granted'] = 'false';
+	$_SESSION['access-layers-granted'] = '';
 	
 	$_SESSION['view-count'] = 0; 
     

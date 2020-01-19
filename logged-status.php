@@ -121,7 +121,7 @@ $json = array();
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
 	if($layer_info) {
 		if(isset($layer_info['var_public_code'])) {
-			if($_SESSION['access-layer-granted'] === $layer_info['int_layer_id']) {
+			if(($_SESSION['access-layer-granted'] === $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) {
 				
 				//Show the sign out option
 				$loggedInMsg = "style=\"display: block;\" >";

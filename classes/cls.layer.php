@@ -1046,6 +1046,25 @@ class cls_login
         }
     
     }
+    
+    
+    public function push_layer_granted($new_layer_granted) 
+	{
+		//Adds to a session array of access-granted arrays
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) $layers_granted_array = array();
+		array_push($layers_granted_array, 12);
+		$_SESSION['access-layers-granted'] = json_encode($layers_granted_array);
+	}
+
+	public function is_layer_granted($check_layer) 
+	{
+		//Returns true or false
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) return false;
+		return in_array($check_layer, $layers_granted_array);
+	}
+    
 
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
@@ -1088,6 +1107,7 @@ class cls_login
 					
 						//And it is the correct password! Continue below with a login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
+						$ly->push_layer_granted($layer_info['int_layer_id']);
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
 						if(($email != "")&&($password != "")) {
@@ -1120,7 +1140,7 @@ class cls_login
 	    	//Check this is a valid layer
 	    	$layer_info = $ly->get_layer_id($layer_visible);
 	    	
-		    if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])) {
+		    if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) {
 	    		//All good to continue...
 	    		
 	    	} else {
@@ -1200,7 +1220,7 @@ class cls_login
 			
 			if($layer_info['var_public_code']) {
 				if($_SESSION['access-layer-granted']) {
-						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
 							//Go back and get a password off the user.
 							return "FORUM_INCORRECT_PASS,RELOAD";  
 						}
@@ -1390,7 +1410,7 @@ class cls_login
 					}
 					
 					if($_SESSION['access-layer-granted']) {
-						if($_SESSION['access-layer-granted'] != $layer_info['int_layer_id']) {
+						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
 							return "FAILURE";
 						}
 					}
