@@ -540,7 +540,22 @@ class cls_layer
 		}
 	}
 	
-	
+	public function push_layer_granted($new_layer_granted) 
+	{
+		//Adds to a session array of access-granted arrays
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) $layers_granted_array = array();
+		array_push($layers_granted_array, 12);
+		$_SESSION['access-layers-granted'] = json_encode($layers_granted_array);
+	}
+
+	public function is_layer_granted($check_layer) 
+	{
+		//Returns true or false
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) return false;
+		return in_array($check_layer, $layers_granted_array);
+	}
 	
 
 }
@@ -1048,22 +1063,7 @@ class cls_login
     }
     
     
-    public function push_layer_granted($new_layer_granted) 
-	{
-		//Adds to a session array of access-granted arrays
-		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
-		if(!is_array($layers_granted_array)) $layers_granted_array = array();
-		array_push($layers_granted_array, 12);
-		$_SESSION['access-layers-granted'] = json_encode($layers_granted_array);
-	}
 
-	public function is_layer_granted($check_layer) 
-	{
-		//Returns true or false
-		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
-		if(!is_array($layers_granted_array)) return false;
-		return in_array($check_layer, $layers_granted_array);
-	}
     
 
 
