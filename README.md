@@ -575,6 +575,7 @@ Returns the integer user id value of the current user.
 
 Required Parameters
 ($check_forum_id)  
+Server: >= 2.3.4 
 
 Check if a layer (numerical ID) has been granted access (i.e. the password has been specifically entered by the current user). If there is no need for access to be granted (i.e. on a public forum - see get_forum_id() and 'requires_password' return param) you should ignore any 'false' values.
 
