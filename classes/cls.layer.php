@@ -545,7 +545,7 @@ class cls_layer
 		//Adds to a session array of access-granted arrays
 		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
 		if(!is_array($layers_granted_array)) $layers_granted_array = array();
-		array_push($layers_granted_array, 12);
+		array_push($layers_granted_array, $new_layer_granted);
 		$_SESSION['access-layers-granted'] = json_encode($layers_granted_array);
 	}
 
