@@ -571,7 +571,14 @@ Server: >= 0.5.0
 Returns the integer user id value of the current user.
 
 
+**is_forum_granted()**
 
+Required Parameters
+($check_forum_id)  
+
+Check if a layer (numerical ID) has been granted access (i.e. the password has been specifically entered by the current user). If there is no need for access to be granted (i.e. on a public forum - see get_forum_id() and 'requires_password' return param) you should ignore any 'false' values.
+
+Returns: true/false
 
 
 
@@ -768,15 +775,6 @@ Server: >= 0.5.0
 
 Hides a message from view, where $message_id is an integer. $warn_admin can be true/false to warn the owner of the forum of the message being hidden.
 
-
-**is_forum_granted()**
-Required Parameters
-($check_forum_id)  
-
-Check if a layer (numerical ID) has been granted access (i.e. the password has been specifically entered by the current user). If there is no need for access to be granted (i.e. on a public forum - see get_forum_id() and 'requires_password' return param) you should ignore any 'false' values.
-
-Output parameters
-true or false
 
 
 
