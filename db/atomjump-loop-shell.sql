@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `php_session`;
 CREATE TABLE `php_session` (
   `session_id` varchar(32) NOT NULL DEFAULT '',
   `user_id` varchar(16) DEFAULT NULL,
-  `date_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_created` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
+  `last_updated` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
   `session_data` longtext,
   PRIMARY KEY (`session_id`),
   KEY `last_updated` (`last_updated`)
@@ -255,3 +255,9 @@ ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) COLLATE utf8_bin 
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
 
 ALTER TABLE tbl_layer ADD `var_title` varchar(255) COLLATE utf8_bin DEFAULT NULL;
+
+
+-- If you have problems with the date defaulting to 0000 (new MySQL versions), these would change and existing database
+-- ALTER TABLE php_session ALTER date_created SET DEFAULT '2000-01-01 00:00:00';
+-- ALTER TABLE php_session ALTER last_updated SET DEFAULT '2000-01-01 00:00:00';
+
