@@ -675,7 +675,7 @@
 			}
 		
 		
-			if($cnf['uploads']['use'] != "none") {
+			if(isset($cnf['uploads']['imagesShare'])) {
 				//Share across our own servers
 			
 				//Get the domain of the web url, and replace with ip:1080
