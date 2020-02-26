@@ -7,15 +7,18 @@ Options -Indexes
 # Hide the contents of directories
 IndexIgnore *
 
+#Deny all files first
+Order Deny,Allow
+Deny from all
+
 # Deny access to filenames starting with dot(.)
 <FilesMatch "^\.">
 Order allow,deny
 Deny from all
 </FilesMatch>
 
-# Allow access to files with extensions .php|.html|.svg|.png|.jpg|.gif|.ico|.js|.pdf
-<FilesMatch "\.(php|html|svg|png|jpg|gif|ico|js|pdf)$">
-Order deny,allow
+# Allow access to files with extensions .php|.html|.svg|.png|.jpg|.gif|.ico|.js|.pdf|.css
+<FilesMatch "\.(php|html|svg|png|jpg|gif|ico|js|pdf|css)$">
 Allow from all
 </FilesMatch>
 
