@@ -22,6 +22,11 @@ Deny from all
 Allow from all
 </FilesMatch>
 
+#Allow a blank index
+<FilesMatch "^$">
+Allow from all
+</FilesMatch>
+
 
 RewriteEngine On
 RewriteBase /
