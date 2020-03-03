@@ -642,8 +642,12 @@
 				//See: https://github.com/tpyo/amazon-s3-php-class
 				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
 	
+				$bucket = "ajmp";		//Default
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
+					$bucket = $cnf['uploads']['vendor']['amazonAWS']['bucket'];
+				}
 	
-				if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
+				if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
 					//Uploaded correctly
 				} else {
 					//Error uploading to Amazon
