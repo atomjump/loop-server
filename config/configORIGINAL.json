@@ -72,6 +72,8 @@
 		  	  "amazonAWS": {
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+				"uploadUseSSL": true,
+				"uploadEndPoint": "s3.amazonaws.com",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
@@ -253,6 +255,8 @@
 		  	  "amazonAWS": {
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+				"uploadUseSSL": true,
+				"uploadEndPoint": "s3.amazonaws.com",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }

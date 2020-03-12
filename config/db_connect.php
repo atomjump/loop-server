@@ -640,7 +640,18 @@
 				require_once($local_server_path . "vendor/amazon/S3.php");
 	
 				//See: https://github.com/tpyo/amazon-s3-php-class
-				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'])) {
+					$use_ssl = $cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'];
+				} else {
+					$use_ssl = false;		//Default
+				}
+				
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'])) {
+					$endpoint = $cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'];
+				} else {
+					$endpoint = "s3.amazonaws.com";		//Default
+				}
+				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'], $use_ssl, $endpoint);		//Amazon AWS credentials
 	
 				$bucket = "ajmp";		//Default
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
