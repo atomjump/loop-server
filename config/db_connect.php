@@ -637,9 +637,14 @@
 			
 			if($cnf['uploads']['use'] == "amazonAWS") {
 			
-				require_once($local_server_path . "vendor/amazon/S3.php");
+				require($local_server_path . 'vendor/aws-autoloader.php');
+				use Aws\S3\S3Client;
+				use Aws\S3\Exception\S3Exception;
+
+				
+
+				//OLD: require_once($local_server_path . "vendor/amazon/S3.php");
 	
-				//See: https://github.com/tpyo/amazon-s3-php-class
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'])) {
 					$use_ssl = $cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'];
 					
@@ -652,26 +657,53 @@
 				} else {
 					$endpoint = "s3.amazonaws.com";		//Default
 				}
-				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'], $use_ssl, $endpoint);		//Amazon AWS credentials
 	
 				$bucket = "ajmp";		//Default
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
 					$bucket = $cnf['uploads']['vendor']['amazonAWS']['bucket'];
 				}
 				
-				if($use_ssl == true) {
-					$server_side_encryption = S3::SSE_AES256;
-				} else {
-					$server_side_encryption = S3::SSE_NONE;
+				
+				//OLD: $s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'], $use_ssl, $endpoint);		//Amazon AWS credentials
+				
+				
+				// Configure a client using Spaces
+				$client = new Aws\S3\S3Client([
+						'version' => 'latest',
+						'region'  => 'nyc3',				//TODO: change this
+						'endpoint' => $endpoint,			//E.g. 'https://nyc3.digitaloceanspaces.com'
+						'credentials' => [
+								'key'    => $cnf['uploads']['vendor']['amazonAWS']['accessKey'],
+								'secret' => $cnf['uploads']['vendor']['amazonAWS']['secretKey'],
+							],
+				]);
+				
+	
+				try {
+					// Upload data.
+					$result = $s3->putObject([
+						'Bucket' => $bucket,
+						'Key'    => $filename,
+						'Body'   => file_get_contents($filename),
+						'ACL'    => 'public-read'
+					]);
+
+					// Print the URL to the object.
+					error_log($result['ObjectURL']);
+				} catch (S3Exception $e) {
+					error_log($e->getMessage());
+					return false;
 				}
+
+				
 	
 				// putObject($input, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $requestHeaders = array(), $storageClass = self::STORAGE_CLASS_STANDARD, $serverSideEncryption = self::SSE_NONE)
-				if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years')), S3::STORAGE_CLASS_STANDARD, $server_side_encryption))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
+				/*OLD: if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years')), null, $server_side_encryption))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
 					//Uploaded correctly
 				} else {
 					//Error uploading to Amazon
 					return false;
-				}
+				}*/
 			
 			}
 			
