@@ -73,7 +73,8 @@
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
 				"uploadUseSSL": true,
-				"uploadEndPoint": "s3.amazonaws.com",
+				"uploadEndPoint": "https://s3.amazonaws.com",
+		  		"region": "us-west2",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
@@ -256,7 +257,8 @@
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
 				"uploadUseSSL": true,
-				"uploadEndPoint": "s3.amazonaws.com",
+				"uploadEndPoint": "https://s3.amazonaws.com",
+		  		"region": "us-west2",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }

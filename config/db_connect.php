@@ -637,12 +637,6 @@
 			
 			
 			if($cnf['uploads']['use'] == "amazonAWS") {
-			
-				
-
-				
-
-				//OLD: require_once($local_server_path . "vendor/amazon/S3.php");
 	
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'])) {
 					$use_ssl = $cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'];
@@ -656,20 +650,24 @@
 				} else {
 					$endpoint = "https://s3.amazonaws.com";		//Default
 				}
-	
-				$bucket = "ajmp";		//Default
+				
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
 					$bucket = $cnf['uploads']['vendor']['amazonAWS']['bucket'];
+				} else {
+					$bucket = "ajmp";		//Default
 				}
 				
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['region'])) {
+					$region = $cnf['uploads']['vendor']['amazonAWS']['region'];
+				} else {
+					$region = 'nyc3';
+				}
 				
-				//OLD: $s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'], $use_ssl, $endpoint);		//Amazon AWS credentials
-				
-				
-				// Configure a client using Spaces
+								
+				//Get an S3 client
 				$s3 = new Aws\S3\S3Client([
 						'version' => 'latest',
-						'region'  => 'nyc3',				//TODO: change this
+						'region'  => $region,				
 						'endpoint' => $endpoint,			//E.g. 'https://nyc3.digitaloceanspaces.com'
 						'credentials' => [
 								'key'    => $cnf['uploads']['vendor']['amazonAWS']['accessKey'],
@@ -689,21 +687,11 @@
 					]);
 
 					// Print the URL to the object.
-					error_log($result['ObjectURL']);
+					error_log("Successfully uploaded: " . $result['ObjectURL']);
 				} catch (S3Exception $e) {
 					error_log($e->getMessage());
 					return false;
 				}
-
-				
-	
-				// putObject($input, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $requestHeaders = array(), $storageClass = self::STORAGE_CLASS_STANDARD, $serverSideEncryption = self::SSE_NONE)
-				/*OLD: if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years')), null, $server_side_encryption))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
-					//Uploaded correctly
-				} else {
-					//Error uploading to Amazon
-					return false;
-				}*/
 			
 			}
 			
