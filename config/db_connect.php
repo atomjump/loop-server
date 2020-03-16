@@ -126,8 +126,7 @@
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
-  
-
+  	
  
  
  
@@ -235,6 +234,13 @@
 	
 	$process_parallel_url = false;              //Used by plugins to run a process after everything else has finished in parallel. Set to true
 	                                            //if this is to be run (currently only works for http servers, not https)
+	
+	//Use an amazon uploader - prep the libraries at compile time.
+	if($cnf['uploads']['use'] == "amazonAWS") {
+		require($local_server_path . 'vendor/aws-autoloader.php');
+		use 'Aws\S3\S3Client';
+		use 'Aws\S3\Exception\S3Exception';
+	}
 	
 
 	if($db_cnf['ssl']) {
@@ -637,9 +643,7 @@
 			
 			if($cnf['uploads']['use'] == "amazonAWS") {
 			
-				require($local_server_path . 'vendor/aws-autoloader.php');
-				use Aws\S3\S3Client;
-				use Aws\S3\Exception\S3Exception;
+				
 
 				
 
