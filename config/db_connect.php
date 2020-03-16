@@ -684,6 +684,7 @@
 						'Bucket' => $bucket,
 						'Key'    => $raw_file,
 						'Body'   => file_get_contents($filename),
+						'ContentType'  => 'image/jpeg',
 						'ACL'    => 'public-read'
 					]);
 
