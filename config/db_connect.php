@@ -236,11 +236,11 @@
 	                                            //if this is to be run (currently only works for http servers, not https)
 	
 	//Use an amazon uploader - prep the libraries at compile time.
-	if($cnf['uploads']['use'] == "amazonAWS") {
+	//if($cnf['uploads']['use'] == "amazonAWS") {
 		require($local_server_path . 'vendor/aws-autoloader.php');
 		use 'Aws\S3\S3Client';
 		use 'Aws\S3\Exception\S3Exception';
-	}
+	//}
 	
 
 	if($db_cnf['ssl']) {
