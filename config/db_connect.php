@@ -667,7 +667,7 @@
 				
 				
 				// Configure a client using Spaces
-				$client = new Aws\S3\S3Client([
+				$s3 = new Aws\S3\S3Client([
 						'version' => 'latest',
 						'region'  => 'nyc3',				//TODO: change this
 						'endpoint' => $endpoint,			//E.g. 'https://nyc3.digitaloceanspaces.com'
