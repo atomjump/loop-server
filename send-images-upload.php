@@ -9,7 +9,12 @@
 	//Send all .jpg images in this folder - to be run from the command line. If a param is set - just send that image
 	include_once('config/db_connect.php');		
 	
-	
+	//Use an amazon uploader - prep the libraries at compile time.
+	if($cnf['uploads']['use'] == "amazonAWS") {
+		require($local_server_path . 'vendor/aws-autoloader.php');
+		use Aws\S3\S3Client;
+		use Aws\S3\Exception\S3Exception;
+	}
 	
 	
 	if(($argc > 1)&&($argv[1] != 'all')) {
