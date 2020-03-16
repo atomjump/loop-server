@@ -654,7 +654,7 @@
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'])) {
 					$endpoint = $cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'];
 				} else {
-					$endpoint = "s3.amazonaws.com";		//Default
+					$endpoint = "https://s3.amazonaws.com";		//Default
 				}
 	
 				$bucket = "ajmp";		//Default
