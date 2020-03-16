@@ -682,7 +682,7 @@
 					// Upload data.
 					$result = $s3->putObject([
 						'Bucket' => $bucket,
-						'Key'    => $filename,
+						'Key'    => $raw_file,
 						'Body'   => file_get_contents($filename),
 						'ACL'    => 'public-read'
 					]);
