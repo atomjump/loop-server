@@ -642,6 +642,7 @@
 				//See: https://github.com/tpyo/amazon-s3-php-class
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'])) {
 					$use_ssl = $cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'];
+					
 				} else {
 					$use_ssl = false;		//Default
 				}
@@ -657,8 +658,15 @@
 				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
 					$bucket = $cnf['uploads']['vendor']['amazonAWS']['bucket'];
 				}
+				
+				if($use_ssl == true) {
+					$server_side_encryption = S3::SSE_AES256;
+				} else {
+					$server_side_encryption = S3::SSE_NONE;
+				}
 	
-				if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
+				// putObject($input, $bucket, $uri, $acl = self::ACL_PRIVATE, $metaHeaders = array(), $requestHeaders = array(), $storageClass = self::STORAGE_CLASS_STANDARD, $serverSideEncryption = self::SSE_NONE)
+				if($s3->putObject(S3::inputFile($filename, false), $bucket, $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years')), S3::STORAGE_CLASS_STANDARD, $server_side_encryption))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
 					//Uploaded correctly
 				} else {
 					//Error uploading to Amazon
