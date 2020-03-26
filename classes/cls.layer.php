@@ -138,9 +138,20 @@ class cls_layer
 
 	}
 	
-	public function new_layer($passcode, $status, $group_id = 'NULL', $public_passcode = NULL)
+	public function new_layer($passcode, $status, $group_id = 'NULL', $public_passcode = NULL, $date_decay = 'NULL')
 	{
 		global $cnf;
+		
+		//Inputs:
+		//passcode is the layer name in text format
+		//status = 'public','public-admin-write-only','private'
+		//group_id = optional, if the later is a part of a group of layers
+		//public_passcode = ...
+		//title is created if the config file includes showAutomaticTitle = true
+		//     and there are multiple replacement strings in titleReplace
+		//date_decay = in MySQL date/time format ("yyyy-mm-dd hh:mm:ss"), for the
+		//intended time the forum will self-decay. Note: you will need to add a 'decay' 
+		//plugin to switch this capability on.
 		
 		if($public_passcode == NULL) {
 			$public_passcode = "NULL";
@@ -166,19 +177,38 @@ class cls_layer
 		} else {
 			$title = "NULL";		//a blank database entry		
 		}
+		
+		//Optional decay time on this forum
+		if(isset($_REQUEST['general'])) {
+			$general_data = json_decode($_REQUEST['general']);
+			if($general_data) {
+				if($general_data['decayIn']) {
+					//decayIn could be "+1 week", "+20 minutes". This is added to the current time to create a timestamp.
+					$now = date("Y-m-d H:i:s");
+					$date_decay = date('Y-m-d H:i:s',strtotime($general_data['decayIn'],strtotime($now)));
+				}
+				
+				if($general_data['decayTime']) {
+					//Or an absolute date/time string passed in
+					$date_decay = date('Y-m-d H:i:s',$general_data['decayTime']);
+				}
+			}
+		}
 			
 		$sql = "INSERT INTO tbl_layer (
 			  enm_access,
 			  passcode,
 			  int_group_id,
 			  var_public_code,
-			  var_title)
+			  var_title,
+			  date_decayed)
 			  VALUES (
 			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
 			  	" . clean_data($group_id) . ",
 			  	" . clean_data($public_passcode) . ",
-			  	" . $title . ")";
+			  	" . $title . ",
+			  	" . clean_data($date_decay) . ")";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();

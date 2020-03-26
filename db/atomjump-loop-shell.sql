@@ -88,6 +88,7 @@ CREATE TABLE `tbl_layer` (
   `int_group_id` int(10) unsigned DEFAULT NULL,
   `var_public_code` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `date_owner_start` datetime DEFAULT NULL,
+  `date_decayed` datetime DEFAULT NULL,
   PRIMARY KEY (`int_layer_id`),
   KEY `tbl_advert_FKIndex1` (`int_layer_id`),
   KEY `tbl_advert_passcode` (`passcode`)
@@ -255,7 +256,7 @@ ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) COLLATE utf8_bin 
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
 
 ALTER TABLE tbl_layer ADD `var_title` varchar(255) COLLATE utf8_bin DEFAULT NULL;
-
+ALTER TABLE tbl_layer ADD `date_decayed` datetime DEFAULT NULL;
 
 -- If you have problems with the date defaulting to 0000 (new MySQL versions), these would change and existing database
 -- ALTER TABLE php_session ALTER date_created SET DEFAULT '2000-01-01 00:00:00';
