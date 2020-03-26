@@ -87,7 +87,7 @@ CREATE TABLE `tbl_layer` (
   `passcode` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
   `int_group_id` int(10) unsigned DEFAULT NULL,
   `var_public_code` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `date_owner_start` datetime DEFAULT NULL
+  `date_owner_start` datetime DEFAULT NULL,
   PRIMARY KEY (`int_layer_id`),
   KEY `tbl_advert_FKIndex1` (`int_layer_id`),
   KEY `tbl_advert_passcode` (`passcode`)
