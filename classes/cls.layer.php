@@ -212,7 +212,7 @@ class cls_layer
 			  	" . clean_data($group_id) . ",
 			  	" . clean_data($public_passcode) . ",
 			  	" . $title . ",
-			  	" . clean_data($date_decay) . ")";
+			  	'" . clean_data($date_decay) . "')";
 		error_log("SQL = " . $sql);			//TESTING
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
