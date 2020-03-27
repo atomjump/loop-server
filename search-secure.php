@@ -8,7 +8,9 @@
 	$ly = new cls_layer();
 	$sh = new cls_ssshout();
 	
-	
+
+	error_log("In search-secure.php general data:" . $_REQUEST['general']);   //TESTING
+
 	
 	//We may have a possible user request in the case of receiving an email
 	if(isset($_REQUEST['possible_user'])) {
@@ -345,7 +347,7 @@
 							<input type="hidden" id="shout-id" name="shout_id" value="">
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
-					   		<input type="hidden" id="general" name="general" value="<?php if(isset($_REQUEST['general'])) { echo $_REQUEST['general']; } ?>">
+					   		
 					   		
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
