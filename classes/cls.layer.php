@@ -180,8 +180,10 @@ class cls_layer
 		
 		//Optional decay time on this forum
 		if(isset($_REQUEST['general'])) {
+			error_log("Input general data: " . $_REQUEST['general']);			//TESTING
 			$general_data = json_decode("{" . $_REQUEST['general'] . "}");
 			if($general_data) {
+				error_log("decayIn: " . $general_data['decayIn']);			//TESTING
 				if($general_data['decayIn']) {
 					//decayIn could be "+1 week", "+20 minutes". This is added to the current time to create a timestamp.
 					$now = date("Y-m-d H:i:s");
@@ -209,6 +211,7 @@ class cls_layer
 			  	" . clean_data($public_passcode) . ",
 			  	" . $title . ",
 			  	" . clean_data($date_decay) . ")";
+		error_log("SQL = " . $sql);			//TESTING
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
