@@ -180,7 +180,7 @@ class cls_layer
 		
 		//Optional decay time on this forum
 		if(isset($_REQUEST['general'])) {
-			$general_data = json_decode($_REQUEST['general']);
+			$general_data = json_decode("{" . $_REQUEST['general'] . "}");
 			if($general_data) {
 				if($general_data['decayIn']) {
 					//decayIn could be "+1 week", "+20 minutes". This is added to the current time to create a timestamp.
