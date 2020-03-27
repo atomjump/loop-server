@@ -182,7 +182,7 @@ class cls_layer
 		if(isset($_REQUEST['general'])) {
 			error_log("Input general data: " . $_REQUEST['general']);			//TESTING
 			$general_data = explode($_REQUEST['general'],",");
-			for($cnt = 0; $cnt < count($general_data) {
+			for($cnt = 0; $cnt < count($general_data); $cnt++) {
 				$tag = explode($general_data[$cnt], ":");
 				error_log("decayIn: " . $general_data['decayIn']);			//TESTING
 				if($tag[0] == 'decayIn') {
