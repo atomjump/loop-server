@@ -9,8 +9,6 @@
 	$sh = new cls_ssshout();
 	
 
-	error_log("In search-secure.php general data:" . $_REQUEST['general']);   //TESTING
-
 	
 	//We may have a possible user request in the case of receiving an email
 	if(isset($_REQUEST['possible_user'])) {
