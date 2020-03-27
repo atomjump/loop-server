@@ -347,6 +347,7 @@
 							<input type="hidden" id="shout-id" name="shout_id" value="">
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
+					   		<input type="hidden" name="general" id="general-data-hidden" value="<?php echo $_REQUEST['general'] ?>">
 					   		
 					   		
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
@@ -404,6 +405,7 @@
 					
 				 <form id="options-frm" class="form" role="form" action="" onsubmit="return set_options_cookie();"  method="POST">
 				 				 <input type="hidden" name="passcode" id="passcode-options-hidden" value="<?php echo $_REQUEST['uniqueFeedbackId'] ?>">
+				 				 <input type="hidden" name="general" id="general-options-hidden" value="<?php echo $_REQUEST['general'] ?>">
 				 				 <input type="hidden" id="email-modified" name="email_modified" value="false">
 				 				 <div class="form-group">
 				 						<div><?php echo $msg['msgs'][$lang]['yourName'] ?></div>
