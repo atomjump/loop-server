@@ -186,12 +186,12 @@ class cls_layer
 				if($tag[0] == 'decayIn') {
 					//decayIn could be "1 week", "20 minutes". This is added to the current time to create a timestamp.
 					$now = date("Y-m-d H:i:s");
-					$date_decay = "'" . date('Y-m-d H:i:s',strtotime("+" . $tag[1],strtotime($now))) . "'";
+					$date_decay = "'" . clean_data(date('Y-m-d H:i:s',strtotime("+" . $tag[1],strtotime($now)))) . "'";
 				}
 				
 				if($tag[0] == 'decayTime') {
 					//Or an absolute date/time string passed in
-					$date_decay = "'" . date('Y-m-d H:i:s',$tag[1]) ."'";
+					$date_decay = "'" . clean_data(date('Y-m-d H:i:s',$tag[1])) . "'";
 				}
 			}
 			
@@ -210,7 +210,7 @@ class cls_layer
 			  	" . clean_data($group_id) . ",
 			  	" . clean_data($public_passcode) . ",
 			  	" . $title . ",
-			  	" . clean_data($date_decay) . ")";
+			  	" . $date_decay . ")";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
