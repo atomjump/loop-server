@@ -179,6 +179,7 @@ class cls_layer
 		}
 		
 		//Optional decay time on this forum
+		error_log("Input general data: " . $_REQUEST['general']);			//TESTING
 		if(isset($_REQUEST['general'])) {
 			error_log("Input general data: " . $_REQUEST['general']);			//TESTING
 			$general_data = explode(",", $_REQUEST['general']);
