@@ -205,7 +205,7 @@ class cls_layer
 			  int_group_id,
 			  var_public_code,
 			  var_title,
-			  date_decayed)
+			  date_to_decay)
 			  VALUES (
 			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
