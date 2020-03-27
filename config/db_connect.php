@@ -151,7 +151,7 @@
 	$db_cnf = array();		//Make a global		
   
   
-  	error_log("Using staging:" . $config['usingStaging'] . "  Server name:" . $_SERVER["SERVER_NAME"]);
+
 	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
 		//Staging
 		$staging = true;
