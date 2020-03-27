@@ -152,7 +152,7 @@
   
 	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
 		//Staging
-		
+		$staging = true;
 		
 		$cnf = $config['staging'];
 		$db_cnf = $cnf['db'];
