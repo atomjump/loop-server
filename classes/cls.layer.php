@@ -181,18 +181,19 @@ class cls_layer
 		//Optional decay time on this forum
 		if(isset($_REQUEST['general'])) {
 			error_log("Input general data: " . $_REQUEST['general']);			//TESTING
-			$general_data = json_decode("{" . $_REQUEST['general'] . "}");
-			if($general_data) {
+			$general_data = explode($_REQUEST['general'],",");
+			for($cnt = 0; $cnt < count($general_data) {
+				$tag = explode($general_data[$cnt], ":");
 				error_log("decayIn: " . $general_data['decayIn']);			//TESTING
-				if($general_data['decayIn']) {
-					//decayIn could be "+1 week", "+20 minutes". This is added to the current time to create a timestamp.
+				if($tag[0] == 'decayIn') {
+					//decayIn could be "1 week", "20 minutes". This is added to the current time to create a timestamp.
 					$now = date("Y-m-d H:i:s");
-					$date_decay = date('Y-m-d H:i:s',strtotime($general_data['decayIn'],strtotime($now)));
+					$date_decay = date('Y-m-d H:i:s',strtotime("+" . $tag[1],strtotime($now)));
 				}
 				
-				if($general_data['decayTime']) {
+				if($tag[0] == 'decayTime']) {
 					//Or an absolute date/time string passed in
-					$date_decay = date('Y-m-d H:i:s',$general_data['decayTime']);
+					$date_decay = date('Y-m-d H:i:s',$tag[1]);
 				}
 			}
 		}
