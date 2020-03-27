@@ -345,6 +345,7 @@
 							<input type="hidden" id="shout-id" name="shout_id" value="">
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
+					   		<input type="hidden" id="general" name="general" value="<?php if(isset($_REQUEST['general'])) { echo $_REQUEST['general']; } ?>">
 					   		
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
 							<input type="hidden" id="phone" name="phone" value="<?php if(isset($_COOKIE['phone'])) { echo urldecode($_COOKIE['phone']); } else { echo ''; } ?>">
