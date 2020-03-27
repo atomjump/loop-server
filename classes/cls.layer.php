@@ -191,7 +191,7 @@ class cls_layer
 					$date_decay = date('Y-m-d H:i:s',strtotime("+" . $tag[1],strtotime($now)));
 				}
 				
-				if($tag[0] == 'decayTime']) {
+				if($tag[0] == 'decayTime') {
 					//Or an absolute date/time string passed in
 					$date_decay = date('Y-m-d H:i:s',$tag[1]);
 				}
