@@ -1637,7 +1637,8 @@ function doSearch()
 					volume: 1.00,
 					records: records,
 					whisper_site: whisperSite,
-					sessionId: $('#ses').val()
+					sessionId: $('#ses').val(),
+					general: $('#general-data-hidden').val()
 											
 		},
 		success: function(response){ 
