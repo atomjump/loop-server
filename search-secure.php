@@ -23,8 +23,8 @@
 	
 	}
 	
-
-	
+	global $cnf;
+	error_log("ReadURL: " . $cnf['readURL']);
 	if(isset($cnf['readURL'])) {
 			//This may be used for modifying the fast server web address
 			$subdomain = check_subdomain();
