@@ -256,6 +256,7 @@ ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) COLLATE utf8_bin 
 
 ALTER TABLE tbl_layer ADD `var_title` varchar(255) COLLATE utf8_bin DEFAULT NULL;
 ALTER TABLE tbl_layer ADD `date_to_decay` datetime DEFAULT NULL;
+CREATE INDEX decay ON tbl_layer (date_to_decay);
 
 -- If you have problems with the date defaulting to 0000 (new MySQL versions), these would change and existing database
 -- ALTER TABLE php_session ALTER date_created SET DEFAULT '2000-01-01 00:00:00';
