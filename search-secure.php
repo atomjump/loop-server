@@ -23,8 +23,8 @@
 	
 	}
 	
-	
-	
+	//This may be used for modifying the fast server web address
+	$subdomain = check_subdomain();
 	
 	
 	function currentdir($url) {
@@ -211,7 +211,7 @@
 				
 				<?php if(isset($cnf['readURL'])) { //Support a specific URL for fast reading with the loop-server-fast plugin 
 				?>
-					var readURL = "<?php echo trim_trailing_slash($cnf['readURL']) ?>";
+					var readURL = "<?php echo trim_trailing_slash(str_replace('[subdomain]', $subdomain, $cnf['readURL'])) ?>";
 				<?php } else { ?>
 					var readURL = null;
 				<?php } ?>

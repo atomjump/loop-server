@@ -674,7 +674,7 @@
 						'credentials' => [
 								'key'    => $cnf['uploads']['vendor']['amazonAWS']['accessKey'],
 								'secret' => $cnf['uploads']['vendor']['amazonAWS']['secretKey'],
-							],
+							]
 				]);
 				
 	
