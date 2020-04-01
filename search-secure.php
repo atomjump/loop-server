@@ -30,7 +30,7 @@
 			$subdomain = check_subdomain();
 
 
-			if((isset($cnf['readURLAllowReplacement'])) && ($cnf['readURLAllowReplacement' == true)) {
+			if((isset($cnf['readURLAllowReplacement'])) && ($cnf['readURLAllowReplacement'] == true)) {
 				$read_url = trim_trailing_slash(str_replace('[subdomain]', $subdomain, $cnf['readURL']));
 			} else {
 				$read_url = trim_trailing_slash(str_replace('[subdomain]', "", $cnf['readURL']));		//Remove any mention of subdomains
