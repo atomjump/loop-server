@@ -26,6 +26,12 @@
 	//This may be used for modifying the fast server web address
 	$subdomain = check_subdomain();
 	
+	if($cnf['readURLAllowReplacement']) {
+		$read_url = trim_trailing_slash(str_replace('[subdomain]', $subdomain, $cnf['readURL']));
+	} else {
+		$read_url = trim_trailing_slash(str_replace('[subdomain]', "", $cnf['readURL']));		//Remove any mention of subdomains
+	}
+	
 	
 	function currentdir($url) {
 		// note: anything without a scheme ("example.com", "example.com:80/", etc.) is a folder
@@ -211,7 +217,7 @@
 				
 				<?php if(isset($cnf['readURL'])) { //Support a specific URL for fast reading with the loop-server-fast plugin 
 				?>
-					var readURL = "<?php echo trim_trailing_slash(str_replace('[subdomain]', $subdomain, $cnf['readURL'])) ?>";
+					var readURL = "<?php echo $readURL; ?>";
 				<?php } else { ?>
 					var readURL = null;
 				<?php } ?>
