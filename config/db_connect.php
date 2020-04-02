@@ -148,7 +148,6 @@
     function add_subdomain_to_path($path) {
 			//This may be used for modifying the fast server web address
 			$subdomain = check_subdomain();
-			error_log("Path : " . $path . "  Subdomain=" . $subdomain);		//TESTING
 			
 			if($subdomain != false) {
 				$add_in = $subdomain . ".";
@@ -156,8 +155,6 @@
 			} else {
 				$new_path = str_replace('[subdomain]', "", $path);
 			}
-			
-			error_log("New path:" . $new_path);  //TESTING
 			return $new_path;			
 	}	
 
