@@ -123,16 +123,40 @@
         return rtrim($str, "/") . '/';
     }
     
+    function check_subdomain()
+	{
+	 	global $config;
+	
+		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
+		$server_name = $_SERVER['SERVER_NAME'];
+
+		if(($server_name == $config['staging']['webDomain']) ||
+		   ($server_name == $config['production']['webDomain'])) {
+		   return false;
+		} else {
+		
+			 
+			$tempstr = str_replace(".atomjump.com","",$server_name);   
+			$subdomain = str_replace(".ajmp.co","",$tempstr);		//Or alternatively the shorthand version
+			
+			return $subdomain;
+		}
+		
+	
+	}
     
     function add_subdomain_to_path($path) {
 			//This may be used for modifying the fast server web address
 			$subdomain = check_subdomain();
-
+			error_log("Path : " . $path . "  Subdomain=" . $subdomain);		//TESTING
+			
 			if($subdomain != false) {
 				$new_path = str_replace('[subdomain]', $subdomain . ".", $path);
 			} else {
-				$new_path = $path;
+				$new_path = str_replace('[subdomain]', "", $path);
 			}
+			
+			error_log("New path:" . $new_path);  //TESTING
 			return $new_path;			
 	}	
 
@@ -346,27 +370,7 @@
 	
 	}
 	
-	function check_subdomain()
-	{
-	 	global $config;
 	
-		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
-		$server_name = $_SERVER['SERVER_NAME'];
-
-		if(($server_name == $config['staging']['webDomain']) ||
-		   ($server_name == $config['production']['webDomain'])) {
-		   return false;
-		} else {
-		
-			 
-			$tempstr = str_replace(".atomjump.com","",$server_name);   
-			$subdomain = str_replace(".ajmp.co","",$tempstr);		//Or alternatively the shorthand version
-			
-			return $subdomain;
-		}
-		
-	
-	}
 	
 	function make_writable_db()
     	{
