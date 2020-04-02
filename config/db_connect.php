@@ -122,6 +122,19 @@
         //Remove and then add
         return rtrim($str, "/") . '/';
     }
+    
+    
+    function add_subdomain_to_path($path) {
+			//This may be used for modifying the fast server web address
+			$subdomain = check_subdomain();
+
+			if($subdomain != false) {
+				$new_path = str_replace('[subdomain]', $subdomain . ".", $path);
+			} else {
+				$new_path = $path;
+			}
+			return $new_path;			
+	}	
 
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
@@ -167,7 +180,7 @@
 		$db_name = $db_cnf['name'];
 	
 	
-		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$root_server_url = trim_trailing_slash(add_subdomain_to_path($cnf['webRoot']));
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 			
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
@@ -190,7 +203,7 @@
 	} else {
   
         $cnf = $config['production']; 
-		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$root_server_url = trim_trailing_slash(add_subdomain_to_path($cnf['webRoot']));
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
 		$db_cnf = $cnf['db'];

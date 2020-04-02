@@ -23,13 +23,10 @@
 	
 	}
 	
-	global $cnf;
-	error_log("ReadURL: " . $cnf['readURL']);
 	if(isset($cnf['readURL'])) {
 			//This may be used for modifying the fast server web address
 			$subdomain = check_subdomain();
 
-			error_log("Comparing: " . $cnf['readURLAllowReplacement']);
 			if((isset($cnf['readURLAllowReplacement'])) && ($cnf['readURLAllowReplacement'] == true)) {
 				$read_url = trim_trailing_slash(str_replace('[subdomain]', $subdomain, $cnf['readURL']));
 			} else {
