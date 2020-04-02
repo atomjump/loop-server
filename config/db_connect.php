@@ -151,7 +151,8 @@
 			error_log("Path : " . $path . "  Subdomain=" . $subdomain);		//TESTING
 			
 			if($subdomain != false) {
-				$new_path = str_replace('[subdomain]', $subdomain . ".", $path);
+				$add_in = $subdomain . ".";
+				$new_path = str_replace('[subdomain]', $add_in, $path);
 			} else {
 				$new_path = str_replace('[subdomain]', "", $path);
 			}
