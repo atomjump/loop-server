@@ -169,10 +169,24 @@
 		
 	}
 	
-	if($layer_info['date_owner_start']) {
-		$date_start = date("Y-m-d H:i:s", strtotime($layer_info['date_owner_start']));
+	if(isset($layer_info['passcode'])) {
+		//There is a layer already
+		if($layer_info['date_owner_start']) {
+			$date_start = date("Y-m-d H:i:s", strtotime($layer_info['date_owner_start']));
+			$video_code = date("YmdHis", $date_start);
+		} else {
+			//It was not created at the start. Use part of the passcode
+			$video_code = substr($layer_info['passcode'], -7);
+			
+		}
 	} else {
-		$date_start = date("Y-m-d H:i:s");
+		//No existing layer
+		if($layer_info['date_owner_start']) {
+			$date_start = date("Y-m-d H:i:s", strtotime($layer_info['date_owner_start']));
+		} else {
+			$date_start = date("Y-m-d H:i:s");
+		}
+		$video_code = date("YmdHis", $date_start);
 	}
 	
 	
@@ -375,13 +389,10 @@
 									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
 									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
 									<a target="_blank" href="<?php 
-										if($layer_info['date_owner_start']) {
-											$feedback_id = $date_start . "-" . $_REQUEST['uniqueFeedbackId'];
-										} else {
-											$feedback_id = strtolower(substr($layer_info['passcode'], -7)) . "-" . $_REQUEST['uniqueFeedbackId'];
-										}
 										
-									if($cnf['video']['url']) {
+											$feedback_id = $video_code . "-" . $_REQUEST['uniqueFeedbackId'];
+										
+											if($cnf['video']['url']) {
 	echo str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
 } else {
 	echo "https://meet.jit.si/aj-changeme-" . $feedback_id; 
