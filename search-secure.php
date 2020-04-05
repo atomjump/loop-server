@@ -370,7 +370,7 @@
 									<button type="submit" id="public-button" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['sendButton'] ?></button>
 									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
 									<a target="_blank" href="<?php 
-										$feedback_id = strtotime($layer_info['date_owner_start']) . "-" . $_REQUEST['uniqueFeedbackId'];
+										$feedback_id = date(strtotime($layer_info['date_owner_start']), "His") . "-" . $_REQUEST['uniqueFeedbackId'];
 									if($cnf['video']['url']) {
 	echo str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
 } else {
