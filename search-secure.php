@@ -173,7 +173,7 @@
 		//There is a layer already
 		if($layer_info['date_owner_start']) {
 			$date_start = date("Y-m-d H:i:s", strtotime($layer_info['date_owner_start']));
-			$video_code = mktime(date('H', $date_start), date('i', $date_start), date('s', $date_start), date('m', $date_start), date('d', $date_start), date('Y', $date_start));
+			$video_code = strtotime($layer_info['date_owner_start']);
 		} else {
 			//It was not created at the start. Use part of the passcode
 			$video_code = substr($layer_info['passcode'], -7);
@@ -186,7 +186,7 @@
 		} else {
 			$date_start = date("Y-m-d H:i:s");
 		}
-		$video_code = mktime(date('H', $date_start), date('i', $date_start), date('s', $date_start), date('m', $date_start), date('d', $date_start), date('Y', $date_start));
+		$video_code = strtotime($date_start);
 	}
 	
 	
