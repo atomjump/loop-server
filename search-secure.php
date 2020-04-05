@@ -169,7 +169,11 @@
 		
 	}
 	
-
+	if($layer_info['date_owner_start']) {
+		$date_start = date("Y-m-d H:i:s", strtotime($layer_info['date_owner_start']));
+	} else {
+		$date_start = date("Y-m-d H:i:s");
+	}
 	
 	
 	//Ensure no caching
@@ -354,6 +358,7 @@
 					  		<input type="hidden" id="msg-id" name="msg_id" value="">
 					   		<input type="hidden" id="message" name="message" value="">
 					   		<input type="hidden" name="general" id="general-data-hidden" value="<?php echo $_REQUEST['general'] ?>">
+					   		<input type="hidden" name="date-owner-start" value="<?php echo $date_start ?>">
 					   		
 					   		
 							<input type="hidden" id="email" name="email" value="<?php if(isset($_COOKIE['email'])) { echo urldecode($_COOKIE['email']); } else { echo ''; } ?>">
@@ -371,7 +376,7 @@
 									<a href="javscript:" style="white-space: nowrap; margin-left:3px;" onclick="return switchPublic();" id="private-public-link"><?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?></a>
 									<a target="_blank" href="<?php 
 										if($layer_info['date_owner_start']) {
-											$feedback_id = date("His", strtotime($layer_info['date_owner_start'])) . "-" . $_REQUEST['uniqueFeedbackId'];
+											$feedback_id = $date_start . "-" . $_REQUEST['uniqueFeedbackId'];
 										} else {
 											$feedback_id = strtolower(substr($layer_info['passcode'], -7)) . "-" . $_REQUEST['uniqueFeedbackId'];
 										}

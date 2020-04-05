@@ -196,6 +196,14 @@ class cls_layer
 			}
 			
 		}
+		
+		if(isset($_REQUEST['date-owner-start'])) {
+			$timestamp = strtotime($_REQUEST['date-owner-start']);
+			$start = date("Y-m-d H:i:s", $timestamp);
+		
+		} else {
+			$start = date("Y-m-d H:i:s");
+		}
 			
 		$sql = "INSERT INTO tbl_layer (
 			  enm_access,
