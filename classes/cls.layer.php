@@ -203,14 +203,15 @@ class cls_layer
 			  int_group_id,
 			  var_public_code,
 			  var_title,
-			  date_to_decay)
+			  date_to_decay,
+			  date_owner_start)
 			  VALUES (
 			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
 			  	" . clean_data($group_id) . ",
 			  	" . clean_data($public_passcode) . ",
 			  	" . $title . ",
-			  	" . $date_decay . ")";
+			  	" . $date_decay . ", NOW())";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
