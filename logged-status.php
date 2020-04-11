@@ -20,6 +20,12 @@ $json = array();
 	//	  $_SESSION['logged-user']     is the account ID, that may not have the credentials passed yet	
 	//    $_SESSION['logged-email']    means a password protected account, which has it's credentials already passed
 
+	if($_SESSION['logged-user']) {
+		$logged_user_text = $_SESSION['logged-user'];
+	} else {
+		$logged_user_text = "null";
+	}
+
 	
 	//Check if we are subscribed.
 	$lg = new cls_login();
@@ -30,17 +36,13 @@ $json = array();
 	
 	$subscribe_toggle_pic_no_ear = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
 	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
-	$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+	$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $logged_user_text . ",'" . $_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
 
 
 	//Get layer info
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
 	
-	if($_SESSION['logged-user']) {
-		$logged_user_text = $_SESSION['logged-user'];
-	} else {
-		$logged_user_text = "null";
-	}
+	
 	
 
 	if($_SESSION['logged-email']) {
