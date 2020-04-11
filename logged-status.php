@@ -39,7 +39,7 @@ $json = array();
 	if($_SESSION['logged-user']) {
 		$logged_user_text = $_SESSION['logged-user'];
 	} else {
-		$logged_user_text = "''";
+		$logged_user_text = "null";
 	}
 	
 

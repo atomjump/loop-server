@@ -142,7 +142,7 @@
 	if($_SESSION['logged-user']) {
 		$logged_user_text = $_SESSION['logged-user'];
 	} else {
-		$logged_user_text = "''";
+		$logged_user_text = "null";
 	}
 
 	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return subFront(" . $logged_user_text . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
