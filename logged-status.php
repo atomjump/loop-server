@@ -35,6 +35,13 @@ $json = array();
 
 	//Get layer info
 	$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
+	
+	if($_SESSION['logged-user']) {
+		$logged_user_text = $_SESSION['logged-user'];
+	} else {
+		$logged_user_text = "''";
+	}
+	
 
 	if($_SESSION['logged-email']) {
 		//We are logged in, but not a forum owner
@@ -57,8 +64,8 @@ $json = array();
 			// Show a subscribe link if we can subscribe
 			$subscribe_text = "subscribe";	
 			if($msg['msgs'][$lang]['subscribe']) $subscribe_text = $msg['msgs'][$lang]['subscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"return sub(" . $logged_user_text . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return subFront(" . $logged_user_text . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
 			
 		} else {
 			$subscribe_text = "cannot subscribe"; 
@@ -75,8 +82,8 @@ $json = array();
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";	
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
-			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $logged_user_text . ",'" .$_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe_toggle = "<a href=\"javascript:\" onclick=\"return unSub(" . $logged_user_text . ",'" . $_REQUEST['passcode'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
 
 		}
 	}

@@ -138,9 +138,15 @@
 	$subscribe = "<a href=\"javascript:\" onclick=\"$('#email-explain').slideToggle(); $('#save-button').html('" . $msg['msgs'][$lang]['subscribeSettingsButton'] . "')\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 	$subscribe_toggle_pic_no_ear = "<img src=\"" . $root_server_url . "/images/no-ear.svg\" title=\"Subscribe\" style=\"width: 32px; height: 32px;\">";
 	$subscribe_toggle_pic_ear = "<img src=\"" . $root_server_url . "/images/ear.svg\" title=\"Unsubscribe\" style=\"width: 32px; height: 32px;\">";
+	
+	if($_SESSION['logged-user']) {
+		$logged_user_text = $_SESSION['logged-user'];
+	} else {
+		$logged_user_text = "''";
+	}
 
-	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
-	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
+	$subscribe_toggle_no_ear = "<a href=\"javascript:\" onclick=\"return subFront(" . $logged_user_text . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_no_ear . "</a>";
+	$subscribe_toggle_ear = "<a href=\"javascript:\" onclick=\"return unSub(" . $logged_user_text . ",\'" . $_REQUEST['uniqueFeedbackId'] . "\');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_toggle_pic_ear . "</a>";
 	$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);
 	
 
@@ -148,7 +154,7 @@
 		//We are logged in, but not a forum owner
 		//Not subscribed. Show a subscribe link.
 		$subscribe_text = "subscribe";
-		$subscribe = "<a href=\"javascript:\" onclick=\"return subFront(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+		$subscribe = "<a href=\"javascript:\" onclick=\"return subFront(" . $logged_user_text . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 		
 		$subscribe_toggle = stripslashes($subscribe_toggle_no_ear);
 	}
@@ -156,12 +162,12 @@
 	if(($layer_info)&&($_SESSION['logged-user'] != "")) {
 	    				
 		//Only the owners can do this
-		$isowner = $lg->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
+		$isowner = $lg->is_owner($logged_user_text, $layer_info['int_group_id'], $layer_info['int_layer_id']);
 		if($isowner == true) {	
 			//Subscribed already. Show an unsubscribe link
 			$subscribe_text = "unsubscribe";
 			if($msg['msgs'][$lang]['unsubscribe']) $subscribe_text = $msg['msgs'][$lang]['unsubscribe'];
-			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $_SESSION['logged-user'] . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
+			$subscribe = "<a href=\"javascript:\" onclick=\"return unSub(" . $logged_user_text . ",'" .$_REQUEST['uniqueFeedbackId'] . "');\" title=\"" . $msg['msgs'][$lang]['yourEmailReason'] . "\">" . $subscribe_text . "</a>";
 			$subscribe_toggle = stripslashes($subscribe_toggle_ear);
 
 		}
