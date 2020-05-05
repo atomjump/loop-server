@@ -1127,6 +1127,17 @@ class cls_login
 	    $layer_info = $ly->get_layer_id($layer_visible);
 	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
 	    
+	    	//This is after a password has been entered for the forum
+			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+				//We are a new user
+				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+			
+				$sh = new cls_ssshout();
+			
+				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
+				
+				
+			}
 	    	
 	    	 //Check if we are the admin user - in this case we will log in automatically,
 	    	 //which allows us to change the group password.
@@ -1166,17 +1177,7 @@ class cls_login
 			
 	    	
 	    	
-			//This is after a password has been entered for the forum
-			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
-				//We are a new user
-				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
-			
-				$sh = new cls_ssshout();
-			
-				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
-				
-				
-			}	    
+				    
 	    
 	    
 	    	
