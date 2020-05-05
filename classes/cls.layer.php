@@ -1121,10 +1121,32 @@ class cls_login
 	    $new_user = false;
 	    
 	   
+	    
+	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);
 	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
 	    
+	    	
+	    	 //Check if we are the admin user - in this case we will log in automatically,
+	    	 //which allows us to change the group password.
+			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if(($row = db_fetch_array($result))&&($email != ""))
+			{
+				//Email exists
+				if($this->is_admin($row['int_user_id']) == true) {
+					//Compare password with existing password
+					if(md5($password) == $row['var_pass']) {
+						//Log in to the forum automatically
+						return "FORUM_LOGGED_IN,RELOAD";			
+					}
+				}
+				
+			}
+			
+			
+	    	
 	    	
 			//This is after a password has been entered for the forum
 			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
