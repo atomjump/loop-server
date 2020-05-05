@@ -1135,13 +1135,10 @@ class cls_login
 			if(($row = db_fetch_array($result))&&($email != ""))
 			{
 				//Email exists
-				error_log("Email exists. Checking userid:" . $row['int_user_id'] . " against admin");
 				if($this->is_admin($row['int_user_id']) == true) {
 					$user_id = $row['int_user_id'];
-					error_log("Is admin");
 					//Compare password with existing user password
 					if(md5($password) == $row['var_pass']) {
-						error_log("Correct pass for admin user");
 						//Log in to the forum automatically
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$ly->push_layer_granted($layer_info['int_layer_id']);
