@@ -1139,7 +1139,22 @@ class cls_login
 					//Compare password with existing password
 					if(md5($password) == $row['var_pass']) {
 						//Log in to the forum automatically
-						return "FORUM_LOGGED_IN,RELOAD";			
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
+						$ly->push_layer_granted($layer_info['int_layer_id']);
+						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+						
+						if(($email != "")&&($password != "")) {
+							//Continue with current user and fully login, but also refresh
+							$reload = ",RELOAD";
+						} else {
+							//Refresh the page and reload
+							
+							//Confirm this new blank user
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+							
+							return "FORUM_LOGGED_IN,RELOAD";
+						} 		
 					}
 				}
 				
