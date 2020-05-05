@@ -1148,7 +1148,8 @@ class cls_login
 						
 						if(($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
-							$reload = ",RELOAD";
+							//$reload = ",RELOAD";
+							return "FORUM_LOGGED_IN,RELOAD";
 						} else {
 							//Refresh the page and reload
 							
