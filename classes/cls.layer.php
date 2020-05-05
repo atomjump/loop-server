@@ -1137,6 +1137,7 @@ class cls_login
 				//Email exists
 				error_log("Email exists. Checking userid:" . $row['int_user_id'] . " against admin");
 				if($this->is_admin($row['int_user_id']) == true) {
+					$user_id = $row['int_user_id'];
 					error_log("Is admin");
 					//Compare password with existing user password
 					if(md5($password) == $row['var_pass']) {
@@ -1148,7 +1149,8 @@ class cls_login
 						
 						if(($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
-							//$reload = ",RELOAD";
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);	
 							return "FORUM_LOGGED_IN,RELOAD";
 						} else {
 							//Refresh the page and reload
