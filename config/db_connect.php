@@ -759,9 +759,11 @@
 					$servers = array($specific_server);
 		
 				}
+				
 	
 				foreach($servers as $server)
 				{
+					error_log("Sending to : " . $server);		//TODO Remove this for speed
 	
 					//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
 					$handle = fopen($filename, "r");
