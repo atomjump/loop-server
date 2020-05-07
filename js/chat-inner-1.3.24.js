@@ -1164,7 +1164,7 @@ function upload() {
 							var targetOrigin = getParentUrl();		//This is in search-secure
 							parent.postMessage( {'highlight': "none" }, targetOrigin );
 						
-						}, 1000);
+						}, 1500);
 					}
 
 			
