@@ -13,7 +13,7 @@
 	if(($argc > 1)&&($argv[1] != 'all')) {
 	
 		error_log("Send images run on " . getcwd() . "/images/property/" . $argv[1]);		//tell apache logs about it
-		if(upload_to_all(getcwd() . "/images/property/" . $argv[1], $argv[1], "/images/property/")) {
+		if(upload_to_all(getcwd() . "/images/property/" . $argv[1], $argv[1], null, "/images/property/")) {
 		
 		} else {
 			echo "Sorry, there was a problem with the image upload.";
