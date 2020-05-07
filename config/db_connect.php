@@ -642,7 +642,7 @@
 	define("ABOUT_LAYER_ID", 1);	
 	define("DEFAULT_AD_WIDTH", 170);		//was 190
 	
-	function upload_to_all($filename, $raw_file, $specific_server = '')
+	function upload_to_all($filename, $raw_file, $specific_server = '', $target_path)
 	{
 			//$raw_file is the hello.jpg, $filename is test/hello.jog
 			//Share to Amazon S3
@@ -763,12 +763,12 @@
 	
 				foreach($servers as $server)
 				{
-					error_log("Sending to : " . $server);		//TODO Remove this for speed
+					//error_log("Sending to : " . $server);		//Include if testing
 	
 					//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
 					$handle = fopen($filename, "r");
 					$data = fread($handle, filesize($filename));
-					$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
+					$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file, 'targetpath'=>$target_path);
 					$curl = curl_init();
 					curl_setopt($curl, CURLOPT_URL, $server);
 					curl_setopt($curl, CURLOPT_TIMEOUT, 30);
