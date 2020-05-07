@@ -1135,6 +1135,8 @@ function upload() {
 					processData: false, // Don't process the files
 					contentType: false // Set content type to false as jQuery will tell the server its a query string request
 				}).done(function(response) {
+					
+					
 						
 					$('#uploading-wait').hide();
 			
@@ -1145,19 +1147,24 @@ function upload() {
 			
 				
 					} else {
-						//Append the response url to the input box
-						//Register that we have started typing
-						$('#shouted').val( response.url );
-						mg.newMsg(true);  //start typing private message
-						mg.commitMsg();
+						//Now wait for a second while internal images get sent around their network
+						setTimeout(function(){ 
+						
+							//Append the response url to the input box
+							//Register that we have started typing
+							$('#shouted').val( response.url );
+							mg.newMsg(true);  //start typing private message
+							mg.commitMsg();
 			
-						$('#uploading-msg').html("");
-						$('#uploading-msg').hide();
-						$("#comment-popup-content").show(); 
-						$("#comment-upload").hide(); 
-						//Send message to the parent frame to hide highlight
-						var targetOrigin = getParentUrl();		//This is in search-secure
-						parent.postMessage( {'highlight': "none" }, targetOrigin );
+							$('#uploading-msg').html("");
+							$('#uploading-msg').hide();
+							$("#comment-popup-content").show(); 
+							$("#comment-upload").hide(); 
+							//Send message to the parent frame to hide highlight
+							var targetOrigin = getParentUrl();		//This is in search-secure
+							parent.postMessage( {'highlight': "none" }, targetOrigin );
+						
+						}, 1000);
 					}
 
 			
