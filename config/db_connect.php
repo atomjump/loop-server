@@ -642,7 +642,7 @@
 	define("ABOUT_LAYER_ID", 1);	
 	define("DEFAULT_AD_WIDTH", 170);		//was 190
 	
-	function upload_to_all($filename, $raw_file, $specific_server = '', $target_path)
+	function upload_to_all($filename, $raw_file, $specific_server = '', $target_path = "/images/property/")
 	{
 			//$raw_file is the hello.jpg, $filename is test/hello.jog
 			//Share to Amazon S3
