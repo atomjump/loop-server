@@ -169,6 +169,22 @@ function receiveMessage(msg)
 	} else {
 		if(!msg) {
 			//Do nothing
+			//Settings
+			if($("#comment-popup-content").is(':visible')) {
+				$("#comment-popup-content").hide();
+				$("#comment-upload").hide();
+				$("#comment-options").show();
+				$("#comment-emojis").hide();
+				var targetOrigin = getParentUrl();		//This is in search-secure
+				parent.postMessage( {'highlight': "options" }, targetOrigin );
+			} else {
+				$("#comment-popup-content").show();
+				$("#comment-upload").hide();
+				$("#comment-options").hide();
+				$("#comment-emojis").hide();
+				var targetOrigin = getParentUrl();		//This is in search-secure
+				parent.postMessage( {'highlight': "none" }, targetOrigin );
+			}
 		} else {
 			switch(msg) {
 			
