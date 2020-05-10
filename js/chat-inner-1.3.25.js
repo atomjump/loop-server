@@ -168,7 +168,6 @@ function receiveMessage(msg)
 		//IE was complaining on the form close that jquery no longer existed in this frame.
 	} else {
 		if(!msg) {
-			//Do nothing
 			//Settings
 			if($("#comment-popup-content").is(':visible')) {
 				$("#comment-popup-content").hide();
