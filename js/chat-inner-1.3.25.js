@@ -186,7 +186,6 @@ function receiveMessage(msg)
 				parent.postMessage( {'highlight': "none" }, targetOrigin );
 			}
 		} else {
-			alert("Message:" + msg);		//TESTING
 			switch(msg) {
 			
 				case 'toggle': 
