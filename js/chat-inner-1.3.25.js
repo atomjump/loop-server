@@ -168,24 +168,31 @@ function receiveMessage(msg)
 		//IE was complaining on the form close that jquery no longer existed in this frame.
 	} else {
 		if(!msg) {
-			//Settings
-			if($("#comment-popup-content").is(':visible')) {
-				$("#comment-popup-content").hide();
-				$("#comment-upload").hide();
-				$("#comment-emojis").hide();
-				$("#comment-options").show();
-				var targetOrigin = getParentUrl();		//This is in search-secure
-				parent.postMessage( {'highlight': "options" }, targetOrigin );
-			} else {
-				$("#comment-popup-content").show();
-				$("#comment-upload").hide();
-				$("#comment-emojis").hide();
-				$("#comment-options").hide();
-				var targetOrigin = getParentUrl();		//This is in search-secure
-				parent.postMessage( {'highlight': "none" }, targetOrigin );
-			}
+			//Do nothing
 		} else {
 			switch(msg) {
+			
+				case 'toggle': 
+					//Toggle options
+					//Settings
+					if($("#comment-popup-content").is(':visible')) {
+						$("#comment-popup-content").hide();
+						$("#comment-upload").hide();
+						$("#comment-options").show();
+						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "options" }, targetOrigin );
+					} else {
+						$("#comment-popup-content").show();
+						$("#comment-upload").hide();
+						$("#comment-options").hide();
+						$("#comment-emojis").hide();
+						var targetOrigin = getParentUrl();		//This is in search-secure
+						parent.postMessage( {'highlight': "none" }, targetOrigin );
+					}
+					
+				break;
+				
 				case 'upload':
 					//Upload
 					if($("#comment-popup-content").is(':visible')) {
@@ -230,22 +237,7 @@ function receiveMessage(msg)
 				break;
 			
 				default:
-					//Settings
-					if($("#comment-popup-content").is(':visible')) {
-						$("#comment-popup-content").hide();
-						$("#comment-upload").hide();
-						$("#comment-options").show();
-						$("#comment-emojis").hide();
-						var targetOrigin = getParentUrl();		//This is in search-secure
-						parent.postMessage( {'highlight': "options" }, targetOrigin );
-					} else {
-						$("#comment-popup-content").show();
-						$("#comment-upload").hide();
-						$("#comment-options").hide();
-						$("#comment-emojis").hide();
-						var targetOrigin = getParentUrl();		//This is in search-secure
-						parent.postMessage( {'highlight': "none" }, targetOrigin );
-					}
+					//Do nothing
 				break;
 			}
 		
