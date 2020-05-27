@@ -26,6 +26,6 @@ ErrorDocument 404 /404image/
 
 RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/404image/$
-RewriteRule ^(.*?)$ api/images/im/upl440-47456560.jpg [L]
+#RewriteRule ^(.*?)$ api/images/im/upl440-47456560.jpg [L]
 
 #/api/missing-image.php?f=%{REQUEST_FILENAME}
