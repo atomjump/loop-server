@@ -14,7 +14,7 @@ ErrorDocument 404 https://staging.atomjump.com/api/images/404image.jpg
 
 RewriteEngine On
 RewriteCond %{REQUEST_URI} ^/api/images/404image.jpg$
-RewriteRule ^(.*?)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [L]
+RewriteRule ^(.*?)$ /api/missing-image.php?f=TEST [L]
 
 
 # Deny access to filenames starting with dot(.)
