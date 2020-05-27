@@ -20,3 +20,10 @@ Deny from all
   ExpiresDefault "access plus 11 month"
   Header append Cache-Control "private, no-transform"
 </filesMatch>
+
+
+ErrorDocument 404 /image404/
+
+RewriteEngine On
+RewriteCond %{REQUEST_URI} ^/image404/$
+RewriteRule ^(.*)(.jpg|.jpeg|.png|.gif)$ ../missing-image.php?f=%{REQUEST_FILENAME} [QSA,L]
