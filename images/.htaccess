@@ -10,11 +10,11 @@ Options -Indexes
 IndexIgnore *
 
 #Handle missing images
-ErrorDocument 404 https://staging.atomjump.com/api/images/404image.jpg
+ErrorDocument 404 /api/missing-image.php
 
-RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/api/images/404image.jpg$
-RewriteRule ^(.*?)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [L]
+#RewriteEngine On
+#RewriteCond %{REQUEST_URI} ^/api/images/404image.jpg$
+#RewriteRule ^(.*?)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [L]
 
 
 # Deny access to filenames starting with dot(.)
