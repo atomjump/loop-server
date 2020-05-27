@@ -22,10 +22,10 @@ Deny from all
 </filesMatch>
 
 
-ErrorDocument 404 /api/missing-image/
+ErrorDocument 404 /missing-image/
 
 RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/api/missing-image/$
+RewriteCond %{REQUEST_URI} ^/missing-image/$
 RewriteRule ^(.*)(.jpg|.jpeg|.png|.gif)$ /api/missing-image.php [QSA,L]
 
 #?f=%{REQUEST_FILENAME}
