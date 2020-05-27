@@ -24,6 +24,6 @@ Deny from all
 
 ErrorDocument 404 /api/missing-image.php
 
-RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/image404/$
-RewriteRule ^(.*)(.jpg|.jpeg|.png|.gif)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [QSA,L]
+#RewriteEngine On
+#RewriteCond %{REQUEST_URI} ^/image404/$
+#RewriteRule ^(.*)(.jpg|.jpeg|.png|.gif)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [QSA,L]
