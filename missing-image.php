@@ -55,6 +55,8 @@
 			
 			$random_count = count($servers) - 1;
 			
+			$failure_getting = true;
+			
 			//Maximum 3 attempts from different cluster servers
 			for($cnt = 0; $cnt < 3; $cnt++) {
 				$random_server = rand(0, $random_count);
@@ -71,7 +73,7 @@
 					$img = __DIR__ . '/images/im/' . $filename;
 					
 					//Download and put into our local image folder
-					$failure_getting = false;
+					
 					
 					try {
    						$str_image = file_get_contents($url);
@@ -89,6 +91,8 @@
 									readfile($img);
 									exit(0);
 								} else {
+									//Remove the file
+									unlink($img);
 									$failure_getting = true;
 								}
 							} else {
@@ -99,20 +103,20 @@
 						error_log("Failed to get " . $e->getMessage());   //TESTING
 						$failure_getting = true;
 					}
-					
-					
-					
-					if($failure_getting == true) {
-						//Can put a default blank image in here
-						error_log("Putting default in");   //TESTING
-						
-						$img = __DIR__ . '/images/im/default.jpg';
-						header('Content-type: image/jpeg');
-						readfile($img);
-						exit(0);
-					}
-					
+										
 				}
+								
+			}
+			
+			//Tried all the attempts
+			if($failure_getting == true) {
+				//Can put a default blank image in here
+				error_log("Putting default in");   //TESTING
+				
+				$img = __DIR__ . '/images/im/' . $filename;
+				header('Content-type: image/jpeg');
+				readfile($img);
+				exit(0);
 			}
 	} else {
 		//Can put a default blank image in here
