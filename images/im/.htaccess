@@ -9,6 +9,12 @@ Options -Indexes
 # Hide the contents of directories
 IndexIgnore *
 
+
+#Handle missing images in a cluster. CHANGE THIS BELOW
+#Insert your own relative path by replacing /api/ below if your loop-server install is at a different subfolder than /api/
+ErrorDocument 404 /api/missing-image.php
+
+
 # Deny access to filenames starting with dot(.)
 <FilesMatch "^\.">
 Order allow,deny
