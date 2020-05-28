@@ -66,7 +66,7 @@
 		
 				if($server) {
 					//TODO: replace subdomain
-					$url  =  "https://atomjump.com/api/images/im/" . $filename;		//trim_trailing_slash($server) .
+					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;		//trim_trailing_slash($server) .
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
 					error_log("url:" . $url);   //TESTING
@@ -77,12 +77,13 @@
 					
 					
 					try {
-						//Do a file header check first.
-						// Open file
-						$handle = @fopen($remoteFile, 'r');
-
+						//Do a file check request first
+						//TODO: replace subdomain
+						$checker = trim_trailing_slash($server) . "/image-exists.php?img=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['code'];	
+						
+						$checker_str = file_get_contents($url);
 						// Check if file exists
-						if(!$handle){
+						if($checker_str !== "true"){
 							error_log("File not found");
 							$failure_getting = true;
 						} else{
