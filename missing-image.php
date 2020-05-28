@@ -1,7 +1,7 @@
 <?php
 
-	echo "This is a missing image served up by PHP";
-	echo "Caller:" . $_SERVER['REQUEST_URI'];
+	//echo "This is a missing image served up by PHP";
+	//echo "Caller:" . $_SERVER['REQUEST_URI'];
 	
 	$url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 	
