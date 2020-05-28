@@ -67,11 +67,13 @@
 						//Pipe the image back to the browser
 						header('Content-type: image/jpeg');
 						readfile($img);
+						exit(0);
 					} else {
 						//Can put a default blank image in here
 						$img = __DIR__ . '/images/im/default.jpg';
 						header('Content-type: image/jpeg');
 						readfile($img);
+						exit(0);
 					}
 					
 				}
@@ -82,6 +84,7 @@
 		
 		header('Content-type: image/jpeg');
 		readfile($img);
+		exit(0);
 	
 	}
 
