@@ -6,6 +6,14 @@
 	global $local_server_path;
 	global $root_server_url;
 	global $cnf;
+	
+	function is_image($pathToFile)
+	{
+	  if( false === exif_imagetype($pathToFile) )
+	   return false;
+
+	   return true;
+	}
 			
 			
 	if(isset($cnf['uploads']['imagesShare'])) {
@@ -67,15 +75,22 @@
 					
 					try {
    						$str_image = file_get_contents($url);
+   						
 						if($str_image === false) {
 							error_log("Failed to get");   //TESTING
 							$failure_getting = true;
 						} else {
+						
 							if(file_put_contents($img, $str_image)) {
-								//Pipe the image back to the browser
-								header('Content-type: image/jpeg');
-								readfile($img);
-								exit(0);
+								if(is_image($img)) {
+									//Pipe the image back to the browser
+									
+									header('Content-type: image/jpeg');
+									readfile($img);
+									exit(0);
+								} else {
+									$failure_getting = true;
+								}
 							} else {
 								$failure_getting = true;
 							}
