@@ -65,7 +65,8 @@
 				$server = $servers[$random_server];
 		
 				if($server) {
-					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;
+					//TODO: replace subdomain
+					$url  =  "https://atomjump.com/api/images/im/" . $filename;		//trim_trailing_slash($server) .
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
 					error_log("url:" . $url);   //TESTING
@@ -76,29 +77,42 @@
 					
 					
 					try {
-   						$str_image = file_get_contents($url);
-   						
-						if($str_image === false) {
-							error_log("Failed to get");   //TESTING
+						//Do a file header check first.
+						// Open file
+						$handle = @fopen($remoteFile, 'r');
+
+						// Check if file exists
+						if(!$handle){
+							error_log("File not found");
 							$failure_getting = true;
-						} else {
-						
-							if(file_put_contents($img, $str_image)) {
-								if(is_image($img)) {
-									//Pipe the image back to the browser
+						} else{
+							error_log("File exists");
+							$str_image = file_get_contents($url);
+							if($str_image === false) {
+								error_log("Failed to get");   //TESTING
+								$failure_getting = true;
+							} else {
+								//Put contents into local file
+								if(file_put_contents($img, $str_image)) {
+									if(is_image($img)) {
+										//Pipe the image back to the browser
 									
-									header('Content-type: image/jpeg');
-									readfile($img);
-									exit(0);
+										header('Content-type: image/jpeg');
+										readfile($img);
+										exit(0);
+									} else {
+										//Remove the file
+										unlink($img);
+										$failure_getting = true;
+									}
 								} else {
-									//Remove the file
-									unlink($img);
 									$failure_getting = true;
 								}
-							} else {
-								$failure_getting = true;
 							}
 						}
+   						
+   						
+						
 					} catch (Exception $e) {
 						error_log("Failed to get " . $e->getMessage());   //TESTING
 						$failure_getting = true;
