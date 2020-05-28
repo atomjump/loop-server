@@ -20,7 +20,7 @@
 			if($specific_server == '') {  //Defaults to all
 				$servers = array();
 				for($cnt =0; $cnt< count($cnf['ips']); $cnt++) {
-					$server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['uploads']['imagesShare']['port'], $root_server_url) . "/copy-image.php";
+					$server_url = str_replace($domain, $cnf['ips'][$cnt] . ":" . $cnf['uploads']['imagesShare']['port'], $root_server_url) . "/";
 					if($cnf['uploads']['imagesShare']['https'] == false) {
 						//Only do with http
 						$server_url = str_replace("https", "http", $server_url);
@@ -49,7 +49,7 @@
 			
 			//Maximum 3 attempts from different cluster servers
 			for($cnt = 0; $cnt < 3; $cnt++) {
-				$random_server = rand($random_count);
+				$random_server = rand(0, $random_count);
 				error_log("rand server:" . $random_server);   //TESTING
 				
 				$server = $servers[$random_server];
