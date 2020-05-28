@@ -63,12 +63,22 @@
 					$img = __DIR__ . '/images/im/' . $filename;
 					
 					//Download and put into our local image folder
-					if(file_put_contents($img, file_get_contents($url))) {
-						//Pipe the image back to the browser
-						header('Content-type: image/jpeg');
-						readfile($img);
-						exit(0);
+					$failure_getting = false;
+					$str_image = file_get_contents($url);
+					if($str_image === false) {
+						$failure_getting = true;
 					} else {
+						if(file_put_contents($img, $str_image)) {
+							//Pipe the image back to the browser
+							header('Content-type: image/jpeg');
+							readfile($img);
+							exit(0);
+						} else {
+							$failure_getting = true;
+						}
+					}
+					
+					if($failure_getting == true) {
 						//Can put a default blank image in here
 						$img = __DIR__ . '/images/im/default.jpg';
 						header('Content-type: image/jpeg');
