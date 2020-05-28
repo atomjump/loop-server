@@ -66,6 +66,7 @@
 					$failure_getting = false;
 					$str_image = file_get_contents($url);
 					if($str_image === false) {
+						error_log("Failed to get");   //TESTING
 						$failure_getting = true;
 					} else {
 						if(file_put_contents($img, $str_image)) {
@@ -80,6 +81,8 @@
 					
 					if($failure_getting == true) {
 						//Can put a default blank image in here
+						error_log("Putting default in");   //TESTING
+						
 						$img = __DIR__ . '/images/im/default.jpg';
 						header('Content-type: image/jpeg');
 						readfile($img);
