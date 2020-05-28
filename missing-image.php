@@ -6,9 +6,8 @@
 
 	// extracted basename
 	$filename = basename($path);
-	echo $filename;
-	exit(0);
 
+	//TODO Get the first two other server's URLS e.g. http://ipaddress1/api/images/im/sample1.jpg
 	$url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 	
 	$img = __DIR__ . '/images/im/' . $filename;
