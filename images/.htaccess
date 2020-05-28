@@ -10,7 +10,7 @@ Options -Indexes
 IndexIgnore *
 
 #Handle missing images
-DocumentRoot /var/www/html/atomjump/api 
+DocumentRoot /var/www/html/atomjump_staging/api 
 ErrorDocument 404 missing-image.php
 
 #RewriteEngine On
