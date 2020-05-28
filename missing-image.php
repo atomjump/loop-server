@@ -50,7 +50,7 @@
 			//Maximum 3 attempts from different cluster servers
 			for($cnt = 0; $cnt < 3; $cnt++) {
 				$random_server = rand(0, $random_count);
-				//error_log("rand server:" . $random_server);   //TESTING
+				error_log("rand server:" . $random_server);   //TESTING
 				
 				$server = $servers[$random_server];
 		
@@ -58,26 +58,34 @@
 					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
-					//error_log("url:" . $url);   //TESTING
+					error_log("url:" . $url);   //TESTING
 					
 					$img = __DIR__ . '/images/im/' . $filename;
 					
 					//Download and put into our local image folder
 					$failure_getting = false;
-					$str_image = file_get_contents($url);
-					if($str_image === false) {
-						error_log("Failed to get");   //TESTING
-						$failure_getting = true;
-					} else {
-						if(file_put_contents($img, $str_image)) {
-							//Pipe the image back to the browser
-							header('Content-type: image/jpeg');
-							readfile($img);
-							exit(0);
-						} else {
+					
+					try {
+   						$str_image = file_get_contents($url);
+						if($str_image === false) {
+							error_log("Failed to get");   //TESTING
 							$failure_getting = true;
+						} else {
+							if(file_put_contents($img, $str_image)) {
+								//Pipe the image back to the browser
+								header('Content-type: image/jpeg');
+								readfile($img);
+								exit(0);
+							} else {
+								$failure_getting = true;
+							}
 						}
+					} catch (Exception $e) {
+						error_log("Failed to get " . $e->getMessage());   //TESTING
+						$failure_getting = true;
 					}
+					
+					
 					
 					if($failure_getting == true) {
 						//Can put a default blank image in here
