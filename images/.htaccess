@@ -9,13 +9,10 @@ Options -Indexes
 # Hide the contents of directories
 IndexIgnore *
 
-#Handle missing images
-DocumentRoot /var/www/html/atomjump_staging/api 
-ErrorDocument 404 missing-image.php
+#Handle missing images in a cluster. CHANGE THIS BELOW
+#Insert your own relative path by replacing /api/ below if your loop-server install is at a different subfolder than /api/
+ErrorDocument 404 /api/missing-image.php
 
-#RewriteEngine On
-#RewriteCond %{REQUEST_URI} ^/404image.jpg$
-#RewriteRule ^(.*?)$ /api/missing-image.php?f=%{REQUEST_FILENAME} [L]
 
 
 # Deny access to filenames starting with dot(.)
