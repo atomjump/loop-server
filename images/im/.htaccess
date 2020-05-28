@@ -21,8 +21,8 @@ Order allow,deny
 Deny from all
 </FilesMatch>
 
-<filesMatch "\.(ico|gif|jpg|png)$">
+<FilesMatch "\.(ico|gif|jpg|png)$">
   ExpiresActive On
   ExpiresDefault "access plus 11 month"
   Header append Cache-Control "private, no-transform"
-</filesMatch>
+</FilesMatch>
