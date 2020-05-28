@@ -113,7 +113,7 @@
 				//Can put a default blank image in here
 				error_log("Putting default in");   //TESTING
 				
-				$img = __DIR__ . '/images/im/' . $filename;
+				$img = __DIR__ . '/images/im/default.jpg';
 				header('Content-type: image/jpeg');
 				readfile($img);
 				exit(0);
