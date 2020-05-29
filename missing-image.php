@@ -59,14 +59,11 @@
 			
 			//Maximum 3 attempts from different cluster servers
 			for($cnt = 0; $cnt < 3; $cnt++) {
-				$random_server = rand(0, $random_count);
-				error_log("rand server:" . $random_server);   //TESTING
 				
-				$server = $servers[$random_server];
+				$server = $servers[$cnt];
 		
 				if($server) {
-					//TODO: replace subdomain
-					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;		//trim_trailing_slash($server) .
+					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;		
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
 					error_log("url:" . $url);   //TESTING
@@ -78,8 +75,7 @@
 					
 					try {
 						//Do a file check request first
-						//TODO: replace subdomain
-						$checker = trim_trailing_slash($server) . "/image-exists.php?img=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['code'];	
+						$checker = trim_trailing_slash($server) . "/image-exists.php?img=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
 						$checker_str = file_get_contents($url);
 						// Check if file exists
