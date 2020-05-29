@@ -2,7 +2,7 @@
 	//This section is a simplified cnf getter - for speed.	
 	if(!isset($config)) {
      //Get global config - but only once
-     $data = file_get_contents (dirname(__FILE__) . "/config.json");
+     $data = file_get_contents (dirname(__FILE__) . "/config/config.json");
      if($data) {
         $config = json_decode($data, true);
         if(!isset($config)) {
