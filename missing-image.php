@@ -75,7 +75,7 @@
 					
 					try {
 						//Do a file check request first
-						$checker = trim_trailing_slash($server) . "/image-exists.php?img=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
+						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
 						$checker_str = file_get_contents($url);
 						// Check if file exists
