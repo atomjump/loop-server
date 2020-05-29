@@ -7,7 +7,7 @@
 	
 	echo "Conf: " . $cnf['uploads']['imagesShare']['checkCode'] . " code=" . $_REQUEST['code'];
 	
-	if($_REQUEST['code'] === $cnf['uploads']['imagesShare']['code']) {
+	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['code']) {
 		$filename = $_REQUEST['image'];
 		if(file_exists(__DIR__ . '/images/im/' . $filename)) {
 			echo "true";
