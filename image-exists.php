@@ -5,6 +5,7 @@
 	global $root_server_url;
 	global $cnf;
 	
+	echo "Conf: " . $cnf['uploads']['imagesShare']['code'] . " code=" . $_REQUEST['code'];
 	
 	if($_REQUEST['code'] === $cnf['uploads']['imagesShare']['code']) {
 		$filename = $_REQUEST['image'];
