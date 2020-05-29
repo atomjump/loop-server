@@ -1,5 +1,11 @@
 <?php
-
+	include_once(__DIR__ . '/config/db_connect.php');		
+	
+	global $local_server_path;
+	global $root_server_url;
+	global $cnf;
+	
+	
 	if($_REQUEST['code'] === $cnf['uploads']['imagesShare']['code']) {
 		$filename = $_REQUEST['image'];
 		if(file_exists(__DIR__ . '/images/im/' . $filename)) {
