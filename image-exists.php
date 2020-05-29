@@ -8,7 +8,7 @@
 	
 	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {
 		$filename = str_replace("/", "", $_REQUEST['image']);
-		$filename = str_replace(".", "", $filename);
+		$filename = str_replace("..", "", $filename);
 		if(file_exists(__DIR__ . '/images/im/' . $filename)) {
 			echo "true";
 		
