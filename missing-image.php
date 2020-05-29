@@ -77,7 +77,7 @@
 						//Do a file check request first
 						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
-						$checker_str = file_get_contents($url);
+						$checker_str = file_get_contents($checker);
 						// Check if file exists
 						if($checker_str !== "true"){
 							error_log("File not found");
