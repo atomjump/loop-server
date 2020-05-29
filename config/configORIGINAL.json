@@ -240,7 +240,8 @@
 		  "use" : "none|same|generic|amazonAWS",
 		  "imagesShare" : {
 			  "port" : "80",
-			  "https" : false
+			  "https" : false,
+			  "checkCode" : "etrwiou4g46nkejr-changeme"
 		  },
 		  "hiRes" : {
 		  	 "width": 1280,
