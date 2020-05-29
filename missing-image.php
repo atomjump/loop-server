@@ -14,6 +14,28 @@
 
 	   return true;
 	}
+	
+	function get_remote($url) {
+		$handle = fopen($filename, "r");
+		$data = fread($handle, filesize($filename));
+		
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, $url);
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+		//curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		//curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
+		$response = curl_exec($curl);		        
+		if(curl_error($curl))
+		{
+			error_log('error:' . curl_error($curl));
+		}
+	
+		curl_close ($curl);
+		
+		return $response;
+	}
 			
 			
 	if(isset($cnf['uploads']['imagesShare'])) {
@@ -77,14 +99,14 @@
 						//Do a file check request first
 						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
-						$checker_str = file_get_contents($checker);
+						$checker_str = get_remote($checker);
 						// Check if file exists
 						if($checker_str !== "true"){
 							error_log("File not found");
 							$failure_getting = true;
 						} else{
 							error_log("File exists");
-							$str_image = file_get_contents($url);
+							$str_image = get_remote($url);
 							if($str_image === false) {
 								error_log("Failed to get");   //TESTING
 								$failure_getting = true;
