@@ -15,7 +15,7 @@
 	   return true;
 	}
 	
-	function get_remote($url) {
+	function get_remote($url, $filename) {
 		$handle = fopen($filename, "r");
 		$data = fread($handle, filesize($filename));
 		
@@ -99,14 +99,14 @@
 						//Do a file check request first
 						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
-						$checker_str = get_remote($checker);
+						$checker_str = get_remote($checker, $filename);
 						// Check if file exists
 						if($checker_str !== "true"){
 							error_log("File not found");
 							$failure_getting = true;
 						} else{
 							error_log("File exists");
-							$str_image = get_remote($url);
+							$str_image = get_remote($url, $filename);
 							if($str_image === false) {
 								error_log("Failed to get");   //TESTING
 								$failure_getting = true;
