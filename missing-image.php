@@ -16,8 +16,6 @@
 	}
 	
 	function get_remote($url, $filename) {
-		$handle = fopen($filename, "r");
-		$data = fread($handle, filesize($filename));
 		
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
