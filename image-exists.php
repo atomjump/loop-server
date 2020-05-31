@@ -19,7 +19,7 @@
      } 
   }
   
-  if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
+  if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($config['usingStaging'] == true)) {
 		//Staging
 		$cnf = $config['staging'];
   } else {
