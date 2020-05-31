@@ -9,8 +9,8 @@
 	
 	function is_image($pathToFile)
 	{
-	  if( false === exif_imagetype($pathToFile) )
-	   return false;
+		return true;	//TESTING IN
+	  if( false === exif_imagetype($pathToFile) ) return false;
 
 	   return true;
 	}
