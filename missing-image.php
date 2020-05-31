@@ -7,9 +7,10 @@
 	global $root_server_url;
 	global $cnf;
 	
+	$verbose = false;
+	
 	function is_image($pathToFile)
 	{
-		return true;	//TESTING IN
 	  if( false === exif_imagetype($pathToFile) ) return false;
 
 	   return true;
@@ -20,10 +21,8 @@
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, $url);
 		curl_setopt($curl, CURLOPT_TIMEOUT, 30);
-		//curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($curl, CURLOPT_POSTFIELDS, $POST_DATA);
 		$response = curl_exec($curl);		        
 		if(curl_error($curl))
 		{
@@ -53,7 +52,6 @@
 						//Only do with http
 						$server_url = str_replace("https", "http", $server_url);
 					}
-					//error_log("server url:" . $server_url);   //TESTING
 					$servers[] = $server_url;
 					
 				}
@@ -64,8 +62,6 @@
 		
 			}
 			
-			//echo "This is a missing image served up by PHP";
-			//echo "Caller:" . $_SERVER['REQUEST_URI'];
 			$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 			// extracted basename
@@ -86,7 +82,7 @@
 					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;		
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
-					error_log("url:" . $url);   //TESTING
+					if($verbose == true) error_log("url:" . $url);
 					
 					$img = __DIR__ . '/images/im/' . $filename;
 					
@@ -100,26 +96,26 @@
 						$checker_str = get_remote($checker, $filename);
 						// Check if file exists
 						if($checker_str !== "true"){
-							error_log("File not found");
+							if($verbose == true) error_log("File not found");
 							$failure_getting = true;
 						} else{
-							error_log("File exists");
+							if($verbose == true) error_log("File exists");
 							$str_image = get_remote($url, $filename);
 							if($str_image === false) {
-								error_log("Failed to get");   //TESTING
+								if($verbose == true) error_log("Failed to get"); 
 								$failure_getting = true;
 							} else {
 								//Put contents into local file
 								if(file_put_contents($img, $str_image)) {
 									if(is_image($img)) {
 										//Pipe the image back to the browser
-										error_log("Is an image, piping out");
+										if($verbose == true) error_log("Is an image, piping out");
 										header('Content-type: image/jpeg');
 										readfile($img);
 										exit(0);
 									} else {
 										//Remove the file
-										error_log("Is not an image, removing the file downloaded");
+										if($verbose == true) error_log("Is not an image, removing the file downloaded");
 										unlink($img);
 										$failure_getting = true;
 									}
@@ -132,7 +128,7 @@
    						
 						
 					} catch (Exception $e) {
-						error_log("Failed to get " . $e->getMessage());   //TESTING
+						if($verbose == true) error_log("Failed to get " . $e->getMessage()); 
 						$failure_getting = true;
 					}
 										
@@ -143,7 +139,7 @@
 			//Tried all the attempts
 			if($failure_getting == true) {
 				//Can put a default blank image in here
-				error_log("Putting default in");   //TESTING
+				if($verbose == true) error_log("Putting default in");
 				
 				$img = __DIR__ . '/images/im/default.jpg';
 				header('Content-type: image/jpeg');

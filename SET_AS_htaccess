@@ -44,7 +44,9 @@ RewriteRule ^download$ download.php [L,PT]
 
 RewriteCond %{HTTPS} off
 RewriteCond %{HTTP_HOST} !atomjump.com$
-RewriteCond %{HTTP_HOST} !ajmp.co$     
+RewriteCond %{HTTP_HOST} !ajmp.co$
+#If you are using shared images, this allows a download from another image server. Use ip of this server   
+RewriteCond %{HTTP_HOST} !192.168.your.ip$     
 RewriteRule (.*) https://atomjump.com/%{QUERY_STRING}
 
 

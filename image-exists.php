@@ -1,6 +1,6 @@
 <?php
-	//This section is a simplified cnf getter - for speed.	
-	if(!isset($config)) {
+  //This section is a simplified cnf getter - for speed.	
+  if(!isset($config)) {
      //Get global config - but only once
      $data = file_get_contents (dirname(__FILE__) . "/config/config.json");
      if($data) {
@@ -26,10 +26,10 @@
   }
   //Up until here
 	
-	error_log($_REQUEST['code'] . " vs " . $cnf['uploads']['imagesShare']['checkCode']);
+	if($verbose == true) error_log($_REQUEST['code'] . " vs " . $cnf['uploads']['imagesShare']['checkCode']);
 	
 	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {
-		$filename = str_replace("/", "", $_REQUEST['image']);
+		$filename = str_replace("/", "", $_REQUEST['image']);		//Remove any additional filename modifications for other areas
 		$filename = str_replace("..", "", $filename);
 		if(file_exists(__DIR__ . '/images/im/' . $filename)) {
 			echo "true";
