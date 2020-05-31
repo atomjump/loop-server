@@ -401,7 +401,7 @@ Note: You should make sure your server provides a caching response to image file
 
 **uploads** **replaceHiResURLMatch**: set to a string in your uploaded images URL path that identifies that the photo is on your server, and not copied from a different server e.g. 'atomjump' would identify for "http://yourserver.com/atomjump/images/im/yourphoto.jpg". Images which include this string, will show the hi-res uploaded version when clicked e.g. "http://yourserver.com/atomjump/images/im/yourphoto_HI.jpg".
 
-**uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
+**uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false. 'checkCode' is a unique code to your server, which you should change, for security purposes, to allow access from your nodes, only, Ver >= 2.5.7. If you are setting up and expandable cluster, you should also modify images/im/.htaccess and enter your subfolder path where it says CHANGE THIS BELOW, to provide a 'missing images' handler that allows expanding clusters, Ver >= 2.5.7. 
 
 **uploads** **vendor** **amazonAWS**: optional. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 
