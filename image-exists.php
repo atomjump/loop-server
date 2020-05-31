@@ -1,4 +1,6 @@
 <?php
+  $verbose = false;
+
   //This section is a simplified cnf getter - for speed.	
   if(!isset($config)) {
      //Get global config - but only once
