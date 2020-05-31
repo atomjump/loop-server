@@ -36,6 +36,8 @@ RewriteRule ^search-chat - [L,PT]
 #Get out of here early - we know we don't need further processing
 RewriteRule copy-image - [L,PT]
 #Get out of here early - we know we don't need further processing
+RewriteRule image-exists - [L,PT]
+#Get out of here early - we know we don't need further processing
 
 
 RewriteRule ^download$ download.php [L,PT]

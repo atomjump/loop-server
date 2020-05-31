@@ -28,6 +28,7 @@
   }
   //Up until here
 	
+	error_log($_REQUEST['code'] . " vs " . $cnf['uploads']['imagesShare']['checkCode']);
 	
 	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {
 		$filename = str_replace("/", "", $_REQUEST['image']);
