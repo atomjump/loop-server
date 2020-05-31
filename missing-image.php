@@ -7,7 +7,7 @@
 	global $root_server_url;
 	global $cnf;
 	
-	$verbose = false;
+	$verbose = true;
 	
 	function is_image($pathToFile)
 	{
