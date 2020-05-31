@@ -113,12 +113,13 @@
 								if(file_put_contents($img, $str_image)) {
 									if(is_image($img)) {
 										//Pipe the image back to the browser
-									
+										error_log("Is an image, piping out");
 										header('Content-type: image/jpeg');
 										readfile($img);
 										exit(0);
 									} else {
 										//Remove the file
+										error_log("Is not an image, removing the file downloaded");
 										unlink($img);
 										$failure_getting = true;
 									}
