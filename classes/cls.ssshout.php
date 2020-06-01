@@ -1344,18 +1344,19 @@ class cls_ssshout
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
 	
-		error_log("input: " . $my_line);
+		error_log("input1: " . $my_line);
 
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start.
 		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);  //?: at the start??
-		
+		error_log("input2: " . $my_line);
 		$match = "#>https://(.*?)" . $url_matching . "(.*?).jpg<#"; 
 		if(preg_match($match, $my_line)) {
 		   //jpgs includes https
+		   error_log("Includes https");
 		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
 		}
-		
+		error_log("input3: " . $my_line);
 		
 		
 		//Turn .atomjump.com links into xxx@ clickable links
@@ -1365,7 +1366,7 @@ class cls_ssshout
 		//Turn long links into smaller 'More Info' text only (except where an image)
 		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
 		
-
+		error_log("output1: " . $my_line);
 		
 
 		//Turn names into an ip address private whisper link
