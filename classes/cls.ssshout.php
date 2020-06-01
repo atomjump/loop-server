@@ -1349,9 +1349,10 @@ class cls_ssshout
 		//Replace any href which doesn't have htt at the start.
 		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);  //?: at the start??
 		
-		if(strpos($my_line, "https") !== false) {
-  			//Includes https any href links if there is an https mentioned elsewhere	
-   			$my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
+		$match = "#>https://(.*?)" . $url_matching . "(.*?).jpg<#"; 
+		if(preg_match($match, $my_line)) {
+		   //jpgs includes https
+		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
 		}
 		
 		
