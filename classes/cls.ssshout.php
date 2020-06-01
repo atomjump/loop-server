@@ -1348,7 +1348,7 @@ class cls_ssshout
 
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start.
-		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);  //?: at the start??
+		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
 		error_log("input2: " . $my_line);
 		$match = "#>https://(.*?)" . $url_matching . "(.*?).jpg<#"; 
 		if(preg_match($match, $my_line)) {
