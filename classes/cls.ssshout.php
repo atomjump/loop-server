@@ -1358,8 +1358,12 @@ class cls_ssshout
 
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start. Removed https option, that is OK.
-		$my_line = preg_replace("/href=\"(?:(http|ftp)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
-		$my_line = preg_replace("/href=\"(?:(https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);
+		if(preg_match("/href=\"(?:(https)\:\/\/)?([^\"]*)\"/", $y_line)) {
+			$my_line = preg_replace("/href=\"(?:(https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);
+		} else {		
+			$my_line = preg_replace("/href=\"(?:(http|ftp)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
+		}
+		
 		
 		
 		//Turn .atomjump.com links into xxx@ clickable links
