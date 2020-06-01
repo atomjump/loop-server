@@ -1346,9 +1346,14 @@ class cls_ssshout
 
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start. Removed https option, that is OK.
-		if(preg_match("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/", $my_line)) {	//If there is an href without
+		if(preg_match(/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/, $my_line)) {	//If there is an href without
 											//an https ftp or https at the start, append http by default	
 			$my_line = preg_replace("/href=\"(?:(http|ftp)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
+		}
+		
+		if(preg_match(/src=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/, $my_line)) {	//If there is an href without
+											//an https ftp or https at the start, append http by default	
+			$my_line = preg_replace("/src=\"(?:(http|ftp)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
 		}
 		
 		
