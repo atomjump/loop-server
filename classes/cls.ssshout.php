@@ -1344,6 +1344,7 @@ class cls_ssshout
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
 	
+		error_log("input: " . $my_line);
 
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start.
