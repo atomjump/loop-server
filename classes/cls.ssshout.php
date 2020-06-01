@@ -1383,7 +1383,7 @@ class cls_ssshout
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start. Removed https option, that is OK.
 		//If there is an href without
-		$my_line = linkify($my_line);
+		$my_line = $this->linkify($my_line);
 		
 											//an https ftp or https at the start, append http by default	
 		/*	$my_line = preg_replace("/href=\"(?^(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
