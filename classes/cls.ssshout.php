@@ -1267,9 +1267,6 @@ class cls_ssshout
         }
 		
 		
-		
-		
-		
 		//Turn xxx@ into clickable atomjump links
 		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com ", $my_line);
 			
@@ -1330,12 +1327,9 @@ class cls_ssshout
 			$use_https = true;
 		}
 		
-		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
 		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
 		
-		error_log("input0.0: " . $my_line);
-
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
 		$url_matching = "ajmp";		//Works with Amazon based jpgs on atomjump.com which include ajmp.
 		if($cnf['uploads']['replaceHiResURLMatch']) $url_matching = $cnf['uploads']['replaceHiResURLMatch'];
@@ -1344,36 +1338,24 @@ class cls_ssshout
 		//Note: TODO In future I suggest investigating
 		//https://sourceforge.net/projects/simplehtmldom/
 
-
-		error_log("output0.0: " . $my_line);
-
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
-		error_log("output0.1: " . $my_line);
 		
 		//Turn remote images by themselves into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
-	
-		error_log("input1: " . $my_line);
-
 		//because you want the url to be an external link the href needs to start with 'http://'
 		//Replace any href which doesn't have htt at the start.
-		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
-		error_log("input2: " . $my_line);
+		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  
 		
 		//Loop through each src= and add http at the start if it doesn't have it
 		$match_src = "#src=\"^http(.*?)\"#m";
 		preg_replace($match_src,"src=\"http://$1\"",$my_line);  
 		
-		
 		if($use_https == true) {
-		   //jpgs includes https
-		   //error_log("Includes https");
+		   //links includes https
 		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
 		}
-		error_log("input3: " . $my_line);
-		
 		
 		//Turn .atomjump.com links into xxx@ clickable links
 		$my_line = preg_replace("/>(https:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
@@ -1381,9 +1363,6 @@ class cls_ssshout
 
 		//Turn long links into smaller 'More Info' text only (except where an image)
 		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
-		
-		error_log("output1: " . $my_line);
-		
 
 		//Turn names into an ip address private whisper link
 		if($ip != "") {
@@ -1397,9 +1376,6 @@ class cls_ssshout
 		 } 
 			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		
 		}
-		
-		
-		
 		
 		
 
