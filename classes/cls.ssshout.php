@@ -1326,7 +1326,7 @@ class cls_ssshout
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
 		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
 		
-		error_log("input0: " . $my_line);
+		error_log("input0.0: " . $my_line);
 
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
 		$url_matching = "ajmp";		//Works with Amazon based jpgs on atomjump.com which include ajmp.
@@ -1337,7 +1337,7 @@ class cls_ssshout
 		//https://sourceforge.net/projects/simplehtmldom/
 
 
-		error_log("output0: " . $my_line);
+		error_log("output0.0: " . $my_line);
 
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
@@ -1357,7 +1357,7 @@ class cls_ssshout
 		$match_b = "#\"https://(.*?)\"#";
 		if(preg_match($match, $my_line) || preg_match($match_b, $my_line)) {
 		   //jpgs includes https
-		   error_log("Includes https");
+		   //error_log("Includes https");
 		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
 		}
 		error_log("input3: " . $my_line);
