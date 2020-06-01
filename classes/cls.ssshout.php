@@ -1308,16 +1308,25 @@ class cls_ssshout
 			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
 			$include_payment = true;  //switch on flag	
 			
+			
+			error_log("My line before 1: " . $my_line);
+			
 			//In this case we have a slightly different url definition, because we don't want to replace the dollar amount with a url link:
 			//Turn any strings which are entirely chars (and not numbers) and include dots into urls
 			//Convert any links into a href links
 			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 			
+			error_log("My line after 1: " . $my_line);
+			
 		} else {		
+				
+			error_log("My line after 2: " . $my_line);	
 				
 			//Turn any strings which are entirely chars/numbers and include dots into urls
 			//Convert any links into a href links
 			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
+		
+			error_log("My line after 2: " . $my_line);
 		
 		}
 		
@@ -1325,6 +1334,7 @@ class cls_ssshout
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
 		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
 		
+		error_log("My line before 3: " . $my_line);
 
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
 		$url_matching = "ajmp";		//Works with Amazon based jpgs on atomjump.com which include ajmp.
@@ -1334,21 +1344,25 @@ class cls_ssshout
 		//Note: TODO In future I suggest investigating
 		//https://sourceforge.net/projects/simplehtmldom/
 
+		error_log("My line after 3: " . $my_line);
+
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 		
+		error_log("My line after 4: " . $my_line);
 		
 		//Turn remote images by themselves into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
+	
 
 		//because you want the url to be an external link the href needs to start with 'http://'
-		//Replace any href which doesn't have htt at the start
-		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
+		//Replace any href which doesn't have htt at the start. Removed https option, that is OK.
+		$my_line = preg_replace("/href=\"(?:(http|ftp)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
 		
 		
 		//Turn .atomjump.com links into xxx@ clickable links
-		$my_line = preg_replace("/>(http:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
+		$my_line = preg_replace("/>(https:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
 
 
 		//Turn long links into smaller 'More Info' text only (except where an image)
