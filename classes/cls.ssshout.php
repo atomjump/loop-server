@@ -1249,42 +1249,7 @@ class cls_ssshout
 	   return $outgoing;
 	
 	}
-	
-	 /** See: https://gist.github.com/jasny/2000705
-     * Turn all URLs in clickable links.
-     * 
-     * @param string $value
-     * @param array  $protocols  http/https, ftp, mail, twitter
-     * @param array  $attributes
-     * @return string
-     */
-    public function linkify($value, $protocols = array('http', 'https'), array $attributes = array())
-    {
-        // Link attributes
-        $attr = '';
-        foreach ($attributes as $key => $val) {
-            $attr .= ' ' . $key . '="' . htmlentities($val) . '"';
-        }
-        
-        $links = array();
-        
-        // Extract existing links and tags
-        $value = preg_replace_callback('~(<a .*?>.*?</a>|<.*?>)~i', function ($match) use (&$links) { return '<' . array_push($links, $match[1]) . '>'; }, $value);
-        
-        // Extract text links for each protocol
-        foreach ((array)$protocols as $protocol) {
-            switch ($protocol) {
-                case 'http':
-                case 'https':   $value = preg_replace_callback('~(?:(https?)://([^\s<]+)|(www\.[^\s<]+?\.[^\s<]+))(?<![\.,:])~i', function ($match) use ($protocol, &$links, $attr) { if ($match[1]) $protocol = $match[1]; $link = $match[2] ?: $match[3]; return '<' . array_push($links, "<a $attr href=\"$protocol://$link\">$link</a>") . '>'; }, $value); break;
-                case 'mail':    $value = preg_replace_callback('~([^\s<]+?@[^\s<]+?\.[^\s<]+)(?<![\.,:])~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"mailto:{$match[1]}\">{$match[1]}</a>") . '>'; }, $value); break;
-                case 'twitter': $value = preg_replace_callback('~(?<!\w)[@#](\w++)~', function ($match) use (&$links, $attr) { return '<' . array_push($links, "<a $attr href=\"https://twitter.com/" . ($match[0][0] == '@' ? '' : 'search/%23') . $match[1]  . "\">{$match[0]}</a>") . '>'; }, $value); break;
-                default:        $value = preg_replace_callback('~' . preg_quote($protocol, '~') . '://([^\s<]+?)(?<![\.,:])~i', function ($match) use ($protocol, &$links, $attr) { return '<' . array_push($links, "<a $attr href=\"$protocol://{$match[1]}\">{$match[1]}</a>") . '>'; }, $value); break;
-            }
-        }
-        
-        // Insert all link
-        return preg_replace_callback('/<(\d+)>/', function ($match) use (&$links) { return $links[$match[1] - 1]; }, $value);
-    }
+
 	
 	public function process_chars($my_line, $ip, $user_id, $id = null, $allow_plugins = true, $allowed_plugins = null)
 	{
@@ -1381,15 +1346,14 @@ class cls_ssshout
 	
 
 		//because you want the url to be an external link the href needs to start with 'http://'
-		//Replace any href which doesn't have htt at the start. Removed https option, that is OK.
-		//If there is an href without
-		$my_line = $this->linkify($my_line);
+		//Replace any href which doesn't have htt at the start.
+		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"https://$2\"",$my_line);  //?: at the start??
 		
-											//an https ftp or https at the start, append http by default	
-		/*	$my_line = preg_replace("/href=\"(?^(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
+		if(strpos($my_line, "https") !== false) {
+  			//Includes https any href links if there is an https mentioned elsewhere	
+   			$my_line = preg_replace("/href=\"http/m","href=\"https",$my_line); 
+		}
 		
-			$my_line = preg_replace("/src=\"(?^(http|ftp|https)\:\/\/)?([^\"]*)\"/","src=\"http://$2\"",$my_line);
-		*/
 		
 		
 		//Turn .atomjump.com links into xxx@ clickable links
