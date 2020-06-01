@@ -1322,6 +1322,14 @@ class cls_ssshout
 				
 		}
 		
+		//Check if we are using https rather than http links and set a flag for later
+		$use_https = false;
+		$match = "#>https://(.*?)<#";
+		$match_b = "#\"https://(.*?)\"#";
+		if(preg_match($match, $my_line) || preg_match($match_b, $my_line)) {
+			$use_https = true;
+		}
+		
 		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
 		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
@@ -1354,11 +1362,12 @@ class cls_ssshout
 		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
 		error_log("input2: " . $my_line);
 		
-		$my_line = preg_replace("/src=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","src=\"http://$2\"",$my_line);  //?: at the start??
+		//Loop through each src= and add http at the start if it doesn't have it
+		$match_src = "#src=\"^http(.*?)\"#m";
+		preg_replace($match_src,"src=\"http://$1\"",$my_line);  
 		
-		$match = "#>https://(.*?)<#";
-		$match_b = "#\"https://(.*?)\"#";
-		if(preg_match($match, $my_line) || preg_match($match_b, $my_line)) {
+		
+		if($use_https == true) {
 		   //jpgs includes https
 		   //error_log("Includes https");
 		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
