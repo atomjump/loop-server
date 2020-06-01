@@ -1354,7 +1354,7 @@ class cls_ssshout
 		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
 		error_log("input2: " . $my_line);
 		
-		$my_line = preg_replace("/src=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  //?: at the start??
+		$my_line = preg_replace("/src=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","src=\"http://$2\"",$my_line);  //?: at the start??
 		
 		$match = "#>https://(.*?)<#";
 		$match_b = "#\"https://(.*?)\"#";
