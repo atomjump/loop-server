@@ -1351,7 +1351,7 @@ class cls_ssshout
 		
 		if(strpos($my_line, "https") !== false) {
   			//Includes https any href links if there is an https mentioned elsewhere	
-   			$my_line = preg_replace("/href=\"http/m","href=\"https",$my_line); 
+   			$my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
 		}
 		
 		
