@@ -51,6 +51,8 @@ class cls_layer
 				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+					error_log("Check b:" . $_SESSION['access-layer-granted']);		//TESTING
+					
 					if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 						$_SESSION['access-layer-granted'] = 'false';
 					}
@@ -99,6 +101,7 @@ class cls_layer
 				    	
 				    	if($row['var_public_code']) {
 							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
+							error_log("Check c:" . $_SESSION['access-layer-granted']);		//TESTING
 							if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 								$_SESSION['access-layer-granted'] = 'false';
 							}
@@ -1196,7 +1199,7 @@ class cls_login
 						$ly->push_layer_granted($layer_info['int_layer_id']);
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
-						error_log("Set access granted to " . $layer_info['int_layer_id']);		//TESTING
+						error_log("Set access granted to " . $layer_info['int_layer_id'] . " Access layer granted: " . $_SESSION['access-layer-granted']);		//TESTING
 						
 						if(($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
@@ -1210,6 +1213,8 @@ class cls_login
 							//Confirm this new blank user
 							$_SESSION['logged-user'] = $user_id;
 							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+							
+							error_log("Returning " . $layer_info['int_layer_id'] . " Access layer granted: " . $_SESSION['access-layer-granted']);		//TESTING
 							
 							return "FORUM_LOGGED_IN,RELOAD";
 						} 
