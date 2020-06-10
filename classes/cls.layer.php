@@ -1212,6 +1212,7 @@ class cls_login
 							
 							//Confirm this new blank user
 							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = "";						
 													
 							error_log("Returning " . $layer_info['int_layer_id'] . " Access layer granted: " . $_SESSION['access-layer-granted']);		//TESTING
 							
