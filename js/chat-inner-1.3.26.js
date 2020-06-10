@@ -1074,7 +1074,7 @@ function set_options_cookie() {
 			        	setTimeout(function(){
 							window.location.assign(newLocation);
 							refreshLoginStatus();
-						}, 100);	
+						}, 300);	
 			        }
 			    }
 	
