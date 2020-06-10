@@ -1662,7 +1662,8 @@ function doSearch()
 					records: records,
 					whisper_site: whisperSite,
 					sessionId: $('#ses').val(),
-					general: $('#general-data-hidden').val()
+					general: $('#general-data-hidden').val(),
+					subdomain: subdomain
 											
 		},
 		success: function(response){ 

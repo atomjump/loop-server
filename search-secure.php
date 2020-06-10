@@ -255,6 +255,12 @@
 					var readURL = null;
 				<?php } ?>
 				
+				<?php if(isset($subdomain)) {  //Support a specific subdomain for fast reading 
+				?>
+					var subdomain = "<?php echo $subdomain ?>";
+				<?php } else { ?>
+					var subdomain = null;
+				<?php } ?>
 				
 				
 				var portReset = true;
