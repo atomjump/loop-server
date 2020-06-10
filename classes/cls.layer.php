@@ -1202,6 +1202,8 @@ class cls_login
 						if(($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
 							
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
 							$reload = ",RELOAD";
 							
 							error_log("Correct password, blank email. Reload = " . $reload);
