@@ -74,10 +74,7 @@ class cls_ssshout
 		global $db;
 		global $notify;
 		
-	 
-	 	error_log("New user request.  Old user: " . $_SESSION['logged-user']);
-
-	 
+	  
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
