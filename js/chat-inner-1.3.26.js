@@ -1026,7 +1026,7 @@ function set_options_cookie() {
 					if(reloadOpt == true) {
 						setTimeout(function(){		//allow time for other cluster node db writes to process
 							window.location.assign(newLocation);
-						}, 300);
+						}, 500);
 			            refreshLoginStatus();
 			           
 			        }
@@ -1079,7 +1079,7 @@ function set_options_cookie() {
 						setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
 							
 							window.location.assign(newLocation);
-						}, 300);
+						}, 500);
 						refreshLoginStatus();
 	
 			        }

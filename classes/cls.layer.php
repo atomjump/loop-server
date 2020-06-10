@@ -1139,7 +1139,7 @@ class cls_login
 				
 				
 			} else {
-				$user_id = $_SESSION['logged-user'];
+				$user_id = $_SESSION['logged-user'];		//TESTING
 			}
 			
 			error_log("Email: " . $email . " IP:" . $ip . " user_id:" . $user_id);		//TESTING
