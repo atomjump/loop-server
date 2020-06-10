@@ -782,7 +782,7 @@ function refreshLoginStatus()
 					$("#sub-toggle").html(response.subscribeToggle);
 					$('#email-explain').hide();		//Blank off messages
 				});
-	}, 100);
+	}, 300);
 
 }
 
@@ -1024,7 +1024,9 @@ function set_options_cookie() {
 	
 					
 					if(reloadOpt == true) {
-						window.location.assign(newLocation);
+						setTimeout(function(){		//allow time for other cluster node db writes to process
+							window.location.assign(newLocation);
+						}, 300);
 			            refreshLoginStatus();
 			           
 			        }
@@ -1049,7 +1051,8 @@ function set_options_cookie() {
 	
 							
 							if(reloadOpt == true) {
-			                   	window.location.assign(newLocation);
+								window.location.assign(newLocation);
+			            		
 			            		refreshLoginStatus();
 			                }
 							
@@ -1074,9 +1077,9 @@ function set_options_cookie() {
 			        
 			        	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
 						setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
-					
+							
 							window.location.assign(newLocation);
-						}, 100);
+						}, 300);
 						refreshLoginStatus();
 	
 			        }
