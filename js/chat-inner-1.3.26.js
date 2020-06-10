@@ -766,22 +766,23 @@ function whisper(whisper_to, targetName, priv, socialNetwork)
 
 function refreshLoginStatus()
 {
+	setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
+					
+		//Update the display after a login via an AJAX call
+		var data = $('#options-frm').serialize();
 
-	//Update the display after a login via an AJAX call
-
-	var data = $('#options-frm').serialize();
-
-	 $.ajax({
-			url: ssshoutServer + '/logged-status.php?callback=?', 
-			data: data,
-			crossDomain: true,
-			dataType: "jsonp"
-		}).done(function(response) {
-			$("#subscribe-button").html(", " + response.subscribe);
-			$("#logged-status").html(response.loggedIn);
-			$("#sub-toggle").html(response.subscribeToggle);
-			$('#email-explain').hide();		//Blank off messages
-		});
+			 $.ajax({
+					url: ssshoutServer + '/logged-status.php?callback=?', 
+					data: data,
+					crossDomain: true,
+					dataType: "jsonp"
+				}).done(function(response) {
+					$("#subscribe-button").html(", " + response.subscribe);
+					$("#logged-status").html(response.loggedIn);
+					$("#sub-toggle").html(response.subscribeToggle);
+					$('#email-explain').hide();		//Blank off messages
+				});
+	}, 100);
 
 }
 
@@ -904,6 +905,7 @@ function set_options_cookie() {
 					$('#forumpasscheck').val("");
 					
 					refreshLoginStatus();
+				
 					
 				break;
 				
@@ -1071,10 +1073,12 @@ function set_options_cookie() {
 						parent.postMessage( {'highlight': "none" }, targetOrigin );
 			        
 			        	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
-			        	setTimeout(function(){
+						setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
+					
 							window.location.assign(newLocation);
-							refreshLoginStatus();
-						}, 300);	
+						}, 100);
+						refreshLoginStatus();
+	
 			        }
 			    }
 	
