@@ -57,6 +57,8 @@
 	//Get ip address
 	$ip = $ly->getFakeIpAddr();
 
+	error_log("INDEX.php Authenticated layer:" . $_SESSION['authenticated-layer'] . " UserId:" . $_SESSION['logged-user']);
+
 
 	//Check to see if we're logging in
 	if(($_SESSION['logged-user'])||($_REQUEST['remoteapp'] == 'true')) {
@@ -76,7 +78,7 @@
 		}
 
 
-
+		
 		if(($_REQUEST['passcode'] != '')||($_REQUEST['reading'] != '')) {
 			$layer_info = $ly->get_layer_id($_REQUEST['passcode'], $_REQUEST['reading']);
 
