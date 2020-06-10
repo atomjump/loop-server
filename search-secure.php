@@ -28,7 +28,7 @@
 			$subdomain = check_subdomain();
 
 			if((isset($cnf['readURLAllowReplacement'])) && ($cnf['readURLAllowReplacement'] == true)) {
-				if($cnf['readURLIncludeDot'] == true) {
+				if((isset($cnf['readURLIncludeDot'])) && ($cnf['readURLIncludeDot'] == true)) {
 					$read_url = trim_trailing_slash(str_replace('[subdomain]', $subdomain . ".", $cnf['readURL']));
 				} else {
 					$read_url = trim_trailing_slash(str_replace('[subdomain]', $subdomain , $cnf['readURL']));
