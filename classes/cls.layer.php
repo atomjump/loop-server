@@ -1128,7 +1128,7 @@ class cls_login
 	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
 	    
 	    	//This is after a password has been entered for the forum
-			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+			if((!isset($_SESSION['logged-user']))||($_SESSION['logged-user'] == "")) {
 				//We are a new user
 				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 			
