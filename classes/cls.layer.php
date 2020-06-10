@@ -1138,6 +1138,8 @@ class cls_login
 				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
 				
 				
+			} else {
+				$user_id = $_SESSION['logged-user'];
 			}
 			
 			error_log("Email: " . $email . " IP:" . $ip . " user_id:" . $user_id);		//TESTING
