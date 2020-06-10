@@ -1206,7 +1206,7 @@ class cls_login
 							$_SESSION['logged-email'] = clean_data($email);
 							$reload = ",RELOAD";
 							
-							error_log("Correct password, blank email. Reload = " . $reload);
+							error_log("Correct password, full email. Reload = " . $reload);
 						} else {
 							//Refresh the page and reload
 							

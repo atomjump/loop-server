@@ -111,14 +111,14 @@
 	}
 	
 	
-	error_log("A search access-layer-granted = " . $_SESSION['access-layer-granted']);  //TESTING
+	error_log("A search access-layer-granted = " . $_SESSION['access-layer-granted'] . " Logged user: " . $_SESSION['logged-user']);  //TESTING
 	
 	//Get the layer info into the session vars
 	$layer_info = $ly->get_layer_id($_REQUEST['uniqueFeedbackId'], null);
 	if(isset($layer_info['var_public_code'])) {
 		$granted = false;
 		
-		error_log("A search access-layer-granted after get_layer_id = " . $_SESSION['access-layer-granted']);  //TESTING
+		error_log("A search access-layer-granted after get_layer_id = " . $_SESSION['access-layer-granted']  . " Logged user: " . $_SESSION['logged-user']);  //TESTING
 		
 		if(($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) { 	//Normal access has been granted  
 			$granted = true;
