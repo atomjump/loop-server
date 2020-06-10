@@ -40,7 +40,7 @@ if($_REQUEST['usercode']) {
 			
 			error_log("End of confirm.php get_layer_id():" . $_SESSION['access-layer-granted'] . " Userid: " . $_SESSION['logged-user']);
 			
-			session_write_close()		//TESTING
+			session_write_close();		//TESTING
 		}
 	}
 }
