@@ -75,7 +75,7 @@ class cls_ssshout
 		global $notify;
 		
 	 
-	 
+	 	error_log("New user request.  Old user: " . $_SESSION['logged-user']);
 
 	 
 	 
