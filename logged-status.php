@@ -13,6 +13,8 @@ $lg = new cls_login();
 $ly = new cls_layer();
 $sh = new cls_ssshout();
 
+error_log("Logged status :" . $_SESSION['access-layer-granted']);		//TESTING
+
 
 $json = array();
 

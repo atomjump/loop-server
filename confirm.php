@@ -32,9 +32,13 @@ if($_REQUEST['usercode']) {
 		} else {
 			//Confirm email/password
 			$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);
+			
+			error_log("End of confirm.php confirm():" . $_SESSION['access-layer-granted']);		//TESTING
 
 			//Confirm this layer
 			$ly->get_layer_id($_REQUEST['passcode'], null);
+			
+			error_log("End of confirm.php get_layer_id():" . $_SESSION['access-layer-granted']);		//TESTING
 		}
 	}
 }
