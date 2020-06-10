@@ -1070,8 +1070,11 @@ function set_options_cookie() {
 						var targetOrigin = getParentUrl();		//This is in search-secure
 						parent.postMessage( {'highlight': "none" }, targetOrigin );
 			        
-			            window.location.assign(newLocation);
-			            refreshLoginStatus();	
+			        	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
+			        	setTimeout(function(){
+							window.location.assign(newLocation);
+							refreshLoginStatus();
+						}, 100);	
 			        }
 			    }
 	
