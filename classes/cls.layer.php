@@ -1138,6 +1138,8 @@ class cls_login
 				
 				
 			}
+			
+			error_log("Email: " . $email . " IP:" . $ip . " user_id:" . $user_id);		//TESTING
 	    	
 	    	 //Check if we are the admin user - in this case we will log in automatically,
 	    	 //which allows us to change the group password.
@@ -1179,22 +1181,29 @@ class cls_login
 	    	
 				    
 	    
-	    
+	    	
 	    	
 			$layer_info = $ly->get_layer_id($layer_visible);
+			
+			error_log("Layer id:" . $layer_info['int_layer_id']);		//TESTING
 			if($layer_info) {
 					//Yes the layer exists
 					
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
-					
+						
 						//And it is the correct password! Continue below with a login
 						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
 						$ly->push_layer_granted($layer_info['int_layer_id']);
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
 						
+						error_log("Set access granted to " . $layer_info['int_layer_id']);		//TESTING
+						
 						if(($email != "")&&($password != "")) {
 							//Continue with current user and fully login, but also refresh
+							
 							$reload = ",RELOAD";
+							
+							error_log("Correct password, blank email. Reload = " . $reload);
 						} else {
 							//Refresh the page and reload
 							
@@ -1282,7 +1291,7 @@ class cls_login
 	    //Get the current layer - use to view 
 	    if(($email != "")&&($password == "")&&(isset($full_request['email_modified']))&&($full_request['email_modified'] != "false")) {
 	    	//This is a subscription case: an email has been entered, but no password.
-	    	
+	    	error_log("Subscription case");   //TESTING
 	    	
 	    	$ly = new cls_layer(); 
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
@@ -1325,6 +1334,7 @@ class cls_login
 		} else {
 		
 			//A regular login attempt
+			error_log("Regular login attempt");   //TESTING
 		
 			//First check if the email exists
 			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
@@ -1412,6 +1422,7 @@ class cls_login
 						}
 						
 						//Normal forum login
+						error_log("Normal forum login: LOGGED_IN" . $reload . "," .$user_id);   //TESTING 
 						return "LOGGED_IN" . $reload . "," .$user_id;  
 						
 						
