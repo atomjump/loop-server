@@ -38,7 +38,9 @@ if($_REQUEST['usercode']) {
 			//Confirm this layer
 			$ly->get_layer_id($_REQUEST['passcode'], null);
 			
-			error_log("End of confirm.php get_layer_id():" . $_SESSION['access-layer-granted'] . " Userid: " . $_SESSION['logged-user']);		//TESTING
+			error_log("End of confirm.php get_layer_id():" . $_SESSION['access-layer-granted'] . " Userid: " . $_SESSION['logged-user']);
+			
+			session_write_close()		//TESTING
 		}
 	}
 }
