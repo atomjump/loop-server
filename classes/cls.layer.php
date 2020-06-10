@@ -1203,6 +1203,7 @@ class cls_login
 							//Continue with current user and fully login, but also refresh
 							
 							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);
 							$reload = ",RELOAD";
 							
 							error_log("Correct password, blank email. Reload = " . $reload);
@@ -1211,8 +1212,7 @@ class cls_login
 							
 							//Confirm this new blank user
 							$_SESSION['logged-user'] = $user_id;
-							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
-							
+													
 							error_log("Returning " . $layer_info['int_layer_id'] . " Access layer granted: " . $_SESSION['access-layer-granted']);		//TESTING
 							
 							return "FORUM_LOGGED_IN,RELOAD";
