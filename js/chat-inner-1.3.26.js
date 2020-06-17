@@ -798,9 +798,9 @@ function set_options_cookie() {
    
     if(yourName == "") {
     	yourName = ""; 
-    	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     } else {
-    	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'your_name=' + yourName + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     }
     $('#name-pass').val(yourName);	//Set the form
    
@@ -808,18 +808,18 @@ function set_options_cookie() {
     if(email == "") {
     	sendNewUserMsg = false;
     	email = "";
-    	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     } else {
-    	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'email=' + email + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     }
     $("#email").val(email);		//Set the form
     
     
     if(phone == "") {
     	phone = '';
-    	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     } else {
-    	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + ';';
+    	document.cookie = 'phone=' + phone + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;';
     }
     $("#phone").val(phone);		//Set the form
     
@@ -1598,7 +1598,7 @@ function refreshResults(results)
   	
       	//Set the cookie also so that when we come back we will have same user
       	var ses = results.ses;
-      	document.cookie = 'ses=' + ses + '; path=/; expires=' + cookieOffset() + ';'; //Thu,31-Dec-2020 00:00:00 GMT
+      	document.cookie = 'ses=' + ses + '; path=/; expires=' + cookieOffset() + '; SameSite=Lax;'; //Thu,31-Dec-2020 00:00:00 GMT
   
 	}
 	
