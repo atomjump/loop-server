@@ -881,7 +881,7 @@ class cls_ssshout
 	    return $return_html;
 	}	
 	
-	
+	/*
 	public function check_duplicate_names($username, $user_id, $layer_id)
 	{
 		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
@@ -917,7 +917,7 @@ class cls_ssshout
 		
 		return $username;
 	
-	}
+	}*/
 	
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
