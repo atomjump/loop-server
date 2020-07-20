@@ -962,7 +962,7 @@ class cls_ssshout
 		$processed_name = clean_data($your_name);  //Or perhaps we need to do something similar to: preg_replace("/[^a-z0-9\_\-\.\ ]/i", '', $your_name);    //Remove special chars
 
 		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
-		$visible_name = $this->check_duplicate_names($processed_name, $user_id, $layer);
+		$visible_name = $processed_name; //TEMPOUT$this->check_duplicate_names($processed_name, $user_id, $layer);
 		
 		if(($processed_name != "")&&
 			($processed_name != "Your Name")) {
