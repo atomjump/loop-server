@@ -882,7 +882,42 @@ class cls_ssshout
 	}	
 	
 	
-
+	public function check_duplicate_names($username, $user_id, $layer_id)
+	{
+		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
+		//Input a username e.g. 'John', from a particular user ID. Note: this should be case insensitive to prevent
+		//users trying to game someone into impersonation by simply changing the case of a letter.
+		//Output is the username with an (02) or (03) attached.
+		
+		//The query should be fast and use an indexed query
+		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(
+					int_counter int(10) unsigned NOT NULL AUTO_INCREMENT,
+					`var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+					`int_author_id` int(10) unsigned DEFAULT NULL
+				)";
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		
+		
+		$sql = "INSERT INTO tbl_multiuser_check SELECT var_username, int_user_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' ORDER BY int_ssshout_id DESC GROUP BY int_author_id";
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($row = db_fetch_array($result))
+		{
+			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
+			$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
+			if($rowb = db_fetch_array($resultb))
+			{
+				if($rowb['int_counter'] > 1) {
+				
+					$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
+				}
+				
+			}
+		
+		}
+		
+		return $username;
+	
+	}
 	
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
@@ -904,12 +939,11 @@ class cls_ssshout
 			$shouted = $msg['msgs'][$lang]['typing'];
 		}
 		
-		if(($your_name != "")&&
-			($your_name != "Your Name")) {
-			$message = $your_name . ": " . $shouted;
-		} else {
-			$message = $shouted;
-		}
+		
+		
+		
+		
+		
 		
 		if($date_override) {
 			 //Allow for a string override on the date
@@ -923,7 +957,19 @@ class cls_ssshout
    		//If we are a user get our id
 		$user_id = $this->new_user($email, $ip, $phone, $loginas);
 				
+		
+		//Modify the username for input into the forum
+		$processed_name = clean_data($your_name);  //Or perhaps we need to do something similar to: preg_replace("/[^a-z0-9\_\-\.\ ]/i", '', $your_name);    //Remove special chars
 
+		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
+		$visible_name = $this->check_duplicate_names($processed_name, $user_id, $layer);
+		
+		if(($processed_name != "")&&
+			($processed_name != "Your Name")) {
+			$message = $visible_name . ": " . $shouted;
+		} else {
+			$message = $shouted;
+		}
 		
 		
 		if(trim($message) != "") {
@@ -1056,7 +1102,8 @@ class cls_ssshout
 												int_whisper_to_id= " . $whisper_to_id . ",
 												enm_active = 'true',
 												enm_status = '$status',
-												int_author_id = $user_id
+												int_author_id = $user_id,
+												var_username = '$processed_name' 
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
 					if(!dbquery($sql)) {
 							error_log("Unable to execute query $sql " . dberror());
@@ -1110,7 +1157,8 @@ class cls_ssshout
 									var_ip,
 									var_whisper_to,
 									int_whisper_to_id,
-									int_author_id
+									int_author_id,
+									var_username,
 								) VALUES (		
 									'" . $latitude ."',
 									'" . $longitude ."',
@@ -1127,7 +1175,8 @@ class cls_ssshout
 									'" . $ip . "',
 									'" . $whisper_to_divided[0] . "',
 									" . $whisper_to_id . ",
-									" . $user_id ."
+									" . $user_id .",
+									'" . clear_data($processed_user) . "',
 									)";	
 									
 									

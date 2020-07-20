@@ -262,3 +262,8 @@ CREATE INDEX decay ON tbl_layer (date_to_decay);
 -- ALTER TABLE php_session ALTER date_created SET DEFAULT '2000-01-01 00:00:00';
 -- ALTER TABLE php_session ALTER last_updated SET DEFAULT '2000-01-01 00:00:00';
 
+
+-- For helping to identify the same user names on a particular forum
+ALTER TABLE tbl_ssshout ADD `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL;
+CREATE INDEX `shouted_user` (`enm_active`,`int_layer_id`,`int_author_id`,`var_username`(50));
+
