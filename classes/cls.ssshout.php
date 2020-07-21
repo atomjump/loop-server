@@ -881,7 +881,7 @@ class cls_ssshout
 	    return $return_html;
 	}	
 	
-	/*
+	
 	public function check_duplicate_names($username, $user_id, $layer_id)
 	{
 		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
@@ -896,13 +896,18 @@ class cls_ssshout
 					`int_author_id` int(10) unsigned DEFAULT NULL
 				)";
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-		
+		error_log($sql);			//TESTING
+
 		
 		$sql = "INSERT INTO tbl_multiuser_check SELECT var_username, int_user_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' ORDER BY int_ssshout_id DESC GROUP BY int_author_id";
+		error_log($sql);			//TESTING
+
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result))
 		{
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
+			error_log($sqlb);			//TESTING
+
 			$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
 			if($rowb = db_fetch_array($resultb))
 			{
@@ -917,7 +922,7 @@ class cls_ssshout
 		
 		return $username;
 	
-	}*/
+	}
 	
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
@@ -962,7 +967,7 @@ class cls_ssshout
 		$processed_name = $your_name;  //Or perhaps we need to do something similar to: preg_replace("/[^a-z0-9\_\-\.\ ]/i", '', $your_name);    //Remove special chars
 
 		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
-		$visible_name = $processed_name; //TEMPOUT$this->check_duplicate_names($processed_name, $user_id, $layer);
+		$visible_name = $this->check_duplicate_names($processed_name, $user_id, $layer);
 		
 		if(($processed_name != "")&&
 			($processed_name != "Your Name")) {
@@ -1178,7 +1183,6 @@ class cls_ssshout
 									" . $user_id .",
 									'" . clean_data($processed_user) . "'
 									)";	
-						error_log($sql);			//TESTING
 									
 									
 						if(!dbquery($sql)) {
