@@ -904,7 +904,8 @@ class cls_ssshout
 		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		error_log("Affected rows:" . db_affected_rows()); 
-		if(db_affected_rows() > 0) {
+		$affected_rows = db_affected_rows();
+		if($affected_rows > 0) {
 			//There have been at least one other user
 		
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
@@ -922,7 +923,7 @@ class cls_ssshout
 			
 			} else {
 				//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
-				$new_user_id = db_affected_rows() + 1;
+				$new_user_id = $affected_rows + 1;
 				$username = $username . " (" . $new_user_id . ")";
 				error_log("Nope no results" . $rowb);
 			}
