@@ -1176,8 +1176,9 @@ class cls_ssshout
 									'" . $whisper_to_divided[0] . "',
 									" . $whisper_to_id . ",
 									" . $user_id .",
-									'" . clean_data($processed_user) . "',
+									'" . clean_data($processed_user) . "'
 									)";	
+						error_log($sql);			//TESTING
 									
 									
 						if(!dbquery($sql)) {
