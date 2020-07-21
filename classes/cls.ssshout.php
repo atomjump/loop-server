@@ -918,7 +918,7 @@ class cls_ssshout
 			}
 			
 		} else {
-			error_log("Result of query = " . $resultb);
+			error_log("Nope no results");
 		}
 		
 		
