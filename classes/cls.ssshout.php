@@ -917,13 +917,13 @@ class cls_ssshout
 				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
 				if($rowb['int_counter'] > 1) {
 				
-					$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
+					$username = $username . " (" . $rowb['int_counter'] . ")";
 				}
 			
 			} else {
 				//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
 				$new_user_id = db_affected_rows();
-				$username = $username . " (" . substr($new_user_id, -2) . ")";
+				$username = $username . " (" . $new_user_id . ")";
 				error_log("Nope no results" . $rowb);
 			}
 		}
