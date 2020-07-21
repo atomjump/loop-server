@@ -890,11 +890,8 @@ class cls_ssshout
 		//Output is the username with an (02) or (03) attached.
 		
 		//The query should be fast and use an indexed query
-		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(
-					int_counter int(10) PRIMARY KEY,
-					`var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-					`int_author_id` int(10) unsigned DEFAULT NULL
-				)";
+		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) PRIMARY KEY, `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL)";
+		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		
 
