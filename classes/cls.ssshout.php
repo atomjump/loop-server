@@ -903,19 +903,19 @@ class cls_ssshout
 		$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
 		error_log($sql);			//TESTING
 	
-		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
-		if($row = db_fetch_array($result))
+		$resultb = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
+		if($row = db_fetch_array($resultb))
 		{
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
 			error_log($sqlb);			//TESTING
 
 			$resultb = dbquery($sqlb)  or die(error_log("Unable to execute query $sql " . dberror()));
-			if($rowb = db_fetch_array($resultb))
+			if($rowc = db_fetch_array($resultc))
 			{
-				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
-				if($rowb['int_counter'] > 0) {
+				error_log("Author ID:" . $rowc['int_counter']);			//TESTING
+				if($rowc['int_counter'] > 0) {
 					
-					$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
+					$username = $username . " (" . substr($rowc['int_counter'], -2) . ")";
 				}
 				
 			}
