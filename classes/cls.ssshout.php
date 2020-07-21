@@ -1176,7 +1176,7 @@ class cls_ssshout
 									'" . $whisper_to_divided[0] . "',
 									" . $whisper_to_id . ",
 									" . $user_id .",
-									'" . clear_data($processed_user) . "',
+									'" . clean_data($processed_user) . "',
 									)";	
 									
 									
