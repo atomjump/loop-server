@@ -917,6 +917,8 @@ class cls_ssshout
 				$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
 			}
 			
+		} else {
+			error_log("Result of query = " . $resultb);
 		}
 		
 		
