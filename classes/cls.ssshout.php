@@ -895,27 +895,20 @@ class cls_ssshout
 		
 		//The query should be fast and use an indexed query
 		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) NOT NULL AUTO_INCREMENT, var_username varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL, KEY `counter` (`int_counter`))";
-		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 		
 
 		
 		$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
-		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		$affected_rows = db_affected_rows();
-		error_log("Affected rows:" . $affected_rows); 
 		if($affected_rows > 0) {
-			//There have been at least one other user
-		
+			//There have been at least one other user	
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
-			error_log($sqlb);			//TESTING
 
 			$result = dbquery($sqlb)  or die("Unable to execute query $sqlb " . dberror());
 			if($rowb = db_fetch_array($result))
 			{
-				error_log("Yep in here");  //TESTING
-				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
 				if($rowb['int_counter'] > 1) {
 				
 					$username = $username . " (" . $rowb['int_counter'] . ")";
@@ -925,7 +918,6 @@ class cls_ssshout
 				//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
 				$new_user_id = $affected_rows + 1;
 				$username = $username . " (" . $new_user_id . ")";
-				error_log("Nope no results" . $rowb);
 			}
 		}
 		
@@ -933,7 +925,6 @@ class cls_ssshout
 		$sql = "DROP TEMPORARY TABLE tbl_multiuser_check";
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		
-		error_log("Username exiting:" . $username);
 		return $username;
 	
 	}
@@ -957,12 +948,7 @@ class cls_ssshout
 		if($typing == true) {
 			$shouted = $msg['msgs'][$lang]['typing'];
 		}
-		
-		
-		
-		
-		
-		
+	
 		
 		if($date_override) {
 			 //Allow for a string override on the date
