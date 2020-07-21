@@ -890,22 +890,22 @@ class cls_ssshout
 		//Output is the username with an (02) or (03) attached.
 		
 		//The query should be fast and use an indexed query
-		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) PRIMARY KEY, `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL)";
+		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) PRIMARY KEY, var_username varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL)";
 		error_log($sql);			//TESTING
-		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 		
 
 		
 		$sql = "INSERT INTO tbl_multiuser_check (var_username, int_author_id) SELECT var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id DESC";
 		error_log($sql);			//TESTING
 	
-		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 		if($row = db_fetch_array($result))
 		{
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
 			error_log($sqlb);			//TESTING
 
-			$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
+			$resultb = dbquery($sqlb)  or die(error_log("Unable to execute query $sql " . dberror()));
 			if($rowb = db_fetch_array($resultb))
 			{
 				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
@@ -918,7 +918,7 @@ class cls_ssshout
 		
 		}
 		
-		$sql = "DROP TABLE tbl_multiuser_check";
+		$sql = "DROP TEMPORARY TABLE tbl_multiuser_check";
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		
 		error_log("Username exiting:" . $username);
