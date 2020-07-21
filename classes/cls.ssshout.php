@@ -891,7 +891,7 @@ class cls_ssshout
 		
 		//The query should be fast and use an indexed query
 		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(
-					int_counter PRIMARY KEY,
+					int_counter int(10) PRIMARY KEY,
 					`var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
 					`int_author_id` int(10) unsigned DEFAULT NULL
 				)";
