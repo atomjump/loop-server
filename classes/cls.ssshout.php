@@ -1178,7 +1178,6 @@ class cls_ssshout
 									" . $user_id .",
 									'" . clean_data($processed_user) . "',
 									)";	
-						error_log($sql);			//TESTING
 									
 									
 						if(!dbquery($sql)) {
