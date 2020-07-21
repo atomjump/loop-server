@@ -265,5 +265,5 @@ CREATE INDEX decay ON tbl_layer (date_to_decay);
 
 -- For helping to identify the same user names on a particular forum
 ALTER TABLE tbl_ssshout ADD `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL;
-CREATE INDEX `shouted_user` ON tbl_ssshout (`enm_active`,`int_layer_id`,`int_author_id`,`var_username`(50));
+CREATE INDEX `shouted_user` ON tbl_ssshout (`enm_active`,`int_layer_id`,`var_username`(50));
 
