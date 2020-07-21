@@ -880,6 +880,7 @@
 	
 	function db_affected_rows()
 	{
+		global $db;
 		return mysqli_affected_rows($db);
 	
 	}
