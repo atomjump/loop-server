@@ -944,6 +944,7 @@ class cls_ssshout
 	    global $lang;
 	    global $db;
 		$email_in_msg = false;
+		$max_username_width = 50;		//Defined by database
 	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
@@ -1116,7 +1117,7 @@ class cls_ssshout
 												enm_active = 'true',
 												enm_status = '$status',
 												int_author_id = $user_id,
-												var_username = '$processed_name' 
+												var_username = '" . substr(clean_data($processed_name), 0, $max_username_width) . "' 
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
 					if(!dbquery($sql)) {
 							error_log("Unable to execute query $sql " . dberror());
@@ -1189,7 +1190,7 @@ class cls_ssshout
 									'" . $whisper_to_divided[0] . "',
 									" . $whisper_to_id . ",
 									" . $user_id .",
-									'" . clean_data($processed_user) . "'
+									'" . substr(clean_data($processed_name), 0, $max_username_width) . "'
 									)";	
 									
 									
