@@ -900,12 +900,13 @@ class cls_ssshout
 
 		
 		$sql = "INSERT INTO tbl_multiuser_check SELECT 0, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id DESC";
+		error_log($sql);			//TESTING
 	
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result))
 		{
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
-			
+			error_log($sqlb);			//TESTING
 
 			$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
 			if($rowb = db_fetch_array($resultb))
@@ -920,6 +921,7 @@ class cls_ssshout
 		
 		}
 		
+		error_log("Username exiting:" . $username);
 		return $username;
 	
 	}
