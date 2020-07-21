@@ -113,16 +113,11 @@
 	    	$cssFeedback = "https://atomjump.com/css/comments-0.1.css";
 	    }
 	}
-	
-	
-	error_log("A search access-layer-granted = " . $_SESSION['access-layer-granted'] . " Logged user: " . $_SESSION['logged-user']);  //TESTING
-	
+		
 	//Get the layer info into the session vars
 	$layer_info = $ly->get_layer_id($_REQUEST['uniqueFeedbackId'], null);
 	if(isset($layer_info['var_public_code'])) {
 		$granted = false;
-		
-		error_log("A search access-layer-granted after get_layer_id = " . $_SESSION['access-layer-granted']  . " Logged user: " . $_SESSION['logged-user']);  //TESTING
 		
 		if(($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) { 	//Normal access has been granted  
 			$granted = true;
@@ -131,7 +126,6 @@
     	 $granted = true;
     }
 	//Get new user in here, and set user IP address in session
-	error_log("Is granted? = " . $granted);  //TESTING
 	
 	//Keep track of the number of views we have from this session - also reset if reloading
 	$_SESSION['view-count'] = 0;
