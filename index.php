@@ -57,7 +57,6 @@
 	//Get ip address
 	$ip = $ly->getFakeIpAddr();
 
-	error_log("INDEX.php Authenticated layer:" . $_SESSION['authenticated-layer'] . " UserId:" . $_SESSION['logged-user']);
 
 
 	//Check to see if we're logging in
