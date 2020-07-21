@@ -870,12 +870,12 @@
 		
 	}
 	
-	function dbquery($sql)
+	function dbquery($sql, $use = MYSQLI_STORE_RESULT)
 	{
 		global $db;
 		
 		//Using old style: return mysql_query($sql);
-		return mysqli_query($db, $sql);
+		return mysqli_query($db, $sql, $use);
 	}
 	
 	function db_fetch_array($result)
