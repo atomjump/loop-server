@@ -896,7 +896,7 @@ class cls_ssshout
 		if($rowb = db_fetch_array($result))
 		{
 			//Yes there is. Now do a complete comparison
-		
+			error_log("Yes checking complete");	//TESTING
 			$sql = "DROP TEMPORARY TABLE IF EXISTS tbl_multiuser_check";
 			$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 
