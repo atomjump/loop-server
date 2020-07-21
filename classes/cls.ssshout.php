@@ -922,7 +922,7 @@ class cls_ssshout
 			
 			} else {
 				//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
-				$new_user_id = db_affected_rows();
+				$new_user_id = db_affected_rows() + 1;
 				$username = $username . " (" . $new_user_id . ")";
 				error_log("Nope no results" . $rowb);
 			}
