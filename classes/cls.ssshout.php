@@ -902,24 +902,29 @@ class cls_ssshout
 		
 		$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
 		error_log($sql);			//TESTING
-		$result = dbquery($sql, MYSQLI_USE_RESULT)  or die("Unable to execute query $sql " . dberror());
-	
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if(db_affected_rows() > 0) {
+			//There have been at least one other user
 		
-		$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
-		error_log($sqlb);			//TESTING
+			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
+			error_log($sqlb);			//TESTING
 
-		$result = dbquery($sqlb)  or die("Unable to execute query $sqlb " . dberror());
-		if($rowb = db_fetch_array($result))
-		{
-			error_log("Yep in here");  //TESTING
-			error_log("Author ID:" . $rowb['int_counter']);			//TESTING
-			if($rowb['int_counter'] > 1) {
+			$result = dbquery($sqlb)  or die("Unable to execute query $sqlb " . dberror());
+			if($rowb = db_fetch_array($result))
+			{
+				error_log("Yep in here");  //TESTING
+				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
+				if($rowb['int_counter'] > 1) {
 				
-				$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
-			}
+					$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
+				}
 			
-		} else {
-			error_log("Nope no results" . $rowb);
+			} else {
+				//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
+				$new_user_id = db_affected_rows();
+				$username = $username . " (" . substr($new_user_id, -2) . ")";
+				error_log("Nope no results" . $rowb);
+			}
 		}
 		
 		

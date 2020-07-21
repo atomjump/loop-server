@@ -878,6 +878,12 @@
 		return mysqli_query($db, $sql, $use);
 	}
 	
+	function db_affected_rows()
+	{
+		return mysqli_affected_rows($db);
+	
+	}
+	
 	function db_fetch_array($result)
 	{
 		//Old style: mysql_fetch_array($result)
