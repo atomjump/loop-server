@@ -899,20 +899,20 @@ class cls_ssshout
 		
 
 		
-		$sql = "INSERT INTO tbl_multiuser_check SELECT var_username, int_user_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' ORDER BY int_ssshout_id DESC GROUP BY int_author_id";
-		error_log($sql);			//TESTING
-
+		$sql = "INSERT INTO tbl_multiuser_check SELECT 0, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id DESC";
+	
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result))
 		{
 			$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
-			error_log($sqlb);			//TESTING
+			
 
 			$resultb = dbquery($sqlb)  or die("Unable to execute query $sql " . dberror());
 			if($rowb = db_fetch_array($resultb))
 			{
-				if($rowb['int_counter'] > 1) {
-				
+				error_log("Author ID:" . $rowb['int_counter']);			//TESTING
+				if($rowb['int_counter'] > 0) {
+					
 					$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
 				}
 				
