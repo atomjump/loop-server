@@ -889,12 +889,12 @@ class cls_ssshout
 		//users trying to game someone into impersonation by simply changing the case of a letter.
 		//Output is the username with an (02) or (03) attached.
 		
-		$sql = "DROP TABLE IF EXISTS tbl_multiuser_check";
+		$sql = "DROP TEMPORARY TABLE IF EXISTS tbl_multiuser_check";
 		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 
 		
 		//The query should be fast and use an indexed query
-		$sql = "CREATE TABLE tbl_multiuser_check(int_counter int(10) NOT NULL AUTO_INCREMENT, var_username varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL, KEY `counter` (`int_counter`))";
+		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) NOT NULL AUTO_INCREMENT, var_username varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL, KEY `counter` (`int_counter`))";
 		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
 		
@@ -923,8 +923,8 @@ class cls_ssshout
 		}
 		
 		
-		//$sql = "DROP  TABLE tbl_multiuser_check";
-		//$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		$sql = "DROP TEMPORARY TABLE tbl_multiuser_check";
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		
 		error_log("Username exiting:" . $username);
 		return $username;
