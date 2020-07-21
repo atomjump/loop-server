@@ -913,7 +913,7 @@ class cls_ssshout
 		{
 			error_log("Yep in here");  //TESTING
 			error_log("Author ID:" . $rowb['int_counter']);			//TESTING
-			if($rowb['int_counter'] > 0) {
+			if($rowb['int_counter'] > 1) {
 				
 				$username = $username . " (" . substr($rowb['int_counter'], -2) . ")";
 			}
