@@ -891,12 +891,12 @@ class cls_ssshout
 		
 		//The query should be fast and use an indexed query
 		$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(
-					int_counter int(10) unsigned NOT NULL AUTO_INCREMENT,
+					int_counter PRIMARY KEY,
 					`var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
 					`int_author_id` int(10) unsigned DEFAULT NULL
 				)";
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-		error_log($sql);			//TESTING
+		
 
 		
 		$sql = "INSERT INTO tbl_multiuser_check SELECT var_username, int_user_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' ORDER BY int_ssshout_id DESC GROUP BY int_author_id";
