@@ -907,9 +907,10 @@ class cls_ssshout
 		$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
 		error_log($sqlb);			//TESTING
 
-		$resultb = dbquery($sqlb)  or die(error_log("Unable to execute query $sql " . dberror()));
+		$resultb = dbquery($sqlb)  or die(error_log("Unable to execute query $sqlb " . dberror()));
 		if($rowb = db_fetch_array($resultb))
 		{
+			error_log("Yep in here");  //TESTING
 			error_log("Author ID:" . $rowb['int_counter']);			//TESTING
 			if($rowb['int_counter'] > 0) {
 				
