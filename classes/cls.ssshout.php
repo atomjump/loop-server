@@ -1158,7 +1158,7 @@ class cls_ssshout
 									var_whisper_to,
 									int_whisper_to_id,
 									int_author_id,
-									var_username,
+									var_username
 								) VALUES (		
 									'" . $latitude ."',
 									'" . $longitude ."',
