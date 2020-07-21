@@ -903,8 +903,8 @@ class cls_ssshout
 		$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
 		error_log($sql);			//TESTING
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-		error_log("Affected rows:" . db_affected_rows()); 
 		$affected_rows = db_affected_rows();
+		error_log("Affected rows:" . $affected_rows); 
 		if($affected_rows > 0) {
 			//There have been at least one other user
 		
