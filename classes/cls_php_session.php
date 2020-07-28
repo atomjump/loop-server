@@ -161,7 +161,7 @@ class php_Session
 								NOW(),
 								'" . $array['session_data'] . "')";
  	          
- 	     						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+ 	     						$result = dbquery($sql) or error_log("Unable to execute query $sql " . dberror());
         
           } else {
         
@@ -176,7 +176,7 @@ class php_Session
 				session_data ='" . $array['session_data'] . "'
 				WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
 
-			 $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			 $result = dbquery($sql)  or error_log("Unable to execute query $sql " . dberror());
         } // if   NOTE: experimental clean_data()
         
         return TRUE;
@@ -192,7 +192,7 @@ class php_Session
     	  make_writable_db();			//Ensure we are writable
        
        $sql = "DELETE FROM php_session WHERE session_id = '" . $this->fieldarray['session_id'] . "'";
-       $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+       $result = dbquery($sql)  or error_log("Unable to execute query $sql " . dberror());
        
        return TRUE;
         
@@ -221,7 +221,7 @@ class php_Session
    
         
         $sql = "DELETE FROM php_session WHERE last_updated < '$dt2' OR (last_updated < '$dtc2' AND (user_id IS NULL OR user_id = ''))";
-        $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+        $result = dbquery($sql)  or error_log("Unable to execute query $sql " . dberror());
         //$count = $this->_dml_deleteSelection("last_updated < '$dt2'");
         
         return TRUE;

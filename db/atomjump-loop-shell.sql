@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.5.38, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: ssshout
+-- Host: localhost    Database: atomjump
 -- ------------------------------------------------------
 -- Server version	5.5.38-0ubuntu0.14.04.1
 
@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `php_session`;
 CREATE TABLE `php_session` (
   `session_id` varchar(32) NOT NULL DEFAULT '',
   `user_id` varchar(16) DEFAULT NULL,
-  `date_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_created` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
+  `last_updated` datetime NOT NULL DEFAULT '2000-01-01 00:00:00',
   `session_data` longtext,
   PRIMARY KEY (`session_id`),
   KEY `last_updated` (`last_updated`)
@@ -48,7 +48,7 @@ CREATE TABLE `tbl_email` (
   `date_when_received` datetime DEFAULT NULL,
   `var_whisper` varchar(256) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`int_email_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,26 +70,9 @@ CREATE TABLE `tbl_feed` (
   KEY `date_feed_item` (`date_when_shouted`,`var_unique_id`),
   KEY `layer` (`int_layer_id`,`int_uid_id`),
   KEY `mail` (`int_mail_id`,`int_uid_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `tbl_group`
---
-
-DROP TABLE IF EXISTS `tbl_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tbl_group` (
-  `int_group_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `int_user1_id` int(10) unsigned NOT NULL,
-  `int_user2_id` int(10) unsigned NOT NULL,
-  `int_more_in_group_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`int_group_id`),
-  KEY `tbl_group12_id` (`int_user1_id`,`int_user2_id`),
-  KEY `tbl_group21_id` (`int_user2_id`,`int_user1_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tbl_layer`
@@ -139,7 +122,7 @@ CREATE TABLE `tbl_search_suggest` (
   `enm_fullscreen` enum('true','false') COLLATE utf8_bin DEFAULT 'false',
   PRIMARY KEY (`int_search_suggest_id`),
   KEY `search_suggest_search` (`var_search_suggest`)
-) ENGINE=MyISAM AUTO_INCREMENT=245082 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=245082 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +181,7 @@ CREATE TABLE `tbl_subdomain` (
   PRIMARY KEY (`int_subdomain_id`),
   KEY `subdomain_search` (`var_owner_string`),
   KEY `subdomain_true_search` (`var_subdomain`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -256,7 +239,6 @@ CREATE INDEX recent_ssshout ON tbl_ssshout (int_layer_id, date_when_shouted);
 -- Modify for international UTF-8 everywhere - these commands should be applied to old systems
 -- ALTER TABLE php_session CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 -- ALTER TABLE tbl_user CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
--- ALTER TABLE tbl_group CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;
 
 -- Modify for ordered messages based on date/time, not id.
 CREATE INDEX ordered_ssshout ON tbl_ssshout (date_when_shouted);
@@ -264,5 +246,24 @@ CREATE INDEX ordered_ssshout_full ON tbl_ssshout (enm_active, int_layer_id, date
 CREATE INDEX ordered_ssshout_big ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, var_whisper_to, var_ip, int_author_id, int_whisper_to_id);
 
 
+
+ALTER TABLE tbl_layer_subscription ADD `int_layer_sub_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;
+ALTER TABLE tbl_layer ADD `var_subscribers_limit` varchar(255) COLLATE utf8_bin DEFAULT NULL;
+
+
 -- This is no longer used and only confuses issues
 -- ALTER TABLE tbl_layer DROP COLUMN var_owner_string;
+
+ALTER TABLE tbl_layer ADD `var_title` varchar(255) COLLATE utf8_bin DEFAULT NULL;
+ALTER TABLE tbl_layer ADD `date_to_decay` datetime DEFAULT NULL;
+CREATE INDEX decay ON tbl_layer (date_to_decay);
+
+-- If you have problems with the date defaulting to 0000 (new MySQL versions), these would change and existing database
+-- ALTER TABLE php_session ALTER date_created SET DEFAULT '2000-01-01 00:00:00';
+-- ALTER TABLE php_session ALTER last_updated SET DEFAULT '2000-01-01 00:00:00';
+
+
+-- For helping to identify the same user names on a particular forum
+ALTER TABLE tbl_ssshout ADD `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL;
+CREATE INDEX `shouted_user` ON tbl_ssshout (`enm_active`,`int_layer_id`,`var_username`,`int_author_id`,`int_ssshout_id`);
+

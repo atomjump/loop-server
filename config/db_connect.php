@@ -77,8 +77,7 @@
   
 	function scale_up_horizontally_check($cnf)
 	{
-		global $db_cnf;
-		$db_cnf = $cnf['db'];
+		$this_db_cnf = $cnf['db'];
 
 		if(isset($_REQUEST['passcode'])) {
 			$layer_name = $_REQUEST['passcode'];			
@@ -88,18 +87,24 @@
 			$layer_name = $_REQUEST['uniqueFeedbackId'];
 		}
 
-		if((isset($db_cnf['scaleUp']))&&(isset($layer_name))) {	
+		if((isset($this_db_cnf['scaleUp']))&&(isset($layer_name))) {	
 			//We are scaling up
-			for($cnt = 0; $cnt< count($db_cnf['scaleUp']); $cnt ++) {	
-				if(preg_match("/" . $db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
+			for($cnt = 0; $cnt< count($this_db_cnf['scaleUp']); $cnt ++) {	
+				if(preg_match("/" . $this_db_cnf['scaleUp'][$cnt]['labelRegExp'] . "/",$layer_name, $matches) == true) {
 					//Override with this database					
-					$db_cnf = $db_cnf['scaleUp'][$cnt];
-					return;
+					$new_db_cnf = $this_db_cnf['scaleUp'][$cnt];
+					
+					//Check if we have our own unique plugins enabled for this installation
+					if($new_db_cnf['plugins']) {
+						global $cnf;
+						$cnf['plugins'] = $new_db_cnf['plugins'];
+					}
+					return $new_db_cnf;
 				}
 
 			}
 		}
-		return;
+		return $this_db_cnf;
 	} 
   
   //Set default language, unless otherwise set
@@ -117,12 +122,46 @@
         //Remove and then add
         return rtrim($str, "/") . '/';
     }
+    
+    function check_subdomain()
+	{
+	 	global $config;
+	
+		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
+		$server_name = $_SERVER['SERVER_NAME'];
+
+		if(($server_name == $config['staging']['webDomain']) ||
+		   ($server_name == $config['production']['webDomain'])) {
+		   return false;
+		} else {
+		
+			 
+			$tempstr = str_replace(".atomjump.com","",$server_name);   
+			$subdomain = str_replace(".ajmp.co","",$tempstr);		//Or alternatively the shorthand version
+			
+			return $subdomain;
+		}
+		
+	
+	}
+    
+    function add_subdomain_to_path($path) {
+			//This may be used for modifying the fast server web address
+			$subdomain = check_subdomain();
+			
+			if($subdomain != false) {
+				$add_in = $subdomain . ".";
+				$new_path = str_replace('[subdomain]', $add_in, $path);
+			} else {
+				$new_path = str_replace('[subdomain]', "", $path);
+			}
+			return $new_path;			
+	}	
 
 
  	error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED); 
  	
-  
-
+  	
  
  
  
@@ -144,15 +183,18 @@
 	
 	$server_timezone = $config['production']['timezone'];
 	$db_timezone = $server_timezone;
-			
+	$db_cnf = array();		//Make a global		
   
+  
+
 	if(($_SERVER["SERVER_NAME"] == $config['staging']['webDomain'])||($staging == true)||($config['usingStaging'] == true)) {
 		//Staging
-		
+		$staging = true;
 		
 		$cnf = $config['staging'];
 		$db_cnf = $cnf['db'];
-		scale_up_horizontally_check($cnf);
+		$db_cnf = scale_up_horizontally_check($cnf);
+
 		
 		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
 		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
@@ -160,31 +202,52 @@
 		$db_name = $db_cnf['name'];
 	
 	
-		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$root_server_url = trim_trailing_slash(add_subdomain_to_path($cnf['webRoot']));
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
-		$db_inc = false;
-		$staging = true;
+			
+		$db_total = count($db_cnf['hosts']);			//Total number of databases
+		$max_db_attempts = 2;	//Maximum incremental attempts 
+		if(((isset($db_read_only))&&($db_read_only == true))||  //This variable is set by caller scripts in forced read-only situations
+		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) { 		
+				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
+				$db_inc = true;
+			
+		} else {
+			//Only one write db which is db 0
+			$db_num = 0;
+			$db_inc = false;
+			
+		}
+		
+		
 		$db_timezone = $db_cnf['timezone'];
 		
 	} else {
   
         $cnf = $config['production']; 
-		$root_server_url = trim_trailing_slash($cnf['webRoot']);
+		$root_server_url = trim_trailing_slash(add_subdomain_to_path($cnf['webRoot']));
 		$local_server_path = add_trailing_slash($cnf['fileRoot']);
 		
 		$db_cnf = $cnf['db'];
-		scale_up_horizontally_check($cnf);
+		$db_cnf = scale_up_horizontally_check($cnf);
 
+
+
+		$db_username = $db_cnf['user']; //Edit this e.g. "peter"
+		$db_password = $db_cnf['pass']; //Edit this e.g. "secretpassword"
+		$db_host =  $db_cnf['hosts'][0]; 
+		$db_name = $db_cnf['name'];
 		
-		//Live is now on amazon
+		//Live 
 		$db_total = count($db_cnf['hosts']);			//Total number of databases
 		$max_db_attempts = 2;	//Maximum incremental attempts 
-		if((isset($db_read_only))&&($db_read_only == true)) { 
+		if(((isset($db_read_only))&&($db_read_only == true))||  //This variable is set by caller scripts in forced read-only situations
+		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) { 		
 				$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
 				$db_inc = true;
 			
 		} else {
-			//Only one write db which is aj0
+			//Only one write db which is db 0
 			$db_num = 0;
 			$db_inc = false;
 			
@@ -210,8 +273,25 @@
 	                                            //if this is to be run (currently only works for http servers, not https)
 	
 
+	
+
+	if($db_cnf['ssl']) {
+		$db_ssl = $db_cnf['ssl'];
+	} else {
+		$db_ssl = null;
+	} 
+	
+	if($db_cnf['port']) {
+		$db_port = $db_cnf['port'];
+	} else {
+		$db_port = null;
+	} 
+	
+	
+
 	//Leave the code below - this connects to the database
-	$db = dbconnect($db_host, $db_username, $db_password);			
+	$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);	
+			
 	if(!$db) {
 		
 		if($db_inc == true) {
@@ -222,7 +302,7 @@
 				$cnt++;
 				//Loop through all the other databases and check if any of them are available - to a max number of attempts				
 				$db_host = $db_cnf['hosts'][$db_num];			
-				$db = dbconnect($db_host, $db_username, $db_password);
+				$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
 			}
 			
 			if($cnt >= $max_db_attempts) {
@@ -288,27 +368,7 @@
 	
 	}
 	
-	function check_subdomain()
-	{
-	 	global $config;
 	
-		//Check if we have a subdomain - return false if no, or the name of the subdomain if we have
-		$server_name = $_SERVER['SERVER_NAME'];
-
-		if(($server_name == $config['staging']['webDomain']) ||
-		   ($server_name == $config['production']['webDomain'])) {
-		   return false;
-		} else {
-		
-			 
-			$tempstr = str_replace(".atomjump.com","",$server_name);   
-			$subdomain = str_replace(".ajmp.co","",$tempstr);		//Or alternatively the shorthand version
-			
-			return $subdomain;
-		}
-		
-	
-	}
 	
 	function make_writable_db()
     	{
@@ -320,33 +380,87 @@
 	    	global $db_name;
 	    	global $db;
 	    	global $db_cnf;
+	    	global $db_total;
     	
     	
     	
-    		//Ensure we don't need this functionality on a staging server - which is always writable, single node
-    		if($staging == true) { 	
+    		//Ensure we don't need this functionality on a multi-write server - which is always writable, single node,
+    		//or a single database server, or a forced read-only override section of code ($db_read_only)
+    		if(($db_total === 1)||
+    		   (isset($db_cnf['singleWriteDb'])&&($db_cnf['singleWriteDb'] === false))) {
+    			
     			if($db) {
+    				//Leave the current database
     				return;
+    			
     			} else {
-    				//We need to reconnect at this point anyway - it is likely at the end of a session
-					$db = dbconnect($db_host, $db_username, $db_password);
+    				//We need to reconnect at this point - it is likely at the end of a session
+    				$max_db_attempts = 2;	//Maximum incremental attempts 
+					
+					if($db_total === 1) {
+						$db_num = 0;
+						$db_inc = false;
+					} else {
+						$db_num = mt_rand(0,($db_total-1));		//If you add more DB nodes, increase this number
+						$db_inc = true;
+					}
+					
+					
+					
+					$db_host = $db_cnf['hosts'][$db_num];
+					
+					while((!$db) && ($cnt < $max_db_attempts)) {
+						$db_num ++;
+						if($db_num >= $db_total) $db_num = 0;
+						$cnt++;
+						//Loop through all the other databases and check if any of them are available - to a max number of attempts				
+						$db_host = $db_cnf['hosts'][$db_num];	
+						
+						if($db_cnf['ssl']) {
+							$db_ssl = $db_cnf['ssl'];
+						} else {
+							$db_ssl = null;
+						} 
+
+						if($db_cnf['port']) {
+							$db_port = $db_cnf['port'];
+						} else {
+							$db_port = null;
+						} 
+														
+						$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
+					}
+					
 					dbselect($db_name);
 	  				db_set_charset('utf8');
 	  				db_misc();
 					return;
-    			}
-    		}
-    
+				}
+			}
+			
 
     
-	    	//Double check we are connected to the master database - which is writable. Note this is amazon specific
+	    	//Double check we are connected to the master database - which is writable. Note this is single write database specific
 	    	$db_master_host = $db_cnf['hosts'][0];
 	    	if(($db_host != $db_master_host)||(!isset($db))) {
 	    		//Reconnect to the master db to carry out the write operation
 	    		dbclose();		//close off the current db
 	    		
 	    		$db_host = $db_master_host;
-	    		$db = dbconnect($db_host, $db_username, $db_password);
+	    			    		
+	    		if($db_cnf['ssl']) {
+					$db_ssl = $db_master_host['ssl'];
+				} else {
+					$db_ssl = null;
+				} 
+				
+				if($db_cnf['port']) {
+					$db_port = $db_cnf['port'];
+				} else {
+					$db_port = null;
+				} 
+	    		
+	    		$db = dbconnect($db_host, $db_username, $db_password, null, $db_ssl, $db_port);
 	    		if(!$db) {
 	    			//No response from the master
 	    			http_response_code(503);
@@ -371,8 +485,8 @@
 		global $staging;
 		global $process_parallel;
 		global $cnf;
-		
-		if($notify == true) {
+				
+		if($notify == true) {		//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
 			$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] .  ' ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . rawurlencode($bcc_email) . ' > /dev/null 2>&1 &';	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
 						
 			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
@@ -484,13 +598,20 @@
 
 	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
-		if($cnf['email']['sending']['use'] == 'mailgun') {
+		global $notify;			//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
 		
-			return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
-		} else {
-			//A generic SMTP server
-			return send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+		if($notify == true) {		
+	
+			if($cnf['email']['sending']['use'] == 'mailgun') {
+		
+				return send_mailgun($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+			} else {
+				//A generic SMTP server
+				return send_generic_email($to_email, $subject, $body_text, $sender_email, $sender_name, $to_name, $bcc_email);
+			}
 		}
+		
+		return false;
 		
 	}
 	
@@ -521,7 +642,7 @@
 	define("ABOUT_LAYER_ID", 1);	
 	define("DEFAULT_AD_WIDTH", 170);		//was 190
 	
-	function upload_to_all($filename, $raw_file, $specific_server = '')
+	function upload_to_all($filename, $raw_file, $specific_server = '', $target_path = "/images/property/")
 	{
 			//$raw_file is the hello.jpg, $filename is test/hello.jog
 			//Share to Amazon S3
@@ -533,17 +654,59 @@
 			
 			
 			if($cnf['uploads']['use'] == "amazonAWS") {
-			
-				require_once($local_server_path . "vendor/amazon/S3.php");
 	
-				//See: https://github.com/tpyo/amazon-s3-php-class
-				$s3 = new S3($cnf['uploads']['vendor']['amazonAWS']['accessKey'],$cnf['uploads']['vendor']['amazonAWS']['secretKey'] );		//Amazon AWS credentials
-	
-	
-				if($s3->putObject(S3::inputFile($filename, false), "ajmp", $raw_file, S3::ACL_PUBLIC_READ, array(), array('Expires' => gmdate('D, d M Y H:i:s T', strtotime('+20 years'))))) {  //e.g. 'Thu, 01 Dec 2020 16:00:00 GMT'
-					//Uploaded correctly
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'])) {
+					$use_ssl = $cnf['uploads']['vendor']['amazonAWS']['uploadUseSSL'];
+					
 				} else {
-					//Error uploading to Amazon
+					$use_ssl = false;		//Default
+				}
+				
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'])) {
+					$endpoint = $cnf['uploads']['vendor']['amazonAWS']['uploadEndPoint'];
+				} else {
+					$endpoint = "https://s3.amazonaws.com";		//Default
+				}
+				
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['bucket'])) {
+					$bucket = $cnf['uploads']['vendor']['amazonAWS']['bucket'];
+				} else {
+					$bucket = "ajmp";		//Default
+				}
+				
+				if(isset($cnf['uploads']['vendor']['amazonAWS']['region'])) {
+					$region = $cnf['uploads']['vendor']['amazonAWS']['region'];
+				} else {
+					$region = 'nyc3';
+				}
+				
+								
+				//Get an S3 client
+				$s3 = new Aws\S3\S3Client([
+						'version' => 'latest',
+						'region'  => $region,				
+						'endpoint' => $endpoint,			//E.g. 'https://nyc3.digitaloceanspaces.com'
+						'credentials' => [
+								'key'    => $cnf['uploads']['vendor']['amazonAWS']['accessKey'],
+								'secret' => $cnf['uploads']['vendor']['amazonAWS']['secretKey'],
+							]
+				]);
+				
+	
+				try {
+					// Upload data.
+					$result = $s3->putObject([
+						'Bucket' => $bucket,
+						'Key'    => $raw_file,
+						'Body'   => file_get_contents($filename),
+						'ContentType'  => 'image/jpeg',
+						'ACL'    => 'public-read'
+					]);
+
+					// Print the URL to the object.
+					error_log("Successfully uploaded: " . $result['ObjectURL']);
+				} catch (S3Exception $e) {
+					error_log($e->getMessage());
 					return false;
 				}
 			
@@ -572,7 +735,7 @@
 			}
 		
 		
-			if($cnf['uploads']['use'] != "none") {
+			if(isset($cnf['uploads']['imagesShare'])) {
 				//Share across our own servers
 			
 				//Get the domain of the web url, and replace with ip:1080
@@ -596,14 +759,16 @@
 					$servers = array($specific_server);
 		
 				}
+				
 	
 				foreach($servers as $server)
 				{
+					//error_log("Sending to : " . $server);		//Include if testing
 	
 					//Coutesy http://stackoverflow.com/questions/19921906/moving-uploaded-image-to-another-server
 					$handle = fopen($filename, "r");
 					$data = fread($handle, filesize($filename));
-					$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file);
+					$POST_DATA   = array('file'=>base64_encode($data),'FILENAME'=>$raw_file, 'targetpath'=>$target_path);
 					$curl = curl_init();
 					curl_setopt($curl, CURLOPT_URL, $server);
 					curl_setopt($curl, CURLOPT_TIMEOUT, 30);
@@ -640,16 +805,51 @@
 		return $details;
 	}
 	
-	function dbconnect($host, $user, $pass, $dbname = null)
+	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null, $dbport = 3306)
 	{
 		//Using old style:
 		/*
 			mysql_connect($host, $user, $pass);
 		*/
-		if($dbname) {
-			return mysqli_connect("p:" . $host, $user, $pass, $dbname);		//p is for persistent connection
+	
+		
+		if(($ssldetails) && (isset($ssldetails['use'])) && ($ssldetails['use'] === true)) {
+			//SSL connection
+			$con = mysqli_init();
+			if (!$con) return false;
+			
+			mysqli_ssl_set($con, $ssldetails['key'], $ssldetails['cert'], $ssldetails['cacert'], $ssldetails['capath'], $ssldetails['protocol']);   
+						
+			if(isset($ssldetails['verify']) && ($ssldetails['verify'] === false)) {
+				$connection_type = MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT;   //  works for PHP >= 5.6
+			} else {
+				$connection_type = MYSQLI_CLIENT_SSL;			
+			}
+						
+						
+			if($dbname) {
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, $dbname, $dbport, null, $connection_type)) {  
+			        return $con;
+			    } else {
+			    	return false;
+			    }
+			} else {
+				if(mysqli_real_connect($con,"p:" . $host, $user, $pass, null, $dbport, null, $connection_type)) { 
+					return $con;
+				} else {
+					return false;
+				}
+			}
+			
 		} else {
-			return mysqli_connect("p:" . $host, $user, $pass);
+		
+			//Normal non-ssl
+		
+			if($dbname) {
+				return mysqli_connect("p:" . $host, $user, $pass, $dbname, $dbport);		//p is for persistent connection
+			} else {
+				return mysqli_connect("p:" . $host, $user, $pass, null, $dbport);
+			}
 		}
 		
 	}
@@ -670,12 +870,19 @@
 		
 	}
 	
-	function dbquery($sql)
+	function dbquery($sql, $use = MYSQLI_STORE_RESULT)
 	{
 		global $db;
 		
 		//Using old style: return mysql_query($sql);
-		return mysqli_query($db, $sql);
+		return mysqli_query($db, $sql, $use);
+	}
+	
+	function db_affected_rows()
+	{
+		global $db;
+		return mysqli_affected_rows($db);
+	
 	}
 	
 	function db_fetch_array($result)

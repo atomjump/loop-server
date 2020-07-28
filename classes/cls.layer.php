@@ -20,7 +20,7 @@ class cls_layer
  	
  	
 
-	public function get_layer_id($passcode, $reading)
+	public function get_layer_id($passcode, $reading = null)
 	{
 
 		$this->layer_name = $passcode; //store
@@ -51,7 +51,7 @@ class cls_layer
 				
 				if($row['var_public_code']) {
 					//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-									if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+					if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 						$_SESSION['access-layer-granted'] = 'false';
 					}
 				} else {
@@ -99,7 +99,7 @@ class cls_layer
 				    	
 				    	if($row['var_public_code']) {
 							//Yes, this layer needs access to be granted - set status to false until we have set it from a login
-																		if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
+							if(!isset($_SESSION['access-layer-granted'])||($_SESSION['access-layer-granted'] == "")) {
 								$_SESSION['access-layer-granted'] = 'false';
 							}
 						} else {
@@ -138,24 +138,88 @@ class cls_layer
 
 	}
 	
-	public function new_layer($passcode, $status, $group_id = 'NULL', $public_passcode = NULL)
+	public function new_layer($passcode, $status, $group_id = 'NULL', $public_passcode = NULL, $date_decay = 'NULL')
 	{
+		global $cnf;
+		
+		//Inputs:
+		//passcode is the layer name in text format
+		//status = 'public','public-admin-write-only','private'
+		//group_id = optional, if the later is a part of a group of layers
+		//public_passcode = ...
+		//title is created if the config file includes showAutomaticTitle = true
+		//     and there are multiple replacement strings in titleReplace
+		//date_decay = in MySQL date/time format ("yyyy-mm-dd hh:mm:ss"), for the
+		//intended time the forum will self-decay. Note: you will need to add a 'decay' 
+		//plugin to switch this capability on.
+		
 		if($public_passcode == NULL) {
 			$public_passcode = "NULL";
 		} else {
-			$public_passcode = "'" . $public_passcode . "'";  //usually a text string except when null
+			$public_passcode = "'" . $public_passcode . "'";  //usually a text string except when null. Note: TODO: check may need a clean_data() around the $public_passcode above?
 		}
-	
+		
+		if(isset($cnf['showAutomaticTitle'])&&($cnf['showAutomaticTitle'] == true)) {
+			$title = $passcode;
+			//Loop through each replace expression of the forum name and remove from the title
+			
+			if(isset($cnf['titleReplace'])) {
+		
+				for($cnt = 0; $cnt < count($cnf['titleReplace']); $cnt++) {
+					$regex = $cnf['titleReplace'][$cnt]['regex'];
+					$replace_with = $cnf['titleReplace'][$cnt]['replaceWith'];
+				
+					$title = preg_replace($regex, $replace_with, $title);
+				}
+			}
+						
+			$title = "'" . clean_data($title) . "'";	//Encapsulate for SQL
+		} else {
+			$title = "NULL";		//a blank database entry		
+		}
+		
+		//Optional decay time on this forum
+		if(isset($_REQUEST['general'])) {
+			$general_data = explode(",", $_REQUEST['general']);
+			for($cnt = 0; $cnt < count($general_data); $cnt++) {
+				$tag = explode(":", $general_data[$cnt]);
+				if($tag[0] == 'decayIn') {
+					//decayIn could be "1 week", "20 minutes". This is added to the current time to create a timestamp.
+					$now = date("Y-m-d H:i:s");
+					$date_decay = "'" . clean_data(date('Y-m-d H:i:s',strtotime("+" . $tag[1],strtotime($now)))) . "'";
+				}
+				
+				if($tag[0] == 'decayTime') {
+					//Or an absolute date/time string passed in
+					$date_decay = "'" . clean_data(date('Y-m-d H:i:s',$tag[1])) . "'";
+				}
+			}
+			
+		}
+		
+		if(isset($_REQUEST['date-owner-start'])) {
+			$timestamp = strtotime($_REQUEST['date-owner-start']);
+			$start = date("Y-m-d H:i:s", $timestamp);
+		
+		} else {
+			$start = date("Y-m-d H:i:s");
+		}
+			
 		$sql = "INSERT INTO tbl_layer (
 			  enm_access,
 			  passcode,
 			  int_group_id,
-			  var_public_code)
+			  var_public_code,
+			  var_title,
+			  date_to_decay,
+			  date_owner_start)
 			  VALUES (
 			  	'". clean_data($status) . "',
 			  	'" . md5($passcode) . "',
 			  	" . clean_data($group_id) . ",
-			  	" . clean_data($public_passcode) . ")";
+			  	" . clean_data($public_passcode) . ",
+			  	" . $title . ",
+			  	" . $date_decay . ", NOW())";
 		dbquery($sql) or die("Unable to execute query $sql " . dberror());	  	 
 	
 		return db_insert_id();
@@ -249,7 +313,8 @@ class cls_layer
 	
 	public function get_remote_ssl($request, $timeout = 2000)
 	{
-	
+		global $cnf;
+		
 		//Asyncronously call url
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $request);
@@ -260,7 +325,12 @@ class cls_layer
 	
 	
       // Turn on SSL certificate verfication
-      curl_setopt($curl, CURLOPT_CAPATH, "/etc/apache2/ssl/ca.pem");
+      if($cnf['caPath']) {
+      	$ca_path = $cnf['caPath'];
+      } else {
+      	$ca_path = "/etc/apache2/ssl/ca.pem";		//The default
+      }
+      curl_setopt($curl, CURLOPT_CAPATH, $ca_path);
       curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
       curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
 
@@ -321,7 +391,7 @@ class cls_layer
 		}
 		 
 	
-		//Notify each member of the group - note tbl_group 
+		//Notify each member of the group
 		$sql = "SELECT * FROM tbl_layer_subscription l LEFT JOIN tbl_user u ON l.int_user_id = u.int_user_id WHERE l.enm_active = 'active' AND int_layer_id = " . $layer_id;
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		while($row = db_fetch_array($result)) {
@@ -335,7 +405,7 @@ class cls_layer
 										 "forum_message" => $msg['msgs'][$lang]['layerName'],
 										 "forum_name" => $layer_name,
 										 "remove_message" => $msg['msgs'][$lang]['removeComment'],
-										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id);
+										 "remove_url" => $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $layer_name);
 				
 				list($ret, $data) = $sh->call_plugins_notify("init", $message, $message_details, $message_id, $message_sender_user_id, null, $data);
 			}
@@ -346,9 +416,11 @@ class cls_layer
 
 			list($with_app, $data) = $sh->call_plugins_notify("addrecipient", $message, $message_details, $message_id, $message_sender_user_id, $row['int_user_id'], $data);
 			if($with_app == false) {
-
-				if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
-					$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
+				
+				if($row['int_user_id']) {
+					if($row['int_user_id'] != $message_sender_user_id) {		//Don't email to yourself
+						$this->notify_by_email($row['int_user_id'], $message, $message_id, true, $layer_id);		//true defaults to admin user 
+					}
 				}
 			}
 					
@@ -387,6 +459,7 @@ class cls_layer
 
 	public function notify_by_email($user_id, $message, $message_id, $is_admin_user = false, $layer_id = null)
 	{
+
 		global $root_server_url;
 		global $cnf;
 		global $msg;
@@ -400,7 +473,7 @@ class cls_layer
 			$url = cur_page_url();
 			$email_body = $message . "\n\n" . $msg['msgs'][$lang]['observeMessage'] . " <a href=\"$url\">$url</a>\n" . $msg['msgs'][$lang]['layerName'] . ": " . $this->layer_name;
 			if($is_admin_user == true) {
-				$url = $root_server_url . "/de.php?mid=" . $message_id;
+				$url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $this->layer_name;
 				$email_body .= "\n\n" .$msg['msgs'][$lang]['removeComment'] . ": <a href=\"$url\">$url</a>";
 			}
 		
@@ -508,7 +581,22 @@ class cls_layer
 		}
 	}
 	
-	
+	public function push_layer_granted($new_layer_granted) 
+	{
+		//Adds to a session array of access-granted arrays
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) $layers_granted_array = array();
+		array_push($layers_granted_array, $new_layer_granted);
+		$_SESSION['access-layers-granted'] = json_encode($layers_granted_array);
+	}
+
+	public function is_layer_granted($check_layer) 
+	{
+		//Returns true or false
+		$layers_granted_array = json_decode($_SESSION['access-layers-granted']);
+		if(!is_array($layers_granted_array)) return false;
+		return in_array($check_layer, $layers_granted_array);
+	}
 	
 
 }
@@ -522,20 +610,29 @@ class cls_login
 		//Get a usercode for display
 		$ly = new cls_layer(); 
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
+		
+		$subscription_string = $this->get_subscription_string();
+		$subscriber_array = explode(",", $subscription_string);
+		if($subscriber_array[0]) {
+			$subscriber_count = count($subscriber_array);
+		} else {
+			$subscriber_count = "[NA]";
+		}
+	
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
-					"layerUsers" => $this->get_subscription_string());
+					"layerUsers" => $subscription_string,
+					"layerUserCount" => $subscriber_count);
 	}
 	
 	
 	public function check_group_intact($user_group, $layer_id)		
 	{
-		//Keeps the database in sync with what the webmaster has set in terms of users who listen into the group.  A future step might be to allow
-		//external users to subscribe also
+		//Keeps the database in sync with what the webmaster has set in terms of users who listen into the group. 
 		$in_db = array();
 	
 		$sql = "SELECT * FROM tbl_layer_subscription l WHERE int_layer_id = " . $layer_id;
+		
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-
 		while($row = db_fetch_array($result)) {
 			$in_db[] = $row['int_user_id'];
 
@@ -582,9 +679,174 @@ class cls_login
 		
 		}
 		
+		if(sizeof($user_group) == 0) {
+			//No owners of the group
+			$sql = "UPDATE tbl_layer_subscription SET enm_active = 'inactive' WHERE int_layer_id = " . $layer_id;
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		
+		}
+		
 			
 		return $str;
 		
+	
+	}
+	
+	public function remove_from_subscriptions($current_subs, $remove_user_id = null)
+	{	
+		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
+		//and remove the current user from the subscriptions list
+		if(!$remove_user_id) {
+			$remove_user_id = $_SESSION['logged-user'];
+		}
+		
+		$sh = new cls_ssshout(); 
+		
+		//Check the default site whispering
+		$whisper_to_site_group = explode(",",$current_subs);
+		$group_user_ids = array();
+		
+		$updated = false;
+		$new_subs = "";
+		
+		//Search through existing users
+		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
+				$user_id = $sh->new_user($email, $ip, null, true);
+				$user_machine = $ip . ":" . $user_id;
+				
+			} else {
+			
+				$whisper_to_divided = explode(":",$user_machine);
+				$user_id = $whisper_to_divided[1];
+			}
+			
+			if($remove_user_id == $user_id) {
+				//Don't append this user to the list
+				$updated = true;
+			} else {
+				//Append this user to the string
+				if(!$new_subs) {
+					//First on list
+					$new_subs = $new_subs . $user_machine;
+				} else {
+					$new_subs = $new_subs . "," . $user_machine;
+				}
+			}
+		}	
+		
+		if($updated == true) {
+					
+			//And resave the subscriptions
+			$this->update_subscriptions($new_subs, $layer);
+		}		
+		
+		return $new_subs;
+	
+	}
+	
+	public function add_to_subscriptions($current_subs, $layer = null, $new_user_id = null, $new_email = null)
+	{
+	
+		//Take an existing string with all users e.g. 1.1.1.1:145:sms,2.2.2.2:32:sms,test@atomjump.com
+		//and add the current user to the subscriptions list
+		if(!$new_user_id) {
+			$new_user_id = $_SESSION['logged-user'];
+		}
+		$ly = new cls_layer(); 
+		$ip = $ly->getFakeIpAddr();  //get new user's ip address
+		
+	
+		
+		$new_user_machine = $ip . ":" . $new_user_id;
+		
+		$sh = new cls_ssshout(); 
+		
+		//Check the default site whispering
+		$whisper_to_site_group = explode(",",$current_subs);
+		$group_user_ids = array();
+		$user_already_subscribed = false;
+		
+		
+		
+		//Check that this current user's email has the correct domain e.g. ...@thisdomain.com to be able to be added 
+		//Get details of layer for any domain limits on new users
+		if(!$layer) {
+			if($_SESSION['authenticated-layer']) {
+				$layer = $_SESSION['authenticated-layer'];
+			} else {
+				//No authenticated layer
+				return false;		//TODO: Should this be limited here?
+			}
+		}
+	
+		if($layer) {
+			$sql = "SELECT var_subscribers_limit FROM tbl_layer WHERE int_layer_id = " . $layer;
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if($row = db_fetch_array($result))
+			{
+			
+				if((isset($row['var_subscribers_limit'])) && ($row['var_subscribers_limit'] != "")) {
+					//There is a limit on who can subscribe to this forum
+					if($new_email) {
+						$email_components = explode("@", $new_email);
+					} else {
+						$email_components = explode("@", $_SESSION['logged-email']);
+					}
+					if(($email_components[1]) && ($email_components[1] === $row['var_subscribers_limit'])) {
+						//This is allowable - it is of the correct domain
+					} else {
+						//Use cannot be added - return last state early
+						return false;
+					}	
+				}
+			} else {
+				//If we don't have a db connection we should also return
+				return false;
+			}
+		}
+		
+		//Search through existing users
+		foreach($whisper_to_site_group as $user_machine) {
+			//Check if this is an email address
+			if(filter_var(trim($user_machine), FILTER_VALIDATE_EMAIL) == true) {
+				//Convert user entered email into a user id
+				$email = trim($user_machine);
+				$ly = new cls_layer();
+				$ip = $ly->getFakeIpAddr();
+				
+				$user_id = $sh->new_user($email, $ip, null, true);
+				$user_machine = $ip . ":" . $user_id;
+				
+			} else {
+			
+				$whisper_to_divided = explode(":",$user_machine);
+				$user_id = $whisper_to_divided[1];
+			}
+			
+			if($new_user_machine == $user_id) {
+				$user_already_subscribed = true;
+			}
+		}	
+		
+		if($user_already_subscribed == false) {
+			//Append to the string
+			if($current_subs != "") {
+				$current_subs = $current_subs . "," . $new_user_machine;
+			} else {
+				$current_subs = $new_user_machine;
+			}
+			
+			//And resave the subscriptions
+			$this->update_subscriptions($current_subs, $layer);
+		}		
+		
+		return $current_subs;
 	
 	}
 	
@@ -638,6 +900,9 @@ class cls_login
 			//Check each of the users is in the db for this layer - don't do in the public sense. Note: because we only send through group details when sending
 			$this->check_group_intact($group_user_ids, $layer);
 		
+		} else {
+			//A blank 
+			$this->check_group_intact(array(), $layer);
 		}
 		
 		return;
@@ -645,6 +910,7 @@ class cls_login
 	
 	public function get_subscription_string($layer_id = null)
 	{
+		
 		if(!$layer_id) {
 			if($_SESSION['authenticated-layer']) {
 				$layer_id = $_SESSION['authenticated-layer'];
@@ -669,7 +935,7 @@ class cls_login
 			}
 			$cnt ++;
 		}
-		
+				
 		return $output;
 	
 	}
@@ -696,6 +962,21 @@ class cls_login
 		}	
 	}
 	
+	public function is_admin($user_id)
+	{
+		global $cnf;
+		//Check this user is the admin user. Return true if so, and false if not
+		
+		$admin_machine_user = $cnf['adminMachineUser'];
+		$admin_parts = explode(":", $admin_machine_user);
+		
+		//Returns true if this user is the system admin
+		if(($user_id) && ($user_id === $admin_parts[1])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public function get_group_user($layer_id = null)
 	{
@@ -821,6 +1102,10 @@ class cls_login
         }
     
     }
+    
+    
+
+    
 
 
 	public function confirm($email, $password, $phone, $users = null, $layer_visible = null, $readonly = false, $full_request)
@@ -830,207 +1115,415 @@ class cls_login
 		//
 		//user_id has been added for the app, which doesn't have sessions as such.
 		//Note: if RELOAD doesn't exist, user_id may be in 2nd place
-	
+		
 		//Check if this is a request to get access to a password protected forum
 	    $forum_accessed = false;
-	    if(isset($full_request['forumpasscheck'])&&($full_request['forumpasscheck'] != "")) {
+	    $new_user = false;
 	    
-	    	$ly = new cls_layer(); 
-			
-			if((!isset($_SESSION['logged_user']))||($_SESSION['logged_user'] == "")) {
+	   
+	    
+	   
+	    $ly = new cls_layer(); 
+	    $layer_info = $ly->get_layer_id($layer_visible);
+	    if((isset($full_request['forumpasscheck']))&&($full_request['forumpasscheck'] != "")) {
+	    
+	    	//This is after a password has been entered for the forum
+			if((!isset($_SESSION['logged-user']))||($_SESSION['logged-user'] == "")) {
 				//We are a new user
 				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 			
 				$sh = new cls_ssshout();
 			
-				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
-				$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-			}	    
-	    
+				$user_id = $sh->new_user($email, $ip, null, false);		//Don't actually login as this user
+				
+				
+			} else {
+				$user_id = $_SESSION['logged-user'];		//TESTING
+			}
+			
+	    	
+	    	 //Check if we are the admin user - in this case we will log in automatically,
+	    	 //which allows us to change the group password.
+			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if(($row = db_fetch_array($result))&&($email != ""))
+			{
+				//Email exists
+				if($this->is_admin($row['int_user_id']) == true) {
+					$user_id = $row['int_user_id'];
+					//Compare password with existing user password
+					if(md5($password) == $row['var_pass']) {
+						//Log in to the forum automatically
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
+						$ly->push_layer_granted($layer_info['int_layer_id']);
+						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+						
+						if(($email != "")&&($password != "")) {
+							//Continue with current user and fully login, but also refresh
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);	
+							return "FORUM_LOGGED_IN,RELOAD";
+						} else {
+							//Refresh the page and reload
+							
+							//Confirm this new blank user
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+							
+							return "FORUM_LOGGED_IN,RELOAD";
+						} 		
+					}
+				}
+				
+			}
+			
+			
+	    	
+	    	
+				    
 	    
 	    	
+	    	
 			$layer_info = $ly->get_layer_id($layer_visible);
+			
 			if($layer_info) {
 					//Yes the layer exists
 					
 					if(md5(clean_data($full_request['forumpasscheck'])) == $layer_info['var_public_code']) {
-					
-						//And it is the correct password! Continue below with a login
-						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];  
 						
+						//And it is the correct password! Continue below with a login
+						$_SESSION['access-layer-granted'] = $layer_info['int_layer_id']; 
+						$ly->push_layer_granted($layer_info['int_layer_id']);
 						$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
-					
-						return "FORUM_LOGGED_IN,RELOAD";
+											
+						if(($email != "")&&($password != "")) {
+							//Continue with current user and fully login, but also refresh
+							
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = clean_data($email);
+							$reload = ",RELOAD";
+							
+						} else {
+							//Refresh the page and reload
+							
+							//Confirm this new blank user
+							$_SESSION['logged-user'] = $user_id;
+							$_SESSION['logged-email'] = "";						
+																				
+							return "FORUM_LOGGED_IN,RELOAD";
+						} 
 						  	
 					} else {
 						//Sorry, this was the wrong password
-						return "FORUM_INCORRECT_PASS";
+						return "FORUM_INCORRECT_PASS";		
 				
 					}
 			} else {
 				//Sorry, this was the wrong password
-				return "FORUM_INCORRECT_PASS";
+				return "FORUM_INCORRECT_PASS";	
 			}
 	    
 	    }
 	    
-	    //Check if this is saving the passcode - we need to be a group owner to do this.
-	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")) {
+	    //Do a check on the layer access being granted.
+	    if(isset($layer_info['var_public_code'])) {
+	    	//Check this is a valid layer
+	    	$layer_info = $ly->get_layer_id($layer_visible);
+	    	
+		    if(($_SESSION['access-layer-granted'] == 'true')||($_SESSION['access-layer-granted'] == $layer_info['int_layer_id'])||($ly->is_layer_granted($layer_info['int_layer_id']))) {
+	    		//All good to continue...
+	    		
+	    	} else {
+	    		//Sorry, the forum password hasn't been set
+				return "FORUM_INCORRECT_PASS,RELOAD";
+	    	}
+	    	
+	    } else {
+	    	//There is no forum password. Access layer granted by default
+	    	$layer_info = $ly->get_layer_id($layer_visible);
+	    	$_SESSION['access-layer-granted'] = $layer_info['int_layer_id'];
+	    	$_SESSION['authenticated-layer'] = $layer_info['int_layer_id'];
+	    }
+	    
+	    //Check if this is saving the passcode - we need to be a sysadmin user to do this.
+	    if(isset($full_request['setforumpassword'])&&($full_request['setforumpassword'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
     
 	    	$ly = new cls_layer();
 			$layer_info = $ly->get_layer_id($layer_visible);
 			if($layer_info) {
 	    				
-				//Only the owners can do this
-				$isowner = $this->is_owner($_SESSION['logged-user'], $layer_info['int_group_id'], $layer_info['int_layer_id']);
-				if($isowner == true) {	
-						//No password protection already - set it in this case
-						$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
-						dbquery($sql) or die("Unable to execute query $sql " . dberror());
-				}
-				
-
+				//No password protection already - set it in this case
+				$sql = "UPDATE tbl_layer SET var_public_code = '" . md5(clean_data($full_request['setforumpassword'])) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
 			}
 		}
+		
+		//Check if this is saving the title - we need to be a sysadmin user to do this.
+	    if(isset($full_request['setforumtitle'])&&($full_request['setforumtitle'] != "")&&($this->is_admin($_SESSION['logged-user']) == true)) {
+    
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+	    				
+				//No password protection already - set it in this case
+				$sql = "UPDATE tbl_layer SET var_title = '" . clean_data($full_request['setforumtitle']) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				$reload = ",RELOAD";		//Reload the new forum title
+			}
+		}
+		
+		
+		
+		//Check if this is saving a domain limitation - update this always
+	    if(isset($full_request['subscriberlimit'])&&($this->is_admin($_SESSION['logged-user']) == true)) {
+	    	$ly = new cls_layer();
+			$layer_info = $ly->get_layer_id($layer_visible);
+			if($layer_info) {
+	    				
+				//Set a domain limitation on email addresses of subscribers
+				$sql = "UPDATE tbl_layer SET var_subscribers_limit = '" . clean_data($full_request['subscriberlimit']) . "' WHERE int_layer_id = " . $layer_info['int_layer_id'];
+				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+			}	
 	    
+	   	}
 	    
 	    //Get the current layer - use to view 
-		
-
-	    
-	    
-	
-		//First check if the email exists
-		$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
-		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-		if(($row = db_fetch_array($result))&&($email != ""))
-		{
-			//Email exists
-			
-			//Check if the password already exists
-			$user_id = $row['int_user_id'];
-			if($row['var_pass'] == NULL) {
-				//No password already, so presumably we need to store it
-				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				dbquery($sql) or die("Unable to execute query $sql " . dberror());
+	    if(($email != "")&&($password == "")&&(isset($full_request['email_modified']))&&($full_request['email_modified'] != "false")) {
+	    	//This is a subscription case: an email has been entered, but no password.	    	
+	    	$ly = new cls_layer(); 
+			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 				
-				//Update phone if necessary too
-				if($phone != "") {
-					//f($phone != "Your Phone") {
-						$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
-						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-				} else {
-						//A blank phone - we want to remove any old phone number
-						$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
-						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-					
-					//}
+			$sh = new cls_ssshout();
+				
+			$saved_auth_layer = $_SESSION['access-layer-granted'];		//Save any authenticated sessions
+			$user_id = $sh->new_user($email, $ip, null, false);		//But don't actually login as this user (since we don't have a password)
+																	//otherwise you could simply login as another user by entering
+																	//no password but their email
+	    	$_SESSION['access-layer-granted'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
+	    	
+				
+			//Check we're authorised to this layer if it has a password
+			$layer_info = $ly->get_layer_id($layer_visible);
+			
+			
+			if($layer_info['var_public_code']) {
+				if($_SESSION['access-layer-granted']) {
+						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
+							//Go back and get a password off the user.
+							return "FORUM_INCORRECT_PASS,RELOAD";  
+						}
 				}
-				
-				//Set our session variable
-				$_SESSION['logged-user'] = $user_id;
-				
+			}
 			
+			//Make sure we have the forum right password, if it exists
+			if($layer_info) {
+				//Yes the layer exists. Add ourselves to the subscription list.
+				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 				
-				//Handle any plugin generated settings
-	        	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-                if(strcmp($returns, "RELOAD") == 0) {
-                	$reload = ",RELOAD";
-                }
+				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], null, $email);  
+				if($new_subs === false) {
+					return "SUBSCRIPTION_DENIED";
+				}			
+			}
+			
+			return "SUBSCRIBED";
+	    
+		} else {
+		
+			//A regular login attempt
+		
+			//First check if the email exists
+			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if(($row = db_fetch_array($result))&&($email != ""))
+			{
+				//Email exists
 				
-				return "STORED_PASS" . $reload . "," .$user_id;
-				
-			} else {
-				//A password already - compare with existing password
-				if(md5($password) == $row['var_pass']) {
-				
-					//Yup, a match - lets sign us in
-				
-					
-				
-					$_SESSION['logged-user'] = $user_id;
-					$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+				//Check if the password already exists
+				$user_id = $row['int_user_id'];
+				if($row['var_pass'] == NULL) {
+					//No password already, so presumably we need to store it
+					$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
 					
 					//Update phone if necessary too
 					if($phone != "") {
-						
+						//f($phone != "Your Phone") {
 							$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 					} else {
 							//A blank phone - we want to remove any old phone number
 							$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
 							$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+						
+						//}
+					}
+					
+					//Set our session variable
+					$_SESSION['logged-user'] = $user_id;
+					$_SESSION['logged-email'] = clean_data($email);	  //This is here to confirm the email matches the logged in
+				
+					
+					//Handle any plugin generated settings
+			    	$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+		            if(strcmp($returns, "RELOAD") == 0) {
+		            	$reload = ",RELOAD";
+		            }
+					
+					return "STORED_PASS" . $reload . "," .$user_id;
+					
+				} else {
+					//A password already - compare with existing password
+					if(md5($password) == $row['var_pass']) {
+					
+						//Yup, a match - lets sign us in
+					
+						
+					
+						$_SESSION['logged-user'] = $user_id;
+						$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+						
+						//Update phone if necessary too
+						if($phone != "") {
+							
+								$sql = "UPDATE tbl_user SET var_phone = " . clean_data($phone) . " WHERE int_user_id = " . $user_id;
+								$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+						} else {
+								//A blank phone - we want to remove any old phone number
+								$sql = "UPDATE tbl_user SET var_phone = NULL WHERE int_user_id = " . $user_id;
+								$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 
+							
+						}
+						
+					
+						//Handle any plugin generated settings
+						$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
+						if(strcmp($returns, "RELOAD") == 0) {
+							$reload = ",RELOAD";
+				   
+						}
+											
+						//Get the group user if necessary
+						$this->get_group_user();
+					
+						//Update the group if necessary too 							
+						if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
+							if($users) {
+								
+								if($this->is_admin($_SESSION['logged-user']) == true) {
+									$this->update_subscriptions($users);
+								}
+							}
+						}
+						
+						//Normal forum login
+						return "LOGGED_IN" . $reload . "," .$user_id;  
+						
+						
+					
+					} else {
+					
+						//Incorrect password
+						return "INCORRECT_PASS";
 						
 					}
-					
 				
-					//Handle any plugin generated settings
-					$returns = $this->save_plugin_settings($user_id, $full_request, "SAVE");
-					if(strcmp($returns, "RELOAD") == 0) {
-						$reload = ",RELOAD";
-			   
-					}
-										
-					//Get the group user if necessary
-					$this->get_group_user();
 				
-					//Update the group if necessary too 							
-					if($_SESSION['logged-group-user'] == $_SESSION['layer-group-user']) {
-						if($users) {
-							$this->update_subscriptions($users);
-						}
-					}
-					
-					//Normal forum login
-					return "LOGGED_IN" . $reload . "," .$user_id;  
-				    
-					
-				
-				} else {
-				
-					//Incorrect password
-					return "INCORRECT_PASS";
-					
 				}
+				
+			} else {
+				//Incorrect email - so, this is a new email, or a blank email 
+				$ly = new cls_layer(); 
+				$ip = $ly->getFakeIpAddr();  //get new user's ip address	
+				
+				$sh = new cls_ssshout();
+				
+				
+				$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email if it is different
+						
+			
+				//No password already, so presumably we need to store it
+				if($password) {
+					$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
+					dbquery($sql) or die("Unable to execute query $sql " . dberror());
+				
+					//Set our session variable
+					$_SESSION['logged-user'] = $user_id;
+					$_SESSION['logged-email'] = clean_data($email);			//This is here to confirm the email matches the logged in
+						
+				} 
+				
+				//Handle any plugin generated settings
+				$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
+				if(strcmp($returns, "RELOAD") == 0) {
+		        		$reload = ",RELOAD";
+		    		}
 			
 			
+				return "NEW_USER" . $reload . "," .$user_id;
 			}
-			
-		} else {
-			//Incorrect email - so, this is a new user
-			$ly = new cls_layer(); 
-			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
-			
-			$sh = new cls_ssshout();
-			
-			$user_id = $sh->new_user($email, $ip);		//Sends off confirmation email
-			$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-			
-			
-			//No password already, so presumably we need to store it
-			if($password) {
-				$sql = "UPDATE tbl_user SET var_pass = '" . md5(clean_data($password)) . "' WHERE int_user_id = " . $user_id;
-				dbquery($sql) or die("Unable to execute query $sql " . dberror());
-			
-				//Set our session variable
-				$_SESSION['logged-user'] = $user_id;
-			}
-			
-			
-			//Handle any plugin generated settings
-			$returns = $this->save_plugin_settings($user_id, $full_request, "NEW");
-        		if(strcmp($returns, "RELOAD") == 0) {
-                		$reload = ",RELOAD";
-            		}
-			
-			
-			return "NEW_USER" . $reload . "," .$user_id;
 		}
 	}
 	
+	public function unsubscribe($user_id = null, $layer_visible = null)
+	{
+		//Unsubscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
+		//can specify the current user
+		$ly = new cls_layer(); 
+		$layer_info = $ly->get_layer_id($layer_visible);
+		if($layer_info) {
+			//Yes the layer exists
+			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+			
+			return $this->remove_from_subscriptions($current_subs, $user_id);	
+		} else {
+			return "FAILURE";
+		}
+	}	
+	
+	public function subscribe($user_id = null, $layer_visible = null, $forum_password)
+	{
+		//Subscribe a user from a layer. If user id is not specified, use the current user - note this has some security issues if you
+		//can specify the current user
+		$ly = new cls_layer(); 
+		$layer_info = $ly->get_layer_id($layer_visible);
+		if($layer_info) {
+			//Yes the layer exists
+			if($layer_info['var_public_code']) {
+					if(isset($forum_password) && $forum_password != "") {
+						if(md5(clean_data($forum_password)) != $layer_info['var_public_code']) {
+							return "FAILURE";
+						}
+					}
+					
+					if($_SESSION['access-layer-granted']) {
+						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
+							return "FAILURE";
+						}
+					}
+			} 
+			
+			
+			$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
+			
+			$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);	
+			if($new_subs === false) {
+				return "FAILURE";
+			} else {
+				return $new_subs;
+			}
+		} else {
+			return "FAILURE";
+		}
+	}	
+
+	
 	public function email_confirm($code)
 	{
+		global $msg;
+		global $lang;
+	
 		$sql = "SELECT * FROM tbl_user WHERE var_confirmcode = '" . clean_data($code) . "'";
 		
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());

@@ -2,25 +2,49 @@
    "usingStaging": true,	
    "staging": {
       "db": {
-         "name": "ssshout",
+         "name": "atomjump",
          "hosts": [
             "127.0.0.1"
          ],
+         "singleWriteDb" : true,
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
          "timezone": "EDT",
-         "deleteDeletes": true
-      },
+         "deleteDeletes": true,
+         "ssl" : {
+         	"use" : false,
+         	"key" : "",
+         	"cert" : "",
+         	"cacert": "",
+         	"capath": "",
+         	"protocol": "",
+         	"verify": true
+         }
+      },	
       "webRoot": "http://127.0.0.1/loop-server-staging",
       "webDomain": "127.0.0.1",
       "fileRoot": "/var/www/html/loop-server-staging",
+      "caPath": "/etc/apache2/ssl/ca.pem",
+      "serviceHome": "",
       "phpPath": "/usr/bin/php",
       "readPort" : null,
       "readURL" : null,							
       "httpsKey" : null,
       "httpsCert": null,
       "serverTimezone": "America/Los_Angeles",
+      "delayFeeds" : 1200,
+      "titleReplace": [
+      		{ 	
+      			"regex" : "/yoursite_(.+)/",
+      			"replaceWith" : "$1@"
+      		},
+      		{	
+      			"regex" : "/-/",
+      			"replaceWith": " "
+      		}
+      ],
+      "showAutomaticTitle": true,
       "ips": [
           "127.0.0.1"
       ],
@@ -33,17 +57,32 @@
 		  "imagesShare" : {
 			  "port" : "80",
 			  "https" : false
+		  },		  
+		  "hiRes" : {
+		  	 "width": 1280,
+		  	 "height": 720
 		  },
+		  "lowRes": {
+		  	 "width": 800,
+		  	 "height": 450
+		  },
+		  "replaceHiResURLMatch": "youruploadurl",
 		  "genericUploadURL": "https://youruploadurl.com/upload.php",
 		  "vendor": {
 		  	  "amazonAWS": {
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+				"uploadUseSSL": true,
+				"uploadEndPoint": "https://s3.amazonaws.com",
+		  		"region": "us-west2",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
 	  }, 
       "adminMachineUser" : "92.27.10.17:1",
+	"video" : {
+		"url": "https://meet.jit.si/AJ-changeme[FORUM]"
+	},
       "email": {
       	 "adminEmail": "your.name@your.company.com",
       	 "webmasterEmail": "your.name@your.company.com",
@@ -107,10 +146,11 @@
    }, 
    "production": {      
      "db": {
-         "name": "ssshout",
+         "name": "atomjump",
          "hosts": [
             "127.0.0.1"
          ],
+         "singleWriteDb" : true,
          "user": "yourDBusername",
          "pass": "yourDBpassword",
          "port": "3306",
@@ -119,47 +159,76 @@
          "scaleUp": [
          	{
          		"labelRegExp": "^ajps_2_",
-         	    "name": "ssshout",
+         	    "name": "atomjump",
 				 "hosts": [
 					"yourdb2write.yourcompany.com",
 					"yourdb2read2.yourcompany.com",
 					"yourdb2read3.yourcompany.com",
 					"yourdb2read4.yourcompany.com"
 				 ],
+				 "singleWriteDb" : true, 
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
-				 "adminMachineUser": "92.27.10.17:1"
+				 "adminMachineUser": "92.27.10.17:1",
+				 "ssl" : {
+					"use" : false,
+					"key" : "",
+					"cert" : "",
+					"cacert": "",
+					"capath": "",
+					"protocol": "",
+					"verify": true
+				 },
+				 "plugins": [
+      			 ]
          	},
          	{
          	    "labelRegExp": "^ajps_3_",
-         	    "name": "ssshout",
+         	    "name": "atomjump",
 				 "hosts": [
-					"yourdb3write.yourcompany.com",
-					"yourdb3read2.yourcompany.com",
-					"yourdb3read3.yourcompany.com",
-					"yourdb3read4.yourcompany.com"
+					"yourdb3write1.yourcompany.com",
+					"yourdb3write2.yourcompany.com",
+					"yourdb3write3.yourcompany.com",
+					"yourdb3write4.yourcompany.com"
 				 ],
+				 "singleWriteDb" : false, 
 				 "user": "yourDBusername",
 				 "pass": "yourDBpassword",
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
-				 "adminMachineUser": "92.27.10.17:1"
+				 "adminMachineUser": "92.27.10.17:1",
+				 "plugins": [
+      			 ]
          	}
          ]
       },
       "webRoot": "http://127.0.0.1/loop-server",
       "webDomain": "127.0.0.1",
       "fileRoot": "/var/www/html/loop-server",
+      "serviceHome": "",
+      "caPath": "/etc/apache2/ssl/ca.pem",
       "phpPath": "/usr/bin/php",
       "readPort" : null,
       "readURL" : null,							
       "httpsKey" : null,
       "httpsCert": null,
       "serverTimezone": "America/Los_Angeles",
+      "delayFeeds" : 1200,
+      "titleReplace": [
+      		{ 	
+      			"regex" : "/yoursite_(.+)/",
+      			"replaceWith" : "$1@"
+      		},
+      		{	
+      			"regex" : "/-/",
+      			"replaceWith": " "
+      		}
+      ],
+      "showAutomaticTitle": true,
       "ips": [
           "127.0.0.1"
       ],
@@ -167,22 +236,38 @@
           "ips": [
           ]
       },
-            "uploads" : {
+      "uploads" : {
 		  "use" : "none|same|generic|amazonAWS",
 		  "imagesShare" : {
 			  "port" : "80",
-			  "https" : false
+			  "https" : false,
+			  "checkCode" : "etrwiou4g46nkejr-changeme"
 		  },
+		  "hiRes" : {
+		  	 "width": 1280,
+		  	 "height": 720
+		  },
+		  "lowRes": {
+		  	 "width": 800,
+		  	 "height": 450
+		  },
+		  "replaceHiResURLMatch": "youruploadurl",
 		  "genericUploadURL": "https://youruploadurl.com/upload.php",
 		  "vendor": {
 		  	  "amazonAWS": {
 				"accessKey": "AKIAI4KWI7L4EP286J5Q",
 				"secretKey": "zPOhZNf7l8pP/6jClygiv7hJfCbf5xKxoZVLkboW",
+				"uploadUseSSL": true,
+				"uploadEndPoint": "https://s3.amazonaws.com",
+		  		"region": "us-west2",
 				"imageURL": "https://s3-us-west-2.amazonaws.com/youraccount/"        
 			  }
 		  }
 	  },
       "adminMachineUser" : "92.27.10.17:1",
+	"video" : {
+		"url": "https://meet.jit.si/[FORUM]"
+	},
       "email": {
       	 "adminEmail": "your.name@your.company.com",
       	 "webmasterEmail": "your.name@your.company.com",

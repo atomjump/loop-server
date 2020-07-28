@@ -19,8 +19,12 @@ if(isset($_REQUEST['just_typing'])) {
 	$just_typing = false;
 }
 
-$sh->deactivate_shout($_REQUEST['mid'], $just_typing);
+//Must include a layer id in $_REQUEST['passcode'] also, because it could be from a completely different database in the case of scaleUp.
 
+if($_REQUEST['passcode']) {
+
+	$sh->deactivate_shout($_REQUEST['mid'], $just_typing);
+}
 
 //For now, let anyone remove messages
 $ip = $ly->getRealIpAddr();

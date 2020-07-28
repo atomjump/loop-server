@@ -38,25 +38,43 @@ class cls_ssshout
 		$_SESSION['logged-group-user'] = '';	//This means we are logged in to view messages from this group user, if the same as the layer-group-user then it will be for this layer. Blank if not authorised. 
 		$_SESSION['layer-group-user'] = '';		//The group user for this layer.
 		$_SESSION['access-layer-granted'] = 'false';   //Either 'false' or a layer id if we have access to this layer (multiple user access with a password).
+		$_SESSION['access-layers-granted'] = '';		//A blank value to begin with. Becomes an array of granted access layers
+		$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
 	
 		$_SESSION['view-count'] = 0;			//0 or 1 for the number of times this layer has been viewed. 	
 	
 	}
 
+	public function check_user_exists($user_id)
+	{
+		//Check exists, and if so, returns the user record, else return falsee
+		$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . $user_id;
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			
+		if($row = db_fetch_array($result))
+		{
+			 //existing user
+			 return $row;
+		} else {
+			return false;
+		}
+	
+	}
+	
 	
 	public function new_user($email, $ip, $phone = NULL, $login_as = true)
 	{
 		//If login_as is false, we don't send a welcome email out to the user (it is a system-only request).
+		//and we don't actually login (i.e. store it in the session variable)
+		//But by default we log in as that user.
 		global $root_server_url;
 		global $cnf;
 		global $msg;
 		global $lang;
 		global $db;
+		global $notify;
 		
-	 
-	 
-
-	 
+	  
 	 
 		//Returns user id - old one if a duplicate, new one if new
 				
@@ -143,7 +161,14 @@ class cls_ssshout
 			
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
-						cc_mail($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'], $cnf['email']['webmasterEmail']);
+						
+						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
+						error_log($body_message);
+						
+						cc_mail_direct($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
+						
+						
+						//($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 						
 						
 						$_SESSION['logged-user'] = db_insert_id();
@@ -151,7 +176,7 @@ class cls_ssshout
 					}
 					
 					//Let me know there is a new user
-					cc_mail($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
+					cc_mail_direct($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
 				
 					return db_insert_id();
 			
@@ -328,10 +353,21 @@ class cls_ssshout
 					$layer_name = $this->layer_name;
 					$email_body .= 	"\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>\n" . $layer_message . ": " . $layer_name;
 ; 
-				
-					$url = $root_server_url . "/de.php?mid=" . $message_id;
-					$remove_url = $url;
-					$remove_message = $msg['msgs'][$lang]['removeComment'];
+				    if($this->layer_name) {
+						//Yes, we have the globally set layer name
+						$url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $layer_name;
+						$remove_url = $url;
+						$remove_message = $msg['msgs'][$lang]['removeComment'];
+					} else {
+						//We don't have the correct layer name - deleting without it could delete it from the wrong database, so
+						//leave out. We may be able to include it if we check there are no scaleUps, but I think that is
+						//a poor soln.
+						$url = "";
+						$remove_url = $url;
+						$remove_message = "";
+					}	
+					
+					
 					$email_body .= "\n\n" . $remove_message . " <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 					
 				} else {
@@ -387,7 +423,16 @@ class cls_ssshout
 					}
 					
 					$remove_message = $msg['msgs'][$lang]['removeComment'];
-					$remove_url = $root_server_url . "/de.php?mid=" . $message_id;
+					if($this->layer_name) {
+						//Yes, we have the globally set layer name
+						$remove_url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $this->layer_name;
+					} else {
+						//We don't have the correct layer name - deleting without it could delete it from the wrong database, so
+						//leave out. We may be able to include it if we check there are no scaleUps, but I think that is
+						//a poor soln.
+						$remove_message = "";
+						$remove_url = "";
+					}		
 					$email_body .= "\n\n" . $msg['msgs'][$lang]['removeComment'] . ": <a href=\"$remove_url\">$remove_url</a>";  // . "u=" . urlencode(cur_page_url())
 				}
 				
@@ -451,15 +496,19 @@ class cls_ssshout
 	
 	public function deactivate_shout($ssshout_id, $just_typing = false)
 	{
+		global $db_cnf;
 		global $cnf;
 		global $msg;
 		global $lang;
 		
+		make_writable_db();
+		
+		
 		//just_typing == true, when you are just typing and it temporarily removes your 'typing' message
 		//            == false, for when want full deactivation
-		if((isset($cnf['db']['deleteDeletes']))
-			&& ($cnf['db']['deleteDeletes'] == true)
-			&& ($just_typing == false)) {
+		if((isset($db_cnf['deleteDeletes']))
+			&& ($db_cnf['deleteDeletes'] == true)
+			&& ($just_typing == false)) {			//Don't use truple === because often just a nullvalue
 			
 			//This is a genuine call to delete the message, and we need to remove it from the database completely.
 			$sql = "DELETE FROM tbl_ssshout WHERE int_ssshout_id = " . clean_data($ssshout_id);
@@ -467,14 +516,60 @@ class cls_ssshout
 			//A regular deactivate
 			$sql = "UPDATE tbl_ssshout SET enm_active = 'false' WHERE int_ssshout_id = " . clean_data($ssshout_id);
 		}
-		dbquery($sql) or die("Unable to execute query $sql " . dberror());
-		
-		if(($just_typing == false)&&
-		   ($cnf['db']['deleteDeletes'] == false)) {
-			//Warn overall admin - TODO: just layer admin?
-			cc_mail($cnf['email']['adminEmail'], str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']), $cnf['email']['webmasterEmail']);
-			echo "Deactivated message.";		//TODO more descriptive comment here.	
+		if(dbquery($sql) == false) {
+			error_log("Unable to execute query $sql " . dberror());
+			if($just_typing == false) {
+				//Warn visually - this is typically from a remote delete message link
+				if($msg['msgs'][$lang]['failureDeactivating']) {
+					echo $msg['msgs'][$lang]['failureDeactivating'];
+				} else {
+					echo "Sorry we could not deactivate the AtomJump Message. Please contact the system admin.";
+				}
+			}
+			return;
 		}
+		
+		
+		if($just_typing == false) {   //&&($db_cnf['deleteDeletes'] == false)
+			//Warn the admin of this message deletion. If they are simply typing then don't notify anyone.
+			
+			//Warn overall admin 
+			$msg = str_replace("MSG_ID", $ssshout_id, $msg['msgs'][$lang]['deactivatedCheck']);
+			
+			if($db_cnf['adminMachineUser']) {
+				//There is a unique user who we can notify
+				$user_components = explode(":", $db_cnf['adminMachineUser']);
+				
+				//Sending to layer admin
+				//Send message to target user ID: $user_components[1]
+				//Get the email address of the admin user
+				$sql = "SELECT var_email FROM tbl_user WHERE int_user_id = " . $user_components[1];
+				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+				if($row = db_fetch_array($result))
+				{
+					//User exists, and we have an email address - email that admin user
+					cc_mail($row['var_email'], $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
+				} else {
+					//Mail the master owner
+					cc_mail($cnf['email']['adminEmail'],  $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
+				}
+				
+			} else {
+				//Mail the master owner
+				cc_mail($cnf['email']['adminEmail'], $msg['msgs'][$lang]['successDeactivating'], $msg, $cnf['email']['webmasterEmail']);
+			}
+			
+			//A message has been deactivated - show something to the user, and log it
+			error_log("Deactivated message. " . $msg);
+			
+			if($msg['msgs'][$lang]['successDeactivating']) {
+				echo $msg['msgs'][$lang]['successDeactivating'];		//This is seen by the end user.
+			} else {
+				echo "You have deactivated the AtomJump Message successfully.";
+			}
+		}
+		
+		
 	
 	}
 	
@@ -750,6 +845,97 @@ class cls_ssshout
 	}
 	
 
+	public function call_plugins_msg_buttons($message, $allowed_plugins) {
+	    global $cnf;
+	    global $local_server_path;
+	    
+	    if($allowed_plugins != null) {
+	        //OK we have an array of allowed plugins
+	        $plugins = $allowed_plugins;
+	    } else {
+	        //Otherwise, assume all plugins in the global config
+	        $plugins = $cnf['plugins'];
+	    }
+	    
+	    $return_html = "";
+	    	    
+	    //Loop through each class and call each plugin_* -> on_message() function
+	    for($cnt=0; $cnt < count($plugins); $cnt++) {
+	        $plugin_name = $plugins[$cnt];
+	        
+	       
+	        include_once($local_server_path . "plugins/" . $plugin_name . "/index.php");
+	        $class_name = "plugin_" . $plugin_name;
+	        
+	        $pg = new $class_name();
+	        
+	        if(method_exists($pg,"on_msg_buttons") == true) {
+	            //OK call the on_settings function of the plugin
+	            $return_html .= $pg->on_msg_buttons($message);
+	        
+	        } else {
+	            //No on_msg_buttons() in plugin - do nothing
+
+	        }
+	    }
+	    return $return_html;
+	}	
+	
+	
+	public function check_duplicate_names($username, $user_id, $layer_id)
+	{
+		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
+		//Input a username e.g. 'John', from a particular user ID. Note: this should be case insensitive to prevent
+		//users trying to game someone into impersonation by simply changing the case of a letter.
+		//Output is the username with an (02) or (03) attached.
+		
+		//First a quick check - we only want to do this precisely if there is another whole user with the same username
+		//but a different author id. 
+		$sql = "SELECT * FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' AND int_author_id <> " . $user_id;
+		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		if($rowb = db_fetch_array($result))
+		{
+			//Yes there is. Now do a complete comparison
+			$sql = "DROP TEMPORARY TABLE IF EXISTS tbl_multiuser_check";
+			$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
+
+		
+			//The query should be fast and use an indexed query
+			$sql = "CREATE TEMPORARY TABLE tbl_multiuser_check(int_counter int(10) NOT NULL AUTO_INCREMENT, var_username varchar(50) CHARACTER SET utf8 DEFAULT NULL, `int_author_id` int(10) unsigned DEFAULT NULL, KEY `counter` (`int_counter`))";
+			$result = dbquery($sql)  or die(error_log("Unable to execute query $sql " . dberror()));
+		
+
+		
+			$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			$affected_rows = db_affected_rows();
+			if($affected_rows > 0) {
+				//There have been at least one other user	
+				$sqlb = "SELECT * FROM tbl_multiuser_check WHERE int_author_id = " . $user_id;
+
+				$result = dbquery($sqlb)  or die("Unable to execute query $sqlb " . dberror());
+				if($rowb = db_fetch_array($result))
+				{
+					if($rowb['int_counter'] > 1) {
+				
+						$username = $username . " (" . $rowb['int_counter'] . ")";
+					}
+			
+				} else {
+					//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
+					$new_user_id = $affected_rows + 1;
+					$username = $username . " (" . $new_user_id . ")";
+				}
+			}
+		
+		
+			$sql = "DROP TEMPORARY TABLE tbl_multiuser_check";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+		}
+		
+		return $username;
+	
+	}
 	
 	
 	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
@@ -758,6 +944,7 @@ class cls_ssshout
 	    global $lang;
 	    global $db;
 		$email_in_msg = false;
+		$max_username_width = 50;		//Defined by database
 	
 		//Insert shouted text into database at this time
 		$peano1 = $bg->generate_peano1($latitude, $longitude);		//Lat/lon of point in table
@@ -770,13 +957,7 @@ class cls_ssshout
 		if($typing == true) {
 			$shouted = $msg['msgs'][$lang]['typing'];
 		}
-		
-		if(($your_name != "")&&
-			($your_name != "Your Name")) {
-			$message = $your_name . ": " . $shouted;
-		} else {
-			$message = $shouted;
-		}
+	
 		
 		if($date_override) {
 			 //Allow for a string override on the date
@@ -790,7 +971,19 @@ class cls_ssshout
    		//If we are a user get our id
 		$user_id = $this->new_user($email, $ip, $phone, $loginas);
 				
+		
+		//Modify the username for input into the forum
+		$processed_name = $your_name;  //Or perhaps we need to do something similar to: preg_replace("/[^a-z0-9\_\-\.\ ]/i", '', $your_name);    //Remove special chars
 
+		//Make sure we differentiate two or more different usernames that are the same. E.g 'John', 'john (02)', 'John (03)'
+		$visible_name = $this->check_duplicate_names($processed_name, $user_id, $layer);
+		
+		if(($processed_name != "")&&
+			($processed_name != "Your Name")) {
+			$message = $visible_name . ": " . $shouted;
+		} else {
+			$message = $shouted;
+		}
 		
 		
 		if(trim($message) != "") {
@@ -923,7 +1116,8 @@ class cls_ssshout
 												int_whisper_to_id= " . $whisper_to_id . ",
 												enm_active = 'true',
 												enm_status = '$status',
-												int_author_id = $user_id
+												int_author_id = $user_id,
+												var_username = '" . substr(clean_data($processed_name), 0, $max_username_width) . "' 
 												WHERE int_ssshout_id = " . $ssshout_id . " and enm_status = 'typing'";
 					if(!dbquery($sql)) {
 							error_log("Unable to execute query $sql " . dberror());
@@ -977,7 +1171,8 @@ class cls_ssshout
 									var_ip,
 									var_whisper_to,
 									int_whisper_to_id,
-									int_author_id
+									int_author_id,
+									var_username
 								) VALUES (		
 									'" . $latitude ."',
 									'" . $longitude ."',
@@ -994,7 +1189,8 @@ class cls_ssshout
 									'" . $ip . "',
 									'" . $whisper_to_divided[0] . "',
 									" . $whisper_to_id . ",
-									" . $user_id ."
+									" . $user_id .",
+									'" . substr(clean_data($processed_name), 0, $max_username_width) . "'
 									)";	
 									
 									
@@ -1113,6 +1309,7 @@ class cls_ssshout
 	   return $outgoing;
 	
 	}
+
 	
 	public function process_chars($my_line, $ip, $user_id, $id = null, $allow_plugins = true, $allowed_plugins = null)
 	{
@@ -1121,6 +1318,7 @@ class cls_ssshout
         global $msg;
         global $lang;
         global $root_server_url;
+        global $cnf;
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
@@ -1129,11 +1327,8 @@ class cls_ssshout
         }
 		
 		
-		
-		
-		
 		//Turn xxx@ into clickable atomjump links
-		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com", $my_line);
+		$my_line = preg_replace("/\b(\w+)@([^\w]+|\z.?)/i", "$1.atomjump.com ", $my_line);
 			
 			
 		//Check for a payment link					
@@ -1170,51 +1365,64 @@ class cls_ssshout
 			
 			$my_line = preg_replace('/(pay\s([\d|\.]+)\s(pounds|dollars|pound|dollar))/i', '<a target="_blank" href="' . $root_server_url . '/p2p-payment.php?user_id=' . $user_id . '&amount=' . trim($pay[1]) . '&currencyCode=' . $currency . '&msgid=' . $id. '">$1</a>', $my_line);
 			$include_payment = true;  //switch on flag	
-			
+					
 			//In this case we have a slightly different url definition, because we don't want to replace the dollar amount with a url link:
 			//Turn any strings which are entirely chars (and not numbers) and include dots into urls
 			//Convert any links into a href links
 			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\D.]+)+\D(:\d+)?(/([-\D/_\.]*([\?|\#]\D+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
 			
 		} else {		
-				
+								
 			//Turn any strings which are entirely chars/numbers and include dots into urls
 			//Convert any links into a href links
 			$my_line= preg_replace('@(\s)((https?://)?([-\w]+\.[-\w\.]+)+\w(:\d+)?(/([-\w/_\.]*([\?|\#]\S+)?)?)*)@', ' <a target="_blank" href="$2">$2</a>', $my_line);
-		
+				
 		}
 		
+		//Check if we are using https rather than http links and set a flag for later
+		$use_https = false;
+		$match = "#>https://(.*?)<#";
+		$match_b = "#\"https://(.*?)\"#";
+		if(preg_match($match, $my_line) || preg_match($match_b, $my_line)) {
+			$use_https = true;
+		}
 		
 		//Turn video links on youtube into embedded thumbnail which plays at youtube  
 		$my_line = preg_replace('#>https://youtu.be\/(.*)<#i', '><img class="img-responsive" width="80%" src="https://img.youtube.com/vi/$1/0.jpg"><img src="https://atomjump.com/images/play.png" width="32" height="32" border="0"><', $my_line);
 		
-
 		//Turn uploaded images into responsive images, with a click through to the hi-res image
-		$my_line = preg_replace("/href=\"(.*?)\.jpg\"\>(.*?ajmp(.*?))\.jpg\</i", 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
-
+		$url_matching = "ajmp";		//Works with Amazon based jpgs on atomjump.com which include ajmp.
+		if($cnf['uploads']['replaceHiResURLMatch']) $url_matching = $cnf['uploads']['replaceHiResURLMatch'];
+		$preg_search = "/href=\"(.*?)\.jpg\"\>(.*?" . $url_matching ."(.*?))\.jpg\</i";
+		$my_line = preg_replace($preg_search, 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
+		//Note: TODO In future I suggest investigating
+		//https://sourceforge.net/projects/simplehtmldom/
 
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 		
-		
 		//Turn remote images by themselves into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\s(.*?\.jpg)\s/i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
 
-
 		//because you want the url to be an external link the href needs to start with 'http://'
-		//Replace any href which doesn't have htt at the start
-		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);
+		//Replace any href which doesn't have htt at the start.
+		$my_line = preg_replace("/href=\"(?:(http|ftp|https)\:\/\/)?([^\"]*)\"/","href=\"http://$2\"",$my_line);  
 		
+		//Loop through each src= and add http at the start if it doesn't have it
+		$match_src = "#src=\"^http(.*?)\"#m";
+		preg_replace($match_src,"src=\"http://$1\"",$my_line);  
+		
+		if($use_https == true) {
+		   //links includes https
+		   $my_line = preg_replace("/href=\"http\:/m","href=\"https:",$my_line); 
+		}
 		
 		//Turn .atomjump.com links into xxx@ clickable links
-		$my_line = preg_replace("/>(http:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
+		$my_line = preg_replace("/>(https:\/\/)?(.*?)\.atomjump\.com</i", ">$2@<", $my_line);
 
 
 		//Turn long links into smaller 'More Info' text only (except where an image)
 		$my_line = preg_replace("/>([^<]{50,})(<\/a>)/i", ">" . $msg['msgs'][$lang]['expandLink'] ."$2", $my_line);
-		
-
-		
 
 		//Turn names into an ip address private whisper link
 		if($ip != "") {
@@ -1228,9 +1436,6 @@ class cls_ssshout
 		 } 
 			$my_line = preg_replace("/^([^:]+):\s/i", "<a href='#' onclick='whisper(\"" . $ip . ":" . $user_id . "\", \"$1\", " . $private . ", \"" . $shortcode ."\"); return false;' title='" . $msg['msgs'][$lang]['sendCommentTo'] . " $1 " . $privately . "'>$1</a>:&nbsp;", $my_line);		
 		}
-		
-		
-		
 		
 		
 
@@ -1427,23 +1632,31 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			$ly = new cls_layer();
 			$bg = new clsBasicGeosearch();
 			$more = false;
+			
+			$json = array();			//The return array
+			
 
 			//Sequential search process. WARNING: depends on request being active
 			//E.g. date_default_timezone_set("Europe/Berlin");
 			date_default_timezone_set($server_timezone);
 
+
 			if(($_REQUEST['passcode'] != '')||($_REQUEST['reading'] != '')) { 
 				$layer_info = $ly->get_layer_id($_REQUEST['passcode'], $_REQUEST['reading']);
-				if($layer_info) {
+				
+				if($layer_info) {			
 					$layer = $layer_info['int_layer_id'];
 				} else {
-					//Create a new layer - TODO: don't allow layers so easily
-					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 
+					//Create a new layer
 					
-					//Given this is a new layer - the first user is the correct user
-					$lg = new cls_login();
-					$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);	
 					
+					$layer = $ly->new_layer($_REQUEST['passcode'], 'public'); 				
+					//Check to see the title, and return it to the client.
+					$layer_info = $ly->get_layer_id($_REQUEST['passcode'], null);
+					if(isset($layer_info['var_title'])) {
+						$json['title'] = $layer_info['var_title'];					
+					}
+										
 				}
 			} else {
 
@@ -1498,6 +1711,14 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 				$dest_tz = new DateTimeZone('UTC'); // TODO: Note this is a constant I think.
 				// a download, for now same query
 		  
+		  		if($cnf['delayFeeds']) {
+		  			//This feature allows for a certain number of seconds for a post to be posted before it can appear on any export or feed.
+		  			//It is important for allowing users to delete objectionable content.
+		  			$delay_seconds = $cnf['delayFeeds'];		
+		  			$delay_feed = true;
+		  		} else {
+		  			$delay_feed = false;
+		  		}
 		  
 		  
 				  switch($format) {
@@ -1505,7 +1726,12 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					  	if($last_id == 0) {
 							$last_id = PHP_INT_MAX;
 					  	}
-				 		$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  	if($delay_feed == false) {
+				 			$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+				 		} else {
+				 			$sql = "CREATE TEMPORARY TABLE recent SELECT TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) AS timeAgo, flt_sentiment FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+				 		
+				 		}
 					break;
 		
 					case "excel":
@@ -1513,7 +1739,13 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					  if($last_id == 0) {
 						$last_id = PHP_INT_MAX;
 					  }
-					  $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  
+					  if($delay_feed == false) {
+					  		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  } else {
+					 	$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id < " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id DESC LIMIT $initial_records";
+					  
+					  }
 
 					break;
 		
@@ -1521,7 +1753,12 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 					   //json
 		
 						//json so forwards
-					   $sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+						if($delay_feed == false) {
+					   		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+					   	} else {
+					   		$sql = "SELECT * FROM tbl_ssshout WHERE int_layer_id = " . $layer . " AND int_ssshout_id > " . $last_id . " AND enm_active = 'true' AND (var_whisper_to = '' OR ISNULL(var_whisper_to) OR var_whisper_to ='" . $ip . "' OR var_ip = '" . $ip . "' $user_check) AND TIMESTAMPDIFF(SECOND, date_when_shouted, NOW()) > " . $delay_seconds . " ORDER BY int_ssshout_id ASC LIMIT $initial_records";
+					   	
+					   	}
 
 					break;
 				  }
@@ -1535,9 +1772,11 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			if(isset($_SESSION['access-layer-granted'])&&($_SESSION['access-layer-granted'] != 'true')) {
 			
 				if(($_SESSION['access-layer-granted'] == 'false') || ($_SESSION['access-layer-granted'] != $layer)) { 
-					//No view on this layer
-					$results_array = array();
-					$ignore_query = true;
+					if(!$ly->is_layer_granted($layer)) {
+						//No view on this layer
+						$results_array = array();
+						$ignore_query = true;
+					}
 				}
 			
 			} 
@@ -1555,7 +1794,6 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 
 			//TODO: expand on whispering a bit so that only select those which a viewable from us in the top 50 results
 
-			$json = array();
 		
 
 		   if($format == "avg") {
@@ -1708,6 +1946,7 @@ public function process($shout_id = null, $msg_id = null, $records = null, $down
 			//Echo the jsonp
 			if($download == true){
       	       $json['more'] = $more;     //relevant to download
+      	             	       
 			   switch($format) {
 			     case 'csv':
 			  

@@ -12,13 +12,48 @@ To test the web domain, use the following small PHP script:
 ?>
 ```
 
-**db** **hosts**: there can be any number of db hosts, but the first one is the only write host, while the others are read.
-   We use Amazon MySQL RDS for multiple db hosts.
+**db** **hosts**: there can be any number of db hosts, but some services do not allow multiple write hosts, and if this case the first one is the only write host, while the others are read. You can configure this with the 'singleWriteDb' option.
+
+**db** **singleWriteDb**: optional. 'true' for a single write database cluster, and 'false' for a multiple write database cluster. This option is only applicable if there is more than one database host. Ver >= 1.8.9
    
 **db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
 
-**db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'.
+**db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'. You can also have different set of plugins with a unique 'plugins' array (Ver >= 1.9.5).
 
+**db** **ssl**: Makes the connection to the database encrypted. Ver >= 1.9.5
+
+```
+"ssl" : {
+         	"use" : false,
+         	"key" : "",
+         	"cert" : "",
+         	"cacert": "",
+         	"capath": "",
+         	"protocol": "",
+         	"verify": true
+         }
+```
+
+**db** **ssl** **use**: Set to 'true' to use SSL, or 'false' to ignore the SSL settings and transfer data to the database unencrypted. Ver >= 1.9.5
+
+**db** **ssl** **key**: The file path of the server's key file. Ver >= 1.9.5
+
+**db** **ssl** **cert**: The file path of the server's certificate file. Ver >= 1.9.5
+
+**db** **ssl** **cacert**: The file path of the CA Certificate file. Ver >= 1.9.5
+
+**db** **ssl** **capath**: The path to the folder that contains the CA Certificate file. Ver >= 1.9.5
+
+**db** **ssl** **protocol**: A list of the supported ssl protocols (separated by semi-colons). Ver >= 1.9.5. Here are some common protocols:
+
+``` ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DH-DSS-AES256-GCM-SHA384:DHE-DSS-AES256-GCM-SHA384:DH-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA256:DH-RSA-AES256-SHA256:DH-DSS-AES256-SHA256:DHE-RSA-AES256-SHA:DHE-DSS-AES256-SHA:
+DH-RSA-AES256-SHA:DH-DSS-AES256-SHA:DHE-RSA-CAMELLIA256-SHA:DHE-DSS-CAMELLIA256-SHA:DH-RSA-CAMELLIA256-SHA:DH-DSS-CAMELLIA256-SHA:ECDH-RSA-AES256-GCM-SHA384:ECDH-ECDSA-AES256-GCM-SHA384:ECDH-RSA-AES256-SHA384:ECDH-ECDSA-AES256-SHA384:ECDH-RSA-AES256-SHA:ECDH-ECDSA-AES256-SHA:AES256-GCM-SHA384:AES256-SHA256:AES256-SHA:CAMELLIA256-SHA:PSK-AES256-CBC-SHA:ECDHE-RSA-AES128-GCM-SHA256:
+ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:DH-DSS-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:DH-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-DSS-AES128-SHA256:DH-RSA-AES128-SHA256:DH-DSS-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA:DH-RSA-AES128-SHA:DH-DSS-AES128-SHA:DHE-RSA-SEED-SHA:DHE-DSS-SEED-SHA:DH-RSA-SEED-SHA:DH-DSS-SEED-SHA:DHE-RSA-CAMELLIA128-SHA:
+DHE-DSS-CAMELLIA128-SHA:DH-RSA-CAMELLIA128-SHA:DH-DSS-CAMELLIA128-SHA:ECDH-RSA-AES128-GCM-SHA256:ECDH-ECDSA-AES128-GCM-SHA256:ECDH-RSA-AES128-SHA256:ECDH-ECDSA-AES128-SHA256:ECDH-RSA-AES128-SHA:ECDH-ECDSA-AES128-SHA:AES128-GCM-SHA256:AES128-SHA256:AES128-SHA:SEED-SHA:CAMELLIA128-SHA:IDEA-CBC-SHA:PSK-AES128-CBC-SHA:ECDHE-RSA-RC4-SHA:ECDHE-ECDSA-RC4-SHA:ECDH-RSA-RC4-SHA:ECDH-ECDSA-RC4-SHA:
+RC4-SHA:RC4-MD5:PSK-RC4-SHA:ECDHE-RSA-DES-CBC3-SHA:ECDHE-ECDSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:EDH-DSS-DES-CBC3-SHA:DH-RSA-DES-CBC3-SHA:DH-DSS-DES-CBC3-SHA:ECDH-RSA-DES-CBC3-SHA:ECDH-ECDSA-DES-CBC3-SHA:DES-CBC3-SHA:PSK-3DES-EDE-CBC-SHA
+```
+
+**db** **ssl** **verify**: Whether to require verification of the certificates. We strongly recommend this is set to 'true'. 'false' requires PHP ver >= 5.6. Ver >= 1.9.5
 
 **ips**: any number of PHP machines with the server software on it.
 
@@ -27,6 +62,19 @@ To test the web domain, use the following small PHP script:
 **fileRoot**: Local file system server's file path. Don't include trailing slash.
 
 **serverTimezone**: Change this to the location of the physical server eg. Pacific/Auckland
+
+**delayFeeds**: Delays any API or feed download access for this number of seconds. The default is 1200 seconds or 20 minutes.
+
+**titleReplace** **regex** **replaceWith**:  To create an automatic visual title for a forum based off the forum's actual database name, you should add in any regular expression replacements. This should be an array of { regex, replaceWith } objects, which are processed sequentially on the forum's database name. For example, xyz.atomjump.com pages are given a forum database name ajps_Xyz . The regex to replace the "ajps_" part of this to create a title "Xyz" you should should use 
+{
+	"regex": "/ajps_(.+)/",
+	"replaceWith": "$1"
+}
+Where $1 is the entry in (.+). Note: you should include the /expression/ around your expressions, and can optionally include case insensitive modifiers, e.g. /expression/i.
+More information on the supported expressions is available at https://www.php.net/manual/en/function.preg-replace.php.
+You can switch automatic titles on or off with 'showAutomaticTitle' below.
+
+**showAutomaticTitle** can be 'true' or 'false' depending on whether you wish to auto-generate titles for the forum headers. You can also modify the title using the 'titleReplace' options above.
 
 **deleteDeletes**: Set to true by default, this means any user action to delete a message removes it completely from the database. If for your records you are required to keep hidden messages, set to false.
 
@@ -62,6 +110,12 @@ message via twitter).
 Note: You should make sure your server provides a caching response to image files, or Safari will continue to refresh the images every 5 seconds.
 
 **uploads** **imagesShare**: If there are multiple PHP nodes, this defines which port to write uploaded images to, so that they are shared between nodes. 'Port' is a port such as 80, and 'https' is either true or false.
+
+**uploads** **hiRes** **width** (**height**): width in pixels of uploaded images, in their hi-res version. The low-res version is displayed to the whole group, and the hi-res version is only used when a user taps on that one photo.
+
+**uploads** **lowRes** **width** (**height**): width in pixels of uploaded images, in their low-res version. The low-res version is displayed to the whole group, and the hi-res version is only used when a user taps on that one photo.
+
+**uploads** **replaceHiResURLMatch**: set to a string in your uploaded images URL path that identifies that the photo is on your server, and not copied from a different server e.g. 'atomjump' would identify for "http://yourserver.com/atomjump/images/im/yourphoto.jpg". Images which include this string, will show the hi-res uploaded version when clicked e.g. "http://yourserver.com/atomjump/images/im/yourphoto_HI.jpg".
 
 **uploads** **vendor** **amazonAWS**: optional. Currently required for image uploads. This is for S3 storage of uploaded images. You will need an Amazon 'accessKey', 'secretKey' and 'imageURL', in this case.
 

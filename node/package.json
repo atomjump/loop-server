@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "mysql": "~2.8.0",
+    "mysql": ">=2.14.0",
     "async": "~1.4.2",
     "sentiment": "~1.0.2"
   }

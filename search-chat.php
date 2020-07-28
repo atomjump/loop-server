@@ -68,6 +68,8 @@ if(intval($_SESSION['view-count']) == 0) {
 
 $se = new cls_search();
 
+header("Cache-Control: private, no-transform"); // HTTP/1.1
+
 $se->process(NULL, NULL, $_REQUEST['records']);
 
 session_write_close(); 

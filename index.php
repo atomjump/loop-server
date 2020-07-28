@@ -58,6 +58,7 @@
 	$ip = $ly->getFakeIpAddr();
 
 
+
 	//Check to see if we're logging in
 	if(($_SESSION['logged-user'])||($_REQUEST['remoteapp'] == 'true')) {
 
@@ -76,7 +77,7 @@
 		}
 
 
-
+		
 		if(($_REQUEST['passcode'] != '')||($_REQUEST['reading'] != '')) {
 			$layer_info = $ly->get_layer_id($_REQUEST['passcode'], $_REQUEST['reading']);
 
@@ -88,16 +89,12 @@
 
 
 			} else {
-				//A new passcode
+				//A new passcode, i.e. a new layer
 				$layer_status = "new";
 				$layer_info = array();
 				$layer_info['enm_access'] = 'private';
 				$layer_info['myaccess'] = 'readwrite';
 				$layer = $ly->new_layer($_REQUEST['passcode'], 'public');
-
-				//Given this is a new layer - the first user is the correct user
-				$lg = new cls_login();
-				$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
 
 			}
 		}
@@ -146,10 +143,6 @@
 				$layer_info['enm_access'] = 'private';
 				$layer_info['myaccess'] = 'readwrite';
 				$layer = $ly->new_layer($_REQUEST['passcode'], 'public');
-
-				//Given this is a new layer - the first user is the correct user
-				$lg = new cls_login();
-				$lg->update_subscriptions(clean_data($_REQUEST['whisper_site']), $layer);
 
 			}
 		} else {
@@ -397,10 +390,20 @@
 		$query = $subdomain;
 	}
 
+	global $db_cnf;
+	if($db_cnf['serviceHome'] && $db_cnf['serviceHome'] != "") {
+		//Redirect to the homepage of the service. Particularly use by the reset password.
+		//This is a 'scaled up' redirect, as a first check.
+		header("Location: " . add_subdomain_to_path($db_cnf['serviceHome']));
+		exit(0);
+	}
 	
-
-
-
+	//Now check the master version
+	if($cnf['serviceHome'] && $cnf['serviceHome'] != "https://yourcompany.com") {
+		//Redirect to the homepage of the service. Particularly use by the reset password
+		header("Location: " . add_subdomain_to_path($cnf['serviceHome']));
+		exit(0);
+	}
 
 
 	//Ensure no caching
@@ -416,7 +419,7 @@
   <head>
   	    <meta charset="utf-8">
 		 <meta name="viewport" content="width=device-width, user-scalable=no">
-		 <title>AtomJump Loop Server - provided by AtomJump</title>
+		 <title>AtomJump Messaging Server - provided by AtomJump</title>
 
 		 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
 
@@ -433,15 +436,7 @@
 			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			  <style>
-			  .looplogo:hover {
-					position: relative;
-					background: url(images/logo640.png)  no-repeat;
-					height: 640px;
-					width: 640px;
-					margin-left: auto;
-					margin-right: auto;
-					padding-top: 0px;
-			 	}
+			  
 
 				.looplogo {
 					background: url(images/logo640.png)  no-repeat;
@@ -478,15 +473,7 @@
 
 
 
-				.looplogo:hover {
-					position: relative;
-					height: 640px;
-					width: 640px;
-					margin-left: auto;
-					margin-right: auto;
-					padding-top: 0px;
-				}
-
+			
 				.looplogo {
 					position: relative;
 					width: 600px;
@@ -738,11 +725,11 @@
 
 		<div>
 		    <div id="logo-wrapper" class="looplogo">
-				<a href="https://atomjump.com"><img class="saver-hideable" src="https://atomjump.com/images/looplogo.svg" id="bg" alt=""></a>
+				<img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt="">
 				<br/>
+				<p align="center">Your AtomJump Messaging server is running!<br/> You should now configure a '<a href="https://github.com/atomjump/loop#loop">web service connector client</a>' to start messaging from this server.</p>
 
 			</div>
-			</a>
 		</div>
 
 
@@ -752,7 +739,7 @@
 
 
 		<div class="subs">
-  				<a href="https://github.com/atomjump/loop-server" title="Download Software"><img  border="0" src="https://atomjump.com/images/loopdownload.svg" width="80" height="80"></a>
+  				<a href="https://github.com/atomjump/loop-server/releases" title="Download Software"><img  border="0" src="https://atomjump.com/images/loopdownload.svg" width="80" height="80"></a>
 		</div>
 
 		
@@ -761,7 +748,7 @@
                 <div class="col-md-2">
                 </div>
                  <div class="col-md-8">
-                    <h3 align="center">Set 'server' to:
+                    <h3 align="center" style="color: #aaa;">Set your 'server' variable to:
                         <b><?php $actual_link = 'http://'.$_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']);
                             echo $actual_link; ?></b>
                         
@@ -777,8 +764,8 @@
 
 			<div class="cpy">
 				<p align="right"><a href="https://atomjump.com/smart.php">Learn More</a></p>
-				<p align="right"><b>Local Server Install</b></p>
-				<p align="right"><small>&copy; <?php echo date('Y'); ?> <?php echo $msg['msgs'][$lang]['copyright'] ?></small></p>
+				<p align="right" style="color: #aaa;"><b>Local Server Install</b></p>
+				<p align="right" style="color: #aaa;"><small>&copy; <?php echo date('Y'); ?> <?php echo $msg['msgs'][$lang]['copyright'] ?></small></p>
 			</div>
 
 		<div id="comment-holder"></div><!-- holds the popup comments. Can be anywhere between the <body> tags -->
