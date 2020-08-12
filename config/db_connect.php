@@ -543,6 +543,7 @@
 		$mail->Subject = $subject;
 		$mail->Body    = nl2br($body_text);
 		$mail->AltBody = $body_text;
+		$mail->CharSet = 'UTF-8';
 
 		error_log("In send_generic_email:" . $mail->Subject); //TESTING - REMOVE ME
 
