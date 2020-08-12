@@ -494,10 +494,7 @@ class cls_layer
 				}		    	
 		    	
 		    	
-		    	if($send_message == true) {
-		    		error_log("Subject1: " . $msg['msgs'][$lang]['newMsg']);			//TESTING - REMOVE ME.
-		    		
-		    		
+		    	if($send_message == true) {   				    		
 			    	cc_mail($row['var_email'], $msg['msgs'][$lang]['newMsg'] . " " . cur_page_url(), $email_body, $cnf['email']['noReplyEmail']);
 			    }
 		    

@@ -29,8 +29,6 @@ require(__DIR__ . "/classes/cls.basic_geosearch.php");
 require(__DIR__ . "/classes/cls.layer.php");
 require(__DIR__ . "/classes/cls.ssshout.php");
 
-error_log("Subject in send-email.php:" . $_REQUEST['subject']); //TESTING - REMOVE ME
-
 echo cc_mail_direct($_REQUEST['to'], $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['sender_email'], $_REQUEST['sender_name'], $_REQUEST['to_name'], $_REQUEST['bcc']);
 
 
