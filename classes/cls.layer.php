@@ -1138,7 +1138,7 @@ class cls_login
 				
 				
 			} else {
-				$user_id = $_SESSION['logged-user'];		//TESTING
+				$user_id = $_SESSION['logged-user'];		
 			}
 			
 	    	
