@@ -488,6 +488,8 @@
 				
 		if($notify == true) {		//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
 			$cmd = 'nohup nice -n 10 ' . $cnf['phpPath'] .  ' ' . $local_server_path . 'send-email.php to=' . rawurlencode($to_email) . '  subject=' . rawurlencode($subject) . ' body=' . rawurlencode($body_text) . ' sender_email=' . rawurlencode($sender_email) .  ' sender_name=' . urlencode($sender_name) . ' to_name=' . urlencode($to_name) . ' staging=' . $staging . ' bcc=' . rawurlencode($bcc_email) . ' > /dev/null 2>&1 &';	//To log eg.: . ' >/var/www/html/atomjump_staging/tmp/newlog.txt';
+			
+			error_log("Command:" . $cmd);		//TESTING - REMOVE ME
 						
 			array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 		}
@@ -541,6 +543,8 @@
 		$mail->Subject = $subject;
 		$mail->Body    = nl2br($body_text);
 		$mail->AltBody = $body_text;
+
+		error_log("In send_generic_email:" . $mail->Subject); //TESTING - REMOVE ME
 
 		if(!$mail->send()) {
 			error_log('Message could not be sent.');
@@ -599,6 +603,9 @@
 	function cc_mail_direct($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 	{
 		global $notify;			//This global variable may be set by an add-on e.g. the emailer, to ensure that notifications are not sent
+		
+		
+		error_log("Subject in cc_mail_direct:" . $subject); //TESTING - REMOVE ME
 		
 		if($notify == true) {		
 	
