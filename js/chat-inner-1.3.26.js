@@ -1660,6 +1660,7 @@ function doSearch()
 					units: 'mi',
 					volume: 1.00,
 					records: records,
+					lang: lang,
 					whisper_site: whisperSite,
 					sessionId: $('#ses').val(),
 					general: $('#general-data-hidden').val(),

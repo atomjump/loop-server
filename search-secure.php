@@ -284,7 +284,7 @@
 
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.3.26.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.3.27.js"></script> 
 			
 		
 			
