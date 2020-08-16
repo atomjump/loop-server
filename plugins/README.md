@@ -329,4 +329,15 @@ This should be called at the end of your script to complete all of the parallel_
 
 
 
+**show_translated_number()**
+
+Required parameters
+($number, $lang) 
+
+Server: >= 2.6.7
+
+Input, ideally an integer between 0 - 60 (60 seconds in a minute means this is usually the largest number we need for most things, i.e. 59 seconds ago), and a language e.g. "en", "ch" from the messages.json translation list. However, any number can be used and the default is to return the English number if there is no matching number in the messages array "number" conversion for the input language.
+
+
+
 
