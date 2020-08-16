@@ -164,7 +164,13 @@
             			 "20", "21", "22", "23", "24", "25", "26", "27", "28", "29",
             			 "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
             			 "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
-            			 "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"]
+            			 "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60"],
+             "numbersLonghand": [ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+            			 "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen",
+            			 "twenty", "twenty one", "twenty two", "twenty three", "twenty four", "twenty five", "twenty six", "twenty seven", "twenty eight", "twenty nine",
+            			 "thirty", "thirty one", "thirty two", "thirty three", "thirty thirty", "thirty five", "thirty six", "thirty seven", "thirty eight", "thirty nine",
+            			 "forty", "forty one", "forty two", "forty three", "forty four", "forty five", "forty six", "forty seven", "forty eight", "forty nine",
+            			 "fifty", "fifty one", "fifty two", "fifty three", "fifty four", "fifty five", "fifty six", "fifty seven", "fifty eight", "fifty nine", "sixty"]
         },
 		"es": {
 			"fullnameEnglish": "Spanish",

@@ -817,6 +817,8 @@
 		//input language.
 		global $msg;
 		
+		error_log("Input num: " . $number . "  Language:" . $lang);
+		
 		if($msg['msgs'][$lang]['numbers']) {
 			//Yes the numbers array exists for this language
 			//Check definitely an integer
