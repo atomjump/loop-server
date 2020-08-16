@@ -1492,8 +1492,10 @@ class cls_search {
 		   $difference = round($difference);
 		   
 		   if($difference != 1) {
+		   		$difference = show_translated_number($difference, $lang);		//Translate into different languages
 		        return "$difference $periods_plural[$j] " . $tense;
 		   } else {
+		   		$difference = show_translated_number($difference, $lang);		//Translate into different languages
 		        return "$difference $periods[$j] " . $tense;
 		   }
 		}
