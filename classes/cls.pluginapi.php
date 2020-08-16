@@ -207,6 +207,20 @@ class cls_plugin_api {
 		return in_array($check_forum_id, $layers_granted_array);
 	}
 	
+	/*
+		Input, ideally an integer between 0 - 60 (60 seconds in a minute means this
+		is usually the largest number we need for most things, i.e. 59 seconds ago). 
+		However, any number can be used and the default is to return the English number
+		if there is no matching number in the messages array "number" conversion for the
+		input language.
+	*/
+	public function show_translated_number($number, $lang)
+	{
+		//Use db_connect version of function
+		return show_translated_number($number, $lang)
+	
+	}
+	
 	
 	/*
 	    Run a parallel system process on the server machine

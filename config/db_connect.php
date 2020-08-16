@@ -807,6 +807,36 @@
 		return $details;
 	}
 	
+	
+	function show_translated_number($number, $lang)
+	{
+		//Input, ideally an integer between 0 - 60 (60 seconds in a minute means this
+		//is usually the largest number we need for most things, i.e. 59 seconds ago). 
+		//However, any number can be used and the default is to return the English number
+		//if there is no matching number in the messages array "number" conversion for the
+		//input language.
+		global $msg;
+		
+		if($msg['msgs'][$lang]['numbers']) {
+			//Yes the numbers array exists for this language
+			//Check definitely an integer
+			if(is_int($number)) {
+				if($msg['msgs'][$lang]['numbers'][$number]) {
+					//Return the string if this is in the 'number' array as the indexed version of that number	
+					return $msg['msgs'][$lang]['numbers'][$number];
+				} else {
+					return $number;				
+				}			
+			} else {
+				return $number;
+			}
+		} else {
+			return $number;
+		}
+		
+	
+	}
+	
 	function dbconnect($host, $user, $pass, $dbname = null, $ssldetails = null, $dbport = 3306)
 	{
 		//Using old style:
