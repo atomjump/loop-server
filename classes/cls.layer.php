@@ -615,6 +615,9 @@ class cls_login
 		$subscriber_array = explode(",", $subscription_string);
 		if($subscriber_array[0]) {
 			$subscriber_count = count($subscriber_array);
+			global $msg;
+			global $lang;
+			$subscriber_count = show_translated_number($subscriber_count, $lang);
 		} else {
 			$subscriber_count = "[NA]";
 		}
