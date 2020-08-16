@@ -816,17 +816,12 @@
 		//if there is no matching number in the messages array "number" conversion for the
 		//input language.
 		global $msg;
-		
-		error_log("Input num: " . $number . "  Language:" . $lang);
-		
+				
 		if($msg['msgs'][$lang]['numbers']) {
 			//Yes the numbers array exists for this language
 			//Check definitely an integer
-			error_log("Yes numbers exists");
 			if(is_int(intval($number))) {
-				error_log("Yes is int");
 				if($msg['msgs'][$lang]['numbers'][$number]) {
-					error_log("Yes exists in array: Returning " . $msg['msgs'][$lang]['numbers'][$number]);
 					//Return the string if this is in the 'number' array as the indexed version of that number	
 					return $msg['msgs'][$lang]['numbers'][$number];
 				} else {
