@@ -823,7 +823,7 @@
 			//Yes the numbers array exists for this language
 			//Check definitely an integer
 			error_log("Yes numbers exists");
-			if(is_int($number)) {
+			if(is_int(intval($number))) {
 				error_log("Yes is int");
 				if($msg['msgs'][$lang]['numbers'][$number]) {
 					error_log("Yes exists in array: Returning " . $msg['msgs'][$lang]['numbers'][$number]);
