@@ -217,7 +217,7 @@ class cls_plugin_api {
 	public function show_translated_number($number, $lang)
 	{
 		//Use db_connect version of function
-		return show_translated_number($number, $lang)
+		return show_translated_number($number, $lang);
 	
 	}
 	
