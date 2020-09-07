@@ -1,5 +1,8 @@
-//WARNING: if you make changes to this file, you should also rename the version number of the file (with git mv)
-//to prevent browser caching not picking up the new version. Then make a change into the server config file 'chatInnerJSFilename'.
+//WARNING: if you make changes to the master version of this file, you should also rename the 
+//version number of the file to chat-inner-x.y.z+1 (and use git mv) to prevent user's browsers caches from referring to
+//an old version. 
+//Then make a change into the server server config file entry 'chatInnerJSFilename', with the correct version number.
+//
 //Language & messages configuration
 //Note: also see /config/messages.json for further messages configuration
 var lsmsg = {

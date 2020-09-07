@@ -203,7 +203,7 @@
 		//Likely an older version of the config.json from ver < 2.6.9
 		//For legacy config support, we will find the correct filename interactively. This is slower, so it is recommended
 		//to add the chatInnerJSFilename element instead.
-		$file_array = glob("js/chat-inner*");
+		$file_array = glob(__DIR__ . "js/chat-inner*");
 		if($file_array[0]) {
 			$chat_inner_js_filename = $file_array[0];
 		}
