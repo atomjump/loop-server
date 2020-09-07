@@ -8,7 +8,15 @@
 	$ly = new cls_layer();
 	$sh = new cls_ssshout();
 	
-
+	
+	if(isset($cnf['chatInnerJSFilename']) && (file_exists($cnf['chatInnerJSFilename']))) {
+		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
+	} else {
+		//The default version
+		$chat_inner_js_filename = "/js/chat-inner-1.3.29.js";			//This should be updated when the Javascript file
+																		//is updated. And you should 'git mv' the file to the
+																		//new version number.
+	}
 	
 	//We may have a possible user request in the case of receiving an email
 	if(isset($_REQUEST['possible_user'])) {
@@ -197,17 +205,7 @@
 	}
 	
 	
-	if(isset($cnf['chatInnerJSFilename']) && (file_exists($cnf['chatInnerJSFilename']))) {
-		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
-	} else {
-		//Likely an older version of the config.json from ver < 2.6.9
-		//For legacy config support, we will find the correct filename interactively. This is slower, so it is recommended
-		//to add the chatInnerJSFilename element instead.
-		$file_array = glob(__DIR__ . "js/chat-inner*");
-		if($file_array[0]) {
-			$chat_inner_js_filename = $file_array[0];
-		}
-	}
+
 		
 	
 	

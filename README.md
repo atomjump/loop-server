@@ -371,6 +371,8 @@ You can switch automatic titles on or off with 'showAutomaticTitle' below.
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
 
+**chatInnerJSFilename**: Path from the server that refers to the server-side Javascript. E.g. "/js/chat-inner-1.3.29.js". The numbers may change during updates.
+
 **logoutPort**: Depreciated ver 0.6.3. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5, ver <= 0.6.2
 
 **adminMachineUser**: once your server has been set up, and you have saved your first user (yourself typically), find this user in the interface

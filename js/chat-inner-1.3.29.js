@@ -1,7 +1,8 @@
 //WARNING: if you make changes to the master version of this file, you should also rename the 
 //version number of the file to chat-inner-x.y.z+1 (and use git mv) to prevent user's browsers caches from referring to
 //an old version. 
-//Then make a change into the server server config file entry 'chatInnerJSFilename', with the correct version number.
+//Then make a change into the server server config file entry 'chatInnerJSFilename', and the top of search-secure script,
+// with the correct default version number.
 //
 //Language & messages configuration
 //Note: also see /config/messages.json for further messages configuration
