@@ -9,7 +9,7 @@
 	$sh = new cls_ssshout();
 	
 	
-	if(isset($cnf['chatInnerJSFilename']) && (file_exists($cnf['chatInnerJSFilename']))) {
+	if(isset($cnf['chatInnerJSFilename']) && (file_exists(__DIR__ . $cnf['chatInnerJSFilename']))) {
 		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
 	} else {
 		//The default version
