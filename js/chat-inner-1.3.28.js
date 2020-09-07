@@ -1,3 +1,5 @@
+//WARNING: if you make changes to this file, you should also rename the version number of the file (with git mv)
+//to prevent browser caching not picking up the new version. Then make a change into the server config file 'chatInnerJSFilename'.
 //Language & messages configuration
 //Note: also see /config/messages.json for further messages configuration
 var lsmsg = {

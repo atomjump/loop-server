@@ -197,6 +197,21 @@
 	}
 	
 	
+	if(isset($cnf['chatInnerJSFilename'])) {
+		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
+	} else {
+		//Likely an older version of the config.json from ver < 2.6.9
+		//For legacy config support, we will find the correct filename interactively. This is slower, so it is recommended
+		//to add the chatInnerJSFilename element instead.
+		$file_array = glob("js/chat-inner*");
+		if($file_array[0]) {
+			$chat_inner_js_filename = $file_array[0];
+		}
+	}
+		
+	
+	
+	
 	//Ensure no caching
 	header("Cache-Control: no-store, no-cache, must-revalidate, private, no-transform"); // HTTP/1.1
 	header("Cache-Control: post-check=0, pre-check=0", false);
@@ -281,10 +296,10 @@
 				var goPrivateMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPrivate'] ?>';
 				var goPublicMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPublic'] ?>';
 				
-
+				
 				
 			</script>
-			<script type="text/javascript" src="<?php echo $root_server_url ?>/js/chat-inner-1.3.28.js"></script> 
+			<script type="text/javascript" src="<?php echo $root_server_url . $chat_inner_js_filename ?>"></script> 
 			
 		
 			
