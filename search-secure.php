@@ -197,7 +197,7 @@
 	}
 	
 	
-	if(isset($cnf['chatInnerJSFilename'])) {
+	if(isset($cnf['chatInnerJSFilename']) && (file_exists($cnf['chatInnerJSFilename']))) {
 		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
 	} else {
 		//Likely an older version of the config.json from ver < 2.6.9
