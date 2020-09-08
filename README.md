@@ -371,7 +371,7 @@ You can switch automatic titles on or off with 'showAutomaticTitle' below.
 
 **phpPath**: Path to externally run any parallel PHP processes. Ver >= 0.5.5
 
-**chatInnerJSFilename**: Path from the server that refers to the server-side Javascript. E.g. "/js/chat-inner-1.3.29.js". This will override the system default, if the file exists, but otherwise the default version, which is specified at the top of the search-secure.php script, is used.
+**chatInnerJSFilename**: Path from the server that refers to the server-side Javascript. E.g. "/js/chat-inner-1.3.29.js". This will override the system default, if the file exists, but otherwise the default version is used, which is specified at the top of the search-secure.php script.
 
 **logoutPort**: Depreciated ver 0.6.3. Port which a logout is supported on. Default 1444. Use in an ssh situation, whereby this is a non-ssh port. Ver >= 0.5.5, ver <= 0.6.2
 
