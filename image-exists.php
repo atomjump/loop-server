@@ -9,11 +9,13 @@
         $config = json_decode($data, true);
         if(!isset($config)) {
           echo "Error: config/config.json is not valid JSON.";
+          
           exit(0);
         }
      
      } else {
        echo "Error: Missing config/config.json.";
+       if($verbose == true) error_log("Error: Missing config/config.json.");
        exit(0);
      
      } 
