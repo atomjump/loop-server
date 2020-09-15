@@ -30,10 +30,9 @@
 	
 	if($verbose == true) error_log($_REQUEST['code'] . " vs " . $cnf['uploads']['imagesShare']['checkCode']);
 	
-	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {
-		$filename = str_replace("/", "", $_REQUEST['image']);		//Remove any additional filename modifications for other areas
-		$filename = str_replace("..", "", $filename);
-		if(file_exists(__DIR__ . '/images/im/' . $filename)) {
+	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {		
+		$filename = str_replace("..", "", $_REQUEST['image']);		//Remove any additional filename modifications for other areas
+		if(file_exists(__DIR__ . '/images/' . $filename)) {
 			echo "true";
 		
 		} else {

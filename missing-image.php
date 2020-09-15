@@ -62,7 +62,11 @@
 		
 			}
 			
-			$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			//$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			
+			$image_path = trim_trailing_slash($server) . "/images/";
+			$path = str_replace($image_path, "", $_SERVER['REQUEST_URI']);
+			$path = parse_url($path, PHP_URL_PATH);
 
 			// extracted basename
 			$filename = basename($path);
@@ -79,28 +83,28 @@
 				$server = $servers[$cnt];
 		
 				if($server) {
-					$url  = trim_trailing_slash($server) . "/images/im/" . $filename;		
+					$url  = trim_trailing_slash($server) . "/images/" . $path;		
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
 					if($verbose == true) error_log("url:" . $url);
 					
-					$img = __DIR__ . '/images/im/' . $filename;
+					$img = __DIR__ . '/images/' . $path;
 					
 					//Download and put into our local image folder
 					
 					
 					try {
 						//Do a file check request first
-						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $filename . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
+						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $path . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
 						
-						$checker_str = get_remote($checker, $filename);
+						$checker_str = get_remote($checker, $path);
 						// Check if file exists
 						if($checker_str !== "true"){
 							if($verbose == true) error_log("File not found");
 							$failure_getting = true;
 						} else{
 							if($verbose == true) error_log("File exists");
-							$str_image = get_remote($url, $filename);
+							$str_image = get_remote($url, $path);
 							if($str_image === false) {
 								if($verbose == true) error_log("Failed to get"); 
 								$failure_getting = true;
