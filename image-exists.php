@@ -1,5 +1,5 @@
 <?php
-  $verbose = true;			//False in live environs
+  $verbose = false;			//False in live environs
   if($verbose == true) error_log("Running image-exists check.");
 
   //This section is a simplified cnf getter - for speed.	
