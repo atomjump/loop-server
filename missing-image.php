@@ -7,7 +7,7 @@
 	global $root_server_url;
 	global $cnf;
 	
-	$verbose = false;
+	$verbose = true;		//Usually false in live environs
 	
 	function is_image($pathToFile)
 	{
