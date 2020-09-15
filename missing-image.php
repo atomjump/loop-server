@@ -82,7 +82,8 @@
 			for($cnt = 0; $cnt < 3; $cnt++) {
 				
 				$server = $servers[$cnt];
-		
+				if($verbose == true) error_log("checking server:" . $server);
+				
 				if($server) {
 					$url  = trim_trailing_slash($server) . "/images" . $path;		
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
@@ -97,6 +98,7 @@
 					try {
 						//Do a file check request first
 						$checker = trim_trailing_slash($server) . "/image-exists.php?image=" . $path . "&code=" . $cnf['uploads']['imagesShare']['checkCode'];	
+						if($verbose == true) error_log("checker: " . $checker );
 						
 						$checker_str = get_remote($checker, $path);
 						// Check if file exists
