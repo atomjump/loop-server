@@ -1,6 +1,6 @@
 <?php
   $verbose = true;			//False in live environs
-  if($verbose == true) error_log("Running image-exists check.");
+  if($verbose == true) error_log("Running image-exists check. Conf:" . dirname(__FILE__) . "/config/config.json");
 
   //This section is a simplified cnf getter - for speed.	
   if(!isset($config)) {
@@ -35,6 +35,7 @@
 	
 	if($_REQUEST['code'] == $cnf['uploads']['imagesShare']['checkCode']) {		
 		$filename = str_replace("..", "", $_REQUEST['image']);		//Remove any additional filename modifications for other areas
+		
 		if(file_exists(__DIR__ . '/images' . $filename)) {
 			echo "true";
 		
