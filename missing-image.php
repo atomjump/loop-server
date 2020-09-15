@@ -107,6 +107,7 @@
 						if($verbose == true) error_log("checker: " . $checker );
 						
 						$checker_str = get_remote($checker, $path);
+						if($verbose == true) error_log("checked response: " . $checker_str );
 						// Check if file exists
 						if($checker_str !== "true"){
 							if($verbose == true) error_log("File not found");
