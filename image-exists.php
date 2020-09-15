@@ -1,5 +1,5 @@
 <?php
-  $verbose = false;
+  $verbose = true;			//False in live environs
 
   //This section is a simplified cnf getter - for speed.	
   if(!isset($config)) {
