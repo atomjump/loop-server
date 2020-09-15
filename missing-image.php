@@ -62,12 +62,15 @@
 		
 			}
 			
-			//$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			if($verbose == true) error_log("input path:" . $path);
 			
+			//Input = $_SERVER['REQUEST_URI'] = /api/images/property/test.jpg
 			$image_path = trim_trailing_slash($cnf['webRoot']) . "/images";
 			if($verbose == true) error_log("image path:" . $image_path);
 			$path = str_replace($image_path, "", $_SERVER['REQUEST_URI']);
 			//$path = parse_url($path, PHP_URL_PATH);
+			//E.g. Target for path from  is /im/test.jpg
 			if($verbose == true) error_log("path:" . $path);
 
 			// extracted basename
