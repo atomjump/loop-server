@@ -83,12 +83,12 @@
 				$server = $servers[$cnt];
 		
 				if($server) {
-					$url  = trim_trailing_slash($server) . "/images/" . $path;		
+					$url  = trim_trailing_slash($server) . "/images" . $path;		
 					//E.g. $url = "https://staging.atomjump.com/api/images/im/upl440-47456560.jpg";
 					
 					if($verbose == true) error_log("url:" . $url);
 					
-					$img = __DIR__ . '/images/' . $path;
+					$img = __DIR__ . '/images' . $path;
 					
 					//Download and put into our local image folder
 					
