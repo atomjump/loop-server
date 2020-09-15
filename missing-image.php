@@ -88,7 +88,12 @@
 			for($cnt = 0; $cnt < 3; $cnt++) {
 				
 				$server = $servers[$cnt];
+				if($config['usingStaging'] == true) {
+					//Staging special case testing
+					$server = add_trailing_slash($cnf['webRoot']);
+				}
 				if($verbose == true) error_log("checking server:" . $server);
+				
 				
 				if($server) {
 					$url  = trim_trailing_slash($server) . "/images" . $path;		
