@@ -64,9 +64,10 @@
 			
 			//$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 			
-			$image_path = trim_trailing_slash($server) . "/images/";
+			$image_path = trim_trailing_slash($server) . "/images";
 			$path = str_replace($image_path, "", $_SERVER['REQUEST_URI']);
 			$path = parse_url($path, PHP_URL_PATH);
+			if($verbose == true) error_log("path:" . $path);
 
 			// extracted basename
 			$filename = basename($path);
