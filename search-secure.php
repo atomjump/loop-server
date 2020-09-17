@@ -748,7 +748,7 @@
 				  	var this_max_width = max_height;
 					if (height > this_max_height) {
 					  //width *= max_height / height;
-					  width = Math.round(width *= this_max_height / height);
+					  width = Math.round(this_max_height *= width / height);
 					  height = this_max_height;
 					}
 				  }
