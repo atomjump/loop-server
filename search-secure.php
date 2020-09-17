@@ -706,10 +706,10 @@
 			  
 			  	  var width = img.width;
 				  var height = img.height;
-				  var max_height = 150;
-				  var max_width = 200;
+				  var max_preview_height = 150;
+				  var max_preview_width = 200;
 				  if(height > width) {
-				  	if (height > this_max_height) {
+				  	if (height > max_preview_height) {
 					  //width *= max_height / height;
 					  width = Math.round(width *= max_height / height);
 					  height = max_height;
@@ -717,8 +717,8 @@
 				  } else {
 				  	if (width > max_width) {
 					  //height *= max_width / width;
-					  height = Math.round(height *= max_width / width);
-					  width = max_width;
+					  height = Math.round(height *= max_preview_width / width);
+					  width = max_preview_width;
 					}				  
 				  }
 				 
