@@ -752,7 +752,7 @@
 					  width = Math.round(this_max_height *= width / height);
 					  height = this_max_height;
 					}
-					alert("Image width: " + width + "  max_width:" + height);
+					alert("Image width: " + width + "  height:" + height);
 				  }
   
 				  // resize the canvas and draw the image data into it
