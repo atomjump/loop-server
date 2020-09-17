@@ -704,12 +704,24 @@
 				  //first get a thumbnail
 				  var canvas = document.createElement('canvas');
 			  
-				  var width = 200;
-				  var height = 150;
-				  if (height > width) {	//Handle vertical images better in preview
-				  	width = 112;
-				  	height = 150;
+			  	  var width = img.width;
+				  var height = img.height;
+				  var max_height = 150;
+				  var max_width = 200;
+				  if(height > width) {
+				  	if (height > this_max_height) {
+					  //width *= max_height / height;
+					  width = Math.round(width *= max_height / height);
+					  height = max_height;
+					}				  	 
+				  } else {
+				  	if (width > max_width) {
+					  //height *= max_width / width;
+					  height = Math.round(height *= max_width / width);
+					  width = max_width;
+					}				  
 				  }
+				 
 				  canvas.width = width;
 				  canvas.height = height;
 				  var ctx = canvas.getContext("2d");
