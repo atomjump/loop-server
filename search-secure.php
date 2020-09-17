@@ -746,11 +746,13 @@
 				  	//Swap around the max
 				  	var this_max_height = max_width;
 				  	var this_max_width = max_height;
+				  	alert("  max_width:" + this_max_width + "  max height: " + this_max_height);
 					if (height > this_max_height) {
 					  //width *= max_height / height;
 					  width = Math.round(this_max_height *= width / height);
 					  height = this_max_height;
 					}
+					alert("Image width: " + width + "  max_width:" + height);
 				  }
   
 				  // resize the canvas and draw the image data into it
