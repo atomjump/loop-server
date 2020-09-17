@@ -715,7 +715,7 @@
 					  height = max_preview_height;
 					}				  	 
 				  } else {
-				  	if (width > max_width) {
+				  	if (width > max_preview_width) {
 					  //height *= max_width / width;
 					  height = Math.round(height *= max_preview_width / width);
 					  width = max_preview_width;
