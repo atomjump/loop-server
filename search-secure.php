@@ -749,7 +749,7 @@
 				  	alert("  max_width:" + this_max_width + "  max height: " + this_max_height);
 					if (height > this_max_height) {
 					  //width *= max_height / height;
-					  width = Math.round(this_max_height *= width / height);
+					  width = Math.round(width *= this_max_height / height);
 					  height = this_max_height;
 					}
 					alert("Image width: " + width + "  height:" + height);
