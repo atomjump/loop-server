@@ -706,6 +706,10 @@
 			  
 				  var width = 200;
 				  var height = 150;
+				  if (height > width) {	//Handle vertical images better in preview
+				  	width = 112;
+				  	height = 150;
+				  }
 				  canvas.width = width;
 				  canvas.height = height;
 				  var ctx = canvas.getContext("2d");
@@ -727,10 +731,13 @@
 					  width = max_width;
 					}
 				  } else {
-					if (height > max_height) {
+				  	//Swap around the max
+				  	var this_max_height = max_width;
+				  	var this_max_width = max_height;
+					if (height > this_max_height) {
 					  //width *= max_height / height;
-					  width = Math.round(width *= max_height / height);
-					  height = max_height;
+					  width = Math.round(width *= this_max_height / height);
+					  height = this_max_height;
 					}
 				  }
   
