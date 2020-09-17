@@ -54,7 +54,11 @@
 				$ratio = $height / $width;
 				$resize = true;
 					
-				$base_size = 800;
+				$base_size = 800;		//For a roughly proportioned 800x450 image
+				
+				if($height > $width) {
+					$base_size = 450;
+				}
 				
 				if($resize == true) {
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
@@ -65,7 +69,11 @@
 					
 					$hi_res = true;
 					//We want a hi res version too
-					$base_size = 1280;
+					$base_size = 1280;		//For a roughly proportioned 1280x720 image
+					
+					if($height > $width) {
+						$base_size = 720;
+					}
 					
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
 					$filename = $hi_target_file;
