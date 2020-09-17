@@ -52,9 +52,21 @@
 				$ratio = $height / $width;
 				$resize = true;
 					
-				$base_size = 800;
-				if($cnf['uploads']['lowRes']['width']) $base_size = $cnf['uploads']['lowRes']['width'];
+				$base_size = 800;			//For a roughly proportioned 800x450 image
 				
+				
+				if($cnf['uploads']['lowRes']['width']) {
+					$base_size = $cnf['uploads']['lowRes']['width'];
+				}
+				
+				
+				//Check for a vertically proportioned image
+				if($height > $width) {
+					$base_size = 450;
+					if($cnf['uploads']['lowRes']['height']) {
+						$base_size = $cnf['uploads']['lowRes']['height'];
+					}
+				}
 				
 				if($resize == true) {
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
@@ -65,8 +77,17 @@
 					
 					$hi_res = true;
 					//We want a hi res version too
-					$base_size = 1280;
+					$base_size = 1280;			//For a roughly proportioned 1280x720 image
 					if($cnf['uploads']['hiRes']['width']) $base_size = $cnf['uploads']['hiRes']['width'];
+					
+					//Check for a vertically proportioned image
+					if($height > $width) {
+						$base_size = 720;
+						if($cnf['uploads']['hiRes']['height']) {
+							$base_size = $cnf['uploads']['hiRes']['height'];
+						}
+					}
+					
 					
 					$tmp = imagecreatetruecolor($base_size, ($base_size*$ratio));
 					$filename = $hi_target_file;
