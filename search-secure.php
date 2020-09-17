@@ -707,7 +707,7 @@
 			  	  var width = img.width;
 				  var height = img.height;
 				  var max_preview_height = 150;
-				  var max_preview_width = 200;
+				  var max_preview_width = 266;
 				  if(height > width) {
 				  	if (height > max_preview_height) {
 					  //width *= max_height / height;
