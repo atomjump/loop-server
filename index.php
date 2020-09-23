@@ -8,6 +8,8 @@
 	require("classes/cls.ssshout.php");
 	require("classes/cls.social.php");
 
+	$debug_parallel = true;		//Usually false, switch to 'true' when debugging output from parallel processes
+
 	$bg = new clsBasicGeosearch();
 	$ly = new cls_layer();
 	$sh = new cls_ssshout();
@@ -316,7 +318,14 @@
 		    global $cnf;
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
+		    if($debug_parallel == true) {
+		    	$cmd = $command;
+		    }
 		    $ret = shell_exec($cmd);
+			if($debug_parallel == true) {
+		    	error_log($ret);
+		    }
+		
 		
 		}
 		
