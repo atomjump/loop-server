@@ -12,13 +12,13 @@
 		
 		for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
 			
-			if($debug_parallel == true) {
+			/*if($debug_parallel == true) {
 				error_log("About to run: " . $process_parallel[$cnt]);
-			}
+			}*/
 			$ret = shell_exec($process_parallel[$cnt]);
-			if($debug_parallel == true) {
+			/*if($debug_parallel == true) {
 				error_log("Finished running: " . $ret);
-			}
+			}*/
 		}
 	} else {
 		echo "Sorry, you need to pass a urlencoded, json_encoded array of shell commands to run.";
