@@ -317,7 +317,6 @@
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
 		    $ret = shell_exec($cmd);
-		    error_log($cmd . "      Returned: " . $ret);
 		
 		}
 		
