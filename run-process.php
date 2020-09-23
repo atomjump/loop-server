@@ -12,9 +12,12 @@
 		
 		for($cnt = 0; $cnt < count($process_parallel); $cnt++) {
 			
+			if($debug_parallel == true) {
+				error_log("About to run: " . $process_parallel[$cnt]);
+			}
 			$ret = shell_exec($process_parallel[$cnt]);
 			if($debug_parallel == true) {
-				error_log($ret);
+				error_log("Finished running: " . $ret);
 			}
 		}
 	} else {
