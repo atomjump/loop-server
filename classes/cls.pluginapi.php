@@ -38,7 +38,7 @@ class cls_plugin_api {
     
     
     public $job;
-    public $debug_parallel = false;		//usually false, but for debugging parallel processing you can switch this on.
+    //public $debug_parallel = false;		//usually false, but for debugging parallel processing you can switch this on.
 
 
 	  
@@ -295,9 +295,9 @@ class cls_plugin_api {
 	                
 	               
 	                $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
-	                if($this->$debug_parallel == true) {
+	                /*if($this->$debug_parallel == true) {
 		    			$cmd = $command;
-		    		}
+		    		}*/
 	                array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 	            }	        
 		        
@@ -342,13 +342,13 @@ class cls_plugin_api {
 		    
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
-		    if($this->$debug_parallel == true) {
+		    /*if($this->$debug_parallel == true) {
 		    		$cmd = $command;
-		    }
+		    }*/
 		    $ret = shell_exec($cmd);
-			if($this->$debug_parallel == true) {
+			/*if($this->$debug_parallel == true) {
 		    		error_log($ret);
-		    }
+		    }*/
 		
 		}
 		
