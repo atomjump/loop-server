@@ -8,7 +8,7 @@
 	require("classes/cls.ssshout.php");
 	require("classes/cls.social.php");
 
-	$debug_parallel = false;		//Usually false, switch to 'true' when debugging output from parallel processes
+	$debug_parallel = true;		//Usually false, switch to 'true' when debugging output from parallel processes
 
 	$bg = new clsBasicGeosearch();
 	$ly = new cls_layer();
