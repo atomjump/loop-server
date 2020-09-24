@@ -38,7 +38,7 @@ class cls_plugin_api {
     
     
     public $job;
-    public $debug_parallel = true;		//usually false, but for debugging parallel processing you can switch this on.
+    public $debug_parallel = false;		//usually false, but for debugging parallel processing you can switch this on.
 
 
 	  

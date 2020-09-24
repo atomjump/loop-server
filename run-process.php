@@ -3,7 +3,7 @@
 	//Runs through a series of shell commands in the background
 	//Usage:  php run_process.php [urlencoded, json_encoded array of shell commands to run]
 	
-	$debug_parallel = true;		//Usually false, switch to 'true' when debugging output from parallel processes
+	$debug_parallel = false;		//Usually false, switch to 'true' when debugging output from parallel processes
 
 	
 	if($argv[1]) {
