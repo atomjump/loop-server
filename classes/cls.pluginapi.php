@@ -296,7 +296,7 @@ class cls_plugin_api {
 	               
 	                $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
 	                error_log("Debug_parallel = " . $this->debug_parallel);
-	                if($this->debug_parallel === true) {
+	                if($this->debug_parallel == true) {
 		    			$cmd = $command;
 		    			error_log("Pushing " . $cmd);
 		    			
@@ -345,12 +345,12 @@ class cls_plugin_api {
 		    
 		    $command = $cnf['phpPath'] . " " . $local_server_path . "run-process.php " . urlencode(json_encode($process_parallel));
 		    $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
-		    if($this->debug_parallel === true) {
+		    if($this->debug_parallel == true) {
 		    		$cmd = $command;
 		    		error_log($cmd);
 		    }
 		    $ret = shell_exec($cmd);
-			if($this->debug_parallel === true) {
+			if($this->debug_parallel == true) {
 		    		error_log($ret);
 		    }
 		
