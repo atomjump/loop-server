@@ -295,8 +295,10 @@ class cls_plugin_api {
 	                
 	               
 	                $cmd = "nohup nice -10 " . $command . " > /dev/null 2>&1 &"; 
+	                error_log("Debug_parallel = " . $this->debug_parallel);
 	                /*if($this->debug_parallel == true) {
 		    			$cmd = $command;
+		    			
 		    		}*/
 	                array_push($process_parallel, $cmd);        //Store to be run by index.php at the end of everything else.
 	            }	        
