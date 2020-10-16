@@ -25,7 +25,9 @@ require("classes/cls.ssshout.php");
 		
 		file_put_contents($maiden_check, "Indexes have been run once.");
 		
-		
+		echo "Successfully changed the indexes. Go back to <a href='index.php'>home</a>";
+	} else {
+		echo "Sorry this has been run already. Go back to <a href='index.php'>home</a>";
 	}
 
 ?>
