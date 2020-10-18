@@ -8,8 +8,8 @@ require("classes/cls.layer.php");
 require("classes/cls.ssshout.php");
 
 	//Allowed to run this script once. We will use the images folder because it has general access already.
-	$maiden_check = "/images/im/indexes_changed_0.txt";
-	if(!file_exists(trim_trailing_slash(__DIR__) . $maiden_check)) {
+	$maiden_check = trim_trailing_slash(__DIR__) . "/images/im/indexes_changed_0.txt";
+	if(!file_exists($maiden_check)) {
 		
 		$sql = "CREATE INDEX ordered_ssshout_id ON tbl_ssshout (enm_active, int_layer_id, date_when_shouted, int_ssshout_id, var_whisper_to, var_ip)";
 		dbquery($sql) or die("Sorry there was an error: unable to execute query. " . dberror());
