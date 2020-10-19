@@ -7,6 +7,7 @@ require("classes/cls.basic_geosearch.php");
 require("classes/cls.layer.php");
 require("classes/cls.ssshout.php");
 
+
 	//Allowed to run this script once. We will use the images folder because it has general access already.
 	$maiden_check = trim_trailing_slash(__DIR__) . "/images/im/indexes_changed_0.txt";
 	if(!file_exists($maiden_check)) {
