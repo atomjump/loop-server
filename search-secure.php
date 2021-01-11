@@ -221,12 +221,13 @@
 	}
 	//Temporary testing:
 	$max_connections = -1;	//TESTING REMOVE ME
-	if(db_active_connections() > $max_connections) {
+	$current_connections = db_active_connections();
+	if($current_connections > $max_connections) {
 		
 		if(isset($msg['msgs'][$lang]['tooManyConcurrentUsers'])) {
 			$too_many_users = $msg['msgs'][$lang]['tooManyConcurrentUsers'];
 		} else {
-			$too_many_users = "Sorry, there are too many people trying to use this forum at once. Please come back and try again later.";
+			$too_many_users = "Sorry, there are too many people (" . $current_connections . ") trying to use this forum at once. Please come back and try again later.";
 		}
 		
 		?>
