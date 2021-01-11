@@ -217,10 +217,8 @@
 	if(isset($db_cnf['maxConcurrentUsers'])) {
 		$max_connections = $db_cnf['maxConcurrentUsers'];
 	} else {
-		$max_connections = 200;		//For a standard single node PHP-only setup.
+		$max_connections = 140;		//For a standard single node PHP-only setup. Typically MySQL allows for 150 concurrent connections.
 	}
-	//Temporary testing:
-	$max_connections = 11;	//TESTING REMOVE ME
 	$current_connections = db_active_connections();
 	if($current_connections > $max_connections) {
 		
