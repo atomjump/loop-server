@@ -225,7 +225,7 @@
 		if(isset($msg['msgs'][$lang]['tooManyConcurrentUsers'])) {
 			$too_many_users = $msg['msgs'][$lang]['tooManyConcurrentUsers'];
 		} else {
-			$too_many_users = "Sorry, there are too many people (" . $current_connections . ") trying to use this forum at once. Please come back and try again later.";
+			$too_many_users = "Sorry, there are too many people trying to use this forum at once. Please come back and try again later.";
 		}
 		
 		?>
