@@ -211,7 +211,7 @@
 	
 	
 	
-	
+			
 	//Check if we have too many database connections (i.e. too many concurrent users), and respond with a 'please come back later' sort of message.
 	global $db_cnf;
 	if(isset($db_cnf['maxConcurrentUsers'])) {
@@ -219,7 +219,37 @@
 	} else {
 		$max_connections = 140;		//For a standard single node PHP-only setup. Typically MySQL allows for 150 concurrent connections.
 	}
+	if(isset($db_cnf['warningConcurrentUsers'])) {
+		$warning_connections = $db_cnf['warningConcurrentUsers'];
+	} else {
+		$warning_connections = 100;		//For a standard single node PHP-only setup. Slightly less than the maxConcurrentUsers above
+	}
 	$current_connections = db_active_connections();
+	
+	
+	$within_capacity_file = __DIR__ . '/images/im/within-capacity-warning.html';
+	if($current_connections > $warning_connections) {
+		//Over the warning level threshold of connections. Note: we make use of the image writable folder here.
+		
+		if(file_exists($within_capacity_file)) {
+			//Remove the warning file, so that a remote service can see we are not within capacity, 
+			//by the file's external lack of response from e.g. https://your.service.com/api/images/im/within-capacity-warning.html.
+			unlink($within_capacity_file);
+		}
+		
+	} else {
+		//Under the warning level threshold
+		if(file_exists($within_capacity_file)) {
+			//No need to do anything, it already exists, so we know we're within capacity
+		} else {
+			//Create the file again
+			$handle = fopen($within_capacity_file, 'w') or error_log("Cannot create capacity warning file:  " . $within_capacity_file .
+								 "   Please make sure your /images/im folder is writable by your public web server user.");
+			$data = '<html><body>You messaging server is within capacity. If this file disappears, you have crossed the warning level on server messaging capacity.</body></html>';
+			fwrite($handle, $data);
+		}
+	}
+	
 	if($current_connections > $max_connections) {
 		
 		if(isset($msg['msgs'][$lang]['tooManyConcurrentUsers'])) {
