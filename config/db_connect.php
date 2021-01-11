@@ -960,5 +960,15 @@
 		dbquery('SET AUTOCOMMIT = 1');	
 	
 	}
+	
+	function db_active_connections()
+	{
+		global $db;
+		
+		//[active_connections] => 1
+    	//[active_persistent_connections] => 0
+		$stats = mysqli_get_connection_stats($link);
+		$total_connections = $stats['active_connections'] + $stats['active_persistent_connections'];
+	}
 
 ?>

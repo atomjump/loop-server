@@ -12,6 +12,7 @@
          "port": "3306",
          "timezone": "EDT",
          "deleteDeletes": true,
+         "maxConcurrentUsers": 200,
          "ssl" : {
          	"use" : false,
          	"key" : "",
@@ -157,6 +158,7 @@
          "port": "3306",
          "timezone": "EDT",
          "deleteDeletes": true,
+         "maxConcurrentUsers": 200,
          "scaleUp": [
          	{
          		"labelRegExp": "^ajps_2_",
@@ -173,6 +175,7 @@
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
+				 "maxConcurrentUsers": 200,
 				 "adminMachineUser": "92.27.10.17:1",
 				 "ssl" : {
 					"use" : false,
@@ -201,6 +204,7 @@
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
+				 "maxConcurrentUsers": 200,
 				 "adminMachineUser": "92.27.10.17:1",
 				 "plugins": [
       			 ]

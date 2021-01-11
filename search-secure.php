@@ -9,6 +9,8 @@
 	$sh = new cls_ssshout();
 	
 	
+	
+	
 	if(isset($cnf['chatInnerJSFilename']) && (file_exists(__DIR__ . $cnf['chatInnerJSFilename']))) {
 		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
 	} else {
@@ -205,6 +207,67 @@
 	}
 	
 	
+	
+	
+	
+	
+	
+	//Check if we have too many database connections (i.e. too many concurrent users), and respond with a 'please come back later' sort of message.
+	global $db_cnf;
+	if(isset($db_cnf['maxConcurrentUsers'])) {
+		$max_connections = $db_cnf['maxConcurrentUsers'];
+	} else {
+		$max_connections = 200;		//For a standard single node PHP-only setup.
+	}
+	if(db_active_connections() > $max_connections) {
+		
+		if(isset($msg['msgs'][$lang]['tooManyConcurrentUsers'])) {
+			$too_many_users = $msg['msgs'][$lang]['tooManyConcurrentUsers'];
+		} else {
+			$too_many_users = "Sorry, there are too many people trying to use this forum at once. Please come back and try again later.";
+		}
+		
+		?>
+		<!DOCTYPE html>
+		<html lang="en">
+		  <head>
+				<meta charset="utf-8">
+				 <title>AtomJump Loop - messaging for your site</title>
+		 
+				 <meta name="description" content="<?php echo $msg['msgs'][$lang]['description'] ?>">
+		 
+				 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
+		 
+					  <!-- Bootstrap core CSS -->
+					<link rel="StyleSheet" href="<?php echo $cssBootstrap ?>" rel="stylesheet">
+			
+					<!-- AtomJump Feedback CSS -->
+					<link rel="StyleSheet" href="<?php echo $cssFeedback ?>">
+			
+					<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+					<!--[if lt IE 9]>
+					  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+					  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+					<![endif]-->
+			
+					<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
+					<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script> 
+					<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
+			
+		<head>
+		</head>
+		<body class="comment-popup-body">
+		 <div id="comment-popup-content" class="comment-inner-style" style="width: <?php echo $_REQUEST['width'] ?>px; height: <?php echo $_REQUEST['height'] ?>px;">
+			<div style="clear: both;"></div>
+				<?php echo $too_many_users; ?>
+		 </div>
+		</body>
+			
+		<?php		
+			
+		exit(0);
+	}
+
 
 		
 	
