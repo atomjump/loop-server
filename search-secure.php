@@ -227,7 +227,7 @@
 	$current_connections = db_active_connections();
 	
 	
-	$within_capacity_file = __DIR__ . '/capacity/within-capacity-warning.html';
+	$within_capacity_file = __DIR__ . '/images/im/capacity/within-capacity-warning.html';
 	if($current_connections > $warning_connections) {
 		//Over the warning level threshold of connections. Note: we make use of the image writable folder here.
 		
@@ -243,14 +243,14 @@
 			//No need to do anything, it already exists, so we know we're within capacity
 		} else {
 			//Create the file again
-			$within_capacity_folder = __DIR__ . "/capacity/";
+			$within_capacity_folder = __DIR__ . "/images/im/capacity/";
 			if (!file_exists($within_capacity_folder)) {
 				mkdir($within_capacity_folder);
 			}
 			$handle = fopen($within_capacity_file, 'w');			
 			if(!$handle) {
 				 error_log("Cannot create capacity warning file:  " . $within_capacity_file .
-								 "   Please make sure your /capacity folder is writable by your public web server user.");
+								 "   Please make sure your /images/im/capacity folder is writable by your public web server user.");
 			} else {
 				$data = '<html><body>You messaging server is within capacity. If this file disappears, you have crossed the warning level on server messaging capacity.</body></html>';
 				fwrite($handle, $data);
