@@ -243,7 +243,10 @@
 			//No need to do anything, it already exists, so we know we're within capacity
 		} else {
 			//Create the file again
-			mkdir(__DIR__ . "/capacity/");
+			$within_capacity_folder = __DIR__ . "/capacity/";
+			if (!file_exists($within_capacity_folder)) {
+				mkdir($within_capacity_folder);
+			}
 			$handle = fopen($within_capacity_file, 'w');			
 			if(!$handle) {
 				 error_log("Cannot create capacity warning file:  " . $within_capacity_file .
