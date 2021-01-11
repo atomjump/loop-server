@@ -305,6 +305,8 @@ To test the web domain, use the following small PHP script:
    
 **db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
 
+**db** **maxConcurrentUsers**: Caps the number of users at a certain number of concurrent connections, and does not try to open the forum if there are too many users, providing a warning to come back later. Ver >= 2.8.1
+
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone','serviceHome'. You can also have different set of plugins with a unique 'plugins' array (Ver >= 1.9.5).
 
 **db** **ssl**: Makes the connection to the database encrypted. Ver >= 1.9.5

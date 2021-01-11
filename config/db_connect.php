@@ -972,6 +972,7 @@
 		//$total_connections = $stats['active_connections'];
 		
 		//This works globally on the server, provided you are have rights to it.
+		$total_connections = 1;		//Default to something - this won't really check, but at least it will return a number. It should always be less than the default total allowed (140).
 		$result = dbquery("SHOW STATUS WHERE `variable_name` = 'Threads_connected'");
 		while($row = db_fetch_array($result)) {
 			$total_connections = $row['Value'];
