@@ -227,7 +227,7 @@
 	$current_connections = db_active_connections();
 	
 	
-	$within_capacity_file = __DIR__ . '/images/im/within-capacity-warning.html';
+	$within_capacity_file = __DIR__ . '/images/im/within-capacity-warning.txt';
 	if($current_connections > $warning_connections) {
 		//Over the warning level threshold of connections. Note: we make use of the image writable folder here.
 		
