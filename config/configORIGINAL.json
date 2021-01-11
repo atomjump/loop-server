@@ -13,6 +13,7 @@
          "timezone": "EDT",
          "deleteDeletes": true,
          "maxConcurrentUsers": 140,
+         "warningConcurrentUsers": 100,
          "ssl" : {
          	"use" : false,
          	"key" : "",
@@ -158,7 +159,8 @@
          "port": "3306",
          "timezone": "EDT",
          "deleteDeletes": true,
-         "maxConcurrentUsers": 140,
+         "maxConcurrentUsers": 140,         
+         "warningConcurrentUsers": 100,
          "scaleUp": [
          	{
          		"labelRegExp": "^ajps_2_",
@@ -175,7 +177,8 @@
 				 "port": "3306",
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
-				 "maxConcurrentUsers": 140,
+				 "maxConcurrentUsers": 140,			 
+         		 "warningConcurrentUsers": 100,
 				 "adminMachineUser": "92.27.10.17:1",
 				 "ssl" : {
 					"use" : false,
@@ -205,6 +208,7 @@
 				 "timezone": "EDT",
 				 "deleteDeletes": true,
 				 "maxConcurrentUsers": 140,
+				 "warningConcurrentUsers": 100,
 				 "adminMachineUser": "92.27.10.17:1",
 				 "plugins": [
       			 ]
