@@ -220,7 +220,7 @@
 		$max_connections = 200;		//For a standard single node PHP-only setup.
 	}
 	//Temporary testing:
-	$max_connections = -1;	//TESTING REMOVE ME
+	$max_connections = 3;	//TESTING REMOVE ME
 	$current_connections = db_active_connections();
 	if($current_connections > $max_connections) {
 		
