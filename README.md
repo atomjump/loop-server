@@ -301,11 +301,13 @@ To test the web domain, use the following small PHP script:
   
 **db** **hosts**: there can be any number of db hosts, but some services do not allow multiple write hosts, and if this case the first one is the only write host, while the others are read. You can configure this with the 'singleWriteDb' option.
 
+**db** **maxConcurrentUsers**: Caps the number of users at a certain number of concurrent connections, and does not try to open the forum if there are too many users, providing a warning to come back later. The actual number of users will be many more than this figure as they will not all be hitting , but this would be the number Ver >= 2.8.1
+
+**db** **warningConcurrentUsers**: After a certain number of concurrent connections (this number is usually less than maxConcurrentUsers), we provide an external service, such as Nagios, with the ability to provide a warning that the server is nearing it's capacity of concurrent users. It does this by creating a folder in the main directory /capacity/ and putting a file 'within-capacity-warning.html' into this folder. If the file is visible externally, you are within capacity, but if this file is not visible (and therefore returns a 404 http error message, typically) then the server is nearing it's capacity, and will shortly produce a warning to users that the forum has too many users. Ver >= 2.8.2
+
 **db** **singleWriteDb**: optional. 'true' for a single write database cluster, and 'false' for a multiple write database cluster. This option is only applicable if there is more than one database host. Ver >= 1.8.9
    
 **db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
-
-**db** **maxConcurrentUsers**: Caps the number of users at a certain number of concurrent connections, and does not try to open the forum if there are too many users, providing a warning to come back later. Ver >= 2.8.1
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone','serviceHome'. You can also have different set of plugins with a unique 'plugins' array (Ver >= 1.9.5).
 
