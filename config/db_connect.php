@@ -969,6 +969,7 @@
     	//[active_persistent_connections] => 0
 		$stats = mysqli_get_connection_stats($db);
 		$total_connections = $stats['active_connections'] + $stats['active_persistent_connections'];
+		return $total_connections;
 	}
 
 ?>
