@@ -965,10 +965,17 @@
 	{
 		global $db;
 		
+		//Note: these only work on a connection basis
 		//[active_connections] => 1
     	//[active_persistent_connections] => 0
-		$stats = mysqli_get_connection_stats($db);
-		$total_connections = $stats['active_connections'] + $stats['active_persistent_connections'];
+		//$stats = mysqli_get_connection_stats($db);
+		//$total_connections = $stats['active_connections'];
+		
+		//This works globally on the server, provided you are have rights to it.
+		dbquery("SHOW STATUS WHERE `variable_name` = 'Threads_connected'");
+		while($row = db_fetch_array($result)) {
+			$total_connections = $row['Value'];
+		}
 		return $total_connections;
 	}
 
