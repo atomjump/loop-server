@@ -222,7 +222,7 @@
 	if(isset($db_cnf['warningConcurrentUsers'])) {
 		$warning_connections = $db_cnf['warningConcurrentUsers'];
 	} else {
-		$warning_connections = 100;		//For a standard single node PHP-only setup. Slightly less than the maxConcurrentUsers above
+		$warning_connections = 0;	//TESTING, SHOULD BE 100;		//For a standard single node PHP-only setup. Slightly less than the maxConcurrentUsers above
 	}
 	$current_connections = db_active_connections();
 	
