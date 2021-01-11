@@ -967,7 +967,7 @@
 		
 		//[active_connections] => 1
     	//[active_persistent_connections] => 0
-		$stats = mysqli_get_connection_stats($link);
+		$stats = mysqli_get_connection_stats($db);
 		$total_connections = $stats['active_connections'] + $stats['active_persistent_connections'];
 	}
 
