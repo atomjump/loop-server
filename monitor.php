@@ -17,6 +17,6 @@
 	}
 	
 	$load = sys_getloadavg();
-	echo "Load average CPU: " . $load . "\n";
+	echo "Load average CPU: " . json_encode($load) . "\n";
 	
 ?>
