@@ -91,13 +91,17 @@ chmod 777 /images/im
 
 # Optional Installation
 
-Add two cron tasks to your server:
+Add three cron tasks to your server:
 
-* A typing cleanup task. On rare instances, a 'typing...' message is left (if the machine cut out etc.). This cleans up any of these old messages periodically (every 5 minutes).  
+* A typing cleanup task. On rare instances, a 'typing...' message is left (if the machine cut out etc.). This cleans up any of these old messages periodically (every 5 minutes). 
+
+* A system monitoring warning, that checks whether the server's CPU or disk space have gone over a threshold. See warningDiskUsage, warningCPUUsage in the "Server Options" section, for more details.
 
 ```
 sudo crontab -e  
 */5 * * * *	/usr/bin/php /yourserverpath/typing-cron.php  
+sudo crontab -e  
+*/5 * * * *	/usr/bin/php /yourserverpath/monitor.php
 ```
 
 * A sentiment analysis task. This sentiment is reflected when you download a spreadsheet of the messages. It requires nodejs to be installed and available to be run by a cron job.  
