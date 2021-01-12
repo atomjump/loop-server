@@ -19,6 +19,7 @@
 		$warning_disk_usage_perc = $cnf['warningDiskUsage']; 
 	} else {
 		$warning_disk_usage_perc = 90;			//Default to 90 perc disk will trigger a warning
+		$warning_disk_usage_perc = 0;			//TESTING REMOVE THIS LINE
 	}
 	
 	if($disk_perc_used > $warning_disk_usage_perc) {
@@ -57,6 +58,7 @@
 		$warning_cpu_usage_perc = $cnf['warningCPUUsage']; 
 	} else {
 		$warning_cpu_usage_perc = 75;
+		$warning_cpu_usage_perc = 0;		//TESTING REMOVE THIS LINE
 	}
 	
 	$within_capacity_file = __DIR__ . '/images/im/capacity/within-cpu-capacity-warning.html';
