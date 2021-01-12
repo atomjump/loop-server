@@ -9,7 +9,14 @@
 	$total_disk = disk_total_space("/");
 	$total_free = disk_free_space("/");
 	$total_used = $total_disk - $total_free;
-	$disk_perc = $total_used / $total_disk * 100.0;
-	echo "Disk perc: " . $disk_perc , "\n"; 
+	$disk_perc_used = $total_used / $total_disk * 100.0;
+	echo "Disk used perc: " . $disk_perc , "\n"; 
+	
+	if($disk_perc_used > $cnf['warningDiskUsage']) {
+		//The local drive has breached the warning level
+	}
+	
+	$load = sys_getloadavg();
+	echo "Load average CPU: " . $load . "\n";
 	
 ?>
