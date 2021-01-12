@@ -1,5 +1,18 @@
 <?php
 	//Run this script on a cron job, once every 5 minutes or so.
+	//E.g   */5 * * * *     /usr/bin/php /yourpath/atomjump/loop-server/monitor.php
+	//
+	//To add this to your crontab via a script e.g.
+	//line="*/5 * * * *     /usr/bin/php /yourpath/atomjump/loop-server/monitor.php"; (crontab -u root -l; echo "$line" ) | crontab -u root -
+	//
+	//which will create and delete the files:
+	// /images/im/capacity/within-disk-capacity-warning.html
+	// /images/im/capacity/within-cpu-capacity-warning.html 
+	//
+	//(Exists) within capacity
+	//(Does not exist) over capacity
+	
+		
 	//Connect to the database
 	include_once('config/db_connect.php');
 	
