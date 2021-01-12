@@ -10,7 +10,7 @@
 	$total_free = disk_free_space("/");
 	$total_used = $total_disk - $total_free;
 	$disk_perc_used = $total_used / $total_disk * 100.0;
-	echo "Disk used perc: " . $disk_perc , "\n"; 
+	echo "Disk used perc: " . $disk_perc_used , "\n"; 
 	
 	$within_capacity_folder = __DIR__ . "/images/im/capacity/";
 	$within_capacity_file = __DIR__ . '/images/im/capacity/within-disk-capacity-warning.html';
