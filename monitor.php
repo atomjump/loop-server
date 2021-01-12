@@ -6,5 +6,10 @@
 	echo "Total disk space " . disk_total_space("/") . "\n";
 	echo "Free disk space " . disk_free_space("/") . "\n";
 	
+	$total_disk = disk_total_space("/");
+	$total_free = disk_free_space("/");
+	$total_used = $total_disk - $total_free;
+	$disk_perc = $total_used / $total_disk * 100.0;
+	echo "Disk perc: " . $disk_perc , "\n"; 
 	
 ?>
