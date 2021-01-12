@@ -24,6 +24,8 @@
          	"verify": true
          }
       },	
+      "warningDiskUsage": 90,
+      "warningCPUUsage": 75,
       "webRoot": "http://127.0.0.1/loop-server-staging",
       "webDomain": "127.0.0.1",
       "fileRoot": "/var/www/html/loop-server-staging",
@@ -215,6 +217,8 @@
          	}
          ]
       },
+      "warningDiskUsage": 90,
+      "warningCPUUsage": 75,
       "webRoot": "http://127.0.0.1/loop-server",
       "webDomain": "127.0.0.1",
       "fileRoot": "/var/www/html/loop-server",
