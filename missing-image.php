@@ -33,6 +33,15 @@
 		
 		return $response;
 	}
+	
+	
+	
+	//Special case check for .html file, rather than an image file. Particularly useful for the server capacity checking
+	if(substr($_SERVER['REQUEST_URI'], -5) == ".html") {
+		//Return a 404 error, file not found
+		http_response_code(404);
+		die();
+	}
 			
 			
 	if(isset($cnf['uploads']['imagesShare'])) {
@@ -66,6 +75,9 @@
 			if($verbose == true) error_log("input path:" . $path);
 			
 			//E.g. Input $path = /api/images/property/test.jpg
+			
+			
+			
 			$image_path = trim_trailing_slash($cnf['webRoot']) . "/images";
 			$image_path = parse_url($image_path, PHP_URL_PATH);
 			//E.g. $image_path = /api/images
