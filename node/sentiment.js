@@ -33,6 +33,8 @@ for(var cnt = 0; cnt< process.argv.length; cnt++) {
  if(process.argv[cnt] == '-labelregexp') {
 	if(process.argv[cnt + 1]) {
 		labelRegExp = process.argv[cnt + 1];
+	} else {
+		console.log("Sorry, no labelregexp parameter set. Usage: node sentiment.js -production -labelregexp ^api1");
 	}
  }
 }
