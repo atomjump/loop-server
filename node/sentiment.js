@@ -20,23 +20,22 @@ var config = JSON.parse(fs.readFileSync(__dirname + '/../config/config.json'));
 var cnf = config.staging;
 var db = cnf.db;
 var labelRegExp = null;
-if(process.argv[2]){
-  //Loop through each arg to see if (process.argv[n] == '-production')
-  for(var cnt; cnt< process.argv.length; cnt++) {
-   	 
-   	 console.log("Checking " + process.argv[cnt]);
-	 if(process.argv[cnt] == '-production') {
-	 	console.log("Using production database");
-	  	cnf = config.production;
-	 }
-	 
-	 if(process.argv[cnt] == '-labelregexp') {
-	 	if(process.argv[cnt + 1]) {
-	 		labelRegExp = process.argv[cnt + 1];
-	 	}
-	 }
-  }
-} 
+
+//Loop through each arg to see if (process.argv[n] == '-production')
+for(var cnt; cnt< process.argv.length; cnt++) {
+ 
+ console.log("Checking " + process.argv[cnt]);
+ if(process.argv[cnt] == '-production') {
+	console.log("Using production database");
+	cnf = config.production;
+ }
+ 
+ if(process.argv[cnt] == '-labelregexp') {
+	if(process.argv[cnt + 1]) {
+		labelRegExp = process.argv[cnt + 1];
+	}
+ }
+}
  
 
 
