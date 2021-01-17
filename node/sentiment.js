@@ -24,7 +24,7 @@ var labelRegExp = null;
 //Loop through each arg to see if (process.argv[n] == '-production')
 for(var cnt = 0; cnt< process.argv.length; cnt++) {
  
- console.log("Checking " + process.argv[cnt]);
+ console.log("Parsing paremeter " + process.argv[cnt]);
  if(process.argv[cnt] == '-production') {
 	console.log("Using production database");
 	cnf = config.production;
