@@ -23,7 +23,8 @@ var labelRegExp = null;
 if(process.argv[2]){
   //Loop through each arg to see if (process.argv[n] == '-production')
   for(var cnt; cnt< process.argv.length; cnt++) {
-   
+   	 
+   	 console.log("Checking " + process.argv[cnt]);
 	 if(process.argv[cnt] == '-production') {
 	 	console.log("Using production database");
 	  	cnf = config.production;
