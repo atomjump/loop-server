@@ -14,6 +14,8 @@ crontab -e
 //  */1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production -labelregexp ^api1
 
 
+var verbose = false;
+
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/../config/config.json'));
 
@@ -24,7 +26,7 @@ var labelRegExp = null;
 //Loop through each arg to see if (process.argv[n] == '-production')
 for(var cnt = 0; cnt< process.argv.length; cnt++) {
  
- console.log("Parsing paremeter " + process.argv[cnt]);
+ if(verbose == true) console.log("Parsing paremeter " + process.argv[cnt]);
  if(process.argv[cnt] == '-production') {
 	console.log("Using production database");
 	cnf = config.production;
@@ -33,7 +35,7 @@ for(var cnt = 0; cnt< process.argv.length; cnt++) {
  if(process.argv[cnt] == '-labelregexp') {
 	if(process.argv[cnt + 1]) {
 		labelRegExp = process.argv[cnt + 1];
-		console.log("Checking config file for scaleUp option " + labelRegExp);
+		if(verbose == true) console.log("Checking config file for scaleUp option " + labelRegExp);
 	} else {
 		console.log("Sorry, no labelregexp parameter set. Usage: node sentiment.js -production -labelregexp ^api1");
 	}
