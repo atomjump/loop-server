@@ -33,6 +33,7 @@ for(var cnt = 0; cnt< process.argv.length; cnt++) {
  if(process.argv[cnt] == '-labelregexp') {
 	if(process.argv[cnt + 1]) {
 		labelRegExp = process.argv[cnt + 1];
+		console.log("Checking config file for scaleUp option " + labelRegExp);
 	} else {
 		console.log("Sorry, no labelregexp parameter set. Usage: node sentiment.js -production -labelregexp ^api1");
 	}
@@ -84,7 +85,7 @@ function checkDatabase(connection) {
 
 if(labelRegExp) {
 	//Try to match the db with one of the scaleup database options
-	for(var cnt = 0; cnt<cnf.db.scaleUp.length; cnt++) {
+	for(var cnt = 0; cnt < cnf.db.scaleUp.length; cnt++) {
 		if(cnf.db.scaleUp[cnt].labelRegExp == labelRegExp) {
 			//Then switch over to this scaleUp database.
 			console.log("Using scaleUp database " + labelRegExp);
