@@ -22,7 +22,7 @@ var db = cnf.db;
 var labelRegExp = null;
 
 //Loop through each arg to see if (process.argv[n] == '-production')
-for(var cnt; cnt< process.argv.length; cnt++) {
+for(var cnt = 0; cnt< process.argv.length; cnt++) {
  
  console.log("Checking " + process.argv[cnt]);
  if(process.argv[cnt] == '-production') {
