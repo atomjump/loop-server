@@ -25,6 +25,7 @@ if(process.argv[2]){
   for(var cnt; cnt< process.argv.length; cnt++) {
    
 	 if(process.argv[cnt] == '-production') {
+	 	console.log("Using production database");
 	  	cnf = config.production;
 	 }
 	 
