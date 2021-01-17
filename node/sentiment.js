@@ -1,5 +1,4 @@
-var Sentiment = require('sentiment');
-var sentiment = new Sentiment();
+var sentiment = require('sentiment');
 var async = require('async');
 var mysql = require('mysql');
 var os = require('os');
@@ -44,7 +43,7 @@ connection.query('SELECT int_ssshout_id, var_shouted FROM tbl_ssshout WHERE flt_
   async.forEachLimit(rows, 5, function(row, cb) {
   
   	  
-      var snt = sentiment.analyze(row.var_shouted);
+      var snt = sentiment(row.var_shouted);
       console.log('Sentiment: ' + snt.score);
       
       
