@@ -85,15 +85,20 @@ function checkDatabase(connection) {
 
 if(labelRegExp) {
 	//Try to match the db with one of the scaleup database options
+	var foundOption = false;
 	for(var cnt = 0; cnt < cnf.db.scaleUp.length; cnt++) {
 		if(cnf.db.scaleUp[cnt].labelRegExp == labelRegExp) {
 			//Then switch over to this scaleUp database.
 			console.log("Using scaleUp database " + labelRegExp);
 			db = cnf.db.scaleUp[cnt];
+			foundOption = true;
 		}
 		
 	}
 
+	if(foundOption == false) {
+		console.log("Sorry, could not find the scaleUp option " + labelRegExp);
+	}
 }
 
 var connection = mysql.createConnection({
