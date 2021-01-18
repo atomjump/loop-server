@@ -55,6 +55,7 @@ function checkDatabase(connection) {
   	  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
 	  var es = require(__dirname + '/wordlist/es-sentiment.json');
 	  var allLanguages = extend(fr,es);
+	  console.log(JSON.stringify(allLanguages));		//TESTING
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
