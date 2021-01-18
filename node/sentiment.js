@@ -59,7 +59,7 @@ function checkDatabase(connection) {
 	  var options = {
   		extras: allLanguages
 	  };
-	  console.log(JSON.stringify(allLanguages));		//TESTING
+	  console.log(rows.length);
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
