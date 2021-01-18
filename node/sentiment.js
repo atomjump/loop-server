@@ -59,6 +59,7 @@ function checkDatabase(connection) {
 		  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
 		  var es = require(__dirname + '/wordlist/es-sentiment.json');
 		  var pt = require(__dirname + '/wordlist/pt-sentiment.json');
+		  var hi = require(__dirname + '/wordlist/hi-sentiment.json');
 		  var allLanguages = extend(fr,es, pt);
 	  
 		  options = {
