@@ -105,8 +105,8 @@ if(labelRegExp) {
 }
 
 var allLanguages = [];
-var fr = require('./fr-sentiment.json');
-var es = require('./es-sentiment.json');
+var fr = require('./wordlist/fr-sentiment.json');
+var es = require('./wordlist/es-sentiment.json');
 
 
 var allLanguages = extend(fr,es);
