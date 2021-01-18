@@ -64,7 +64,7 @@ function checkDatabase(connection) {
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
-	  
+	  	  console.log(JSON.stringify(options));		//TESTING
 		  var snt = sentiment.analyze(row.var_shouted, options);
 		  console.log('Sentiment: ' + snt.score);
 	  
