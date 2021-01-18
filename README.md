@@ -117,7 +117,6 @@ sudo crontab -e
 
 This will update the production database message sentiments once every minute (or remove the -production to go to staging).  
 
-
 # Windows installation
 
 Running on Windows has currently not been tested, but you can use a Ubuntu 14.04 virtual machine from https://bitnami.com/stack/lamp/virtual-machine
@@ -320,6 +319,13 @@ To test the web domain, use the following small PHP script:
 **db** **scaleUp**: For different forums you can refer to completely different databases, to remove the heavy write usage in a multi-read/single write database server farm. This is an array of alternative db/hosts, which are used if a given regular expression is detected in the forum's name.
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone','serviceHome'. You can also have different set of plugins with a unique 'plugins' array (Ver >= 1.9.5).
+
+(Ver >= 2.9.0) You can optionally run the sentiment script on another database in your configuration file, for example for forums starting with "api1" by using:
+
+```
+sudo crontab -e
+*/1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production -labelregexp ^api1
+```
 
 **db** **ssl**: Makes the connection to the database encrypted. Ver >= 1.9.5
 
