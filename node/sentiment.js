@@ -60,7 +60,17 @@ function checkDatabase(connection) {
 		  var es = require(__dirname + '/wordlist/es-sentiment.json');
 		  var pt = require(__dirname + '/wordlist/pt-sentiment.json');
 		  var hi = require(__dirname + '/wordlist/hi-sentiment.json');
-		  var allLanguages = extend(fr,es, pt, hi);
+		  var bg = require(__dirname + '/wordlist/bg-sentiment.json');
+		  var ch = require(__dirname + '/wordlist/ch-sentiment.json');
+		  var cht = require(__dirname + '/wordlist/cht-sentiment.json');
+		  var de = require(__dirname + '/wordlist/de-sentiment.json');
+		  var inSentiment = require(__dirname + '/wordlist/in-sentiment.json');
+		  var it = require(__dirname + '/wordlist/ch-sentiment.json');
+		  var jp = require(__dirname + '/wordlist/jp-sentiment.json');
+		  var ko = require(__dirname + '/wordlist/ko-sentiment.json');
+		  var pu = require(__dirname + '/wordlist/pu-sentiment.json');
+		  var ru = require(__dirname + '/wordlist/ru-sentiment.json');
+		  var allLanguages = extend(fr,es, pt, hi, bg, ch, cht, de, inSentiment, it, jp, ko, pu, ru);
 	  
 	  	  if(verbose == true) console.log('All languages: ' + JSON.stringify(allLanguages));
 		  options = {
