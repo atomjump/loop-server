@@ -28,6 +28,13 @@ To test the web domain, use the following small PHP script:
 
 **db** **scaleUp** **labelRegExp**: This is a javascript/PHP regular expression that changes the database used for this forum. E.g. "^hello", would detect the forums 'hello_there', 'hello_anything' etc. Then the standard db details can be entered for this case i.e. 'name','hosts','user','pass','port','deleteDeletes','timezone'. You can also have different set of plugins with a unique 'plugins' array (Ver >= 1.9.5).
 
+(Ver >= 2.9.0) You can optionally run the sentiment script on another database in your configuration file, for example for forums starting with "api1" by using:
+
+```
+sudo crontab -e
+*/1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production -labelregexp ^api1
+```
+
 **db** **ssl**: Makes the connection to the database encrypted. Ver >= 1.9.5
 
 ```
