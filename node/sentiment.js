@@ -15,7 +15,7 @@ crontab -e
 //  */1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production -labelregexp ^api1
 
 
-var verbose = true;
+var verbose = false;
 
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/../config/config.json'));
