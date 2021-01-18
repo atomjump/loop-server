@@ -57,7 +57,7 @@ function checkDatabase(connection) {
 		  var es = require(__dirname + '/wordlist/es-sentiment.json');
 		  var allLanguages = extend(fr,es);
 	  
-		  var options = {
+		  options = {
 			extras: allLanguages
 		  };
 	  }
@@ -118,7 +118,7 @@ var allLanguages = [];
 
 
 var sentiment = new Sentiment();
-
+var options = {};
 
 var connection = mysql.createConnection({
   host     : db.hosts[0],
