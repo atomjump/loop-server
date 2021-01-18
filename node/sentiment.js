@@ -55,6 +55,10 @@ function checkDatabase(connection) {
   	  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
 	  var es = require(__dirname + '/wordlist/es-sentiment.json');
 	  var allLanguages = extend(fr,es);
+	  
+	  var options = {
+  		extras: allLanguages
+	  };
 	  console.log(JSON.stringify(allLanguages));		//TESTING
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
@@ -111,9 +115,7 @@ if(labelRegExp) {
 
 var allLanguages = [];
 
-var options = {
-  extras: allLanguages
-};
+
 var sentiment = new Sentiment();
 
 
