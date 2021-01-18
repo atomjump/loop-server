@@ -50,16 +50,17 @@ function checkDatabase(connection) {
   
   
 	  if (err) throw err;
-  		
-  	  //Yes there are some sentiments. Load any extra language files at this point.
-  	  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
-	  var es = require(__dirname + '/wordlist/es-sentiment.json');
-	  var allLanguages = extend(fr,es);
+  	 
+  	  if(rows > 0) {	
+		  //Yes there are some sentiments. Load any extra language files at this point.
+		  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
+		  var es = require(__dirname + '/wordlist/es-sentiment.json');
+		  var allLanguages = extend(fr,es);
 	  
-	  var options = {
-  		extras: allLanguages
-	  };
-	  console.log(rows.length);
+		  var options = {
+			extras: allLanguages
+		  };
+	  }
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
