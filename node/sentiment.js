@@ -1,8 +1,9 @@
-var sentiment = require('sentiment');
+var Sentiment = require('sentiment');
 var async = require('async');
 var mysql = require('mysql');
 var os = require('os');
 var fs = require('fs');
+var extend = require('extend');
 
 /*
 
@@ -54,7 +55,7 @@ function checkDatabase(connection) {
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
 	  
-		  var snt = sentiment(row.var_shouted);
+		  var snt = sentiment.analyze(row.var_shouted, options);
 		  console.log('Sentiment: ' + snt.score);
 	  
 	  
@@ -102,6 +103,18 @@ if(labelRegExp) {
 		console.log("Sorry, could not find the scaleUp option " + labelRegExp);
 	}
 }
+
+var allLanguages = [];
+var fr = require('./fr-sentiment.json');
+var es = require('./es-sentiment.json');
+
+
+var allLanguages = extend(fr,es);
+var options = {
+  extras: allLanguages
+};
+var sentiment = new Sentiment();
+
 
 var connection = mysql.createConnection({
   host     : db.hosts[0],
