@@ -62,10 +62,12 @@ function checkDatabase(connection) {
 		  };
 	  }
   
+  	  var myOptions = options;
+  
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
-	  	  console.log(JSON.stringify(options));		//TESTING
-		  var snt = sentiment.analyze(row.var_shouted, options);
+	  	  console.log(JSON.stringify(myOptions));		//TESTING
+		  var snt = sentiment.analyze(row.var_shouted, myOptions);
 		  console.log('Sentiment: ' + snt.score);
 	  
 	  
