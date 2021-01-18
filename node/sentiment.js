@@ -70,7 +70,8 @@ function checkDatabase(connection) {
 		  var ko = require(__dirname + '/wordlist/ko-sentiment.json');
 		  var pu = require(__dirname + '/wordlist/pu-sentiment.json');
 		  var ru = require(__dirname + '/wordlist/ru-sentiment.json');
-		  var allLanguages = extend(fr,es, pt, hi, bg, ch, cht, de, inSentiment, it, jp, ko, pu, ru);
+		  var ar = require(__dirname + '/wordlist/ar-sentiment.json');
+		  var allLanguages = extend(fr,es, pt, hi, bg, ch, cht, de, inSentiment, it, jp, ko, pu, ru, ar);
 	  
 	  	  if(verbose == true) console.log('All languages: ' + JSON.stringify(allLanguages));
 		  options = {
