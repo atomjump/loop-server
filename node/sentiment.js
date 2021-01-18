@@ -58,7 +58,8 @@ function checkDatabase(connection) {
 		  //Yes there are some sentiments. Load any extra language files at this point.
 		  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
 		  var es = require(__dirname + '/wordlist/es-sentiment.json');
-		  var allLanguages = extend(fr,es);
+		  var pt = require(__dirname + '/wordlist/pt-sentiment.json');
+		  var allLanguages = extend(fr,es, pt);
 	  
 		  options = {
 			extras: allLanguages
