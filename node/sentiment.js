@@ -15,7 +15,7 @@ crontab -e
 //  */1 * * * * /usr/bin/nodejs /yourserverpath/node/sentiment.js -production -labelregexp ^api1
 
 
-var verbose = false;
+var verbose = true;
 
 
 var config = JSON.parse(fs.readFileSync(__dirname + '/../config/config.json'));
@@ -62,6 +62,7 @@ function checkDatabase(connection) {
 		  var hi = require(__dirname + '/wordlist/hi-sentiment.json');
 		  var allLanguages = extend(fr,es, pt);
 	  
+	  	  if(verbose == true) console.log('All languages: ' + JSON.stringify(allLanguages));
 		  options = {
 			extras: allLanguages
 		  };
