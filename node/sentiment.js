@@ -65,7 +65,7 @@ function checkDatabase(connection) {
 		  var cht = require(__dirname + '/wordlist/cht-sentiment.json');
 		  var de = require(__dirname + '/wordlist/de-sentiment.json');
 		  var inSentiment = require(__dirname + '/wordlist/in-sentiment.json');
-		  var it = require(__dirname + '/wordlist/ch-sentiment.json');
+		  var it = require(__dirname + '/wordlist/it-sentiment.json');
 		  var jp = require(__dirname + '/wordlist/jp-sentiment.json');
 		  var ko = require(__dirname + '/wordlist/ko-sentiment.json');
 		  var pu = require(__dirname + '/wordlist/pu-sentiment.json');
