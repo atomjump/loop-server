@@ -3,6 +3,7 @@ var async = require('async');
 var mysql = require('mysql');
 var os = require('os');
 var fs = require('fs');
+var extend = require('extend');
 
 
 /*
