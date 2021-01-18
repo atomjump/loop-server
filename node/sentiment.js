@@ -1,4 +1,4 @@
-var sentiment = require('sentiment');
+var Sentiment = require('sentiment');
 var async = require('async');
 var mysql = require('mysql');
 var os = require('os');
@@ -50,12 +50,38 @@ function checkDatabase(connection) {
   
   
 	  if (err) throw err;
-  
+  	 
+  	  var options = {};
+
+  	 
+  	  if(rows.length > 0) {	
+		  //Yes there are some sentiments. Load any extra language files at this point.
+		  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
+		  var es = require(__dirname + '/wordlist/es-sentiment.json');
+		  var pt = require(__dirname + '/wordlist/pt-sentiment.json');
+		  var hi = require(__dirname + '/wordlist/hi-sentiment.json');
+		  var bg = require(__dirname + '/wordlist/bg-sentiment.json');
+		  var ch = require(__dirname + '/wordlist/ch-sentiment.json');
+		  var cht = require(__dirname + '/wordlist/cht-sentiment.json');
+		  var de = require(__dirname + '/wordlist/de-sentiment.json');
+		  var inSentiment = require(__dirname + '/wordlist/in-sentiment.json');
+		  var it = require(__dirname + '/wordlist/it-sentiment.json');
+		  var jp = require(__dirname + '/wordlist/jp-sentiment.json');
+		  var ko = require(__dirname + '/wordlist/ko-sentiment.json');
+		  var pu = require(__dirname + '/wordlist/pu-sentiment.json');
+		  var ru = require(__dirname + '/wordlist/ru-sentiment.json');
+		  var ar = require(__dirname + '/wordlist/ar-sentiment.json');
+		  var allLanguages = extend(fr,es, pt, hi, bg, ch, cht, de, inSentiment, it, jp, ko, pu, ru, ar);
+	  
+	  	  if(verbose == true) console.log('All languages: ' + JSON.stringify(allLanguages));
+		  options = {
+			extras: allLanguages
+		  };
+	  }
   
 	  async.forEachLimit(rows, 5, function(row, cb) {
-  
-	  
-		  var snt = sentiment(row.var_shouted);
+
+		  var snt = sentiment.analyze(row.var_shouted, options);
 		  console.log('Sentiment: ' + snt.score);
 	  
 	  
@@ -103,6 +129,10 @@ if(labelRegExp) {
 		console.log("Sorry, could not find the scaleUp option " + labelRegExp);
 	}
 }
+
+
+var allLanguages = [];
+var sentiment = new Sentiment();
 
 var connection = mysql.createConnection({
   host     : db.hosts[0],
