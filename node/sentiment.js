@@ -51,6 +51,9 @@ function checkDatabase(connection) {
   
 	  if (err) throw err;
   	 
+  	  var options = {};
+
+  	 
   	  if(rows > 0) {	
 		  //Yes there are some sentiments. Load any extra language files at this point.
 		  var fr = require(__dirname + '/wordlist/fr-sentiment.json');
@@ -62,11 +65,9 @@ function checkDatabase(connection) {
 		  };
 	  }
   
-  	  var myOptions = options;
-  
 	  async.forEachLimit(rows, 5, function(row, cb) {
   
-	  	  console.log(JSON.stringify(myOptions));		//TESTING
+	  	  console.log(JSON.stringify(options));		//TESTING
 		  var snt = sentiment.analyze(row.var_shouted, myOptions);
 		  console.log('Sentiment: ' + snt.score);
 	  
@@ -120,7 +121,6 @@ var allLanguages = [];
 
 
 var sentiment = new Sentiment();
-var options = {};
 
 var connection = mysql.createConnection({
   host     : db.hosts[0],
