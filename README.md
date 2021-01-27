@@ -3,7 +3,7 @@
 # AtomJump Messaging Server
 
 This acts as a server to the AtomJump Messaging front-end 
-at http://github.com/atomjump/loop
+at http://src.atomjump.com/atomjump/loop
 
 
 # Requirements
@@ -43,16 +43,16 @@ sudo apt-get install ntp
 
 # Installation
 
-On your Linux server, download and unzip the latest release of the loop-server from https://github.com/atomjump/loop-server/releases
+On your Linux server, download and unzip the latest release of the loop-server from https://src.atomjump.com/atomjump/loop-server/releases
 
 ```
-https://github.com/atomjump/loop-server/releases
+https://src.atomjump.com/atomjump/loop-server/releases
 ```
 
 Or git clone 
 
 ```
-git clone https://github.com/atomjump/loop-server.git
+git clone https://git.atomjump.com/loop-server.git
 ```
 
 Or using composer https://getcomposer.org/ see https://packagist.org/packages/atomjump/loop-server
@@ -127,13 +127,13 @@ Running on Windows has currently not been tested, but you can use a Ubuntu 14.04
 **(sometimes called the 'loop' project)**
 
 Is available from
-https://github.com/atomjump/loop#loop 
+https://src.atomjump.com/atomjump/loop#loop 
 or you can add this to your site from
 http://atomjump.org/wp/add-atomjump-messaging-to-your-site/
 
 This tool provides a 'WhatsApp-like' group discussion forum from a popup on your website. It is good for general messaging, either within a company or family, in either a private or public setting.  
 
-The client software is entirely Javascript and CSS, but it refers to an AtomJump Messaging server to store messages. This is freely available as a separate project at https://github.com/atomjump/loop-server, or you can use the AtomJump.com server, by default.
+The client software is entirely Javascript and CSS, but it refers to an AtomJump Messaging server to store messages. This is freely available as a separate project at https://src.atomjump.com/atomjump/loop-server, or you can use the AtomJump.com server, by default.
 
 Private forums on the hosted AtomJump.com hosted platform are purchased for US$10 / year to cover the (non-profit) Foundation's costs, but public forums are free, within reason.
 
@@ -904,7 +904,7 @@ All of the AtomJump-built plugins serve as good example code. But here are some 
 
 For customising the buttons that are visible when you tap on a single message, and for including a specific type of export of a forum, see this shell project, which can be modified to suit your own.
 
-https://github.com/atomjump/medimage_export/tree/shell
+https://src.atomjump.com/atomjump/medimage_export/tree/shell
 
 
 
