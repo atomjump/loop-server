@@ -291,7 +291,7 @@ $first_button = $follow_on_link;
 						<div class="form-row text-center">
     						<div class="col-12">
 				
-								<a class="btn btn-primary" style="margin: 6px;" class="input-group input-group-lg" href='<?php echo $first_button ?>'><?php echo $first_button_wording ?></a>
+								<a class="btn btn-primary btn-lg" style="margin: 6px;" href='<?php echo $first_button ?>'><?php echo $first_button_wording ?></a>
 
 								<?php if($second_button) { ?>
 									<a class="btn btn-primary" style="margin: 6px;" href='<?php echo $second_button ?>'><?php echo $second_button_wording ?></a>
