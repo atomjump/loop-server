@@ -799,6 +799,26 @@ Server: >= 0.5.0
 Hides a message from view, where $message_id is an integer. $warn_admin can be true/false to warn the owner of the forum of the message being hidden.
 
 
+**Sending Emails**
+
+Although this is not yet a part of the plugin API, you can include the config/db_config.php file in your own script and use either the cc_mail_direct() or cc_mail() functions. The direct() version will immediately send an email (with an execution pause of a few seconds), while the regular version will log the request in parallel. 
+
+You should set a global variable $notify beforehand
+
+```
+$notify = true;
+```
+
+See the 'Notifications' plugin at https://src.atomjump.com/atomjump/notifications/ notifications/register.php for an example.
+
+If you use the regular cc_mail() version, you will need to also call
+
+```
+$api->complete_parallel_calls(); 
+```
+if you want the notifications to be sent, at the end of the script.
+
+
 
 
 ## Global Variables
