@@ -325,6 +325,70 @@ if you want the notifications to be sent, at the end of the script.
 
 
 
+## Global Variables
+
+**$root_server_url**
+The AtomJump Messaging Server's URL.
+Make the variable available to your function with:
+
+```
+global $root_server_url;
+```
+
+**$cnf**
+The global configuration file as an array. This can be accessed with e.g. $cnf['webRoot'].
+Make the variable available to your function with:
+
+```
+global $cnf;
+```
+
+**$msg**
+The global messages configuration file as an array. This can be accessed with e.g. $msg['msgs'][$lang]['description'].
+Make the variable available to your function with:
+
+```
+global $msg;
+``` 
+
+**$lang**
+The current selected language e.g. "en" for English.
+Make the variable available to your function with:
+
+```
+global $lang;
+``` 
+
+**$db_cnf**
+The current selected database configuration. This can be accessed with e.g. $db_cnf['user'].
+Make the variable available to your function with:
+
+```
+global $db_cnf;
+``` 
+
+**$notify**
+Allow email notifications to be sent if 'true'. You should set this within your own script. Please see the section 'Writing Functions > Sending Emails'.
+ 
+**$_REQUEST['uniqueFeedbackId'] / $_REQUEST['passcode']** 
+Either of these can be the current forum's name as a string. You should check for both.
+
+**$_SESSION['logged-email']**
+Set on sign in. This is the email of the signed in user.
+
+**$_SESSION['user-ip']**
+The logged-in user's artificial ip address.
+		
+**$_SESSION['temp-user-name']**
+This username is used potentially before another name is set e.g. 'Anon 55'
+		
+**$_SESSION['authenticated-layer']**
+The current user has the authority to read and write to this layer ID (applies to any forum, not just password protected forums).
+
+
+
+
+
 ## Misc
 
 **parallel_system_call()**

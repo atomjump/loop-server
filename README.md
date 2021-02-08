@@ -862,6 +862,9 @@ Make the variable available to your function with:
 ```
 global $db_cnf;
 ``` 
+
+**$notify**
+Allow email notifications to be sent if 'true'. You should set this within your own script. Please see the section 'Writing Functions > Sending Emails'.
  
 **$_REQUEST['uniqueFeedbackId'] / $_REQUEST['passcode']** 
 Either of these can be the current forum's name as a string. You should check for both.
