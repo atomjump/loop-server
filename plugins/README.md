@@ -314,7 +314,7 @@ You should set a global variable $notify beforehand
 $notify = true;
 ```
 
-See the 'Notifications' plugin at https://src.atomjump.com/atomjump/notifications/ notifications/register.php for an example.
+See the 'Notifications' plugin at https://src.atomjump.com/atomjump/notifications/, script register.php for an example.
 
 If you use the regular cc_mail() version, you will need to also call
 
