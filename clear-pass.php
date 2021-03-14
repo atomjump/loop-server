@@ -24,7 +24,7 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
       	  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			        
 		       	
-           header("Location: " . $cnf['webRoot']);
+           header("Location: " . add_trailing_slash($cnf['webRoot']));
           //Password cleared
           
        } else {

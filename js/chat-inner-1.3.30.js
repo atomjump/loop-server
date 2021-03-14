@@ -250,7 +250,7 @@ var lsmsg = {
               "subscriptionDenied":"很抱歉，您無權訂閱此論壇。"
         }    
     }
-};
+}
 var lang = lsmsg.defaultLanguage;       
 
 
