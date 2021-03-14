@@ -15,7 +15,7 @@
 		$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
 	} else {
 		//The default version
-		$chat_inner_js_filename = "/js/chat-inner-1.3.30.js";			//This should be updated when the Javascript file
+		$chat_inner_js_filename = "/js/chat-inner-1.3.31.js";			//This should be updated when the Javascript file
 																		//is updated. And you should 'git mv' the file to the
 																		//new version number.
 	}
