@@ -947,6 +947,10 @@
 		 
 		 	  function unSub(uid, uniqueFeedbackId)
 		 	  {
+		 	  	//Show an ajax waiting
+		 	    $('#email-explain').html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
+		 	    $('#email-explain').show();
+		 	    
 		 	  	ur = "confirm.php?uid=" + uid + "&unsub=" + uniqueFeedbackId;
 		 		$.get(ur, function(response) { 
 				  	 if(response.includes("FAILURE") === true) {
@@ -970,6 +974,10 @@
 		 	  
 		 	   function sub(uid, uniqueFeedbackId)
 		 	  {
+		 	  	//Show an ajax waiting
+		 	    $('#email-explain').html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
+		 	    $('#email-explain').show();
+		 	  	
 		 	  	ur = "confirm.php?uid=" + uid + "&sub=" + uniqueFeedbackId + "&fp=" + $("#set-forum-password").val();
 		 		$.get(ur, function(response) { 
 				  	 if(response.includes("FAILURE") === true) {
