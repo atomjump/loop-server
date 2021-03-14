@@ -22,9 +22,10 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
        if($_SESSION['temp-email']) {
           $sql = "UPDATE tbl_user SET var_pass = NULL WHERE var_email = '" . $_SESSION['temp-email'] . "'";
       	  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
-			        
+			
+		   $target_url = add_trailing_slash(add_subdomain_to_path($cnf['serviceHome']));	        
 		       	
-           header("Location: " . add_trailing_slash($cnf['webRoot']));
+           header("Location: " . $target_url);
           //Password cleared
           
        } else {
