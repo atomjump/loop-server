@@ -988,7 +988,7 @@ function refreshLoginStatus()
 function set_options_cookie() {
 
 	//Show a waiting graphic
-	$("#comment-messages").html("<img src=\"img/ajax-loader.gif\" width=\"16\" height=\"16\">");
+	$("#comment-messages").html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 	$("#comment-messages").show();
 
 	//See http://stackoverflow.com/questions/4901633/how-to-store-other-languages-unicode-in-cookies-and-get-it-back-again
