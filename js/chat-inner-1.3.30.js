@@ -220,7 +220,7 @@ var lsmsg = {
         "in": {
               "defaultYourName": "Namamu",
               "defaultYourEmail": "Email Anda",
-              "login": "Sudah masuk. Harap tunggu ..",
+              "loggedIn": "Sudah masuk. Harap tunggu ..",
               "passwordWrong": "Maaf, password anda salah.",
               "forumPasswordWrong": "Maaf, kata sandi forum Anda salah.",
               "passwordStored": "Terima kasih, sandi Anda sekarang telah disetel.",
@@ -987,6 +987,10 @@ function refreshLoginStatus()
 
 function set_options_cookie() {
 
+	//Show a waiting graphic
+	$("#comment-messages").html("<img src=\"img/ajax-loader.gif\" width=\"16\" height=\"16\">");
+	$("#comment-messages").show();
+
 	//See http://stackoverflow.com/questions/4901633/how-to-store-other-languages-unicode-in-cookies-and-get-it-back-again
     var yourName = encodeURIComponent($('#your-name-opt').val());
     var email = encodeURIComponent($('#email-opt').val());
@@ -1041,6 +1045,9 @@ function set_options_cookie() {
 			crossDomain: true,
 			dataType: "jsonp"
 		}).done(function(response) {
+			$("#comment-messages").val("");
+			$("#comment-messages").show();
+		
 			var msg = "";
 			var toggle = true;
 			var reload = false;

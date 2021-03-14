@@ -934,6 +934,7 @@
 					document.cookie = 'email=' + encodeURIComponent(email) + '; path=/; expires=' + cookieOffset() + ';';
 				}
 				
+				$('#clear-password').html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 			
 				 $.get(ur, function(response) { 
 				  		 
