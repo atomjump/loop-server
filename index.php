@@ -450,12 +450,12 @@
 			<![endif]-->
 
 			<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
-			<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+			<script type="text/javascript" src="//frontcdn.atomjump.com/atomjump-frontend/jquery-1.11.0.min.js"></script>
 			<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
 
 			<!-- For the dropdown autocomplete -->
-			<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-			<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+			<link rel="stylesheet" href="//atomjump.com/css/jquery-ui.css">
+			<script src="//atomjump.com/js/jquery-ui.js"></script>
 
 
 	
