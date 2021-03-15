@@ -40,10 +40,9 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
       	  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 			
-		   $main_message = $msg['msgs'][$lang]['pass']['title'];
-		          
+		   $main_message = $msg['msgs'][$lang]['pass']['title'];        
 		       	
-           header("Location: " . $target_url);
+          
           //Password cleared
           
        } else {
