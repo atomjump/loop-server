@@ -1,0 +1,640 @@
+/* AtomJump Loop sample css
+	(C)2015 AtomJump. MIT license.
+	
+	Can use locally and change this css.
+	Contact: peter AT atomjump.com
+*/
+
+.comment-popup-body {
+   background-color: #fff; 
+}
+
+#comment-loading {
+	width: 28px; 
+	height: 28px;
+    position:absolute;		
+	top: 50%;
+	left: 50%;
+	margin-left: -14px;
+    margin-top: -14px;
+    z-index:500;
+
+}
+
+
+.comment-search-box {
+	position: absolute;
+	top: 28px;
+	left: 30px;
+	z-index: 1000;
+	color: #ccc !important; /* was ccc */
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	padding: 4px !important;
+	
+	
+}
+
+.comment-search-box input {			/* Overriding common css frameworks like bootstrap */
+	color: #444;
+	border: 0px;
+	text-indent: 4px;
+	box-sizing: border-box;
+	ms-box-sizing: border-box;
+	webkit-box-sizing: border-box;
+	moz-box-sizing: border-box;
+	width: 210px;
+	height: 1.4em;
+}
+
+#comment-message {
+	padding-top: 3px;
+}	
+
+
+
+.comment-search-box input:focus { 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+}
+
+
+button:focus { 
+	outline: none;  /*for chrome bugfix to allow form on top of canvas */
+}
+
+.comment-suggestion {
+	width: 170px;
+	border-bottom: 1px solid #888;
+	z-index: 1000;
+	cursor: pointer;
+	font-size: 120%;
+}
+
+#comment-baddomain {
+	position: absolute;
+	top: 6px;
+	left: 10px;
+	font-family: helvetica, sans-serif;
+	font-size: 12px;
+	color: #777;
+}
+		 
+.comment-highlight {
+	color: #fdd;
+}
+
+.comment-suggestion-box {
+	width: 172px;
+	z-index: 999;
+	margin-bottom: 20px;
+	padding-top: 3px;
+}
+
+#comment-clear {
+	vertical-align: middle;
+	padding-left:6px;
+	padding-right: 6px;	
+}
+
+#comment-popup {
+	position: relative;
+	z-index: 4000;
+	top: 5%;
+	left:5%;
+	height: 90%;
+	
+	width: 90%;  
+	background-color: rgba(200,200,200,0.9);
+	
+	font-family: helvetica, sans-serif;
+	font-size: 12px;
+	color: #444;
+
+	box-shadow: 2px 2px 2px rgba(0,0,0,.5);
+	border-radius: 5px;
+}
+
+
+
+
+
+.comment-inner-style {
+
+	font-family: helvetica, sans-serif;
+	font-size: 12px;
+	color: #444;
+}
+
+.comment-padding {
+	margin: 10px;
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index: 4100;
+
+}
+
+
+
+
+.comment-padding-allow-space {
+	margin: 10px;
+	margin-top: 24px;		/* allow space for title */
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:50px;
+	z-index: 4100;
+
+}
+
+#comment-popup-inner {
+		position: absolute;
+		top:0px;
+		left:0px;
+		width:100%;
+		height:100%;
+		z-index: 4100;
+}
+
+#comment-popup-text-container {
+	position: relative;
+	border: 1px solid #ddd;
+	top: 0px;
+	left:0px;
+	height: 100%; /*works in every browser except ie7*/
+	width: 100%;
+	overflow-y: hidden;  /* was auto */
+	overflow-x: hidden;
+	border-radius: 5px;
+	background-color: white;
+	z-index: 4200;
+}
+
+
+
+.comment-frm-scroller {
+	display: none;
+	
+	-webkit-overflow-scrolling: touch;		
+	overflow-y: scroll; /* was auto */
+	padding-right: 4px;	/* added for slight margin */
+
+}
+
+
+
+
+#comment-prev-messages {
+
+	
+
+}
+
+.private {
+	
+
+}
+
+
+
+#comment-popup-content {
+	-webkit-overflow-scrolling: touch;
+	overflow-y: auto;
+}
+
+.comment-logo {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+}
+
+.comment-controls {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;	
+}
+
+#comment-popup-container {
+		position: fixed;
+		top:0px;
+		left:0px;
+		padding: 0px;
+		margin:0px;
+		display: none;
+		z-index: 3000;
+}
+
+#comment-in-here {
+	
+	-webkit-overflow-scrolling: touch;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#comment-close-popup {
+	position: relative;
+	float: right;
+	padding: 0;
+	width: 20px;
+	z-index:5000;
+	height: 100%;
+}
+
+#comment-close-popup-container 	{
+	position: relative;
+	float: right;
+	width: 40px;
+	height: 20px;
+	margin-right: 10px;
+	
+}
+
+#comment-refresh {
+	position: relative;
+	float: left;
+	width: 40px;
+	z-index:5000;
+}
+
+
+
+
+#comment-pop-title {
+	float: left;
+	position: relative;
+	color: #444;
+	font-size: 130%;
+	width: 100%;
+	margin-bottom: 10px;
+} 
+
+#comment-show-password {
+	margin-bottom: 10px;
+}
+
+#comment-pop-text {
+	clear: both;
+}
+
+#comment-pop-image {
+	padding: 10px;	
+	float: right;	
+}
+
+.comment-popup-style {
+	font-family: Helvetica, sans-serif;
+}
+
+
+
+#comment-pop-title a:link {
+	color: #0000ee;
+	text-decoration: underline;
+}
+
+#comment-pop-title a:visited {
+	color:#800080;
+}
+
+#comment-pop-text a:link {
+	color: #0000ee;
+	text-decoration: underline;
+}
+
+#comment-pop-text a:visited {
+	color:#800080;
+}
+
+#comment-search {	
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	font-size: 120%;
+	width: 160px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#comment-preloader-hidden {
+	width: 30px;
+	height: 30px;
+	top: 200px;
+	left: 330px;
+	position: absolute;
+	z-index: 4000;
+}
+
+.comment-mapspecs {
+	width: 100%; 
+	height: 300px; 
+	margin-top: 10px;
+	margin-bottom: 10px; 
+	border-radius: 10px;
+}
+ 
+#comment-waiting {
+ 	display:none;
+ 	padding-top: 10px;
+}
+
+a img {
+	outline: none;
+}
+			 	
+img {
+	border : none;
+}		/* old ie versions */
+
+
+/* Specific to Bootstrap 3 */
+
+/* get a larger input, and align it with submit button */
+.form-inline .form-group > div.col-xs-8 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+/* vertical align label */
+.form-inline label {
+    line-height: 34px !important;
+}
+/* force inline control to fit container width
+ http://getbootstrap.com/css/#forms-inline  */
+.form-inline .form-control {
+    width: 100% !important;
+}
+/* Reset margin-bottom for our multiline form */
+@media (min-width: 768px) {
+  .form-inline .form-group {
+    margin-bottom: 15px !important;
+  }
+}
+
+
+.comment-open {
+	cursor:pointer;   /* ensure ipads click ok */
+
+}
+
+
+#comment-key {
+	
+	position: absolute;
+	height: 54px;
+	bottom: 0px;
+	left: 10px;
+	z-index:5000;
+	width:100%;	
+	display: inline-block;
+	white-space: nowrap;
+	float: left;
+}
+
+.comment-settings a {
+	white-space: nowrap;
+	display: inline-block;
+	margin: 0px;
+	padding: 0px;
+}
+
+.comment-settings img {
+	margin: 0px;
+	padding: 0px;
+	white-space: nowrap;
+	display: inline-block;
+}
+
+
+.comment-settings {
+	bottom: 0px;
+	height: 60px;
+	display: inline-block;
+	white-space: nowrap;
+	padding: 6px;
+}
+
+.comment-help {
+	float: right;
+	margin-right: 14px;
+}
+
+.comment-button {
+	margin: 0px;
+
+}
+
+
+
+.comment-private-key {
+	bottom: 0px; 
+	background-color: #d9edf7; 
+    padding: 3px;
+
+}
+
+
+.comment-vid-play {
+	position: relative;
+	left: 30px;
+	top: 30px;
+}
+
+.comment-vid-wrap {
+ 	background-image:url("https://atomjump.com/images/play.png");
+    
+    width: 32px;
+    height: 32px;
+	
+
+}
+
+
+.comment-msg-td {
+	word-wrap: break-word;
+	width: 65%;
+}
+
+.comment-ago-td {
+	max-width:36%; 
+	padding-right: 0px !important;
+}
+
+.comment-ago-text {
+	min-width: 55px;
+	overflow: hidden; 
+	white-space:nowrap;
+}
+
+#comment-title {	
+	padding-right: 20px;
+	text-align: center;
+	padding-top: 7px;
+	font-family: helvetica, sans-serif;
+	font-size: 16px;
+	font-style: bold;
+	color: white;
+}
+
+.comment-forum-logged-in {
+	padding-left: 10px;
+	color: #800000;
+}
+
+.comment-highlight-button {
+	background-color: rgba(240,240,240,0.5);			/* lighter but still transparent */
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+}
+
+.comment-msg-button {
+	padding: 8px;
+	width: 62px;
+	height: 62px;
+}
+
+
+@media (max-width: 768px) {
+	/* Mobile devices have 100% screens */
+	#comment-popup {
+		position: relative;
+		z-index: 4000;
+		top: 0%;
+		left:0%;
+		height: 125%;		/* Intended to allow for hidden address bar size - also see popup-inner */
+	
+		width: 100%;  
+		background-color: rgba(200,200,200,0.9);
+	
+		font-family: helvetica, sans-serif;
+		font-size: 12px;
+		color: #444;
+
+		/*Removed: */
+		box-shadow: 0px 0px 0px rgba(0,0,0,.5);
+		border-radius: 0px;
+	}
+	
+	#comment-popup-inner {
+		position: absolute;
+		top:0px;
+		left:0px;
+		width:100%;
+		height:80%;			/* Not 100% because popup is 125%. 100/125 * 100 = 80.0 */
+		z-index: 4100;
+	}
+	
+	.comment-padding {
+		
+		margin-top: 10px;			/* smaller left and right */
+		margin-bottom: 14px;		/* larger bottom */
+		margin-left: 0px;
+		margin-right: 0px;
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+		z-index: 4100;
+
+	}
+	
+	.comment-padding-allow-space {
+		margin-top: 24px;			/* smaller left and right, but bigger at top */
+		margin-bottom: 30px;
+		margin-left: 0px;
+		margin-right: 0px;
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		bottom:20px;
+		z-index: 4100;
+
+	}
+	
+	#comment-close-popup-container 	{
+		position: relative;
+		float: right;
+		width: 40px;
+		height: 16px;
+		margin-right: 10px;
+	
+	}
+	
+	
+	#comment-popup-text-container {
+		position: relative;
+		border: 1px solid #ddd;
+		top: 0px;
+		left:0px;
+		height: 100%; /*works in every browser except ie7*/
+		width: 100%;  /* wider here */
+		overflow-y: hidden;  /* was auto */
+		overflow-x: hidden;
+		border-radius: 5px;
+		background-color: white;
+		z-index: 4200;
+	}
+	
+	#comment-key {
+	
+		position: absolute;
+		height: 54px;
+		bottom: 0px;
+		left: 10px;
+		z-index:5000;
+		width:100%;	
+		padding-right: 10px;		/* this is added */
+		padding-top: 4px;			/* this is added */
+		display: inline-block;
+		white-space: nowrap;
+		float: left;
+	}
+	
+	
+	.comment-frm-scroller {
+		display: none;
+	
+		-webkit-overflow-scrolling: touch;		
+		overflow-y: scroll; /* was auto */
+		padding-right: 4px;	/* added for slight margin */
+		padding-left: 10px;	/* added for some margin */
+
+	}
+	
+	.comment-msg-td {
+		word-wrap: break-word;
+		width: 74%;
+	}
+	
+	.comment-button {
+		margin: 4px;	/* make easier to touch */
+
+	}
+	
+	#comment-title {
+		padding-right: 20px;
+		text-align: center;
+		padding-top: 6px;
+		font-family: helvetica, sans-serif;
+		font-size: 16px;
+		font-style: bold;
+		color: white;
+	}
+	
+	.comment-help {
+		float: right;
+		margin-right: 8px;
+	}
+
+	
+}
+
+
+

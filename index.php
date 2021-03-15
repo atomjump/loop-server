@@ -426,15 +426,15 @@
 		 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
 
 			  <!-- Bootstrap core CSS -->
-			<link rel="StyleSheet" href="https://atomjump.com/css/bootstrap.min.css" rel="stylesheet">
+			<link rel="StyleSheet" href="front-end/css/bootstrap.min.css" rel="stylesheet">
 
 			<!-- AtomJump Feedback CSS -->
-			<link rel="StyleSheet" href="https://atomjump.com/css/comments-0.1.css">
+			<link rel="StyleSheet" href="front-end/css/comments-1.0.4.css?ver=1">
 
 			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!--[if lt IE 9]>
-			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			  <script src="front-end/js/html5shiv-3-7-0.js"></script>
+			  <script src="front-end/js/respond-1-4-2.min.js"></script>
 			  <style>
 			  
 
@@ -450,12 +450,12 @@
 			<![endif]-->
 
 			<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
-			<script type="text/javascript" src="//frontcdn.atomjump.com/atomjump-frontend/jquery-1.11.0.min.js"></script>
+			<script type="text/javascript" src="front-end/js/jquery-1.11.0.min.js"></script>
 			<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
 
 			<!-- For the dropdown autocomplete -->
-			<link rel="stylesheet" href="//atomjump.com/css/jquery-ui.css">
-			<script src="//atomjump.com/js/jquery-ui.js"></script>
+			<link rel="stylesheet" href="front-end/css/jquery-ui.css">
+			<script src="front-end/js/jquery-ui.js"></script>
 
 
 	
@@ -725,7 +725,7 @@
 
 		<div>
 		    <div id="logo-wrapper" class="looplogo">
-				<img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt="">
+				<img class="saver-hideable" src="front-end/img/speech-bubble-start.png" id="bg" alt="">
 				<br/>
 				<p align="center">Your AtomJump Messaging server is running!<br/> You should now configure a '<a href="https://src.atomjump.com/atomjump/loop#loop">web service connector client</a>' to start messaging from this server.</p>
 

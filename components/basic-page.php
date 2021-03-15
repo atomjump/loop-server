@@ -10,15 +10,15 @@
 		 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
 
 			  <!-- Bootstrap core CSS -->
-			<link rel="StyleSheet" href="//frontcdn.atomjump.com/atomjump-frontend/bootstrap.min.css" rel="stylesheet">
+			<link rel="StyleSheet" href="front-end/css/bootstrap.min.css" rel="stylesheet">
 
 			<!-- AtomJump Feedback CSS -->
-			<link rel="StyleSheet" href="//frontcdn.atomjump.com/atomjump-frontend/comments-1.0.4.css?ver=1">
+			<link rel="StyleSheet" href="front-end/css/comments-1.0.4.css?ver=1">
 
 			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!--[if lt IE 9]>
-			  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-			  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			  <script src="front-end/js/html5shiv-3-7-0.js"></script>
+			  <script src="front-end/js/respond-1-4-2.min.js"></script>
 			  <style>
 			  
 
@@ -34,12 +34,11 @@
 			<![endif]-->
 
 			<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
-			<script type="text/javascript" src="//frontcdn.atomjump.com/atomjump-frontend/jquery-1.11.0.min.js"></script>
-			<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
+			<script type="text/javascript" src="front-end/js/jquery-1.11.0.min.js"></script>
 
 			<!-- For the dropdown autocomplete -->
-			<link rel="stylesheet" href="//atomjump.com/css/jquery-ui.css">
-			<script src="//atomjump.com/js/jquery-ui.js"></script>
+			<link rel="stylesheet" href="front-end/css/jquery-ui.css">
+			<script src="front-end/js/jquery-ui.js"></script>
 
 			<style>
 				h2 {
@@ -249,7 +248,7 @@
 
 		<div>
 		    <div id="logo-wrapper" class="looplogo">
-				<a href="<?php echo $follow_on_link ?>"><img class="saver-hideable" src="https://atomjump.com/wp/wp-content/uploads/2018/12/speech-bubble-start-1.png" id="bg" alt=""></a>
+				<a href="<?php echo $follow_on_link ?>"><img class="saver-hideable" src="front-end/img/speech-bubble-start.png" id="bg" alt=""></a>
 			</div>
 		</div>
    		
