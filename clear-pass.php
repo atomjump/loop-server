@@ -9,6 +9,14 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
 } else {
 	$unique_pass_reset = $cnf['db']['user'] . $cnf['db']['pass'];	//Should also be unique per installation - the number is not shown.
 }
+
+
+$main_message = "";
+$follow_on_link = "https://atomjump.com";
+if($cnf['serviceHome']) {
+	$follow_on_link = add_subdomain_to_path($cnf['serviceHome']);
+}
+
     
  if($_REQUEST['action']) {
    
@@ -29,11 +37,11 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
           //Password cleared
           
        } else {
-       		echo $msg['msgs'][$lang]['passwordNotReset'];
+       		$main_message = $msg['msgs'][$lang]['passwordNotReset'];
        
        }
     } else {
-    	  echo $msg['msgs'][$lang]['passwordNotReset'];
+    	  $main_message = $msg['msgs'][$lang]['passwordNotReset'];
     
     }
  
@@ -50,7 +58,8 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
 			      //There is an email like this on the system   
 			   		 
 			   } else {
-			   		echo $msg['msgs'][$lang]['emailNotExist'];
+			   		$main_message = $msg['msgs'][$lang]['emailNotExist'];
+			   		include("components/basic-page.php");
 			   		exit(0);
 			   
 			   }
@@ -63,15 +72,13 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
 	     $_SESSION['temp-email'] = $email;
 	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset); 
 	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
-	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
+	     $main_message = $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
-	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
-	  
-	  
+	  	 $main_message = $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
 	  }
 	
-
-
-	
  }
+ 
+ 
+ include("components/basic-page.php");
 ?>
