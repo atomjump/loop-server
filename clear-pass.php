@@ -44,6 +44,10 @@ if($cnf['serviceHome']) {
     	  $main_message = $msg['msgs'][$lang]['passwordNotReset'];
     
     }
+    
+    
+	include("components/basic-page.php");
+    
  
  } else {
 	
@@ -58,9 +62,7 @@ if($cnf['serviceHome']) {
 			      //There is an email like this on the system   
 			   		 
 			   } else {
-			   		$main_message = $msg['msgs'][$lang]['emailNotExist'];
-			   		include("components/basic-page.php");
-			   		exit(0);
+			   		echo $msg['msgs'][$lang]['emailNotExist'];
 			   
 			   }
 			
@@ -72,13 +74,12 @@ if($cnf['serviceHome']) {
 	     $_SESSION['temp-email'] = $email;
 	     $link = $root_server_url . '/clear-pass.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset); 
 	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
-	     $main_message = $msg['msgs'][$lang]['pass']['checkAndClick'];
+	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
-	  	 $main_message = $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
+	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
 	  }
 	
  }
  
  
- include("components/basic-page.php");
 ?>
