@@ -2024,7 +2024,7 @@ function logout() {
 		$("#comment-not-signed-in").html("<img src=\"" + ssshoutServer + "/images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 		
 		window.location.assign(newLocation);
-	}, 100);
+	}, 500);
 	refreshLoginStatus();
 	
 	return;
