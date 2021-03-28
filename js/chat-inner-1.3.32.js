@@ -1976,6 +1976,8 @@ function beforeLogout(cb) {
 	$('#user-id-show').hide();
 
  
+ 	//Show a waiting graphic
+	$("#comment-logout-text").html("<img src=\"" + ssshoutServer + "/images/ajax-loader.gif\" width=\"16\" height=\"16\">");
     
     //Clear out the local cookies
     document.cookie = "your_name=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
@@ -1994,6 +1996,7 @@ function logout() {
 	$('#comment-not-signed-in').show();
 	$('#ses').val('');  //also sign out the current sess
  
+ 
     
 
     $('#comment-prev-messages').html('');   //remove any existing messages
@@ -2008,7 +2011,7 @@ function logout() {
 	//And run a search
 	doSearch();
 	
-	//TESTING  Refresh the page
+	//Refresh the page
 	//Send message to the parent frame to hide highlight
 	var targetOrigin = getParentUrl();		//This is in search-secure
 	parent.postMessage( {'highlight': "none" }, targetOrigin );
@@ -2016,6 +2019,9 @@ function logout() {
 
 	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
 	setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
+		
+		//Show a waiting graphic, until we refresh the page
+		$("#comment-not-signed-in").html("<img src=\"" + ssshoutServer + "/images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 		
 		window.location.assign(newLocation);
 	}, 100);

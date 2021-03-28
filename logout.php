@@ -9,7 +9,7 @@
    
 	//Do not remove the 'ses' value just yet.
 	
-	//This must be off:$_SESSION['authenticated-layer'] = '';
+	//IMPORTANT: this must not be used here:$_SESSION['authenticated-layer'] = '';
 	$_SESSION['logged-user'] = '';
 	$_SESSION['logged-email'] = '';
 	$_SESSION['user-ip'] = '';
@@ -20,10 +20,7 @@
 	$_SESSION['layer-group-user'] = '';
 	$_SESSION['access-layer-granted'] = 'false';
 	$_SESSION['access-layers-granted'] = '';
-	
-	
-	//in HERE?	$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
-	
+		
 	
 	$_SESSION['view-count'] = 0; 
     
