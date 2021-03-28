@@ -2012,6 +2012,7 @@ function logout() {
 	//Send message to the parent frame to hide highlight
 	var targetOrigin = getParentUrl();		//This is in search-secure
 	parent.postMessage( {'highlight': "none" }, targetOrigin );
+	var newLocation = window.location.href;
 
 	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
 	setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
