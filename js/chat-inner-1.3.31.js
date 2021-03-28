@@ -2002,8 +2002,24 @@ function logout() {
 	portReset = false; 
 	port=initPort;
 	
+	
+	
+	
 	//And run a search
 	doSearch();
+	
+	//TESTING  Refresh the page
+	//Send message to the parent frame to hide highlight
+	var targetOrigin = getParentUrl();		//This is in search-secure
+	parent.postMessage( {'highlight': "none" }, targetOrigin );
+
+	//Give ourselves a fraction of a second (1/10sec) to cope with another cluster node not having written session data
+	setTimeout(function(){		//Give ourselves a fraction of a second to wait for sessions to be written on another node
+		
+		window.location.assign(newLocation);
+	}, 100);
+	refreshLoginStatus();
+	
 	return;
 }
 

@@ -21,6 +21,10 @@
 	$_SESSION['access-layer-granted'] = 'false';
 	$_SESSION['access-layers-granted'] = '';
 	
+	
+	//in HERE?	$_SESSION['authenticated-layer'] = '';		//Clear any previously authenticated layers
+	
+	
 	$_SESSION['view-count'] = 0; 
     
 
