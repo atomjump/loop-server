@@ -57,7 +57,9 @@
 			   		 
 			   } else {
 			   		//The email doesn't exist on the system
-			   		echo $msg['msgs'][$lang]['emailNotExist'];
+			   		$output = $msg['msgs'][$lang]['emailNotExist'];
+			   		
+			   		echo json_encode($output);
 			   		exit(0);
 			   }
 			
@@ -68,15 +70,17 @@
 	     //Send an email to the logged email
 	     $link = $root_server_url . '/clear-pass-phone.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset) . '&user=' . $email;
 	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
-	     echo $msg['msgs'][$lang]['pass']['checkAndClick'];
+	     $output = $msg['msgs'][$lang]['pass']['checkAndClick'];
 	  } else {
-	  	 echo $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
+	  	 $output = $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
 	  
 	  
 	  }
 	
+	  echo json_encode($output);
+	  exit(0);
 
-
+		
 	
  }
 ?>
