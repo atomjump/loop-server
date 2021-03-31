@@ -11,6 +11,16 @@
    }	
  
  if($_REQUEST['action']) {
+ 	//Get default messages to display
+   	$main_message = "";
+	$follow_on_link = "https://atomjump.com";
+	if($cnf['serviceHome']) {
+		$follow_on_link = add_subdomain_to_path($cnf['serviceHome']);
+	}
+	$first_button_wording = "&#8962;";		//A 'home' UTF-8 char
+
+	$first_button = $follow_on_link;
+ 
  
    $email = $_REQUEST['user'];
    
