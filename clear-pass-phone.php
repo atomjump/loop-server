@@ -59,7 +59,7 @@
 			   		//The email doesn't exist on the system
 			   		$output = $msg['msgs'][$lang]['emailNotExist'];
 			   		
-			   		$json = array("message" => $output);
+			   		$json = $output;
 
 					//This is a jquery ajax json call, so we need a proper return
 					if(isset($_GET['callback'])) {
@@ -83,7 +83,7 @@
 	  
 	  }
 	
-	  $json = array("message" => $output);
+	  $json = $output;
 
 	  //This is a jquery ajax json call, so we need a proper return
 	  if(isset($_GET['callback'])) {
