@@ -91,4 +91,6 @@
 	  }
 
  }
+ 
+ //Note: needs a newline below after the 'greater' sign.
 ?>
