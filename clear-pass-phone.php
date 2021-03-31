@@ -24,13 +24,15 @@
           $sql = "UPDATE tbl_user SET var_pass = NULL WHERE var_email = '" . $email . "'";
       	  $result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			        
-           echo $msg['msgs'][$lang]['passwordBeenResetApp'];
+           $main_message = $msg['msgs'][$lang]['passwordBeenResetApp'];
           //Password cleared
           
     } else {
-    	  echo $msg['msgs'][$lang]['passwordNotReset'];
+    	  $main_message = $msg['msgs'][$lang]['passwordNotReset'];
     
     }
+    
+    include("components/basic-page.php");
  
  } else {
 	
