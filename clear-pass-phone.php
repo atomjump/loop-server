@@ -59,7 +59,13 @@
 			   		//The email doesn't exist on the system
 			   		$output = $msg['msgs'][$lang]['emailNotExist'];
 			   		
-			   		echo json_encode($output);
+			   		$json = array("message" => $output);
+
+					//This is a jquery ajax json call, so we need a proper return
+					if(isset($_GET['callback'])) {
+						echo $_GET['callback'] . "(" . json_encode($json) . ")";
+					}
+
 			   		exit(0);
 			   }
 			
@@ -77,10 +83,12 @@
 	  
 	  }
 	
-	  echo json_encode($output);
-	  exit(0);
+	  $json = array("message" => $output);
 
-		
-	
+	  //This is a jquery ajax json call, so we need a proper return
+	  if(isset($_GET['callback'])) {
+		  echo $_GET['callback'] . "(" . json_encode($json) . ")";
+	  }
+
  }
 ?>
