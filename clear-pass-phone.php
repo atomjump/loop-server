@@ -62,10 +62,11 @@
 			   		$json = $output;
 
 					//This is a jquery ajax json call, so we need a proper return
-					/*if(isset($_GET['callback'])) {
+					if(isset($_GET['callback'])) {
 						echo $_GET['callback'] . "(" . json_encode($json) . ")";
-					}*/
-					echo $output;
+					} else {
+						echo $output;
+					}
 
 			   		exit(0);
 			   }
@@ -88,10 +89,11 @@
 	  $json = $output;
 
 	  //This is a jquery ajax json call, so we need a proper return
-	  /*if(isset($_GET['callback'])) {
+	  if(isset($_GET['callback'])) {
 		  echo $_GET['callback'] . "(" . json_encode($json) . ")";
-	  }*/
-	  echo $output;
+	  } else {
+	  	echo $output;
+	  }
 
  }
  
