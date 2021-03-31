@@ -62,9 +62,10 @@
 			   		$json = $output;
 
 					//This is a jquery ajax json call, so we need a proper return
-					if(isset($_GET['callback'])) {
+					/*if(isset($_GET['callback'])) {
 						echo $_GET['callback'] . "(" . json_encode($json) . ")";
-					}
+					}*/
+					echo $output;
 
 			   		exit(0);
 			   }
@@ -75,8 +76,9 @@
 	  if($email != '') {
 	     //Send an email to the logged email
 	     $link = $root_server_url . '/clear-pass-phone.php?action=' . md5(date('Ymd') . $email . $unique_pass_reset) . '&user=' . $email;
-	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
 	     $output = $msg['msgs'][$lang]['pass']['checkAndClick'];
+	     cc_mail_direct($email, $msg['msgs'][$lang]['pass']['title'], $msg['msgs'][$lang]['pass']['pleaseClick'] ."<a href=\"$link\">$link</a>", $cnf['email']['webmasterEmail']);
+	     
 	  } else {
 	  	 $output = $msg['msgs'][$lang]['pass']['pleaseEnterEmail'];
 	  
@@ -86,9 +88,10 @@
 	  $json = $output;
 
 	  //This is a jquery ajax json call, so we need a proper return
-	  if(isset($_GET['callback'])) {
+	  /*if(isset($_GET['callback'])) {
 		  echo $_GET['callback'] . "(" . json_encode($json) . ")";
-	  }
+	  }*/
+	  echo $output;
 
  }
  
