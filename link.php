@@ -14,6 +14,17 @@ $lg = new cls_login();
 
 $main_message = $lg->email_confirm($_REQUEST['d']);
 
+if(isset($_REQUEST['id']) && isset($_REQUEST['deviceType'])) {
+	//We are also trying to pair with the app at the same time. This request
+	//would only come if you have the 'notifications' plugin installed.
+	global $root_server_url;
+	$url = trim_trailing_slash($root_server_url) . "/plugins/notifications/register.php?id=" . $_REQUEST['id'] . "&devicetype=" . $_REQUEST['deviceType'];
+	
+	//Redirect to the reigstration of the app.
+	header("Location: " . $url, true, 301);
+	exit(0);
+}
+
 $follow_on_link = "https://atomjump.com";
 if($cnf['serviceHome']) {
 	$follow_on_link = add_subdomain_to_path($cnf['serviceHome']);
