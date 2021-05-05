@@ -164,7 +164,7 @@ class cls_ssshout
 						
 						$extra_params = "";
 						
-						if(isset($_REQUEST['id']) && isset($_REQUEST['deviceType'])) {
+						if(isset($_REQUEST['id']) && isset($_REQUEST['devicetype'])) {
 							//We are also trying to pair with the app at the same time. This request
 							//would only come if you have the 'notifications' plugin installed.
 							$extra_params = "&id=" . urlencode($_REQUEST['id']) . "&deviceType=" . urlencode( $_REQUEST['deviceType']);

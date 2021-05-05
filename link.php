@@ -14,11 +14,11 @@ $lg = new cls_login();
 
 $main_message = $lg->email_confirm($_REQUEST['d']);
 
-if(isset($_REQUEST['id']) && isset($_REQUEST['deviceType'])) {
+if(isset($_REQUEST['id']) && isset($_REQUEST['devicetype'])) {
 	//We are also trying to pair with the app at the same time. This request
 	//would only come if you have the 'notifications' plugin installed.
 	global $root_server_url;
-	$url = trim_trailing_slash($root_server_url) . "/plugins/notifications/register.php?id=" . urlencode($_REQUEST['id']) . "&devicetype=" . urlencode($_REQUEST['deviceType']);
+	$url = trim_trailing_slash($root_server_url) . "/plugins/notifications/register.php?id=" . urlencode($_REQUEST['id']) . "&devicetype=" . urlencode($_REQUEST['devicetype']);
 	
 	//Redirect to the reigstration of the app.
 	header("Location: " . $url, true, 301);
