@@ -20,6 +20,11 @@ if(isset($_REQUEST['id']) && isset($_REQUEST['devicetype'])) {
 	global $root_server_url;
 	$url = trim_trailing_slash($root_server_url) . "/plugins/notifications/register.php?id=" . urlencode($_REQUEST['id']) . "&devicetype=" . urlencode($_REQUEST['devicetype']);
 	
+	if(isset($_REQUEST['email'])) {
+	
+		 $url .= "&email=" . urlencode($_REQUEST['email']);
+	}
+	
 	//Redirect to the reigstration of the app.
 	header("Location: " . $url, true, 301);
 	exit(0);
