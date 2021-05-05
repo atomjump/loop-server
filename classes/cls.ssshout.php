@@ -162,7 +162,14 @@ class cls_ssshout
 					//TODO: deactivate if user hasn't confirmed email address after an hour or so
 					if($login_as == true) {
 						
-						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
+						$extra_params = "";
+						
+						if(isset($_REQUEST['id']) && isset($_REQUEST['deviceType'])) {
+							//We are also trying to pair with the app at the same time. This request
+							//would only come if you have the 'notifications' plugin installed.
+							$extra_params = "&id=" . urlencode($_REQUEST['id']) . "&deviceType=" . urlencode( $_REQUEST['deviceType']);
+						}
+						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $extra_params . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
 						error_log($body_message);
 						
 						cc_mail_direct($email, $msg['msgs'][$lang]['welcomeEmail']['title'], $body_message, $cnf['email']['webmasterEmail']);
