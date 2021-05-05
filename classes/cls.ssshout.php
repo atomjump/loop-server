@@ -167,7 +167,7 @@ class cls_ssshout
 						if(isset($_REQUEST['id']) && isset($_REQUEST['devicetype'])) {
 							//We are also trying to pair with the app at the same time. This request
 							//would only come if you have the 'notifications' plugin installed.
-							$extra_params = "&id=" . urlencode($_REQUEST['id']) . "&deviceType=" . urlencode( $_REQUEST['deviceType']);
+							$extra_params = "&id=" . urlencode($_REQUEST['id']) . "&devicetype=" . urlencode( $_REQUEST['devicetype']);
 						}
 						$body_message = $msg['msgs'][$lang]['welcomeEmail']['pleaseClick'] . $root_server_url . "/link.php?d=" . $confirm_code . $extra_params . $msg['msgs'][$lang]['welcomeEmail']['confirm'] . str_replace('CUSTOMER_PRICE_PER_SMS_US_DOLLARS', CUSTOMER_PRICE_PER_SMS_US_DOLLARS, $msg['msgs'][$lang]['welcomeEmail']['setupSMS']) . str_replace('ROOT_SERVER_URL',$root_server_url, $msg['msgs'][$lang]['welcomeEmail']['questions']) . $msg['msgs'][$lang]['welcomeEmail']['regards'];
 						error_log($body_message);
