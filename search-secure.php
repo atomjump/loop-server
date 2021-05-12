@@ -616,7 +616,7 @@
 											 <input  id="subscribers-limit" name="subscriberlimit" type="text" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['limitSubscribersEnter'] ?>" value="<?php if(($layer_info['var_subscribers_limit']) && ($layer_info['var_subscribers_limit'] != "")) { echo $layer_info['var_subscribers_limit']; } ?>">
 										</div>
 										<div id="set-forum-password-form" class="form-group" style="display:none;">
-											<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span></div>
+											<div><?php echo $msg['msgs'][$lang]['setForumPass'] ?> <a href="javascript:" onclick="$('#forum-password-explain').slideToggle();" title="<?php echo $msg['msgs'][$lang]['setForumPassReason'] ?>"><?php echo $msg['msgs'][$lang]['optional'] ?></a>  <span id="forum-password-explain" style="display: none;  color: #f88374;"><?php echo $msg['msgs'][$lang]['setForumPassReasonExtended'] ?></span> <img src="images/close.svg" width="16" height="16" onclick="$('#set-forum-password').val('-');"></div>
 											 <input  id="set-forum-password" name="setforumpassword" type="password" class="form-control" placeholder="<?php echo $msg['msgs'][$lang]['setForumPassEnter'] ?>" value="">
 											 <input type="hidden" id="forumpasscheck" name="forumpasscheck" value="">
 										</div>
