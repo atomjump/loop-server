@@ -358,6 +358,16 @@ if(typeof ajFeedback !== 'undefined') {
 } 
 
 
+function showSettings()
+{
+	$("#comment-popup-content").hide();
+	$("#comment-upload").hide();
+	$("#comment-options").show();
+	$("#comment-emojis").hide();
+	var targetOrigin = getParentUrl();		//This is in search-secure
+	parent.postMessage( {'highlight': "options" }, targetOrigin );
+	return;
+}
 
 
 function receiveMessage(msg)
@@ -1135,6 +1145,10 @@ function set_options_cookie() {
 					msg = lsmsg.msgs[lang].passwordWrong;
 					$('#comment-password-vis').show();
 					toggle = false;
+					
+					//Ensure we are showing the settings page. Make sure we have hidden any forum password content, as an incorrect user password will override an incorrect forum password.
+					showSettings();
+					
 					refreshLoginStatus();
 				break;
 				
