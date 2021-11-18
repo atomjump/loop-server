@@ -19,7 +19,7 @@ Modify the upload size in php.ini (found in e.g. /etc/php5/apache2/php.ini)
 ```
 upload_max_filesize = 10M
 max_execution_time = 200
-service apache2 reload
+sudo service apache2 reload
 ```
 
 Imagemagick can be used to handle image uploads (Ubuntu command):
@@ -31,6 +31,16 @@ To keep timing in-sync (Ubuntu command):
 ```
 sudo apt-get install ntp
 ```
+
+MySQL >= 5.7 users: add this 'SQL mode' into your my.cnf MySQL configuration file (found in e.g. /etc/mysql/mysql.conf.d/mysqld.cnf)
+```
+sql_mode = STRICT_TRANS_TABLES
+```
+and restart the MySQL server with
+```
+sudo service mysql restart
+```
+
 
 # Optional Components
 
