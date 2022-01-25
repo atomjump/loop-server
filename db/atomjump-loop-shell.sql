@@ -272,3 +272,30 @@ CREATE INDEX decay ON tbl_layer (date_to_decay);
 ALTER TABLE tbl_ssshout ADD `var_username` varchar(50) CHARACTER SET utf8 DEFAULT NULL;
 CREATE INDEX `shouted_user` ON tbl_ssshout (`enm_active`,`int_layer_id`,`var_username`,`int_author_id`,`int_ssshout_id`);
 
+
+
+
+
+
+
+
+-- DRAFT Changing to support emoticons, which need "utf8mb4_unicode", not plain UTF8
+-- See more details at https://mathiasbynens.be/notes/mysql-utf8mb4
+ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE tbl_ssshout CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- TODO: repeat out for the other tables
+ALTER TABLE tbl_ssshout CHANGE var_shouted var_shouted VARCHAR(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;
+ALTER TABLE tbl_ssshout CHANGE var_shouted_processed var_shouted_processed VARCHAR(1024) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL;
+
+
+-- shouted_already index of shouted_already.  KEY `shouted_already` (`var_ip`,`var_shouted`(255),`date_when_shouted`),
+-- needs to become KEY `shouted_already` (`var_ip`,`var_shouted`(191),`date_when_shouted`)
+-- due to a fixed max index size of 255*3 =765 bytes. For larger 4 byte chars, it is 191*4 = 764 bytes.
+
+
+--  Same potentially applies to `tbl_search_suggest`  if we ever needed it to be 
+--  `var_search_suggest` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+--  KEY `search_suggest_search` (`var_search_suggest`)
+
+-- TODO: we need to change the connection method in the PHP to "SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci"
+
