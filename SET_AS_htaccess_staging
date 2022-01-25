@@ -1,0 +1,52 @@
+#Note: Over-riding httpd.conf settings using .htaccess is only allowed 
+#if the AllowOverride Directive is set inside httpd.conf which is the default case.
+
+# Disable directory browsing 
+Options -Indexes
+
+# Hide the contents of directories
+IndexIgnore *
+
+#Deny all files first
+Order Deny,Allow
+Deny from all
+
+# Deny access to filenames starting with dot(.)
+<FilesMatch "^\.">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Allow access to files with extensions .php|.html|.svg|.png|.jpg|.gif|.ico|.js|.pdf|.css
+<FilesMatch "\.(php|html|svg|png|jpg|gif|ico|js|pdf|css)$">
+Allow from all
+</FilesMatch>
+
+#Allow a blank index
+<FilesMatch "^$">
+Allow from all
+</FilesMatch>
+
+# Prevent anything in the .git folder from showing
+RedirectMatch 404 /\.git
+
+
+RewriteEngine On
+RewriteBase /
+
+
+RewriteRule ^search-chat - [L,PT]
+#Get out of here early - we know we don't need further processing
+
+
+
+
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://staging.atomjump.com/%{QUERY_STRING}
+RewriteRule http://staging.atomjump.com https://atomjump.com
+
+RewriteCond %{HTTPS} on
+RewriteRule https://staging.atomjump.com https://staging.atomjump.com/%{QUERY_STRING}
+
+RewriteRule ^download download.php [NC,L]
+

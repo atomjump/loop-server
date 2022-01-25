@@ -1,0 +1,64 @@
+#Note: Over-riding httpd.conf settings using .htaccess is only allowed 
+#if the AllowOverride Directive is set inside httpd.conf which is the default case.
+
+# Disable directory browsing 
+Options -Indexes
+
+# Hide the contents of directories
+IndexIgnore *
+
+#Deny all files first
+Order Deny,Allow
+Deny from all
+
+# Deny access to filenames starting with dot(.)
+<FilesMatch "^\.">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Allow access to files with extensions .php|.html|.svg|.png|.jpg|.gif|.ico|.js|.pdf|.css
+<FilesMatch "\.(php|html|svg|png|jpg|gif|ico|js|pdf|css)$">
+Allow from all
+</FilesMatch>
+
+#Allow a blank index
+<FilesMatch "^$">
+Allow from all
+</FilesMatch>
+
+# Prevent anything in the .git folder from showing
+RedirectMatch 404 /\.git
+
+
+RewriteEngine On
+RewriteBase /
+
+
+RewriteRule ^search-chat - [L,PT]
+#Get out of here early - we know we don't need further processing
+RewriteRule copy-image - [L,PT]
+#Get out of here early - we know we don't need further processing
+RewriteRule image-exists - [L,PT]
+#Get out of here early - we know we don't need further processing
+
+
+
+RewriteRule ^download$ download.php [L,PT]
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !atomjump.com$
+RewriteCond %{HTTP_HOST} !ajmp.co$
+#If you are using shared images, this allows a download from another image server. Use ip of this server   
+RewriteCond %{HTTP_HOST} !192.168.your.ip$     
+RewriteRule (.*) https://atomjump.com/%{QUERY_STRING}
+
+
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP_HOST} !www.atomjump.com$
+RewriteRule http://www.atomjump.com https://atomjump.com/%{QUERY_STRING}
+
+
+
+RewriteCond %{HTTPS} on
+RewriteRule https://www.atomjump.com https://atomjump.com/%{QUERY_STRING}
