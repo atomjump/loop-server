@@ -524,6 +524,9 @@
 												$video_url = str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
 												if($lang) {
 													$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+													if(!$lang_converted) {
+														$lang_converted = "en";		//Default to English
+													}
 													$video_url = str_replace("[LANG]", $lang_converted, $video_url);
 												}
 												echo $video_url;
@@ -531,6 +534,9 @@
 	$video_url = "https://meet.jit.si/aj-changeme-" . $feedback_id; 
 	if($lang) {
 		$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+		if(!$lang_converted) {
+			$lang_converted = "en";		//Default to English
+		}
 		$video_url .= "?lang=" . $lang_converted;
 	}
 	echo $video_url;

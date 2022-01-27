@@ -87,10 +87,24 @@
       "adminMachineUser" : "92.27.10.17:1",
 	"video" : {
 		"url": "https://meet.jit.si/AJ-changeme[FORUM]?lang=[LANG]",
+		"jitsi-codes": "See table here: https://github.com/jitsi/jitsi-meet/blob/master/lang/languages.json",
 		"langCodeInnerVsOuter": {
 			"en": "en",
+			"ch": "zhCN",
+			"cht": "zhTW",
+			"ar": "ar",
+			"bg": "en",
 			"de": "de",
-			"ru": "ru"
+			"es" : "es",
+			"pt" : "pt",
+			"fr": "fr",
+			"hi": "hi",
+			"in": "id",
+			"it": "it",
+			"jp": "ja",
+			"ko": "ko",
+			"pu": "en",
+			"ru": "ru"			
 		}
 	},
       "email": {
