@@ -521,9 +521,19 @@
 											$feedback_id = $video_code . "-" . $_REQUEST['uniqueFeedbackId'];
 										
 											if($cnf['video']['url']) {
-	echo str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
+												$video_url = str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
+												if($lang) {
+													$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+													$video_url = str_replace("[LANG]", $lang_converted, $video_url);
+												}
+												echo $video_url;
 } else {
-	echo "https://meet.jit.si/aj-changeme-" . $feedback_id; 
+	$video_url = "https://meet.jit.si/aj-changeme-" . $feedback_id; 
+	if($lang) {
+		$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+		$video_url .= "?lang=" . $lang_converted;
+	}
+	echo $video_url;
 } ?>" onclick="event.stopPropagation(); return true;" style="margin-bottom:3px;"><img id="video-button" src="<?php echo $root_server_url ?>/images/video.svg" title="Video Chat" style="width: 48px; height: 32px;"></a><span id="sub-toggle"><?php echo $subscribe_toggle; ?></span>
 								</div>
 							
