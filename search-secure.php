@@ -523,7 +523,9 @@
 											if($cnf['video']['url']) {
 												$video_url = str_replace("[FORUM]", $feedback_id, $cnf['video']['url']);
 												if($lang) {
-													$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+													if($cnf['video']['langCodeInnerVsOuter']) {
+														$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+													}
 													if(!$lang_converted) {
 														$lang_converted = "en";		//Default to English
 													}
@@ -533,7 +535,9 @@
 } else {
 	$video_url = "https://meet.jit.si/aj-changeme-" . $feedback_id; 
 	if($lang) {
-		$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+		if($cnf['video']['langCodeInnerVsOuter']) {
+			$lang_converted = $cnf['video']['langCodeInnerVsOuter'][$lang];
+		}
 		if(!$lang_converted) {
 			$lang_converted = "en";		//Default to English
 		}
