@@ -8,7 +8,7 @@ at http://src.atomjump.com/atomjump/loop
 
 # Requirements
 
-* PHP. This software has been fully tested on PHP 5.3, 5.5, 7.0, 7.1, 7.2, 7.4 (with curl, php-mbstring, zip, php-xml support added) 
+* PHP. This software has been fully tested on PHP 5.3, 5.5, 7.0, 7.1, 7.2, 7.4 (with curl, php-mbstring, zip, php-xml support added). Note: Preliminary tests have been carried out with PHP 8.0 and 8.1, and most features appear to work, but we cannot yet guarantee 100% compatibility, although this will come in time.  
 * MySQL 5+ 
 * Apache 2  
 * Linux server (though a Windows server may be partially functional)  
