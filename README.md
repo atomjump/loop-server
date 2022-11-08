@@ -603,6 +603,15 @@ Server: >= 0.5.0
 Returns the integer user id value of the current user.
 
 
+**is_admin()**
+
+Required Parameters
+($user_id)
+Server: >= 3.2.2
+
+Returns: true/false
+
+
 **is_forum_granted()**
 
 Required Parameters

@@ -455,6 +455,18 @@ class cls_plugin_api {
 	     return $sh->deactivate_shout($message_id, $just_typing);
 		 
      }
+     
+     /*
+     	Checks is user id is the admin or not
+     */
+     
+     public function is_admin($user_id)
+	 {
+	 	$ly = new cls_layer();
+	 	
+	 	return $ly->is_admin($user_id);
+	 }
+
    
 
 }
