@@ -462,9 +462,9 @@ class cls_plugin_api {
      
      public function is_admin($user_id)
 	 {
-	 	$ly = new cls_layer();
+	 	$lg = new cls_login();
 	 	
-	 	return $ly->is_admin($user_id);
+	 	return $lg->is_admin($user_id);
 	 }
 
    
