@@ -388,6 +388,7 @@ class cls_plugin_api {
 	                                                //developer. However, plugins that work with before_msg will continue to work 
 	 	$notification = true;						//Can switch off notifications from this message when set to false.
 	 	$always_send_email = false;					//Set to true to ensure an email will always be sent to the recipient(s). Usually, messages within around 20 minutes won't multiple-email the user (when false).
+	 	$strip_tags = true;							//By default we strip any tags in a new message
 	 
 	 
 	    if(isset($options)) {
@@ -406,6 +407,7 @@ class cls_plugin_api {
 	     if(isset($options['allowed_plugins']))  $allowed_plugins = $options['allowed_plugins'];
 	     if(isset($options['notification']))  $notification = $options['notification'];
 	     if(isset($options['always_send_email'])) $always_send_email = $options['always_send_email'];
+	     if(isset($options['strip_tags'])) $strip_tags = $options['strip_tags'];
 	    }
 	 	 
 	 	
@@ -430,7 +432,8 @@ class cls_plugin_api {
 	                        $allow_plugins,
 	                        $allowed_plugins,
 	                        $notification,
-	                        $always_send_email);
+	                        $always_send_email,
+	                        $strip_tags);
 	 
 	 }	
 	 

