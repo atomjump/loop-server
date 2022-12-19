@@ -898,7 +898,7 @@ class cls_ssshout
 		
 		//First a quick check - we only want to do this precisely if there is another whole user with the same username
 		//but a different author id. 
-		$sql = "SELECT * FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' AND int_author_id <> " . $user_id;
+		$sql = "SELECT * FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . clean_data($username) . "' AND int_author_id <> " . $user_id;
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($rowb = db_fetch_array($result))
 		{
@@ -913,7 +913,7 @@ class cls_ssshout
 		
 
 		
-			$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . $username . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
+			$sql = "INSERT INTO tbl_multiuser_check SELECT NULL, var_username, int_author_id FROM tbl_ssshout WHERE enm_active = 'true' AND int_layer_id = " . $layer_id . " AND var_username = '" . clean_data($username) . "' GROUP BY int_author_id ORDER BY int_ssshout_id";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			$affected_rows = db_affected_rows();
 			if($affected_rows > 0) {
