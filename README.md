@@ -753,6 +753,7 @@ Additions:
 ($login_as), server >= 0.5.1  
 ($allow_plugins, $allowed_plugins), server >= 0.5.5
 ($notification, $always_send_email), server >= 1.0.4
+($strip_tags), server >= 3.2.3
 
 
 Output parameters
@@ -764,7 +765,8 @@ Output parameters
 	$recipient_id,                              //User id of recipient e.g. "123.123.123.123:436" 
 	$sender_email,                              //Sender's email address e.g. "fred@company.com"
 	$sender_ip,                                 //Sender's ip address eg. "123.123.123.123"
-	$message_forum_id,                          //Forum id e.g. 23, which is derived from a forum name e.g. 'aj_test'
+	$message_forum_id,                          //Forum id e.g. 23, which is derived from a forum name e.g. 'aj_test',
+	$options									//Options array, see below
 
 Options
 
@@ -785,6 +787,7 @@ Options
 												//developer. However, plugins that work with before_msg will continue to work 
 	$notification = true;						//Set to false to switch off notifications from this message
 	$always_send_email = false;					//Set to true to ensure an email will always be sent to the recipient(s). Usually, messages within around 20 minutes won't multiple-email the user (when false).
+	$strip_tags = true;							//By default we strip any tags in a new message
 ```
 
 Usage example:
