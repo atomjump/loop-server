@@ -348,6 +348,8 @@ class cls_ssshout
 		$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 		if($row = db_fetch_array($result))
 		{
+			$to_email = $row['var_email'];
+		
 			if($introducing == false) {
 				//A standard email once they are familiar with the concept
 				$email_body = $orig_message;
@@ -359,7 +361,7 @@ class cls_ssshout
 					$layer_message = $msg['msgs'][$lang]['layerName'];
 					$layer_name = $this->layer_name;
 					$email_body .= 	"\n\n" . $observe_message . " <a href=\"$observe_url\">$observe_url</a>\n" . $layer_message . ": " . $layer_name;
-; 
+ 
 				    if($this->layer_name) {
 						//Yes, we have the globally set layer name
 						$url = $root_server_url . "/de.php?mid=" . $message_id . "&passcode=" . $layer_name;
@@ -397,7 +399,9 @@ class cls_ssshout
 					$ly = new cls_layer();
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
-						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //"Private message on " . cur_page_url()
+						if(($to_email) && ($to_email != "")) {
+							$result = cc_mail($to_email, summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //"Private message on " . cur_page_url()
+						}
 					}
 				}
 				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
@@ -464,7 +468,9 @@ class cls_ssshout
 					$ly->always_send_email = $always_send_email;
 					if($ly->just_sent_message($layer_id, $message_id, '20') == false) {
 						//If haven't already sent a message from this
-						$result = cc_mail($row['var_email'], summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						if(($to_email) && ($to_email != "")) {
+							$result = cc_mail($to_email, summary($orig_message, 45), $email_body, $from_email, $your_name, null, $from_email);  //First 45 letters of message is the title "A new message from " . $_SERVER["SERVER_NAME"]
+						}
 					}
 				}
 				$this->call_plugins_notify("send", $orig_message, $message_details, $message_id, $from_user_id, $user_id, $data);
