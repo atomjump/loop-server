@@ -896,7 +896,7 @@ class cls_ssshout
 	
 	public function duplicate_named($username, $number)
 	{
-		switch($new_user_id) {
+		switch($number) {
 			case 2:
 				$username = $username . " Ⅱ";
 			break;
