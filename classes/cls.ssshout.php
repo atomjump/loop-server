@@ -939,18 +939,18 @@ class cls_ssshout
 					$new_user_id = $affected_rows + 1;
 					switch($new_user_id) {
 						case 2:
-							$username = $username . " ܅";
+							$username = $username . " Ⅱ";
 						break;
 						case 3:
-							$username = $username . " …";
+							$username = $username . " Ⅲ";
 						break;
 						
 						case 4:
-							$username = $username . " ܀";
+							$username = $username . " Ⅳ";
 						break;
 						
 						case 5:
-							$username = $username . " ⁙";
+							$username = $username . " Ⅴ";
 						break;
 						
 						default:
