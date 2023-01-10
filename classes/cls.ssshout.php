@@ -912,6 +912,22 @@ class cls_ssshout
 				$username = $username . " ➄";
 			break;
 			
+			case 6:
+				$username = $username . " ➅";
+			break;
+			
+			case 7:
+				$username = $username . " ➆";
+			break;
+			
+			case 8:
+				$username = $username . " ➇";
+			break;
+			
+			case 9:
+				$username = $username . " ➈";
+			break;
+			
 			default:
 				$username = $username . " (" . $new_user_id . ")";
 			break;	
