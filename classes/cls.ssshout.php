@@ -898,18 +898,18 @@ class cls_ssshout
 	{
 		switch($number) {
 			case 2:
-				$username = $username . " ᄂ";
+				$username = $username . " 🂲";
 			break;
 			case 3:
-				$username = $username . " ᄃ";
+				$username = $username . " 🂳";
 			break;
 			
 			case 4:
-				$username = $username . " ᄄ";
+				$username = $username . " 🂴";
 			break;
 			
 			case 5:
-				$username = $username . " ᄅ";
+				$username = $username . " 🂵";
 			break;
 			
 			default:
