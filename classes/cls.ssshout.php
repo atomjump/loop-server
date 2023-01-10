@@ -937,7 +937,28 @@ class cls_ssshout
 				} else {
 					//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
 					$new_user_id = $affected_rows + 1;
-					$username = $username . " (" . $new_user_id . ")";
+					switch($new_user_id) {
+						case 2:
+							$username = $username . " ܅";
+						break;
+						case 3:
+							$username = $username . " …";
+						break;
+						
+						case 4:
+							$username = $username . " ܀";
+						break;
+						
+						case 5:
+							$username = $username . " ⁙";
+						break;
+						
+						default:
+							$username = $username . " (" . $new_user_id . ")";
+						break;	
+					}
+					
+					
 				}
 			}
 		
