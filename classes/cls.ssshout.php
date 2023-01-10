@@ -898,18 +898,18 @@ class cls_ssshout
 	{
 		switch($number) {
 			case 2:
-				$username = $username . " 🂲";
+				$username = $username . " ➁";
 			break;
 			case 3:
-				$username = $username . " 🂳";
+				$username = $username . " ➂";
 			break;
 			
 			case 4:
-				$username = $username . " 🂴";
+				$username = $username . " ➃";
 			break;
 			
 			case 5:
-				$username = $username . " 🂵";
+				$username = $username . " ➄";
 			break;
 			
 			default:
@@ -917,6 +917,7 @@ class cls_ssshout
 			break;	
 		}
 		
+		//Or ➁➂➃➄ 
 		//Or ⅡⅢⅣⅤ
 		//Or ㉠ ㉡ ㉢ ㉣ ㉤ ㉥ ㉦ 	(Enclosed CJK Letters and Month)
 		//Or 🃂🃃🃄🃅🃆🃇🃈🃉🃊 
