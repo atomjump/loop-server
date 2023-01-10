@@ -894,6 +894,32 @@ class cls_ssshout
 	    return $return_html;
 	}	
 	
+	public function duplicate_named($username, $number)
+	{
+		switch($new_user_id) {
+			case 2:
+				$username = $username . " Ⅱ";
+			break;
+			case 3:
+				$username = $username . " Ⅲ";
+			break;
+			
+			case 4:
+				$username = $username . " Ⅳ";
+			break;
+			
+			case 5:
+				$username = $username . " Ⅴ";
+			break;
+			
+			default:
+				$username = $username . " (" . $new_user_id . ")";
+			break;	
+		}
+		return $username;
+	
+	}
+	
 	
 	public function check_duplicate_names($username, $user_id, $layer_id)
 	{
@@ -930,34 +956,16 @@ class cls_ssshout
 				if($rowb = db_fetch_array($result))
 				{
 					if($rowb['int_counter'] > 1) {
-				
-						$username = $username . " (" . $rowb['int_counter'] . ")";
+						
+						
+						$username = $this->duplicate_named($username, $rowb['int_counter']);
 					}
 			
 				} else {
 					//Seems like a new user that hasn't been logged yet, so give affected_rows + 1
 					$new_user_id = $affected_rows + 1;
-					switch($new_user_id) {
-						case 2:
-							$username = $username . " Ⅱ";
-						break;
-						case 3:
-							$username = $username . " Ⅲ";
-						break;
-						
-						case 4:
-							$username = $username . " Ⅳ";
-						break;
-						
-						case 5:
-							$username = $username . " Ⅴ";
-						break;
-						
-						default:
-							$username = $username . " (" . $new_user_id . ")";
-						break;	
-					}
 					
+					$username = $this->duplicate_named($username, $new_user_id);
 					
 				}
 			}
