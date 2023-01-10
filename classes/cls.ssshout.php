@@ -898,24 +898,31 @@ class cls_ssshout
 	{
 		switch($number) {
 			case 2:
-				$username = $username . " Ⅱ";
+				$username = $username . " ᄂ";
 			break;
 			case 3:
-				$username = $username . " Ⅲ";
+				$username = $username . " ᄃ";
 			break;
 			
 			case 4:
-				$username = $username . " Ⅳ";
+				$username = $username . " ᄄ";
 			break;
 			
 			case 5:
-				$username = $username . " Ⅴ";
+				$username = $username . " ᄅ";
 			break;
 			
 			default:
 				$username = $username . " (" . $new_user_id . ")";
 			break;	
 		}
+		
+		//Or ⅡⅢⅣⅤ
+		//Or ㉠ ㉡ ㉢ ㉣ ㉤ ㉥ ㉦ 	(Enclosed CJK Letters and Month)
+		//Or 🃂🃃🃄🃅🃆🃇🃈🃉🃊 
+		//Or 🂲🂳🂴🂵🂶🂷🂸🂹🂺
+		//Or 🀳🀴🀵🀶🀷 	
+		//Or ᄂ 	ᄃ 	ᄄ 	ᄅ 	ᄆ 	ᄇ 	ᄈ 	ᄉ 	ᄊ  (Korean numbers)
 		return $username;
 	
 	}
