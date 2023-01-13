@@ -66,6 +66,7 @@ class cls_layer
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
 					$_SESSION['authenticated-layer'] = $row['int_layer_id'];
+					error_log("Yes is owner: authenticated layer=" . $_SESSION['authenticated-layer']);	//TESTING
 				} else {
 					//unset the authenticated layer
 					$_SESSION['authenticated-layer'] = '';
