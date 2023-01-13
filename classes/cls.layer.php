@@ -26,13 +26,9 @@ class cls_layer
 		$this->layer_name = $passcode; //store
 
 	
-		error_log("get_layer_id() called");	//TESTING
-		
-	
 
 
 		if($passcode != "") {
-			error_log("Private forum");	//TESTING
 			//This is a private passcode request
 			$sql = "SELECT * FROM tbl_layer WHERE passcode = '" . md5($passcode). "'";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -62,11 +58,9 @@ class cls_layer
 				
 				//Check we're an owner of the layer.
 				$lg = new cls_login();		
-				error_log("Checking is owner: logged-user=" . $_SESSION['logged-user'] . "  LayerId=" . $row['int_layer_id']);	//TESTING
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
 					$_SESSION['authenticated-layer'] = $row['int_layer_id'];
-					error_log("Yes is owner: authenticated layer=" . $_SESSION['authenticated-layer']);	//TESTING
 				} else {
 					if($lg->is_admin($_SESSION['logged-user'])) {
 						//Always authenticated as the admin user
@@ -84,7 +78,6 @@ class cls_layer
 				return $row;
 			} 
 		} else {
-			error_log("Public forum forum. Reading=" . $reading);	//TESTING
 			if($reading != "") {
 				
 				$sql = "SELECT * FROM tbl_layer WHERE int_layer_id = '" . $reading . "'";
@@ -120,7 +113,6 @@ class cls_layer
 				    	
 				    	//Check we're an owner of the layer
 				    	$lg = new cls_login();
-				    	error_log("Checking is owner: logged-user=" . $_SESSION['logged-user'] . "  LayerId=" . $row['int_layer_id']);	//TESTING
 						if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 							//Cool is owner, so authenticate this layer
 							$_SESSION['authenticated-layer'] = $row['int_layer_id'];
@@ -628,9 +620,7 @@ class cls_login
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
 		
 		$subscription_string = $this->get_subscription_string();
-		error_log("subscription_string = " . $subscription_string);	//TESTING
 		$subscriber_array = explode(",", $subscription_string);
-		error_log("subscriber_array[0] = " . $subscriber_array[0]);	//TESTING
 		if($subscriber_array[0]) {
 			$subscriber_count = count($subscriber_array);
 			global $msg;
@@ -640,8 +630,6 @@ class cls_login
 			$subscriber_count = "[NA]";
 		}
 		
-		error_log("subscriber_count = " . $subscriber_count);	//TESTING
-	
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $subscription_string,
 					"layerUserCount" => $subscriber_count);
@@ -933,7 +921,6 @@ class cls_login
 	
 	public function get_subscription_string($layer_id = null)
 	{
-		error_log("In get_subscription_string. layer_id = " . $layer_id);	//TESTING
 		if(!$layer_id) {
 			if($_SESSION['authenticated-layer']) {
 				$layer_id = $_SESSION['authenticated-layer'];
@@ -972,7 +959,6 @@ class cls_login
 				$group_user_id = $user_id;
 			}
 			$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND (int_user_id = " . $user_id . " OR int_user_id = " . $group_user_id . ")"; 
-			error_log("Check if owner of group SQL:" . $sql);	//TESTING
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			if($row = db_fetch_array($result))
 			{
@@ -1320,10 +1306,8 @@ class cls_login
 	   	}
 	    
 	    //Get the current layer - use to view 
-	    error_log("About to check if subscribe case email=" . $email);		//TESTING
 	    if(($email != "")&&($password == "")&&(isset($full_request['email_modified']))&&($full_request['email_modified'] != "false")) {
 	    	//This is a subscription case: an email has been entered, but no password.	    	
-	    	error_log("This is a subscribe case email=" . $email);		//TESTING
 	    	
 	    	$ly = new cls_layer(); 
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
@@ -1334,7 +1318,6 @@ class cls_login
 			$user_id = $sh->new_user($email, $ip, null, false);		//But don't actually login as this user (since we don't have a password)
 																	//otherwise you could simply login as another user by entering
 																	//no password but their email
-			error_log("New user id created=" . $user_id);		//TESTING														
 																	
 	    	$_SESSION['access-layer-granted'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
 	    	
@@ -1347,7 +1330,6 @@ class cls_login
 				if($_SESSION['access-layer-granted']) {
 						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
 							//Go back and get a password off the user.
-							error_log("FORUM_INCORRECT_PASS,RELOAD case email=" . $email);		//TESTING
 							return "FORUM_INCORRECT_PASS,RELOAD";  
 						}
 				}
@@ -1360,13 +1342,10 @@ class cls_login
 				
 				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);  
 				if($new_subs === false) {
-					error_log("SUBSCRIPTION_DENIED case email=" . $email);		//TESTING
 					return "SUBSCRIPTION_DENIED";
 				}			
 			}
-			
-			error_log("SUBSCRIBED case email=" . $email);		//TESTING
-			
+						
 			return "SUBSCRIBED";
 	    
 		} else {
