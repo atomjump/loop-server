@@ -922,7 +922,7 @@ class cls_login
 	
 	public function get_subscription_string($layer_id = null)
 	{
-		error_log("In get_subscription_string. layer_id = " $layer_id);	//TESTING
+		error_log("In get_subscription_string. layer_id = " . $layer_id);	//TESTING
 		if(!$layer_id) {
 			if($_SESSION['authenticated-layer']) {
 				$layer_id = $_SESSION['authenticated-layer'];
