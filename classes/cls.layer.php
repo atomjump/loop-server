@@ -612,7 +612,9 @@ class cls_login
 		$ip = $ly->getFakeIpAddr();  //get new user's ip address
 		
 		$subscription_string = $this->get_subscription_string();
+		error_log("subscription_string = " . $subscription_string);	//TESTING
 		$subscriber_array = explode(",", $subscription_string);
+		error_log("subscriber_array[0] = " . $subscriber_array[0]);	//TESTING
 		if($subscriber_array[0]) {
 			$subscriber_count = count($subscriber_array);
 			global $msg;
@@ -621,6 +623,8 @@ class cls_login
 		} else {
 			$subscriber_count = "[NA]";
 		}
+		
+		error_log("subscriber_count = " . $subscriber_count);	//TESTING
 	
 		return array("thisUser" => $ip . ":" . $_SESSION['logged-user'],
 					"layerUsers" => $subscription_string,
