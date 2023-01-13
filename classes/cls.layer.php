@@ -1322,7 +1322,8 @@ class cls_login
 				//Email already exists
 				$login_as = false;	//don't actually login as this user (since we don't have a password)
 									//otherwise you could simply login as another user by entering
-									//no password but their email
+									//no password but their email.
+				return "SUBSCRIPTION_DENIED";
 			} else {
 				//Looks like a new email address. We'll want to login as this user
 				$login_as = true;
