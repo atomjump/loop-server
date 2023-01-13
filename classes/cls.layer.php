@@ -1313,12 +1313,24 @@ class cls_login
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 				
 			$sh = new cls_ssshout();
+			
+			//Check if the new email entered already exists
+			$sql = "SELECT * FROM tbl_user WHERE var_email = '" . clean_data($email) . "'";
+			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+			if(($row = db_fetch_array($result))&&($email != ""))
+			{
+				//Email already exists
+				$login_as = false;	//don't actually login as this user (since we don't have a password)
+									//otherwise you could simply login as another user by entering
+									//no password but their email
+			} else {
+				//Looks like a new email address. We'll want to login as this user
+				$login_as = true;
+			}
+			
 				
 			$saved_auth_layer = $_SESSION['access-layer-granted'];		//Save any authenticated sessions
-			$user_id = $sh->new_user($email, $ip, null, false);		//But don't actually login as this user (since we don't have a password)
-																	//otherwise you could simply login as another user by entering
-																	//no password but their email
-																	
+			$user_id = $sh->new_user($email, $ip, null, $login_as);																			
 	    	$_SESSION['access-layer-granted'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
 	    	
 				
@@ -1345,7 +1357,7 @@ class cls_login
 					return "SUBSCRIPTION_DENIED";
 				}			
 			}
-						
+									
 			return "SUBSCRIBED";
 	    
 		} else {
