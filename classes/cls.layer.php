@@ -962,6 +962,7 @@ class cls_login
 				$group_user_id = $user_id;
 			}
 			$sql = "SELECT * FROM tbl_layer_subscription WHERE int_layer_id = " . $layer_id . " AND enm_active = 'active' AND (int_user_id = " . $user_id . " OR int_user_id = " . $group_user_id . ")"; 
+			error_log("Check if owner of group SQL:" . $sql);	//TESTING
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			if($row = db_fetch_array($result))
 			{
