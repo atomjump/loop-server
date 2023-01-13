@@ -68,8 +68,13 @@ class cls_layer
 					$_SESSION['authenticated-layer'] = $row['int_layer_id'];
 					error_log("Yes is owner: authenticated layer=" . $_SESSION['authenticated-layer']);	//TESTING
 				} else {
-					//unset the authenticated layer
-					$_SESSION['authenticated-layer'] = '';
+					if($lg->is_admin($_SESSION['logged-user'])) {
+						//Always authenticated as the admin user
+						$_SESSION['authenticated-layer'] = $row['int_layer_id'];
+					} else {
+						//unset the authenticated layer
+						$_SESSION['authenticated-layer'] = '';
+					}
 				}
 							
 				//Get the group user if necessary
@@ -120,8 +125,13 @@ class cls_layer
 							//Cool is owner, so authenticate this layer
 							$_SESSION['authenticated-layer'] = $row['int_layer_id'];
 						} else {
-							//unset the authenticated layer
-							$_SESSION['authenticated-layer'] = '';
+							if($lg->is_admin($_SESSION['logged-user'])) {
+								//Always authenticated as the admin user
+								$_SESSION['authenticated-layer'] = $row['int_layer_id'];
+							} else {
+								//unset the authenticated layer
+								$_SESSION['authenticated-layer'] = '';
+							}
 						}
 						
 						
