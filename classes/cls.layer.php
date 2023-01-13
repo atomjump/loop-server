@@ -1313,6 +1313,8 @@ class cls_login
 			$user_id = $sh->new_user($email, $ip, null, false);		//But don't actually login as this user (since we don't have a password)
 																	//otherwise you could simply login as another user by entering
 																	//no password but their email
+			error_log("New user id created=" . $user_id);		//TESTING														
+																	
 	    	$_SESSION['access-layer-granted'] = $saved_auth_layer;		//Get it back - saves entering it twice for the user, if a new user is created.
 	    	
 				
@@ -1335,7 +1337,7 @@ class cls_login
 				//Yes the layer exists. Add ourselves to the subscription list.
 				$current_subs = $this->get_subscription_string($layer_info['int_layer_id']);
 				
-				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], null, $email);  
+				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], $user_id);  
 				if($new_subs === false) {
 					error_log("SUBSCRIPTION_DENIED case email=" . $email);		//TESTING
 					return "SUBSCRIPTION_DENIED";
