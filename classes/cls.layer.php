@@ -1299,8 +1299,11 @@ class cls_login
 	   	}
 	    
 	    //Get the current layer - use to view 
+	    error_log("About to check if subscribe case email=" . $email);		//TESTING
 	    if(($email != "")&&($password == "")&&(isset($full_request['email_modified']))&&($full_request['email_modified'] != "false")) {
 	    	//This is a subscription case: an email has been entered, but no password.	    	
+	    	error_log("This is a subscribe case email=" . $email);		//TESTING
+	    	
 	    	$ly = new cls_layer(); 
 			$ip = $ly->getFakeIpAddr();  //get new user's ip address	
 				
@@ -1321,6 +1324,7 @@ class cls_login
 				if($_SESSION['access-layer-granted']) {
 						if(($_SESSION['access-layer-granted'] != $layer_info['int_layer_id'])&&(!$ly->is_layer_granted($layer_info['int_layer_id']))) {
 							//Go back and get a password off the user.
+							error_log("FORUM_INCORRECT_PASS,RELOAD case email=" . $email);		//TESTING
 							return "FORUM_INCORRECT_PASS,RELOAD";  
 						}
 				}
@@ -1333,9 +1337,12 @@ class cls_login
 				
 				$new_subs = $this->add_to_subscriptions($current_subs, $layer_info['int_layer_id'], null, $email);  
 				if($new_subs === false) {
+					error_log("SUBSCRIPTION_DENIED case email=" . $email);		//TESTING
 					return "SUBSCRIPTION_DENIED";
 				}			
 			}
+			
+			error_log("SUBSCRIBED case email=" . $email);		//TESTING
 			
 			return "SUBSCRIBED";
 	    
