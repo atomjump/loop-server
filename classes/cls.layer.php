@@ -26,12 +26,13 @@ class cls_layer
 		$this->layer_name = $passcode; //store
 
 	
-	
+		error_log("get_layer_id() called");	//TESTING
 		
 	
 
 
 		if($passcode != "") {
+			error_log("Private forum");	//TESTING
 			//This is a private passcode request
 			$sql = "SELECT * FROM tbl_layer WHERE passcode = '" . md5($passcode). "'";
 			$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
@@ -60,7 +61,8 @@ class cls_layer
 				}
 				
 				//Check we're an owner of the layer.
-				$lg = new cls_login();				
+				$lg = new cls_login();		
+				error_log("Checking is owner: logged-user=" . $_SESSION['logged-user'] . "  LayerId=" . $row['int_layer_id']);	//TESTING
 				if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 					//Cool is owner, so authenticate this layer
 					$_SESSION['authenticated-layer'] = $row['int_layer_id'];
@@ -76,7 +78,9 @@ class cls_layer
 				return $row;
 			} 
 		} else {
+			error_log("Public forum forum. Reading=" . $reading);	//TESTING
 			if($reading != "") {
+				
 				$sql = "SELECT * FROM tbl_layer WHERE int_layer_id = '" . $reading . "'";
 				$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 				if($row = db_fetch_array($result))
@@ -110,6 +114,7 @@ class cls_layer
 				    	
 				    	//Check we're an owner of the layer
 				    	$lg = new cls_login();
+				    	error_log("Checking is owner: logged-user=" . $_SESSION['logged-user'] . "  LayerId=" . $row['int_layer_id']);	//TESTING
 						if($lg->is_owner($_SESSION['logged-user'], $row['int_group_id'], $row['int_layer_id'])) {
 							//Cool is owner, so authenticate this layer
 							$_SESSION['authenticated-layer'] = $row['int_layer_id'];
@@ -917,7 +922,7 @@ class cls_login
 	
 	public function get_subscription_string($layer_id = null)
 	{
-		
+		error_log("In get_subscription_string. layer_id = " $layer_id);	//TESTING
 		if(!$layer_id) {
 			if($_SESSION['authenticated-layer']) {
 				$layer_id = $_SESSION['authenticated-layer'];
