@@ -165,7 +165,7 @@ class cls_ssshout
 						if($row = db_fetch_array($result))
 						{
 						 	//existing user
-						 	if($row['var_email'] == "") {
+						 	if(is_null($row['var_email'])) {
 						 		
 						 		//Definitely a temporary user with no email. We are going to upgrade this particular temporary user (so that they can keep their private messages
 						 		$inserting = false;
