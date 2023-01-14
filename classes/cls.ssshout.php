@@ -169,7 +169,7 @@ class cls_ssshout
 						 		
 						 		//Definitely a temporary user with no email. We are going to upgrade this particular temporary user (so that they can keep their private messages
 						 		$inserting = false;
-						 		$sql = "UPDATE tbl_user SET var_email = '" . clean_data($email) . "', var_phone = " . clean_data($insert_phone) . ", var_confirmcode='" . clean_data($confirm_code) . "'  WHERE int_user_id = " . clean_data($_SESSION['logged-user']);
+						 		$sql = "UPDATE tbl_user SET var_email = '" . clean_data($email) . "', var_phone = " . clean_data($insert_phone) . ", var_confirmcode='" . clean_data($confirm_code) . "', date_updated = NOW()  WHERE int_user_id = " . clean_data($_SESSION['logged-user']);
 						 		$returned_id = $_SESSION['logged-user'];
 						 	}
 						 }
