@@ -1161,7 +1161,7 @@ function set_options_cookie() {
 				
 				case 'NEW_USER':
 				
-				    if(sendNewUserMsg == true) {
+					if(sendNewUserMsg == true) {
 					    msg = lsmsg.msgs[lang].registration;
 					    toggle = true;
 					    $('#comment-logout-text').show();	//show the correct text 
@@ -1169,9 +1169,11 @@ function set_options_cookie() {
 					    timeMult = 6;
 					} else {
 					    toggle = true;
+					    msg = '';			//Hide any rotating timer
 					    $('#comment-logout-text').show();	//show the correct text 
 					    $('#comment-not-signed-in').hide();	
 					}
+					
 					
 					refreshLoginStatus();
 					
