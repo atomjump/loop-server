@@ -151,10 +151,32 @@ class cls_ssshout
 				//A new user
 				if(($email != '')&&(!is_null($email))) {
 			
-			
 					$confirm_code = md5(uniqid(rand())); 
-			
+					
+					//Default case is to create a new user...
+					$inserting = true;
 					$sql = "INSERT INTO tbl_user(var_last_ip, var_email, var_phone, var_confirmcode, date_created) VALUES ('" . clean_data($ip) . "', '" . clean_data($email) . "'," . clean_data($insert_phone) . ",'" . clean_data($confirm_code) . "', NOW())";
+			
+					//... unless we are already logged in, but the email is blank, in which case it is an upgrade of a temp user
+					if((isset($_SESSION['logged-user']))&&($_SESSION['logged-user'] != '')) {
+						$sql = "SELECT * FROM tbl_user WHERE int_user_id = " . clean_data($_SESSION['logged-user']);
+						$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
+						
+						if($row = db_fetch_array($result))
+						{
+						 	//existing user
+						 	if($row['var_email'] == "") {
+						 		
+						 		//Definitely a temporary user with no email. We are going to upgrade this particular temporary user (so that they can keep their private messages
+						 		$inserting = false;
+						 		$sql = "UPDATE tbl_user SET var_email = '" . clean_data($email) . "', var_phone = " . clean_data($insert_phone) . ", var_confirmcode='" . clean_data($confirm_code) . "'  WHERE int_user_id = " . clean_data($_SESSION['logged-user']);
+						 		$returned_id = $_SESSION['logged-user'];
+						 	}
+						 }
+					
+					}
+			
+					
 					$result = dbquery($sql)  or die("Unable to execute query $sql " . dberror());
 			
 					//Let the user confirm their email address
@@ -177,15 +199,17 @@ class cls_ssshout
 						
 						//($to_email, $subject, $body_text, $sender_email, $sender_name="", $to_name="", $bcc_email="")
 						
-						
-						$_SESSION['logged-user'] = db_insert_id();
-						$this->clear_old_session_data();
+						if($inserting == true) {
+							$_SESSION['logged-user'] = db_insert_id();
+							$this->clear_old_session_data();
+							$returned_id = db_insert_id();
+						}
 					}
 					
 					//Let me know there is a new user
 					cc_mail_direct($cnf['email']['adminEmail'], $msg['msgs'][$lang]['welcomeEmail']['warnAdminNewUser'], clean_data($email), $cnf['email']['webmasterEmail']);
 				
-					return db_insert_id();
+					return $returned_id;
 			
 				} else {
 				 	//email is null
