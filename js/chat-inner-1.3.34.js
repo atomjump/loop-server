@@ -1251,6 +1251,10 @@ function set_options_cookie() {
 			            refreshLoginStatus();
 			           
 			        }
+			        
+			        //And hide any rotating signs
+			        $("#comment-messages").html(msg);
+			        $("#comment-messages").hide();
 					
 				} else {
 					$("#comment-messages").html(msg);
