@@ -3,6 +3,7 @@
    global $cnf; 
    global $msg;
    global $lang;
+   $screen_type = "signup";	//TODO: change to "resetpass"
  
    if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
  		$unique_pass_reset = $cnf['db']['user'] . $cnf['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
