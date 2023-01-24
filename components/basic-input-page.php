@@ -284,6 +284,7 @@
 				var goPublicMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPublic'] ?>';
 
 				//Overwrite the default message slightly
+				/*
 				lsmsg.msgs.en.loggedIn = "Logged in.";		//original is 'Logged in. Please wait..'
 				lsmsg.msgs.es.loggedIn = "Conectado.";
 				lsmsg.msgs.pt.loggedIn = "Iniciado.";
@@ -299,6 +300,7 @@
 				lsmsg.msgs.it.loggedIn = "Accesso effettuato.";
 				lsmsg.msgs.in.loggedIn = "Sudah masuk.";
 				lsmsg.msgs.cht.loggedIn = "已登錄。";
+				*/
 
 				function isChromeDesktop()
 				{
