@@ -23,10 +23,10 @@
 		
 		default:
 			if(isset($cnf['chatInnerJSFilename']) &&
-			  (file_exists(add_trailing_slash_local($cnf['fileRoot']) . $cnf['chatInnerJSFilename']) )
+			  (file_exists(add_trailing_slash($cnf['fileRoot']) . $cnf['chatInnerJSFilename']) )
 			  ) {
 					$chat_inner_js_filename = $cnf['chatInnerJSFilename'];
-					$inner_js = trim_trailing_slash_local($webroot) . $chat_inner_js_filename;
+					$inner_js = trim_trailing_slash($webroot) . $chat_inner_js_filename;
 			} else {
 				//The default version
 				$chat_inner_js_filename = "js/" . $default_name;			//Use the local version default version
