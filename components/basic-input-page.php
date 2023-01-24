@@ -301,6 +301,18 @@
 				lsmsg.msgs.in.loggedIn = "Sudah masuk.";
 				lsmsg.msgs.cht.loggedIn = "已登錄。";
 				*/
+				
+				function cookieOffset()
+				{
+				  //Should output: Thu,31-Dec-2020 00:00:00 GMT
+				  var cdate = new Date;
+				  var expirydate=new Date();
+				  expirydate.setTime(expirydate.getTime()+(365*3*60*60*24*1000))
+				  var write = expirydate.toGMTString();
+				  
+				  return write;
+				}
+				
 
 				function isChromeDesktop()
 				{
