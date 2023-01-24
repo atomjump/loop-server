@@ -9,11 +9,15 @@
 
 		 <meta name="keywords" content="<?php echo $msg['msgs'][$lang]['keywords'] ?>">
 
+
+			
 			  <!-- Bootstrap core CSS -->
-			<link rel="StyleSheet" href="css/bootstrap.min.css" rel="stylesheet">
+			<link rel="StyleSheet" href="front-end/css/bootstrap.min.css" rel="stylesheet">
 
 			<!-- AtomJump Feedback CSS -->
-			<link rel="StyleSheet" href="css/comments-1.0.4.css?ver=1">
+			<link rel="StyleSheet" href="front-end/css/comments-1.0.4.css?ver=1">
+			
+			
 
 			<!-- Bootstrap HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 			<!--[if lt IE 9]>
@@ -34,15 +38,16 @@
 			<![endif]-->
 
 			<!-- Include your version of jQuery here.  This is version 1.9.1 which is tested with AtomJump Feedback. -->
-			<script type="text/javascript" src="<?php echo $webroot ?>/js/jquery-1.11.0.min.js"></script>
+			<script type="text/javascript" src="front-end/js/jquery-1.11.0.min.js"></script>
 			<!-- Took from here 15 May 2014: http://ajax.googleapis.com/ajax/libs/jquery/1.9.1 -->
 
 			<!-- For the dropdown autocomplete -->
-			<link rel="stylesheet" href="css/jquery-ui.css">
+			<link rel="stylesheet" href="front-end/css/jquery-ui.css">
 			<script src="js/jquery-ui.js"></script>
 
 
 			<script>
+				/*
 					//Add your configuration here for AtomJump Feedback
 					var ajFeedback = {
 						"uniqueFeedbackId" : "Setup",	//Anything globally unique to your company/page, starting with 'apix-'	
@@ -51,12 +56,13 @@
 						"cssFeedback": "css/comments-1.0.4.css?ver=1",
 						"cssBootstrap": "css/bootstrap.min.css"
 					}
+				*/
 			</script>
 			
 			<?php if($screen_type == "signup") { ?>
 				<script type="text/javascript" src="<?php echo $inner_js ?>"></script>
 			<?php } else { //Warning - these will conflict if on the same screen ?>
-				<script type="text/javascript" src="js/chat-1.0.9.js"></script>
+				<script type="text/javascript" src="front-end/js/chat-1.0.9.js"></script>
 				<!--No svg support -->
 				<!--[if lt IE 9]>
 				  <script src="https://frontcdn.atomjump.com/atomjump-frontend/chat-1.0.7.js"></script>
