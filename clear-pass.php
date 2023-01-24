@@ -24,6 +24,7 @@
  
  $subdomain = check_subdomain();
  $webroot = trim_trailing_slash($cnf['webRoot']);
+ error_log($webroot);		//TESTING
  
 if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
 	$unique_pass_reset = $cnf['db']['user'] . $cnf['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
