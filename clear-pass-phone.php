@@ -11,7 +11,6 @@
 	$sh = new cls_ssshout();
 	$api = new cls_plugin_api();	
 	
-	include("components/inner_js_filename.php");
 
 
    global $cnf; 
@@ -22,6 +21,9 @@
    	$subdomain = check_subdomain();
 	$webroot = trim_trailing_slash($cnf['webRoot']);
 	error_log($webroot);		//TESTING
+ 
+	include("components/inner_js_filename.php");
+ 
  
    if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
  		$unique_pass_reset = $cnf['db']['user'] . $cnf['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
