@@ -14,7 +14,9 @@
  
     include("components/inner_js_filename.php");
  
- 
+ 	$subdomain = check_subdomain();
+	$webroot = trim_trailing_slash_local($cnf['webRoot']);
+	
  
  global $cnf; 
  global $msg;
