@@ -13,13 +13,15 @@
 	
 	include("components/inner_js_filename.php");
 
-	$subdomain = check_subdomain();
-	$webroot = trim_trailing_slash($cnf['webRoot']);
-	
+
    global $cnf; 
    global $msg;
    global $lang;
    $screen_type = "signup";	//TODO: change to "resetpass"
+   
+   	$subdomain = check_subdomain();
+	$webroot = trim_trailing_slash($cnf['webRoot']);
+	
  
    if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
  		$unique_pass_reset = $cnf['db']['user'] . $cnf['email']['sending']['vendor']['mailgun']['key'];	//This should be unique per installation.	
