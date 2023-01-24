@@ -1,5 +1,16 @@
 <?php 
 	require('config/db_connect.php');
+
+	//For plugins - language change in particular
+	require($start_path . "classes/cls.layer.php");
+	require($start_path . "classes/cls.ssshout.php");
+	
+	require($start_path . "classes/cls.pluginapi.php");
+	
+	$ly = new cls_layer();
+	$sh = new cls_ssshout();
+	$api = new cls_plugin_api();	
+	
    global $cnf; 
    global $msg;
    global $lang;
