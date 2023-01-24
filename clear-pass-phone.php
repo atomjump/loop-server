@@ -11,6 +11,9 @@
 	$sh = new cls_ssshout();
 	$api = new cls_plugin_api();	
 	
+	include("components/inner_js_filename.php");
+
+	
    global $cnf; 
    global $msg;
    global $lang;
