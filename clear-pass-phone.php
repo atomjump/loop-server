@@ -42,7 +42,7 @@
     
     }
     
-    include("components/basic-page.php");
+    include("components/basic-input-page.php");
  
  } else {
 	

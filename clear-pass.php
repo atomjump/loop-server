@@ -55,7 +55,7 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
     }
     
     
-	include("components/basic-page.php");
+	include("components/basic-input-page.php");
     
  
  } else {
