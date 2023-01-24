@@ -443,7 +443,7 @@
 					</span>
 					<span class="signuptitle-section" style="text-align:right; float: right; width: 50%;">
 						
-							<a href="<?php echo $follow_on_link; ?>"><img src="img/logo80.png" width="70" height="70"></a>
+							<a href="<?php echo $follow_on_link; ?>"><img src="front-end/img/logo80.png" width="70" height="70"></a>
 
 					</span>
 				</div>
