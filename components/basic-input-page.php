@@ -495,7 +495,7 @@
 		 									<div style="display: none; color: red;" id="comment-messages"></div>
 								</div>
 								<br/>
-							 <button id="sign-and-pair-button" type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $notifications_config['msgs'][$lang]['signUp']; ?></button><br/><small><a href="<?php echo $notifications_config['privacyPolicyLink']; ?>" target="_blank"><?php echo $notifications_config['msgs'][$lang]['privacyPolicy']; ?></a></small><br/><br/>
+							 <button id="sign-and-pair-button" type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton']; ?></button><br/><small><?php echo $msg['msgs'][$lang]['tip']; ?></small><br/><br/>
 							 <button style="display: none;" id="pair-again-button"  class="btn btn-primary btn-lg" style="margin-bottom:3px;"><?php echo $notifications_config['msgs'][$lang]['completePairing']; ?></button>
 							<br/>
 							<br/>
