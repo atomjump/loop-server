@@ -43,7 +43,7 @@
 
 			<!-- For the dropdown autocomplete -->
 			<link rel="stylesheet" href="front-end/css/jquery-ui.css">
-			<script src="js/jquery-ui.js"></script>
+			<script src="front-end/js/jquery-ui.js"></script>
 
 
 			<script>
