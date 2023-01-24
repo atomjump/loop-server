@@ -458,7 +458,7 @@
 				 				 <input type="hidden" name="devicetype" id="device-type" value="<?php echo $_REQUEST['devicetype'] ?>">
 				 				 <input type="hidden" name="date-owner-start" value="<?php echo $date_start ?>">
 				 				 <input type="hidden" id="email-modified" name="email_modified" value="false">
-				 				 <?php //NOT NEEDED IN THIS VERSION$sh->call_plugins_settings(null); //User added plugins here ?>								
+				 				 <?php $sh->call_plugins_settings(null); //User added plugins here ?>								
 				 				
 				 				 <a id="change-lang-button"><img style="margin-top: 10px; margin-bottom: 14px;" src='front-end/img/refresh.png' width='60' height='60'></a> <img src="images/flags.png" width="48" height="14"><br/>
 								 <div class="form-group">
