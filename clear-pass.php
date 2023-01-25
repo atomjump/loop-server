@@ -95,8 +95,8 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
 			      //There is an email like this on the system   
 			   		 
 			   } else {
-			   		echo $msg['msgs'][$lang]['emailNotExist'];
-			   
+			   		echo $msg['msgs'][$lang]['emailNotExist'] . " ";		//But allow through so that it tries to send an email still.
+			   		
 			   }
 			
 		
