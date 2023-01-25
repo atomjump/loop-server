@@ -426,8 +426,8 @@
 							
 							//$("#sign-and-pair-button").hide();
 							$("#pair-again-button").fadeIn();
-							
-							return returned;
+										
+							return false;
 						} else {
 							return false;
 						}
