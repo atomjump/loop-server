@@ -393,7 +393,9 @@
 						var newUrl = "<?php echo $first_button; ?>";
 						alert("New Url=" + newUrl);		//TESTING
 						window.location = newUrl;
+						console.log(window.location);
 						//refresh();
+						return false;
 					});
 					
 					
