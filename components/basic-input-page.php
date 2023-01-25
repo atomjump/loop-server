@@ -444,7 +444,7 @@
 				
 				<div class="">
 					<span class="signuptitle-section" style="text-align:left; float: left; width: 50%;">
-						<span class="signuptitle"><?php echo $msg['msgs'][$lang]['pass']['title']; ?></span></br>
+						<span class="signuptitle"><?php //Heading if we need it e.g. echo $msg['msgs'][$lang]['pass']['title']; ?></span></br>
 						<span><?php //Subheading if we ever need it. ?></span>
 					</span>
 					<span class="signuptitle-section" style="text-align:right; float: right; width: 50%;">
