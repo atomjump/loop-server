@@ -284,7 +284,7 @@
 				var goPublicMsg = '<?php echo $msg['msgs'][$lang]['sendSwitchToPublic'] ?>';
 
 				//Overwrite the default message slightly
-				/*
+				
 				lsmsg.msgs.en.loggedIn = "Logged in.";		//original is 'Logged in. Please wait..'
 				lsmsg.msgs.es.loggedIn = "Conectado.";
 				lsmsg.msgs.pt.loggedIn = "Iniciado.";
@@ -300,18 +300,9 @@
 				lsmsg.msgs.it.loggedIn = "Accesso effettuato.";
 				lsmsg.msgs.in.loggedIn = "Sudah masuk.";
 				lsmsg.msgs.cht.loggedIn = "已登錄。";
-				*/
 				
-				/*function cookieOffset()
-				{
-				  //Should output: Thu,31-Dec-2020 00:00:00 GMT
-				  var cdate = new Date;
-				  var expirydate=new Date();
-				  expirydate.setTime(expirydate.getTime()+(365*3*60*60*24*1000))
-				  var write = expirydate.toGMTString();
-				  
-				  return write;
-				}*/
+				
+			
 				
 
 				function isChromeDesktop()
@@ -355,7 +346,7 @@
 					}
 				
 			
-					$('#clear-password').html("<img src=\"img/ajax-loader.gif\" width=\"16\" height=\"16\">");
+					$('#clear-password').html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 					 $.get(ur, function(response) { 
 						 
 						   $('#clear-password').html(response);
@@ -422,7 +413,7 @@
 						}
 						
 						if(allGood == true) {
-							$("#comment-messages").html("<img src=\"img/ajax-loader.gif\" width=\"16\" height=\"16\">");
+							$("#comment-messages").html("<img src=\"images/ajax-loader.gif\" width=\"16\" height=\"16\">");
 							
 						}
 						$("#comment-messages").show();

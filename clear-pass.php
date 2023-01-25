@@ -79,6 +79,7 @@ if(isset($cnf['email']['sending']['vendor']['mailgun']['key'])) {
     }
     
     
+    $display_email = $_SESSION['temp-email'];
 	include("components/basic-input-page.php");
     
  

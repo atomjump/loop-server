@@ -63,6 +63,7 @@
     
     }
     
+    $display_email = $email;
     include("components/basic-input-page.php");
  
  } else {
