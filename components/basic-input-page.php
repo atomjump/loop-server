@@ -389,7 +389,9 @@
 					
 					$("#pair-again-button").click(function() {
 						//Works on all platforms except iphones: window.location.reload(true);
-						refresh();
+						//Go to the homepage
+						window.location = "<?php echo $first_button; ?>";
+						//refresh();
 					});
 					
 					
