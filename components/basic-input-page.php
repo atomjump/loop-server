@@ -452,6 +452,7 @@
 				</div>
 				<div style="clear: both;"></div>
 				
+				<h3 align="center" style="color: #aaa;"><?php echo $main_message ?></h3>
 				
 				<!-- Signup Form -->
 				<form id="options-frm" class="form" role="form" action="" onsubmit=""  method="POST">
@@ -499,7 +500,7 @@
 								</div>
 								<br/>
 							 <button id="sign-and-pair-button" type="submit" class="btn btn-primary" style="margin-bottom:3px;"><?php echo $msg['msgs'][$lang]['saveSettingsButton']; ?></button><br/><small><?php echo $msg['msgs'][$lang]['tip']; ?></small><br/><br/>
-							 <button style="display: none;" id="pair-again-button"  class="btn btn-primary btn-lg" style="margin-bottom:3px;"><?php echo $notifications_config['msgs'][$lang]['completePairing']; ?></button>
+							 <button style="display: none;" id="pair-again-button"  class="btn btn-primary btn-lg" style="margin-bottom:3px;"><?php echo $first_button_wording ?></button>
 							<br/>
 							<br/>
 							
