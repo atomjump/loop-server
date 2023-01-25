@@ -1,5 +1,7 @@
 <?php
 
+error_log("In here 0");
+
 require('config/db_connect.php');
 
 require("classes/cls.basic_geosearch.php");
