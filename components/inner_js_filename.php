@@ -32,6 +32,8 @@
 				$chat_inner_js_filename = "js/" . $default_name;			//Use the local version default version
 				$inner_js = $chat_inner_js_filename;
 			}
+		
+			
 		break;	
 	}
 

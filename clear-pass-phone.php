@@ -23,7 +23,19 @@
    
    	$subdomain = check_subdomain();
 	$webroot = trim_trailing_slash($cnf['webRoot']);
- 
+	
+	//Substitute [subdomain] with the actual subdomain if allowed and it exists
+	if((isset($cnf['readURLAllowReplacement'])) && ($cnf['readURLAllowReplacement'] == true)) {
+		if((isset($cnf['readURLIncludeDot'])) && ($cnf['readURLIncludeDot'] == true)) {
+			$webroot = trim_trailing_slash(str_replace('[subdomain]', $subdomain . ".", $webroot));
+		} else {
+			$webroot = trim_trailing_slash(str_replace('[subdomain]', $subdomain , $webroot));
+		}
+	} else {
+		$webroot = trim_trailing_slash(str_replace('[subdomain]', "", $webroot));		//Remove any mention of subdomains
+	}
+			
+
 	include("components/inner_js_filename.php");
  
  
