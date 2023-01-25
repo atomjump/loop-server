@@ -59,7 +59,7 @@
 				
 			</script>
 			
-			<?php if($screen_type == "signup") { ?>
+			<?php if($screen_type == "resetpass") { ?>
 				<script type="text/javascript" src="<?php echo $inner_js ?>"></script>
 			<?php } else { //Warning - these will conflict if on the same screen ?>
 				<script type="text/javascript" src="front-end/js/chat-1.0.9.js"></script>
@@ -391,10 +391,7 @@
 						//Works on all platforms except iphones: window.location.reload(true);
 						//Go to the homepage
 						var newUrl = "<?php echo $first_button; ?>";
-						alert("New Url=" + newUrl);		//TESTING
 						window.location = newUrl;
-						console.log(window.location);
-						//refresh();
 						return false;
 					});
 					
@@ -440,15 +437,15 @@
 		</script>
 
 		
-		<?php if($screen_type == "signup") { ?>
+		<?php if($screen_type == "resetpass") { ?>
      	<div class="container-fluid infront">
 			<div class="row justify-content-center">
 				<div class="col-md-12">
 				
 				<div class="">
 					<span class="signuptitle-section" style="text-align:left; float: left; width: 50%;">
-						<span class="signuptitle"><?php echo $notifications_config['msgs'][$lang]['signUp']; ?></span></br>
-						<span><?php echo $notifications_config['msgs'][$lang]['orSignIn']; ?></span>
+						<span class="signuptitle"><?php echo $cnf['msgs'][$lang]['pass']['title']; ?></span></br>
+						<span><?php //Subheading if we ever need it. ?></span>
 					</span>
 					<span class="signuptitle-section" style="text-align:right; float: right; width: 50%;">
 						

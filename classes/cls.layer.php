@@ -1130,8 +1130,7 @@ class cls_login
 	    $forum_accessed = false;
 	    $new_user = false;
 	    
-	   	error_log("Layer visible=" . $layer_visible . " Email=" . $email . " Password=" . $password);  //TESTING
-	    
+   
 	   
 	    $ly = new cls_layer(); 
 	    $layer_info = $ly->get_layer_id($layer_visible);

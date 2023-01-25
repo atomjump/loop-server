@@ -1,6 +1,9 @@
 <?php 
 	require('config/db_connect.php');
 
+	//This version runs from the direct login within the standalone app, but is very simliar to clear-pass.php.
+	//Changes should be made to both.
+
 	//For plugins - language change in particular
 	require($start_path . "classes/cls.layer.php");
 	require($start_path . "classes/cls.ssshout.php");
@@ -16,11 +19,10 @@
    global $cnf; 
    global $msg;
    global $lang;
-   $screen_type = "signup";	//TODO: change to "resetpass"
+   $screen_type = "resetpass";	
    
    	$subdomain = check_subdomain();
 	$webroot = trim_trailing_slash($cnf['webRoot']);
-	error_log($webroot);		//TESTING
  
 	include("components/inner_js_filename.php");
  

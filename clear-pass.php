@@ -19,11 +19,10 @@
  global $cnf; 
  global $msg;
  global $lang;
- $screen_type = "signup";	//TODO: change to "resetpass"
+ $screen_type = "resetpass";	//TODO: change to "resetpass"
  
  $subdomain = check_subdomain();
  $webroot = trim_trailing_slash($cnf['webRoot']);
- error_log($webroot);		//TESTING
  
  include("components/inner_js_filename.php");
  
