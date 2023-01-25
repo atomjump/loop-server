@@ -452,7 +452,7 @@
 				</div>
 				<div style="clear: both;"></div>
 				
-				<h3 align="center" style="color: #aaa;"><?php echo $main_message ?></h3>
+				<h3 align="left" style="color: #aaa;"><?php echo $main_message ?></h3>
 				
 				<!-- Signup Form -->
 				<form id="options-frm" class="form" role="form" action="" onsubmit=""  method="POST">
