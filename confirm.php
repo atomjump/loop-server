@@ -12,7 +12,7 @@ require("classes/cls.ssshout.php");
 $lg = new cls_login();
 $ly = new cls_layer();
 
-
+error_log("In here 1");
 
 if($_REQUEST['usercode']) {
 
@@ -31,6 +31,9 @@ if($_REQUEST['usercode']) {
 			$json = $lg->subscribe($_REQUEST['uid'], $_REQUEST['sub'], $_REQUEST['fp']);
 		} else {
 			//Confirm email/password
+			
+			error_log("In here 2");
+			
 			$json = $lg->confirm($_REQUEST['email-opt'], $_REQUEST['pd'], $_REQUEST['ph'], $_REQUEST['users'], $_REQUEST['passcode'], false, $_REQUEST);
 			
 			//Confirm this layer
