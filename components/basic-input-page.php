@@ -47,7 +47,7 @@
 
 
 			<script>
-				/*
+				
 					//Add your configuration here for AtomJump Feedback
 					var ajFeedback = {
 						"uniqueFeedbackId" : "Setup",	//Anything globally unique to your company/page, starting with 'apix-'	
@@ -56,7 +56,7 @@
 						"cssFeedback": "css/comments-1.0.4.css?ver=1",
 						"cssBootstrap": "css/bootstrap.min.css"
 					}
-				*/
+				
 			</script>
 			
 			<?php if($screen_type == "signup") { ?>
