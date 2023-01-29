@@ -1,5 +1,7 @@
 <img src="https://atomjump.com/images/logo80.png">
 
+__WARNING: this project has now moved to https://src.atomjump.com/atomjump/loop-server.git__
+
 # AtomJump Messaging Server
 
 This acts as a server to the AtomJump Messaging front-end 
